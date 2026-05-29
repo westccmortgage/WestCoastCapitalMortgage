@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 210" role="img" aria-label="West Coast Capital Mortgage house and currency mark">
+  <g fill="#15486f">
+    <!-- Roof: bold chevron band with eaves -->
+    <path d="M120 28 L208 96 L184 96 L184 90 L120 41 L56 90 L56 96 L32 96 Z"/>
+    <!-- Left & right walls (outline posts) -->
+    <rect x="62" y="96" width="13" height="58"/>
+    <rect x="165" y="96" width="13" height="58"/>
+    <!-- Window: 2x2 panes -->
+    <rect x="106" y="104" width="12" height="12"/>
+    <rect x="122" y="104" width="12" height="12"/>
+    <rect x="106" y="120" width="12" height="12"/>
+    <rect x="122" y="120" width="12" height="12"/>
+  </g>
+  <!-- Banknote -->
+  <g transform="rotate(-7 120 168)">
+    <rect x="52" y="150" width="136" height="48" rx="6" fill="#15486f"/>
+    <ellipse cx="120" cy="174" rx="18" ry="15.5" fill="#fcfaf4"/>
+    <text x="120" y="182" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#15486f" text-anchor="middle">$</text>
+    <circle cx="78" cy="174" r="4.6" fill="#fcfaf4"/>
+    <circle cx="162" cy="174" r="4.6" fill="#fcfaf4"/>
+  </g>
+  <!-- Motion swooshes -->
+  <g fill="none" stroke="#15486f" stroke-width="5" stroke-linecap="round">
+    <path d="M150 202 q28 -5 46 -19"/>
+    <path d="M160 210 q24 -4 38 -15"/>
+  </g>
+</svg>
