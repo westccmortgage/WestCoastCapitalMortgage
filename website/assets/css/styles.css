@@ -74,6 +74,10 @@ p{margin:0 0 1rem}
 .nav-cta{display:flex;align-items:center;gap:10px}
 .nav-phone{font-weight:700;color:var(--navy);font-size:.95rem;white-space:nowrap}
 .nav-phone span{color:var(--gold-2)}
+.lang-switch{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.lang-switch button{font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.03em;padding:6px 9px;background:transparent;color:var(--muted);border:0;cursor:pointer;line-height:1;transition:background .15s,color .15s}
+.lang-switch button:hover{background:var(--mist-2);color:var(--navy)}
+.lang-switch button.active{background:var(--navy);color:#fff}
 .burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
 .burger span{width:24px;height:2px;background:var(--navy);border-radius:2px;transition:.2s}
 

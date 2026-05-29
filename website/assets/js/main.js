@@ -2,6 +2,9 @@
 (function(){
   "use strict";
 
+  /* ---------- i18n helper ---------- */
+  function L(key){return (window.I18N&&window.I18N.t)?window.I18N.t(key):'';}
+
   /* ---------- Mobile nav ---------- */
   var burger=document.getElementById('burger');
   var menu=document.getElementById('menu');
@@ -60,7 +63,7 @@
     var months=save>0?Math.ceil(costs/save):0;
     set('r-out-new',money2(newP));
     set('r-out-save',money2(Math.max(save,0)));
-    set('r-out-break',months>0?months+' mo':'—');
+    set('r-out-break',months>0?months+(L('moSuffix')||' mo'):'—');
     set('r-out-year',money(Math.max(save,0)*12));
   }
   // Affordability
@@ -93,7 +96,7 @@
     var netOwn=ownTotal-equity;
     set('v-out-rent',money(rentTotal));
     set('v-out-own',money(Math.max(netOwn,0)));
-    set('v-out-verdict',netOwn<rentTotal?'Buying wins':'Renting wins');
+    set('v-out-verdict',netOwn<rentTotal?(L('buyWins')||'Buying wins'):(L('rentWins')||'Renting wins'));
     set('v-out-equity',money(Math.max(equity,0)));
   }
   function set(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
@@ -117,7 +120,7 @@
       bars.forEach(function(b,idx){b.classList.toggle('active',idx===i);b.classList.toggle('done',idx<i);});
       document.getElementById('wiz-back').style.visibility=i===0?'hidden':'visible';
       var next=document.getElementById('wiz-next');
-      next.textContent=(i===steps.length-2)?'Submit application':'Continue';
+      next.textContent=(i===steps.length-2)?(L('wizSubmit')||'Submit application'):(L('wizContinue')||'Continue');
       next.classList.toggle('hide',i===steps.length-1);
       document.getElementById('wiz-back').classList.toggle('hide',i===steps.length-1);
       cur=i;
@@ -136,6 +139,11 @@
     });
     document.getElementById('wiz-back').addEventListener('click',function(){if(cur>0)show(cur-1);});
     show(0);
+    // Refresh the dynamic Continue/Submit label when language changes.
+    if(window.I18N&&window.I18N.onChange)window.I18N.onChange(function(){
+      var next=document.getElementById('wiz-next');
+      if(next)next.textContent=(cur===steps.length-2)?(L('wizSubmit')||'Submit application'):(L('wizContinue')||'Continue');
+    });
   }
 
   /* ---------- Contact / apply mailto fallback ---------- */
@@ -156,40 +164,52 @@
     function add(text,who){
       var d=document.createElement('div');d.className='msg '+who;d.textContent=text;body.appendChild(d);body.scrollTop=body.scrollHeight;
     }
-    function botReply(q){
+    // Map a user message to a reply key; the localized text comes from i18n.
+    function replyKey(q){
       q=q.toLowerCase();
-      var a;
-      if(/rate|interest/.test(q))a="Today's sample rates: 30-yr fixed ~6.49%, 15-yr ~5.74%, FHA ~6.13%. Rates change daily and depend on your credit, down payment, and loan type. Want a personalized quote? I can have a loan officer reach out — just share your name and phone, or call (310) 654-1577.";
-      else if(/fha/.test(q))a="FHA loans are great for first-time buyers — as little as 3.5% down and flexible credit requirements. They do carry mortgage insurance. Want me to start a quick pre-qualification?";
-      else if(/va\b|veteran/.test(q))a="VA loans offer $0 down for eligible veterans and active-duty service members, with no PMI. You'll need a Certificate of Eligibility. Shall I connect you with our VA specialist?";
-      else if(/jumbo/.test(q))a="Jumbo loans finance amounts above the conforming limit — ideal for higher-priced LA properties. They typically need stronger credit and reserves. I can outline what you'd qualify for.";
-      else if(/down ?payment/.test(q))a="Down payments range from 0% (VA/USDA) to 3.5% (FHA) to 3–20% (conventional). Less than 20% usually adds mortgage insurance. Tell me the price range and I'll estimate it.";
-      else if(/refinanc/.test(q))a="Refinancing can lower your rate, shorten your term, or tap equity. The break-even is when your monthly savings cover closing costs. Try our refinance calculator, or I can run the numbers with you.";
-      else if(/credit|score/.test(q))a="Minimums vary: FHA from ~580, conventional ~620, jumbo ~700+. Even with lower scores there are options. Want me to flag this for a loan officer review?";
-      else if(/pre.?qual|pre.?approv|qualify|start|apply/.test(q))a="Great — getting pre-approved takes about 10 minutes. Head to our Apply page, or share your name, phone, and the loan type you're after and I'll pass it to our team.";
-      else if(/contact|call|phone|talk|human|agent|officer/.test(q))a="You can reach West Coast Capital Mortgage at (310) 654-1577, or leave your name and number here and a licensed loan officer will call you back shortly.";
-      else if(/hello|hi\b|hey/.test(q))a="Hi! I'm the West Coast Capital Mortgage assistant. I can help with rates, loan programs (FHA, VA, USDA, Jumbo, Conventional), down payments, and getting pre-approved. What are you looking into?";
-      else if(/usda/.test(q))a="USDA loans offer $0 down for eligible rural and some suburban areas, with low mortgage insurance. Eligibility depends on location and income. Want me to check if your area qualifies?";
-      else if(/reverse/.test(q))a="Reverse mortgages let homeowners 62+ convert equity into cash without monthly payments. They're worth discussing carefully — I can connect you with our specialist.";
-      else a="That's a great question. A licensed loan officer can give you the most accurate answer. Call (310) 654-1577, or share your name and phone and we'll reach out. Meanwhile, you can also start an application or try our calculators.";
+      if(/rate|interest|tasa|ставк/.test(q))return 'rates';
+      else if(/fha/.test(q))return 'fha';
+      else if(/va\b|veteran|ветеран/.test(q))return 'va';
+      else if(/jumbo|джамбо/.test(q))return 'jumbo';
+      else if(/down ?payment|inicial|взнос/.test(q))return 'down';
+      else if(/refinanc|refinanci|рефинанс/.test(q))return 'refi';
+      else if(/credit|score|crédito|кредит|рейтинг/.test(q))return 'credit';
+      else if(/pre.?qual|pre.?approv|qualify|start|apply|preaprob|предодобр|заявку/.test(q))return 'prequal';
+      else if(/contact|call|phone|talk|human|agent|officer|llam|teléfono|звон|телефон/.test(q))return 'contact';
+      else if(/hello|hi\b|hey|hola|привет|здрав/.test(q))return 'hello';
+      else if(/usda/.test(q))return 'usda';
+      else if(/reverse|inversa|обратн/.test(q))return 'reverse';
+      return 'botDefault';
+    }
+    function t(key){return (window.I18N&&window.I18N.t)?window.I18N.t(key):'';}
+    function botReply(text,key){
+      var a=t(key||replyKey(text));
       setTimeout(function(){add(a,'bot');},500);
     }
-    function send(text){if(!text.trim())return;add(text,'user');input.value='';botReply(text);}
+    function send(text,key){if(!text.trim())return;add(text,'user');input.value='';botReply(text,key);}
     fab.addEventListener('click',function(){
       panel.classList.toggle('open');
       if(panel.classList.contains('open')&&!body.dataset.init){
         body.dataset.init='1';
-        add("👋 Hi! I'm your West Coast Capital Mortgage assistant. Ask me about rates, loan programs, or getting pre-approved.",'bot');
+        add(t('chatGreeting'),'bot');
       }
     });
     document.getElementById('chat-close').addEventListener('click',function(){panel.classList.remove('open');});
     document.getElementById('chat-send').addEventListener('click',function(){send(input.value);});
     input.addEventListener('keydown',function(e){if(e.key==='Enter')send(input.value);});
     document.querySelectorAll('.chat-quick button').forEach(function(b){
-      b.addEventListener('click',function(){send(b.textContent);});
+      b.addEventListener('click',function(){send(b.textContent,b.getAttribute('data-reply'));});
     });
   }
 
   /* ---------- Year ---------- */
   document.querySelectorAll('.year').forEach(function(el){el.textContent=new Date().getFullYear();});
+
+  /* ---------- Recompute calculator verdicts/units when language changes ---------- */
+  if(window.I18N&&window.I18N.onChange)window.I18N.onChange(function(){
+    if(document.getElementById('p-price'))calcPurchase();
+    if(document.getElementById('r-balance'))calcRefi();
+    if(document.getElementById('a-income'))calcAfford();
+    if(document.getElementById('v-rent'))calcRvb();
+  });
 })();

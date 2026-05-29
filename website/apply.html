@@ -32,6 +32,11 @@
       </ul>
     </nav>
     <div class="nav-cta">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ru">RU</button>
+      </div>
       <a class="nav-phone" href="tel:+13106541577">📞 <span>(310) 654-1577</span></a>
       <a class="btn btn-gold" href="apply.html">Apply Now</a>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -161,16 +166,17 @@
   </div>
   <div class="chat-body" id="chat-body"></div>
   <div class="chat-quick">
-    <button>Today's rates</button>
-    <button>FHA loans</button>
-    <button>How much can I afford?</button>
-    <button>Get pre-approved</button>
+    <button data-reply="rates">Today's rates</button>
+    <button data-reply="fha">FHA loans</button>
+    <button data-reply="down">How much can I afford?</button>
+    <button data-reply="prequal">Get pre-approved</button>
   </div>
   <div class="chat-input">
     <input id="chat-text" type="text" placeholder="Ask about rates, programs…" autocomplete="off">
     <button id="chat-send" aria-label="Send">➤</button>
   </div>
 </div>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
