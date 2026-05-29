@@ -1,0 +1,7 @@
+# West Coast Capital Mortgage Inc. — static site + WCCI AI assistant functions
+[build]
+  publish = "."
+  functions = "netlify/functions"
+# No build step: this is plain static HTML/CSS/JS.
+# Required env var for the WCCI AI assistant: ANTHROPIC_KEY
+# Optional (lead email notifications): RESEND_API_KEY, LEAD_EMAIL_TO, LEAD_EMAIL_FROM
