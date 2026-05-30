@@ -18,6 +18,7 @@ APPLY_URL = "https://2817729.my1003app.com/2775380/register"      # full borrowe
 AGENT_URL = "https://2817729.myagentloans.com/register"           # agent / partner portal
 WCCI_URL = "https://wcci.online"                                  # external AI mortgage review tool
 APPLY_NOTE_TEXT = "You will be redirected to our secure mortgage application portal."
+WCCI_LANG_NOTE = "WCCI.Online may open in a multilingual experience. English, Russian, and other language support may vary by tool version."
 
 def contact_block(office_label="Office / Loan Officer Questions"):
     return (f'<b>{office_label}:</b> <a href="tel:{OFFICE_TEL}">{OFFICE_PHONE}</a><br>'
@@ -386,6 +387,15 @@ JS = r"""/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) 
   function calc(){
     var price=val('c-price'),dpPct=val('c-down'),rate=val('c-rate'),term=val('c-term');
     var taxYr=val('c-tax'),insYr=val('c-ins'),hoa=val('c-hoa');
+    var hint=document.getElementById('c-out-hint');
+    // Require home price, interest rate, and loan term before showing any dollar estimate.
+    if(!(price>0&&rate>0&&term>0)){
+      set('c-out-total','');
+      if(hint)hint.style.display='';
+      ['c-out-pi','c-out-tax','c-out-ins','c-out-hoa','c-out-loan'].forEach(function(id){set(id,'—');});
+      return;
+    }
+    if(hint)hint.style.display='none';
     var loan=Math.max(price-(price*dpPct/100),0);
     var r=rate/100/12,n=term*12;
     var pi=(r===0)?(n?loan/n:0):loan*r/(1-Math.pow(1+r,-n));
@@ -522,7 +532,7 @@ def footer():
       <p>West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Opportunity. Information is provided for
       educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
       and underwriting approval.</p>
-      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -549,6 +559,9 @@ def page_hero(title, sub, crumb=None):
     <p class="lead">{sub}</p>
   </div>
 </section>"""
+
+def cr_loans(name): return f'<a href="loans.html">Loans</a> &nbsp;/&nbsp; {name}'
+def cr_res(name): return f'<a href="resources.html">Resources</a> &nbsp;/&nbsp; {name}'
 
 def card(label, h, body, cta, href):
     lab = f'<span class="label">{label}</span>' if label else ""
@@ -690,8 +703,9 @@ def _home():
 <section class="testimonial">
   <div class="wrap">
     <div class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-    <blockquote>&ldquo;I received clear guidance, competitive loan options, and a smooth process from start to finish.&rdquo;</blockquote>
-    <div class="who">WCCM Client</div>
+    <blockquote>&ldquo;West Coast Capital Mortgage helped make the financing process clear, organized, and easier to understand from start to finish.&rdquo;</blockquote>
+    <div class="who">Borrower feedback</div>
+    <p class="testi-note">More client feedback will be added as available.</p>
   </div>
 </section>
 
@@ -863,7 +877,7 @@ def loan_page(crumb, title, sub, intro, highlights, reqs, benefits, faqs):
     hl = "".join(f'<div class="card center"><h3 style="color:var(--blue)">{a}</h3><p style="margin:0">{b}</p></div>' for a,b in highlights)
     req = "".join(f"<li>{x}</li>" for x in reqs)
     ben = "".join(f"<li>{x}</li>" for x in benefits)
-    return page_hero(title, sub, crumb) + f"""
+    return page_hero(title, sub, cr_loans(crumb)) + f"""
 <section><div class="wrap">
   <div class="grid grid-4">{hl}</div>
 </div></section>
@@ -1010,32 +1024,33 @@ def _calc():
         card("","Amortization Calculator","See how your balance pays down over time.","Open","calculators.html"),
         card("","Down Payment Calculator","Plan how much to put down on your home.","Open","calculators.html"),
     ])
-    return page_hero("Mortgage Calculators", "Estimate your monthly payment and explore scenarios. Figures are estimates for educational purposes and not an offer to lend.", "Calculators") + f"""
+    return page_hero("Mortgage Calculators", "Estimate your monthly payment and explore scenarios. Figures are estimates for educational purposes and not an offer to lend.", cr_res("Calculators")) + f"""
 <section><div class="wrap">
   <div class="calc-panel">
     <div>
       <h3 style="color:#fff">Mortgage Payment Calculator</h3>
       <div class="calc-fields">
-        {field("c-price","Home price ($)","450000")}
-        {field("c-down","Down payment (%)","20")}
-        {field("c-rate","Interest rate (%)","6.5",extra='step="0.01"')}
+        {field("c-price","Home price ($)","")}
+        {field("c-down","Down payment (%)","")}
+        {field("c-rate","Interest rate (%)","",extra='step="0.01"')}
         {term}
-        {field("c-tax","Property tax / year ($)","5400")}
-        {field("c-ins","Insurance / year ($)","1500")}
-        {field("c-hoa","HOA / month ($)","0")}
+        {field("c-tax","Property tax / year ($)","")}
+        {field("c-ins","Insurance / year ($)","")}
+        {field("c-hoa","HOA / month ($)","")}
       </div>
     </div>
     <div class="calc-out">
       <span class="total">Estimated total monthly payment</span>
-      <span class="big" id="c-out-total">$0</span>
-      <div class="calc-row"><span>Principal &amp; interest</span><b id="c-out-pi">$0</b></div>
-      <div class="calc-row"><span>Property tax</span><b id="c-out-tax">$0</b></div>
-      <div class="calc-row"><span>Insurance</span><b id="c-out-ins">$0</b></div>
-      <div class="calc-row"><span>HOA</span><b id="c-out-hoa">$0</b></div>
-      <div class="calc-row"><span>Loan amount</span><b id="c-out-loan">$0</b></div>
+      <span class="big" id="c-out-total"></span>
+      <p class="calc-hint" id="c-out-hint">Enter your loan details to calculate an estimate.</p>
+      <div class="calc-row"><span>Principal &amp; interest</span><b id="c-out-pi">&mdash;</b></div>
+      <div class="calc-row"><span>Property tax</span><b id="c-out-tax">&mdash;</b></div>
+      <div class="calc-row"><span>Insurance</span><b id="c-out-ins">&mdash;</b></div>
+      <div class="calc-row"><span>HOA</span><b id="c-out-hoa">&mdash;</b></div>
+      <div class="calc-row"><span>Loan amount</span><b id="c-out-loan">&mdash;</b></div>
     </div>
   </div>
-  <p class="form-note">Estimates only and not an offer to lend. Your actual payment depends on your full financial profile, program, and current market conditions.</p>
+  <p class="form-note">This calculator provides an estimate for educational purposes only and is not a loan approval, Loan Estimate, rate quote, or commitment to lend.</p>
 </div></section>
 {wcci_cta("Want help interpreting the numbers?", "Use WCCI.Online to review your mortgage scenario and organize the questions a loan officer will need to answer.", "Review My Scenario")}
 <section class="bg-light"><div class="wrap">
@@ -1048,7 +1063,7 @@ PAGES["calculators.html"] = dict(title="Mortgage Calculators", desc="Estimate yo
 
 # ---------------- Rates ----------------
 def _rates():
-    return page_hero("Mortgage Rates", "Mortgage rates change daily. The most accurate number is a personalized quote based on your profile.", "Mortgage Rates") + f"""
+    return page_hero("Mortgage Rates", "Mortgage rates change daily. The most accurate number is a personalized quote based on your profile.", cr_res("Mortgage Rates")) + f"""
 <section><div class="wrap split">
   <div>
     <span class="eyebrow">Today&rsquo;s market</span>
@@ -1102,15 +1117,15 @@ def _ftb():
         ("Does my credit need to be perfect?","No. Many programs work with a range of credit profiles &mdash; we&rsquo;ll explain what affects your options."),
         ("What loan is best for first-time buyers?","It depends on your finances and goals. FHA and conventional low-down-payment programs are common starting points."),
     ])
-    return page_hero("First-Time Homebuyer Hub", "Everything you need to prepare, qualify, and buy your first home with confidence.", "First-Time Homebuyer Hub") + f"""
+    return page_hero("First-Time Homebuyer Hub", "Everything you need to prepare, qualify, and buy your first home with confidence.", cr_res("First-Time Homebuyer Hub")) + f"""
 <section><div class="wrap">
   <div class="grid grid-3">
-    {card("Step 1","How to prepare","Review your finances, build savings, and set a realistic budget.","Get started","apply.html")}
-    {card("Step 2","Credit basics","Understand what lenders look for and how to strengthen your profile.","Learn more","glossary.html")}
-    {card("Step 3","Down payment","Explore how much you need and where the funds can come from.","Use calculators","calculators.html")}
-    {card("Step 4","Pre-approval","Know your budget and shop with a stronger offer.","Get preapproved","apply.html")}
-    {card("Step 5","Choose your loan","Match the right program to your situation.","See programs","loans.html")}
-    {card("Step 6","Make your move","Find a home, make an offer, and close with guidance.","Read the guide","homebuying-guide.html")}
+    {card("Step 1","How to prepare","Start by reviewing your income, monthly obligations, savings, and comfort level with a future mortgage payment. A strong homebuying plan begins before you start shopping for homes.","Get started","apply.html")}
+    {card("Step 2","Credit basics","Your credit profile can affect available loan programs, interest rate options, mortgage insurance, and documentation requirements. Review your credit early so you have time to address any issues before applying.","Learn more","glossary.html")}
+    {card("Step 3","Down payment","Different loan programs have different down payment requirements. Conventional, FHA, VA, jumbo, and other programs may all work differently depending on your borrower profile and property type.","Use calculators","calculators.html")}
+    {card("Step 4","Pre-approval","A mortgage pre-approval helps you understand your estimated budget and gives sellers more confidence when you make an offer. Pre-approval is based on income, credit, assets, and documentation review.","Get preapproved","apply.html")}
+    {card("Step 5","Choose your loan","The right loan program depends on your goals, property type, income structure, credit profile, and down payment. West Coast Capital Mortgage can help compare available options.","See programs","loans.html")}
+    {card("Step 6","Make your move","Once you are ready, connect with your real estate agent, make an offer, complete underwriting, and prepare for closing. Our goal is to help make the financing process clear from start to finish.","Read the guide","homebuying-guide.html")}
   </div>
 </div></section>
 <section class="bg-light"><div class="wrap">
@@ -1137,7 +1152,7 @@ def _guide():
         ("11. Review the closing disclosure","Review your final terms and costs at least three business days before closing."),
         ("12. Close and get the keys","Sign your documents, fund the loan, and take ownership of your home."),
     ]
-    return page_hero("How to Buy a House", "A clear, 12-step roadmap from reviewing your finances to getting the keys.", "Homebuying Guide") + f"""
+    return page_hero("How to Buy a House", "A clear, 12-step roadmap from reviewing your finances to getting the keys.", cr_res("Homebuying Guide")) + f"""
 <section><div class="wrap" style="max-width:860px">
   {accordion(steps)}
 </div></section>
@@ -1152,7 +1167,7 @@ def _refguide():
         ("When might it not make sense?","If you&rsquo;ll move before reaching break-even, or if costs outweigh the benefit, refinancing may not be worth it."),
         ("What does it cost to refinance?","Closing costs typically include lender, appraisal, title, and recording fees. We&rsquo;ll lay them out clearly."),
     ])
-    return page_hero("Refinancing Guide", "Understand the why, the math, and the timing so you can decide with confidence.", "Refinancing Guide") + f"""
+    return page_hero("Refinancing Guide", "Understand the why, the math, and the timing so you can decide with confidence.", cr_res("Refinancing Guide")) + f"""
 <section><div class="wrap">
   <div class="grid grid-3">
     {card("","Why refinance","Lower your rate or payment, shorten your term, or access equity.","Learn more","refinance.html")}
@@ -1185,7 +1200,7 @@ def _articles():
         f'<span class="label">{l}</span><h3>{h}</h3>'
         f'<p>A clear, borrower-friendly explanation to help you decide with confidence.</p></div></a>'
         for l,h in arts)
-    return page_hero("Mortgage Articles", "Plain-English guides and explainers to help you make smart, confident decisions.", "Mortgage Articles") + f"""
+    return page_hero("Mortgage Articles", "Plain-English guides and explainers to help you make smart, confident decisions.", cr_res("Mortgage Articles")) + f"""
 <section><div class="wrap"><div class="grid grid-3">{cards}</div></div></section>
 {cta_band()}
 """
@@ -1209,7 +1224,7 @@ def _glossary():
         ("Underwriting","The lender&rsquo;s process of verifying your information and approving the loan."),
     ]
     rows = "".join(f'<div class="term"><b>{t}</b><span>{d}</span></div>' for t,d in terms)
-    return page_hero("Mortgage Glossary", "Key mortgage terms defined in plain language.", "Mortgage Glossary") + f"""
+    return page_hero("Mortgage Glossary", "Key mortgage terms defined in plain language.", cr_res("Mortgage Glossary")) + f"""
 <section><div class="wrap" style="max-width:860px"><div class="glossary">{rows}</div></div></section>
 {cta_band()}
 """
@@ -1243,7 +1258,7 @@ def _faq():
     out = []
     for title, items in cats:
         out.append(f'<h3 style="margin-top:36px">{title}</h3>{accordion(items)}')
-    return page_hero("Mortgage FAQ", "Answers to common questions about buying, refinancing, programs, rates, documents, and closing.", "Mortgage FAQ") + f"""
+    return page_hero("Mortgage FAQ", "Answers to common questions about buying, refinancing, programs, rates, documents, and closing.", cr_res("Mortgage FAQ")) + f"""
 <section><div class="wrap" style="max-width:860px">{''.join(out)}</div></section>
 {cta_band()}
 """
@@ -1438,20 +1453,6 @@ def _airev():
 PAGES["ai-mortgage-review.html"] = dict(title="WCCI.Online AI Mortgage Review",
     desc="WCCI AI Mortgage Assistant by West Coast Capital Mortgage — organize your goals, review your scenario, and prepare a document checklist before speaking with a licensed mortgage professional. Preliminary educational guidance only.",
     nav="", body=_airev())
-
-# ---------------- 404 ----------------
-def _404():
-    return page_hero("Page not found", "The page you are looking for may have moved or may no longer be available.") + f'''
-<section><div class="wrap center" style="max-width:680px">
-  <div class="btn-row" style="justify-content:center">
-    <a class="btn btn-lg btn-blue" href="index.html">Return Home</a>
-    <a class="btn btn-lg btn-outline" href="resources.html">View Mortgage Resources</a>
-    <a class="btn btn-lg btn-black" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Application</a>
-  </div>
-  {apply_note()}
-</div></section>
-'''
-PAGES["404.html"] = dict(title="Page not found", desc="The page you are looking for may have moved or may no longer be available.", nav="", body=_404())
 
 # >>> INSERT PAGES HERE <<<
 

@@ -39,6 +39,15 @@
   function calc(){
     var price=val('c-price'),dpPct=val('c-down'),rate=val('c-rate'),term=val('c-term');
     var taxYr=val('c-tax'),insYr=val('c-ins'),hoa=val('c-hoa');
+    var hint=document.getElementById('c-out-hint');
+    // Require home price, interest rate, and loan term before showing any dollar estimate.
+    if(!(price>0&&rate>0&&term>0)){
+      set('c-out-total','');
+      if(hint)hint.style.display='';
+      ['c-out-pi','c-out-tax','c-out-ins','c-out-hoa','c-out-loan'].forEach(function(id){set(id,'—');});
+      return;
+    }
+    if(hint)hint.style.display='none';
     var loan=Math.max(price-(price*dpPct/100),0);
     var r=rate/100/12,n=term*12;
     var pi=(r===0)?(n?loan/n:0):loan*r/(1-Math.pow(1+r,-n));
