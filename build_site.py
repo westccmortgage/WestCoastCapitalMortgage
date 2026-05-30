@@ -326,6 +326,20 @@ section{padding:88px 0}
 .apply-support h3{margin-bottom:.3em}
 .cta-contact{margin-top:20px;color:#c7d0db;font-size:.95rem}
 .cta-contact b{color:#fff}
+/* ---------- Founder ---------- */
+.founder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
+.founder-photo{border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 18px 44px rgba(17,17,17,.12);background:var(--light)}
+.founder-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top}
+.founder-cred{list-style:none;margin:20px 0 0;padding:0}
+.founder-cred li{position:relative;padding:0 0 11px 26px;color:var(--black)}
+.founder-cred li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.founder-contact{margin-top:20px;line-height:2}
+.founder-contact a{color:var(--blue);font-weight:600}
+.founder-preview .founder-photo img{aspect-ratio:1/1}
+@media(max-width:760px){
+  .founder-grid{grid-template-columns:1fr;gap:26px}
+  .founder-photo{max-width:440px;margin:0 auto}
+}
 """
 
 # ----------------------------------------------------------------------------
@@ -702,7 +716,19 @@ def _home():
   <div class="grid grid-3">{articles}</div>
 </div></section>
 
-<section><div class="wrap center">
+<section><div class="wrap">
+  <div class="founder-grid founder-preview">
+    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc." loading="lazy"></div>
+    <div>
+      <span class="eyebrow" style="color:var(--blue)">Our founder</span>
+      <h2>Mortgage guidance with real estate experience.</h2>
+      <p class="lead">West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
+      <a class="btn btn-blue" href="about.html#anatoliy">Meet Anatoliy</a>
+    </div>
+  </div>
+</div></section>
+
+<section class="bg-light"><div class="wrap center">
   <span class="eyebrow">Talk to us</span>
   <h2>Speak with West Coast Capital Mortgage</h2>
   <p class="contact-lines" style="font-size:1.05rem">{contact_block("Office")}</p>
@@ -1304,6 +1330,26 @@ def _about():
     <li><b>Technology + people</b><span>Modern tools backed by real advisors.</span></li>
     <li><b>Borrower-first</b><span>No hype, no pressure &mdash; just a smooth process.</span></li>
   </ul>
+</div></section>
+<section id="anatoliy"><div class="wrap">
+  <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Founder &amp; Mortgage Professional</span><h2>Meet Anatoliy Kanevsky</h2></div>
+  <div class="founder-grid">
+    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc." loading="lazy"></div>
+    <div>
+      <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage Inc. and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.</p>
+      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows West Coast Capital Mortgage to approach every client scenario with both lending discipline and practical real estate experience.</p>
+      <p>Whether a client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, Anatoliy&rsquo;s focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client&rsquo;s actual situation.</p>
+      <ul class="founder-cred">
+        <li>California Real Estate Broker</li>
+        <li>Mortgage professional since 2001</li>
+        <li>Luxury real estate and development experience</li>
+        <li>Purchase, refinance, jumbo, Non-QM, DSCR, and self-employed borrower strategy</li>
+        <li>Founder, West Coast Capital Mortgage Inc.</li>
+      </ul>
+      <p class="founder-contact"><b>Anatoliy Direct:</b> <a href="tel:{DIRECT_TEL}">{DIRECT_PHONE}</a><br><b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+      <div class="btn-row" style="margin-top:18px"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Application</a></div>
+    </div>
+  </div>
 </div></section>
 <section class="bg-light"><div class="wrap">
   <div class="section-head center"><span class="eyebrow">Why WCCM</span><h2>Why borrowers choose us</h2></div>
