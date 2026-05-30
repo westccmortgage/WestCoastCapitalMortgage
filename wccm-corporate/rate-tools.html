@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rate Sheet Tool (Internal) | West Coast Capital Mortgage Inc.</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .rt-wrap{max-width:1000px;margin:0 auto;padding:40px 24px}
+  .rt-head{border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:26px}
+  .rt-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--charcoal);border-radius:999px;padding:4px 11px}
+  .rt-drop{border:2px dashed var(--border);border-radius:14px;padding:34px;text-align:center;background:var(--light);transition:.15s}
+  .rt-drop.drag{border-color:var(--blue);background:#eef5ff}
+  .rt-row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;margin:22px 0}
+  .rt-field{display:flex;flex-direction:column;gap:6px}
+  .rt-field label{font-size:.8rem;font-weight:600;color:var(--gray)}
+  .rt-field input{padding:11px 13px;border:1px solid var(--border);border-radius:8px;font:inherit;width:160px}
+  table.rt{width:100%;border-collapse:collapse;margin-top:18px;font-size:.95rem}
+  table.rt th,table.rt td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+  table.rt th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
+  table.rt td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .rt-status{margin:16px 0;font-size:.92rem;color:var(--gray)}
+  .rt-err{color:#b00020;font-weight:600}
+  textarea#json{width:100%;min-height:200px;margin-top:14px;border:1px solid var(--border);border-radius:10px;padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem}
+  .hide{display:none}
+  .rt-note{font-size:.82rem;color:var(--gray);line-height:1.6;background:#fff8e6;border:1px solid #ffe3a3;border-radius:10px;padding:14px 16px;margin-top:18px}
+  ol.rt-steps{font-size:.92rem;color:var(--charcoal);line-height:1.7;margin-top:10px;padding-left:20px}
+</style>
+</head>
+<body>
+<div class="rt-wrap">
+  <div class="rt-head">
+    <span class="rt-badge">Internal Tool — not public</span>
+    <h1 style="margin:14px 0 6px">Rate Sheet → Website Updater</h1>
+    <p class="muted" style="margin:0">West Coast Capital Mortgage Inc. · Converts the PennyMac TPO rate sheet into the small <code>rates.json</code> your public “Today’s Sample Rates” reads. Everything runs in your browser — the rate sheet is never uploaded anywhere.</p>
+  </div>
+
+  <div class="rt-drop" id="drop">
+    <p style="margin:0 0 12px;font-weight:600">Drop the rate sheet <code>.xlsx</code> here, or</p>
+    <input type="file" id="file" accept=".xlsx">
+  </div>
+
+  <div class="rt-row">
+    <div class="rt-field">
+      <label for="comp">Your comp + costs (points)</label>
+      <input id="comp" type="number" step="0.125" value="2.75">
+    </div>
+    <div class="rt-field" style="align-self:center">
+      <span class="muted" style="font-size:.85rem">Higher points → higher borrower rate (rebate must cover your comp + admin fee).</span>
+    </div>
+  </div>
+
+  <div id="status" class="rt-status">Waiting for a rate sheet…</div>
+
+  <div id="result" class="hide">
+    <h2 style="font-size:1.3rem">Preview — best‑case borrower sample rates</h2>
+    <table class="rt">
+      <thead><tr><th>Product</th><th class="num">Wholesale par</th><th class="num">Borrower rate (no points)</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+
+    <h2 style="font-size:1.1rem;margin-top:30px">rates.json (this is what the website uses)</h2>
+    <div class="btn-row">
+      <button class="btn btn-blue" id="download" type="button">Download rates.json</button>
+      <button class="btn btn-outline" id="copy" type="button">Copy</button>
+    </div>
+    <textarea id="json" spellcheck="false" readonly></textarea>
+
+    <div class="rt-note">
+      <b>To publish:</b>
+      <ol class="rt-steps">
+        <li>Click <b>Download rates.json</b>.</li>
+        <li>On GitHub, open <code>wccm-corporate/assets/</code> → <b>Add file → Upload files</b> → drop <code>rates.json</code> (replace the old one) → Commit.</li>
+        <li>Netlify auto‑deploys in ~1 minute; the public <b>Mortgage Rates</b> page shows the new numbers.</li>
+      </ol>
+      The full wholesale sheet stays private — only these curated, marked‑up borrower numbers go live.
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:.78rem;margin-top:34px">Wholesale figures are for licensed mortgage professionals only and are not consumer offers. Published sample rates are estimates, not a Loan Estimate, rate quote, rate lock, or commitment to lend.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var COMMIT = 30;            // lock period to read
+  var EXCL = /NOO|SH |NY|FL|TX|< 700|>= 95|High Balance/;
+  // [display name, membership test on LpName]
+  var FAMILIES = [
+    ["Conventional 30-Year Fixed", function(n){return n.indexOf("Conv 25/30Yr Fixed")===0 && !EXCL.test(n);}],
+    ["Conventional 15-Year Fixed", function(n){return n.indexOf("Conv 15Yr Fixed")===0 && n.indexOf("High Balance")<0;}],
+    ["FHA 30-Year Fixed", function(n){return n.indexOf("FHA 20/25/30Yr Fixed")===0 && n.indexOf("NY")<0 && n.indexOf("High Balance")<0;}],
+    ["VA 30-Year Fixed", function(n){return n.indexOf("VA 20/25/30Yr Fixed")===0 && n.indexOf("High Balance")<0;}],
+    ["USDA 30-Year Fixed", function(n){return n.indexOf("USDA 30Yr Fixed")===0 && n.indexOf("High Balance")<0;}],
+    ["Jumbo 30-Year Fixed", function(n){return n==="Jumbo 30Yr Fixed";}],
+    ["Non-QM (A+) 30-Year Fixed", function(n){return n==="Non-QM A+ 30Yr Fixed";}],
+    ["DSCR Investor 30-Year Fixed", function(n){return n==="Non-QM DSCR 30Yr Fixed";}]
+  ];
+
+  var DATA=null, EFF="";
+  var statusEl=document.getElementById('status');
+  function status(msg,err){statusEl.innerHTML=msg; statusEl.className="rt-status"+(err?" rt-err":"");}
+
+  function parse(buf){
+    status("Reading rate sheet…");
+    var wb;
+    try{ wb=XLSX.read(new Uint8Array(buf),{type:'array'}); }
+    catch(e){ status("Could not read this file. Is it the .xlsx rate sheet? ("+e.message+")",true); return; }
+    var ws=wb.Sheets["Price"];
+    if(!ws){ status("No “Price” tab found — this doesn’t look like the PennyMac rate sheet.",true); return; }
+    var rows=XLSX.utils.sheet_to_json(ws,{header:1});
+    // columns: 0 LpId,1 CommitPeriod,2 NoteRate,3 FinalBasePrice,4 Key,5 LpName,6 EffectiveTime
+    var byName={};
+    EFF="";
+    for(var i=1;i<rows.length;i++){
+      var r=rows[i]; if(!r) continue;
+      var commit=r[1], rate=r[2], price=r[3], name=r[5];
+      if(name==null||typeof rate!=="number"||typeof price!=="number") continue;
+      if(!EFF && r[6]) EFF=fmtEff(r[6]);
+      if(commit!==COMMIT) continue;
+      (byName[name]||(byName[name]=[])).push([rate,price]);
+    }
+    if(!Object.keys(byName).length){ status("Parsed the file but found no pricing rows.",true); return; }
+    DATA=byName;
+    status("Loaded "+rows.length.toLocaleString()+" price points · effective "+(EFF||"(unknown)")+".");
+    compute();
+  }
+
+  function fmtEff(v){
+    if(v instanceof Date){ try{return v.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})+" PT";}catch(e){} }
+    var s=String(v); // "2026-05-29 14:14:00 -0700"
+    var m=s.match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);
+    if(m){
+      var mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][parseInt(m[2],10)-1];
+      var h=parseInt(m[4],10), ap=h>=12?"PM":"AM", h12=((h+11)%12)+1;
+      return mo+" "+parseInt(m[3],10)+", "+m[1]+" · "+h12+":"+m[5]+" "+ap+" PT";
+    }
+    return s;
+  }
+
+  function bestByRate(testFn){
+    var b={}; // rate -> min price (best rebate) across member bands
+    for(var name in DATA){
+      if(!testFn(name)) continue;
+      var arr=DATA[name];
+      for(var i=0;i<arr.length;i++){
+        var rate=arr[i][0], price=arr[i][1];
+        if(!(rate in b) || price<b[rate]) b[rate]=price;
+      }
+    }
+    return b;
+  }
+  function fmtRate(r){ return (Math.round(r*1000)/1000).toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+"%"; }
+
+  function compute(){
+    if(!DATA) return;
+    var comp=parseFloat(document.getElementById('comp').value)||0;
+    var tbody=document.getElementById('tbody'); tbody.innerHTML="";
+    var products=[];
+    FAMILIES.forEach(function(fam){
+      var b=bestByRate(fam[1]);
+      var rates=Object.keys(b).map(Number).sort(function(a,c){return a-c;});
+      if(!rates.length) return;
+      var par=null, bor=null;
+      for(var i=0;i<rates.length;i++){ if(b[rates[i]]<=0){par=rates[i];break;} }
+      for(var j=0;j<rates.length;j++){ if(b[rates[j]]<=-comp){bor=rates[j];break;} }
+      var rateVal = bor!=null?bor:(rates[rates.length-1]);
+      products.push({name:fam[0], rate:Math.round(rateVal*1000)/1000});
+      var tr=document.createElement('tr');
+      tr.innerHTML="<td>"+fam[0]+"</td><td class='num'>"+(par!=null?fmtRate(par):"—")+
+        "</td><td class='num'><b>"+fmtRate(rateVal)+"</b></td>";
+      tbody.appendChild(tr);
+    });
+    var out={
+      effective: EFF||"",
+      source:"Lender wholesale base pricing; best-case borrower profile.",
+      comp_points: comp,
+      products: products
+    };
+    document.getElementById('json').value=JSON.stringify(out,null,2);
+    document.getElementById('result').classList.remove('hide');
+    window.__rates=out;
+  }
+
+  // wiring
+  var fileEl=document.getElementById('file'), drop=document.getElementById('drop');
+  function handle(file){
+    if(!file) return;
+    var fr=new FileReader();
+    fr.onload=function(){ parse(fr.result); };
+    fr.onerror=function(){ status("Could not read the file.",true); };
+    fr.readAsArrayBuffer(file);
+  }
+  fileEl.addEventListener('change',function(){ handle(fileEl.files[0]); });
+  ['dragover','dragenter'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('drag');});});
+  ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('drag');});});
+  drop.addEventListener('drop',function(e){ if(e.dataTransfer.files[0]) handle(e.dataTransfer.files[0]); });
+  document.getElementById('comp').addEventListener('input',compute);
+  document.getElementById('download').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify(window.__rates,null,2)],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="rates.json"; a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    document.getElementById('json').select(); document.execCommand('copy'); status("Copied rates.json to clipboard.");
+  });
+})();
+</script>
+</body>
+</html>

@@ -327,6 +327,12 @@ section{padding:88px 0}
 .apply-support h3{margin-bottom:.3em}
 .cta-contact{margin-top:20px;color:#c7d0db;font-size:.95rem}
 .cta-contact b{color:#fff}
+.rate-table{max-width:620px;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.rate-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--border)}
+.rate-row:last-child{border-bottom:0}
+.rate-name{font-weight:600;color:var(--charcoal)}
+.rate-val{font-weight:800;font-size:1.18rem;color:var(--navy);font-variant-numeric:tabular-nums}
+.rate-effective{font-size:.82rem;color:var(--gray);margin-top:12px;letter-spacing:.02em}
 /* ---------- Founder ---------- */
 .founder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
 .founder-photo{border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 18px 44px rgba(17,17,17,.12);background:var(--light)}
@@ -414,6 +420,21 @@ JS = r"""/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) 
       var el=document.getElementById(id);if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}
     });
     calc();
+  }
+
+  /* Sample rate board — reads assets/rates.json (updated via rate-tools.html) */
+  var rb=document.getElementById('rate-board');
+  if(rb){
+    fetch(rb.getAttribute('data-src'),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      if(!d||!d.products||!d.products.length){throw 0;}
+      var rows=d.products.map(function(p){
+        var rate=(typeof p.rate==='number')?(p.rate.toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+'%'):p.rate;
+        return '<div class="rate-row"><span class="rate-name">'+p.name+'</span><span class="rate-val">'+rate+'</span></div>';
+      }).join('');
+      rb.innerHTML='<div class="rate-table">'+rows+'</div>'+(d.effective?'<p class="rate-effective">Effective '+d.effective+'</p>':'');
+    }).catch(function(){
+      rb.innerHTML='<p class="muted">Current sample rates are updated regularly. <a href="contact.html" style="color:var(--blue);font-weight:600">Request today’s rate quote →</a></p>';
+    });
   }
 
   /* Year stamp */
@@ -1064,11 +1085,17 @@ PAGES["calculators.html"] = dict(title="Mortgage Calculators", desc="Estimate yo
 # ---------------- Rates ----------------
 def _rates():
     return page_hero("Mortgage Rates", "Mortgage rates change daily. The most accurate number is a personalized quote based on your profile.", cr_res("Mortgage Rates")) + f"""
-<section><div class="wrap split">
+<section><div class="wrap">
+  <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Today&rsquo;s Sample Rates</span><h2>Sample rates</h2>
+  <p class="lead">Illustrative best-case rates for well-qualified borrowers. Your actual rate depends on your full profile.</p></div>
+  <div id="rate-board" data-src="assets/rates.json"><p class="muted">Loading current rates&hellip;</p></div>
+  <p class="form-note">Sample rates are estimates for educational purposes only, based on a best-case borrower scenario (e.g., strong credit, low loan-to-value, owner-occupied). They are not a Loan Estimate, rate quote, rate lock, APR, or commitment to lend. Rates change daily and depend on your credit profile, loan program, occupancy, property type, loan amount, and other factors. Equal Housing Opportunity &middot; NMLS #{NMLS}.</p>
+</div></section>
+<section class="bg-light"><div class="wrap split">
   <div>
     <span class="eyebrow">Today&rsquo;s market</span>
     <h2>Request today&rsquo;s rate quote</h2>
-    <p class="lead">Mortgage rates change daily based on market conditions, loan program, credit profile, occupancy, property type, loan amount, and other factors. Rather than post a number that may not apply to you, we&rsquo;ll prepare a personalized quote.</p>
+    <p class="lead">Mortgage rates change daily based on market conditions, loan program, credit profile, occupancy, property type, loan amount, and other factors. The sample rates above are a starting point &mdash; we&rsquo;ll prepare a personalized quote for your scenario.</p>
     <div class="btn-row"><a class="btn btn-blue" href="contact.html">Request a Quote</a><a class="btn btn-outline" href="loan-officer.html">Talk to a Loan Officer</a></div>
   </div>
   <ul class="feature-list">
@@ -1079,7 +1106,7 @@ def _rates():
     <li><span>Loan amount and overall market conditions.</span></li>
   </ul>
 </div></section>
-<section class="bg-light"><div class="wrap">
+<section><div class="wrap">
   <div class="section-head"><span class="eyebrow">Strategy</span><h2>Rate strategy</h2>
   <p class="lead">A lower rate isn&rsquo;t always the lowest total cost. We&rsquo;ll help you weigh points, closing costs, and how long you plan to stay so the structure fits your goals.</p></div>
   <div class="grid grid-3">
@@ -1088,7 +1115,7 @@ def _rates():
     {card("","Plan your timeline","Your time horizon affects which option costs less overall.","Talk to us","loan-officer.html")}
   </div>
 </div></section>
-{cta_band(h="Get a personalized rate quote",p="No fake live rates &mdash; just a real quote built around your situation.",b1=("Request a Quote","contact.html","btn-blue"))}
+{cta_band(h="Get a personalized rate quote",p="Sample rates are estimates &mdash; we&rsquo;ll build a real quote around your situation.",b1=("Request a Quote","contact.html","btn-blue"))}
 """
 PAGES["rates.html"] = dict(title="Mortgage Rates", desc="Mortgage rates change daily. Request a personalized rate quote and learn what factors affect your rate.", nav="resources", body=_rates())
 

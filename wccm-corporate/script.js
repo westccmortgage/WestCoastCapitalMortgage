@@ -68,6 +68,21 @@
     calc();
   }
 
+  /* Sample rate board — reads assets/rates.json (updated via rate-tools.html) */
+  var rb=document.getElementById('rate-board');
+  if(rb){
+    fetch(rb.getAttribute('data-src'),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      if(!d||!d.products||!d.products.length){throw 0;}
+      var rows=d.products.map(function(p){
+        var rate=(typeof p.rate==='number')?(p.rate.toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+'%'):p.rate;
+        return '<div class="rate-row"><span class="rate-name">'+p.name+'</span><span class="rate-val">'+rate+'</span></div>';
+      }).join('');
+      rb.innerHTML='<div class="rate-table">'+rows+'</div>'+(d.effective?'<p class="rate-effective">Effective '+d.effective+'</p>':'');
+    }).catch(function(){
+      rb.innerHTML='<p class="muted">Current sample rates are updated regularly. <a href="contact.html" style="color:var(--blue);font-weight:600">Request today’s rate quote →</a></p>';
+    });
+  }
+
   /* Year stamp */
   document.querySelectorAll('.year').forEach(function(el){el.textContent=new Date().getFullYear();});
 })();
