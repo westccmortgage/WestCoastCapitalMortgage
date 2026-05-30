@@ -6,7 +6,7 @@ Running this is a convenience only — the OUTPUT has no build step or dependenc
 
 import os
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wccm-corporate")
+OUT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "wccm-corporate"))
 NMLS = "2817729"
 OFFICE_PHONE = "310-654-1577"
 OFFICE_TEL = "3106541577"
