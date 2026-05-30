@@ -311,6 +311,7 @@ section{padding:88px 0}
 @media(max-width:560px){.wcci-cta{padding:30px 22px}.wcci-msg{max-width:92%}}
 .apply-note{font-size:.8rem;color:var(--gray);margin-top:12px;letter-spacing:.02em;line-height:1.5}
 .apply-note.light{color:#aeb9c6}
+.wcci-lang-note{font-size:.78rem;color:var(--gray);margin:10px auto 0;line-height:1.5;max-width:60ch}
 .wcci-hero{padding:92px 0}
 .wcci-split{display:grid;grid-template-columns:.82fr 1.18fr;gap:40px;align-items:start}
 .wcci-split .wcci-toolwrap{max-width:none;margin:0}
@@ -1337,6 +1338,7 @@ def _apply():
   <a class="btn btn-lg btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Full 1003 Application</a>
   {apply_note()}
   <p class="muted" style="margin-top:20px">Not ready for the full application? Try WCCI.Online AI Mortgage Review first. <a href="{WCCI_URL}" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-weight:600">Open WCCI.Online</a></p>
+  <p class="wcci-lang-note">{WCCI_LANG_NOTE}</p>
   <p class="wcci-note" style="margin-top:8px">{WCCI_DISCLOSURE}</p>
   <div class="apply-support"><h3>Questions before applying?</h3><p class="contact-lines">{contact_block()}</p></div>
 </div></section>
@@ -1493,6 +1495,7 @@ def _airev():
     <a class="btn btn-lg btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Full Application</a>
   </div>
   <p class="apply-note">{APPLY_NOTE_TEXT}</p>
+  <p class="wcci-lang-note">{WCCI_LANG_NOTE}</p>
   <p class="wcci-note" style="margin-top:18px;display:inline-block;text-align:left">{WCCI_DISCLOSURE_FULL}</p>
 </div></section>
 """

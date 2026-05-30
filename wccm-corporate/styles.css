@@ -281,6 +281,7 @@ section{padding:88px 0}
 @media(max-width:560px){.wcci-cta{padding:30px 22px}.wcci-msg{max-width:92%}}
 .apply-note{font-size:.8rem;color:var(--gray);margin-top:12px;letter-spacing:.02em;line-height:1.5}
 .apply-note.light{color:#aeb9c6}
+.wcci-lang-note{font-size:.78rem;color:var(--gray);margin:10px auto 0;line-height:1.5;max-width:60ch}
 .wcci-hero{padding:92px 0}
 .wcci-split{display:grid;grid-template-columns:.82fr 1.18fr;gap:40px;align-items:start}
 .wcci-split .wcci-toolwrap{max-width:none;margin:0}
