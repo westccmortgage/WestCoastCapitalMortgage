@@ -11,6 +11,10 @@ NMLS = "2817729"
 PHONE = "(800) 555-0199"          # placeholder — easy to replace
 PHONE_TEL = "+18005550199"
 EMAIL = "info@westcoastcapitalmortgage.com"
+# Real external portals
+APPLY_URL = "https://2817729.my1003app.com/2775380/register"      # full borrower 1003
+AGENT_URL = "https://2817729.myagentloans.com/register"           # agent / partner portal
+APPLY_NOTE_TEXT = "You will be redirected to our secure mortgage application portal."
 
 # ----------------------------------------------------------------------------
 # Stylesheet
@@ -95,7 +99,7 @@ section{padding:88px 0}
 .logo .l2{font-size:.66rem;letter-spacing:.26em;color:var(--blue);font-weight:700;margin-top:3px}
 .nav-collapse{display:flex;align-items:center;gap:28px;flex:1;justify-content:flex-end}
 .mainnav{display:flex;align-items:center;gap:6px}
-.mainnav a{padding:10px 13px;font-size:.95rem;font-weight:600;color:var(--black);border-radius:6px;letter-spacing:.01em}
+.mainnav a{padding:10px 13px;font-size:.95rem;font-weight:600;color:var(--black);border-radius:6px;letter-spacing:.03em}
 .mainnav a:hover{color:var(--blue)}
 .mainnav a.active{color:var(--blue)}
 .header-cta{display:flex;align-items:center;gap:12px}
@@ -296,6 +300,15 @@ section{padding:88px 0}
 .wcci-result ul{margin:8px 0 0;padding-left:20px}
 .wcci-result li{margin-bottom:6px;color:var(--charcoal)}
 @media(max-width:560px){.wcci-cta{padding:30px 22px}.wcci-msg{max-width:92%}}
+.apply-note{font-size:.8rem;color:var(--gray);margin-top:12px;letter-spacing:.02em;line-height:1.5}
+.apply-note.light{color:#aeb9c6}
+.wcci-hero{padding:92px 0}
+.wcci-split{display:grid;grid-template-columns:.82fr 1.18fr;gap:40px;align-items:start}
+.wcci-split .wcci-toolwrap{max-width:none;margin:0}
+.wcci-intro h3{margin-bottom:.4em}
+.wcci-intro .feature-list{margin-top:18px}
+.wcci-intro .feature-list li{padding-bottom:12px}
+@media(max-width:860px){.wcci-split{grid-template-columns:1fr;gap:28px}}
 """
 
 # ----------------------------------------------------------------------------
@@ -373,7 +386,7 @@ JS = r"""/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) 
 NAV_ITEMS = [
     ("buy.html", "Buy a Home", "buy"),
     ("refinance.html", "Refinance", "refinance"),
-    ("loan-officer.html", "Find a Loan Officer", "loan-officer"),
+    (AGENT_URL, "Find a Loan Officer", "loan-officer"),
     ("loans.html", "Loans", "loans"),
     ("resources.html", "Resources", "resources"),
     ("about.html", "About Us", "about"),
@@ -397,6 +410,8 @@ def head(title, desc):
 
 def header(active):
     def navlink(href, label, key):
+        if href.startswith("http"):
+            return f'<a href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>'
         cls = ' class="active"' if key == active else ''
         return f'<a href="{href}"{cls}>{label}</a>'
     links = "".join(navlink(h, l, k) for h, l, k in NAV_ITEMS)
@@ -428,7 +443,7 @@ def header(active):
     <div class="nav-collapse" id="navc">
       <nav class="mainnav" aria-label="Primary">{links}</nav>
       <div class="header-cta">
-        <a class="btn btn-blue" href="apply.html">Apply Now</a>
+        <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Now</a>
         <a class="btn btn-outline" href="payment.html">Make a Payment</a>
       </div>
     </div>
@@ -440,7 +455,11 @@ def header(active):
 
 def footer():
     def col(title, items):
-        links = "".join(f'<a href="{h}">{t}</a>' for t, h in items)
+        def fl(t, h):
+            if h.startswith("http"):
+                return f'<a href="{h}" target="_blank" rel="noopener noreferrer">{t}</a>'
+            return f'<a href="{h}">{t}</a>'
+        links = "".join(fl(t, h) for t, h in items)
         return f'<div><h4>{title}</h4>{links}</div>'
     cols = "".join([
         f'<div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE INC.</div>'
@@ -460,7 +479,7 @@ def footer():
             ("Mortgage Glossary","glossary.html"),("Mortgage FAQ","faq.html"),("Mortgage Videos","resources.html"),
             ("Rate Watch","rates.html")]),
         col("About Us", [("About West Coast Capital Mortgage","about.html"),("Contact Us","contact.html"),
-            ("Find a Loan Officer","loan-officer.html"),("Licensing & Disclosures","about.html")]),
+            ("Find a Loan Officer",AGENT_URL),("Licensing & Disclosures","about.html")]),
     ])
     return f"""
 <footer class="site-footer">
@@ -519,17 +538,26 @@ def accordion(items):
         out.append(f'<details class="acc"><summary>{q}</summary><div class="acc-body">{a}</div></details>')
     return "".join(out)
 
+def btn(label, href, cls, lg=True):
+    size = " btn-lg" if lg else ""
+    if href.startswith("http"):
+        return f'<a class="btn{size} {cls}" href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>'
+    return f'<a class="btn{size} {cls}" href="{href}">{label}</a>'
+
+def apply_note(light=False):
+    return f'<p class="apply-note{" light" if light else ""}">{APPLY_NOTE_TEXT}</p>'
+
 def cta_band(h="Ready to take the next step?",
              p="Start with a short mortgage intake and we will help you understand your options.",
              b1=("Start Short Application","apply.html","btn-blue"),
-             b2=("Contact a Loan Officer","loan-officer.html","btn-outline-light")):
+             b2=("Contact a Loan Officer","loan-officer.html","btn-outline-light"),
+             note=False):
+    note_html = apply_note(light=True) if note else ""
     return f"""
 <section><div class="wrap"><div class="cta-band">
   <h2>{h}</h2><p>{p}</p>
-  <div class="btn-row">
-    <a class="btn btn-lg {b1[2]}" href="{b1[1]}">{b1[0]}</a>
-    <a class="btn btn-lg {b2[2]}" href="{b2[1]}">{b2[0]}</a>
-  </div>
+  <div class="btn-row">{btn(b1[0], b1[1], b1[2])}{btn(b2[0], b2[1], b2[2])}</div>
+  {note_html}
 </div></div></section>"""
 
 PAGES = {}
@@ -615,9 +643,10 @@ def _home():
     <h1>Start Your Financing Journey</h1>
     <p class="lead">Clear mortgage guidance, smart loan solutions, and modern tools to help you move forward with confidence.</p>
     <div class="btn-row">
-      <a class="btn btn-lg btn-black" href="apply.html">Get Preapproved</a>
+      <a class="btn btn-lg btn-black" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Get Preapproved</a>
       <a class="btn btn-lg btn-outline" href="calculators.html">View Mortgage Tools</a>
     </div>
+    <p class="apply-note">{APPLY_NOTE_TEXT}</p>
     <p class="hero-supporting">Purchase &bull; Refinance &bull; Jumbo &bull; FHA &bull; VA &bull; Non-QM &bull; DSCR</p>
   </div>
 </section>
@@ -696,7 +725,8 @@ def _buy():
     <span class="eyebrow">Purchase loans</span>
     <h2>Financing made clear</h2>
     <p class="lead">A purchase loan helps you buy a primary residence, second home, or investment property. We&rsquo;ll compare programs, explain the trade-offs, and prepare your financing so you can shop with certainty.</p>
-    <div class="btn-row"><a class="btn btn-blue" href="apply.html">Get Preapproved</a><a class="btn btn-outline" href="loans.html">Explore Loan Programs</a></div>
+    <div class="btn-row"><a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Get Preapproved</a><a class="btn btn-outline" href="loans.html">Explore Loan Programs</a></div>
+    {apply_note()}
   </div>
   <ul class="feature-list">
     <li><b>First-time buyer support</b><span>Step-by-step guidance and education from day one.</span></li>
@@ -727,7 +757,7 @@ def _buy():
   <div class="section-head"><span class="eyebrow">FAQ</span><h2>Buying a home questions</h2></div>
   {faqs}
 </div></section>
-{cta_band(b1=("Get Preapproved","apply.html","btn-blue"))}
+{cta_band(b1=("Get Preapproved",APPLY_URL,"btn-blue"), note=True)}
 """
 PAGES["buy.html"] = dict(title="Buy a Home", desc="Buying a home starts with the right mortgage plan — preapproval, loan programs, down payment basics, and first-time buyer support.", nav="buy", body=_buy())
 
@@ -1052,7 +1082,7 @@ def _ftb():
   <div class="section-head"><span class="eyebrow">FAQ</span><h2>First-time buyer questions</h2></div>
   {faqs}
 </div></section>
-{cta_band(b1=("Get Preapproved","apply.html","btn-blue"))}
+{cta_band(b1=("Get Preapproved",APPLY_URL,"btn-blue"), note=True)}
 """
 PAGES["first-time-homebuyer.html"] = dict(title="First-Time Homebuyer Hub", desc="Prepare, qualify, and buy your first home: credit basics, down payment, pre-approval, and choosing the right loan.", nav="resources", body=_ftb())
 
@@ -1076,7 +1106,7 @@ def _guide():
 <section><div class="wrap" style="max-width:860px">
   {accordion(steps)}
 </div></section>
-{cta_band(b1=("Get Preapproved","apply.html","btn-blue"))}
+{cta_band(b1=("Get Preapproved",APPLY_URL,"btn-blue"), note=True)}
 """
 PAGES["homebuying-guide.html"] = dict(title="How to Buy a House", desc="A 12-step homebuying guide: from reviewing your finances and getting preapproved to closing and getting the keys.", nav="resources", body=_guide())
 
@@ -1210,7 +1240,7 @@ def _apply():
   <div class="section-head center"><span class="eyebrow" style="color:var(--blue)">Two ways to begin</span><h2>Choose how you want to start.</h2></div>
   <div class="grid grid-2">
     <div class="card"><span class="label">WCCI AI Review</span><h3>Start with WCCI AI Review</h3><p>Best if you want to understand your options before completing a full mortgage application.</p><a class="btn btn-blue" href="ai-mortgage-review.html">Start AI Review</a></div>
-    <div class="card"><span class="label">Full Application</span><h3>Continue to Full Application</h3><p>Best if you are ready to provide complete borrower details and move forward.</p><a class="btn btn-outline" href="#apply-form">Start Application</a></div>
+    <div class="card"><span class="label">Full 1003 Application</span><h3>Continue to Full 1003 Application</h3><p>Best if you are ready to provide complete borrower details and move forward.</p><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Full Application</a>{apply_note()}</div>
   </div>
   {wcci_disclosure()}
 </div></section>
@@ -1240,7 +1270,7 @@ def _lo():
     <h2>Speak with a loan advisor</h2>
     <p class="lead">Whether you&rsquo;re just exploring or ready to apply, a licensed professional will help you understand your options with no pressure.</p>
     <p><b>Phone:</b> <a href="tel:{PHONE_TEL}" style="color:var(--blue)">{PHONE}</a><br><b>Email:</b> <a href="mailto:{EMAIL}" style="color:var(--blue)">{EMAIL}</a></p>
-    <a class="btn btn-blue" href="apply.html">Start an Application</a>
+    <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start an Application</a>
   </div>
   {form}
 </div></section>
@@ -1338,11 +1368,15 @@ def _airev():
         return f'<div class="field"><label for="{idn}">{label}</label><select id="{idn}" name="{idn}">{o}</select></div>'
     def inp(idn, label, ph="", t="text"):
         return f'<div class="field"><label for="{idn}">{label}</label><input id="{idn}" name="{idn}" type="{t}" placeholder="{ph}"></div>'
+    def hcard(t, d):
+        return f'<div class="card"><span class="label">WCCI</span><h3>{t}</h3><p>{d}</p></div>'
     helps = "".join([
-        card("WCCI", "Preliminary Scenario Review", "Organize your goals and see possible loan paths to discuss with a licensed professional.", "Below", "#wcci-tool"),
-        card("WCCI", "Smart Document Checklist", "Get a tailored list of the documents a loan officer will likely need.", "Below", "#wcci-tool"),
-        card("WCCI", "Short 1003 Intake", "Answer a few simplified, 1003-style questions to prepare for your conversation.", "Below", "#wcci-tool"),
-        card("WCCI", "Borrower Education", "Understand common terms and options before you speak with a professional.", "Below", "#wcci-tool"),
+        hcard("Purchase scenarios", "Organize a home purchase &mdash; price range, down payment, and the documents you&rsquo;ll likely need."),
+        hcard("Refinance options", "Explore rate-and-term and cash-out refinance paths and what to prepare."),
+        hcard("Jumbo loan questions", "Understand jumbo guidelines for higher-priced and high-cost-area properties."),
+        hcard("Bank statement / self-employed borrowers", "Prepare bank-statement and self-employed documentation paths."),
+        hcard("DSCR and investment property loans", "Review investor scenarios that qualify on rental cash flow."),
+        hcard("Document preparation", "Get a tailored checklist so your file is ready for underwriting review."),
     ])
     intake = (
         sel("loanPurpose", "Loan purpose", ["Purchase", "Refinance", "Cash-out refinance", "Investment / DSCR", "Not sure yet"]) +
@@ -1360,60 +1394,98 @@ def _airev():
         inp("phone", "Phone", "(310) 555-0000", "tel") +
         inp("email", "Email", "you@email.com", "email")
     )
-    return page_hero("A smarter way to begin your mortgage conversation.",
-        "Use WCCI.Online to organize your goals, understand possible loan paths, and prepare for a licensed mortgage professional review.",
-        "AI Mortgage Review") + f"""
+    hero = f"""
+<section class="page-hero wcci-hero">
+  <div class="hero-wallpaper" aria-hidden="true">
+    <div class="wallpaper-line" style="top:6%">WEST COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:42%">WCCI ONLINE</div>
+    <div class="wallpaper-line w3" style="top:74%">MORTGAGE INTELLIGENCE</div>
+  </div>
+  <div class="wrap page-hero-inner">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; AI Mortgage Review</div>
+    <span class="eyebrow" style="color:var(--blue)">WCCI AI MORTGAGE ASSISTANT</span>
+    <h1>A smarter way to begin your mortgage conversation.</h1>
+    <p class="lead">Use WCCI.Online to organize your goals, review possible loan paths, and prepare for a licensed mortgage professional review before completing a full application.</p>
+    <div class="btn-row"><a class="btn btn-lg btn-blue" href="#wcci-tool">Start AI Review</a><a class="btn btn-lg btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Continue to Full Application</a></div>
+    <p class="apply-note">{APPLY_NOTE_TEXT}</p>
+  </div>
+</section>"""
+    return hero + f"""
 <section><div class="wrap">
   <div class="section-head"><span class="eyebrow" style="color:var(--blue)">WCCI.Online Mortgage Intelligence</span><h2>What WCCI helps with</h2></div>
-  <div class="grid grid-4">{helps}</div>
-</div></section>
-
-<section class="bg-light"><div class="wrap">
-  <div class="section-head"><span class="eyebrow">How it works</span><h2>Four simple steps</h2></div>
-  <ol class="steps" style="max-width:760px">
-    <li><b>Share your goals</b><span>Tell WCCI what you want to do &mdash; buy, refinance, or invest.</span></li>
-    <li><b>Review your scenario</b><span>WCCI organizes your income, property, credit, and loan goals.</span></li>
-    <li><b>Get your checklist</b><span>Receive a tailored document checklist and possible loan paths.</span></li>
-    <li><b>Talk to a licensed pro</b><span>Hand everything to a licensed mortgage professional to review.</span></li>
-  </ol>
+  <div class="grid grid-3">{helps}</div>
 </div></section>
 
 <section id="wcci-tool" class="wcci-band"><div class="wrap">
   <div class="section-head center"><span class="eyebrow" style="color:var(--blue)">WCCI AI Mortgage Assistant</span><h2>Start your preliminary review</h2></div>
-  <div class="wcci-toolwrap">
-    <div class="wcci-tabs" role="tablist" aria-label="Assistant mode">
-      <button class="wcci-tab active" type="button" data-tab="chat" aria-selected="true">AI Assistant</button>
-      <button class="wcci-tab" type="button" data-tab="intake" aria-selected="false">Short Scenario Intake</button>
+  <div class="wcci-split">
+    <div class="wcci-intro">
+      <h3>Start your preliminary review</h3>
+      <p class="muted">Answer a few questions so WCCI can help organize your mortgage scenario before a licensed loan officer reviews your file.</p>
+      <ul class="feature-list">
+        <li><b>Loan goal</b></li>
+        <li><b>Property type</b></li>
+        <li><b>Income profile</b></li>
+        <li><b>Credit range</b></li>
+        <li><b>Down payment or equity</b></li>
+        <li><b>Document checklist</b></li>
+      </ul>
     </div>
-    <div class="wcci-panel" id="wcci-panel-chat">
-      <div class="wcci-chat" id="wcci-chat" aria-live="polite"></div>
-      <form class="wcci-chat-input" id="wcci-chat-form" autocomplete="off">
-        <input id="wcci-chat-text" type="text" placeholder="Tell us your mortgage goal…" aria-label="Message">
-        <button class="btn btn-blue" type="submit">Send</button>
-      </form>
-    </div>
-    <div class="wcci-panel hide" id="wcci-panel-intake">
-      <form id="wcci-intake-form" class="form" novalidate>
-        <div class="form-grid">{intake}</div>
-        <div style="margin-top:18px"><button class="btn btn-blue btn-lg" type="submit">Build My Scenario Review</button></div>
-      </form>
-      <div id="wcci-result" class="wcci-result hide"></div>
+    <div class="wcci-toolwrap">
+      <div class="wcci-tabs" role="tablist" aria-label="Assistant mode">
+        <button class="wcci-tab active" type="button" data-tab="chat" aria-selected="true">AI Assistant</button>
+        <button class="wcci-tab" type="button" data-tab="intake" aria-selected="false">Short Scenario Intake</button>
+      </div>
+      <div class="wcci-panel" id="wcci-panel-chat">
+        <div class="wcci-chat" id="wcci-chat" aria-live="polite"></div>
+        <form class="wcci-chat-input" id="wcci-chat-form" autocomplete="off">
+          <input id="wcci-chat-text" type="text" placeholder="Tell us your mortgage goal…" aria-label="Message">
+          <button class="btn btn-blue" type="submit">Send</button>
+        </form>
+      </div>
+      <div class="wcci-panel hide" id="wcci-panel-intake">
+        <form id="wcci-intake-form" class="form" novalidate>
+          <div class="form-grid">{intake}</div>
+          <div style="margin-top:18px"><button class="btn btn-blue btn-lg" type="submit">Build My Scenario Review</button></div>
+        </form>
+        <div id="wcci-result" class="wcci-result hide"></div>
+      </div>
     </div>
   </div>
   {wcci_disclosure()}
 </div></section>
 
 <section><div class="wrap">
-  <div class="section-head"><span class="eyebrow">Good to know</span><h2>What WCCI does not do</h2></div>
-  <ul class="feature-list" style="max-width:760px">
-    <li><b>It is not a loan approval or denial.</b><span>WCCI does not approve, deny, or underwrite loans.</span></li>
-    <li><b>It is not a Loan Estimate, rate quote, or rate lock.</b><span>No pricing or commitment is issued by WCCI.</span></li>
-    <li><b>It is not a credit decision.</b><span>No credit pull is performed by the assistant.</span></li>
-    <li><b>It does not replace a licensed professional.</b><span>A licensed mortgage professional reviews your scenario and next steps.</span></li>
-  </ul>
+  <div class="section-head"><span class="eyebrow">How it works</span><h2>How it works</h2></div>
+  <ol class="steps" style="max-width:760px">
+    <li><b>Tell us your goal</b><span>Buy, refinance, or invest &mdash; share what you want to accomplish.</span></li>
+    <li><b>WCCI organizes your scenario</b><span>Income, property, credit, and loan goals in one place.</span></li>
+    <li><b>Review your possible next steps</b><span>See possible loan paths and a tailored document checklist.</span></li>
+    <li><b>A licensed mortgage professional follows up</b><span>West Coast Capital Mortgage reviews your file and guides you forward.</span></li>
+  </ol>
 </div></section>
 
-{wcci_cta("Ready to begin?", "Start your WCCI AI Mortgage Review now, then connect with a licensed mortgage professional to move forward.", "Start AI Mortgage Review", "#wcci-tool")}
+<section class="bg-light"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Good to know</span><h2>What WCCI does not do</h2></div>
+  <ul class="feature-list" style="max-width:760px">
+    <li><b>It does not approve loans</b></li>
+    <li><b>It does not deny loans</b></li>
+    <li><b>It does not issue Loan Estimates</b></li>
+    <li><b>It does not quote final interest rates</b></li>
+    <li><b>It does not lock rates</b></li>
+    <li><b>It does not replace underwriting</b></li>
+    <li><b>It does not replace a licensed mortgage professional</b></li>
+  </ul>
+  {wcci_disclosure()}
+</div></section>
+
+<section><div class="wrap"><div class="cta-band">
+  <span class="eyebrow" style="color:#7fb1f5">WCCI.Online Mortgage Intelligence</span>
+  <h2>Ready to move forward?</h2>
+  <p>Start with WCCI, then connect with West Coast Capital Mortgage for licensed mortgage guidance.</p>
+  <div class="btn-row">{btn("Start AI Mortgage Review", "#wcci-tool", "btn-blue")}{btn("Apply Now", APPLY_URL, "btn-outline-light")}</div>
+  {apply_note(light=True)}
+</div></div></section>
 """
 PAGES["ai-mortgage-review.html"] = dict(title="WCCI AI Mortgage Assistant",
     desc="WCCI AI Mortgage Assistant by West Coast Capital Mortgage — organize your goals, review your scenario, and prepare a document checklist before speaking with a licensed mortgage professional. Preliminary educational guidance only.",

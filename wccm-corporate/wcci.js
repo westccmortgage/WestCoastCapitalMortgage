@@ -134,7 +134,8 @@
       '<h3>Your preliminary scenario summary</h3><div class="sum">' + rows + '</div>' +
       '<h3>Smart document checklist <span class="muted" style="font-weight:400;font-size:.85rem">(' + esc(cl.primaryLabel) + ')</span></h3>' +
       '<ul>' + li + '</ul>' +
-      '<div class="btn-row" style="margin-top:22px"><a class="btn btn-blue" href="loan-officer.html">Talk to a Loan Officer</a><a class="btn btn-outline" href="apply.html">Continue to Full Application</a></div>' +
+      '<div class="btn-row" style="margin-top:22px"><a class="btn btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Continue to Full Application</a><a class="btn btn-outline" href="loan-officer.html">Talk to a Loan Officer</a></div>' +
+      '<p class="apply-note">You will be redirected to our secure mortgage application portal.</p>' +
       '<p class="wcci-note"><span class="wcci-tag">Powered by WCCI.Online</span> WCCI.Online provides preliminary educational mortgage guidance only. It is not a loan approval, loan denial, Loan Estimate, rate quote, rate lock, or commitment to lend. All mortgage options are subject to borrower qualification, property review, documentation, and underwriting approval by licensed mortgage professionals.</p>';
     out.classList.remove("hide");
     out.scrollIntoView({ behavior: "smooth", block: "start" });
