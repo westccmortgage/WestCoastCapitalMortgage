@@ -101,9 +101,22 @@
     ["DSCR Investor 30-Year Fixed", function(n){return n==="Non-QM DSCR 30Yr Fixed";}]
   ];
 
-  var DATA=null, EFF="";
+  var DATA=null, EFF="", CHOSEN=30;
   var statusEl=document.getElementById('status');
   function status(msg,err){statusEl.innerHTML=msg; statusEl.className="rt-status"+(err?" rt-err":"");}
+
+  // The workbook stores a wrong dimension for the Price tab, so SheetJS reads only
+  // the header row. Recompute the real used range from the actual cell addresses.
+  function fixRange(ws){
+    var maxR=-1, maxC=-1;
+    for(var k in ws){
+      if(k.charAt(0)==='!') continue;
+      var a=XLSX.utils.decode_cell(k);
+      if(a.r>maxR)maxR=a.r; if(a.c>maxC)maxC=a.c;
+    }
+    if(maxR>=0) ws['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:maxR,c:maxC}});
+  }
+  function num(v){ if(typeof v==='number') return v; if(v==null) return NaN; return parseFloat(String(v).replace(/[^0-9.\-]/g,'')); }
 
   function parse(buf){
     status("Reading rate sheet…");
@@ -112,21 +125,30 @@
     catch(e){ status("Could not read this file. Is it the .xlsx rate sheet? ("+e.message+")",true); return; }
     var ws=wb.Sheets["Price"];
     if(!ws){ status("No “Price” tab found — this doesn’t look like the PennyMac rate sheet.",true); return; }
-    var rows=XLSX.utils.sheet_to_json(ws,{header:1});
-    // columns: 0 LpId,1 CommitPeriod,2 NoteRate,3 FinalBasePrice,4 Key,5 LpName,6 EffectiveTime
-    var byName={};
-    EFF="";
-    for(var i=1;i<rows.length;i++){
+    fixRange(ws);
+    var rows=XLSX.utils.sheet_to_json(ws,{header:1, blankrows:false, defval:null});
+    if(rows.length<2){ status("The Price tab appears to be empty after parsing.",true); return; }
+    // map columns by header name (fallback to default positions)
+    var hdr=(rows[0]||[]).map(function(x){return String(x==null?'':x).trim().toLowerCase();});
+    function col(name,def){ var i=hdr.indexOf(name); return i<0?def:i; }
+    var cC=col('commitperiod',1), cR=col('noterate',2), cP=col('finalbaseprice',3), cN=col('lpname',5), cE=col('effectivetime',6);
+    // which lock periods are present? prefer 30-day, else the smallest available
+    var seen={};
+    for(var i=1;i<rows.length;i++){ var rr=rows[i]; if(!rr)continue; var cm=num(rr[cC]); if(isFinite(cm)) seen[Math.round(cm)]=1; }
+    var avail=Object.keys(seen).map(Number);
+    var chosen = avail.indexOf(30)>=0 ? 30 : (avail.length?Math.min.apply(null,avail):30);
+    var byName={}; EFF="";
+    for(i=1;i<rows.length;i++){
       var r=rows[i]; if(!r) continue;
-      var commit=r[1], rate=r[2], price=r[3], name=r[5];
-      if(name==null||typeof rate!=="number"||typeof price!=="number") continue;
-      if(!EFF && r[6]) EFF=fmtEff(r[6]);
-      if(commit!==COMMIT) continue;
+      var name=r[cN], rate=num(r[cR]), price=num(r[cP]), cm=Math.round(num(r[cC]));
+      if(name==null||name===''||!isFinite(rate)||!isFinite(price)) continue;
+      if(!EFF && r[cE]!=null && r[cE]!=='') EFF=fmtEff(r[cE]);
+      if(cm!==chosen) continue;
       (byName[name]||(byName[name]=[])).push([rate,price]);
     }
-    if(!Object.keys(byName).length){ status("Parsed the file but found no pricing rows.",true); return; }
-    DATA=byName;
-    status("Loaded "+rows.length.toLocaleString()+" price points · effective "+(EFF||"(unknown)")+".");
+    if(!Object.keys(byName).length){ status("Parsed "+(rows.length-1).toLocaleString()+" rows but couldn’t match the pricing columns/lock period.",true); return; }
+    DATA=byName; CHOSEN=chosen;
+    status("Loaded "+(rows.length-1).toLocaleString()+" price points · "+chosen+"-day lock · effective "+(EFF||"(unknown)")+".");
     compute();
   }
 
