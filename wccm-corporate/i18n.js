@@ -979,7 +979,11 @@
     "Our founder": ["Nuestro fundador", "Наш основатель"],
     "Mortgage guidance with real estate experience.": ["Orientación hipotecaria con experiencia inmobiliaria.", "Ипотечные консультации с опытом в недвижимости."],
     "West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.": ["West Coast Capital Mortgage está dirigida por Anatoliy Kanevsky, un profesional de hipotecas y bienes raíces con experiencia en préstamos, corretaje, desarrollo residencial de lujo y escenarios complejos de prestatarios.", "West Coast Capital Mortgage возглавляет Анатолий Каневский — специалист по ипотеке и недвижимости с опытом в кредитовании, брокерской деятельности, элитном жилищном строительстве и сложных сценариях заёмщиков."],
-    "Meet Anatoliy": ["Conozca a Anatoliy", "Познакомиться с Анатолием"]
+    "Meet Anatoliy": ["Conozca a Anatoliy", "Познакомиться с Анатолием"],
+    "Page not found": ["P\u00e1gina no encontrada", "\u0421\u0442\u0440\u0430\u043d\u0438\u0446\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430"],
+    "The page you are looking for may have moved or may no longer be available.": ["Es posible que la p\u00e1gina que busca se haya movido o que ya no est\u00e9 disponible.", "\u0412\u043e\u0437\u043c\u043e\u0436\u043d\u043e, \u0438\u0441\u043a\u043e\u043c\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430 \u0431\u044b\u043b\u0430 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0430 \u0438\u043b\u0438 \u0431\u043e\u043b\u044c\u0448\u0435 \u043d\u0435\u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0430."],
+    "Return Home": ["Volver al Inicio", "\u041d\u0430 \u0433\u043b\u0430\u0432\u043d\u0443\u044e"],
+    "View Mortgage Resources": ["Ver Recursos Hipotecarios", "\u0418\u043f\u043e\u0442\u0435\u0447\u043d\u044b\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u044b"]
   };
 
   /* ===== Engine ===== */
