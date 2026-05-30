@@ -288,3 +288,12 @@ section{padding:88px 0}
 .wcci-intro .feature-list{margin-top:18px}
 .wcci-intro .feature-list li{padding-bottom:12px}
 @media(max-width:860px){.wcci-split{grid-template-columns:1fr;gap:28px}}
+.contact-lines{line-height:2.1}
+.contact-lines a{color:var(--blue);font-weight:600}
+.contact-lines.light a{color:#cfe0fb}
+.footer-contact{margin-top:10px;line-height:2}
+.footer-contact a{color:#fff}
+.apply-support{margin-top:34px}
+.apply-support h3{margin-bottom:.3em}
+.cta-contact{margin-top:20px;color:#c7d0db;font-size:.95rem}
+.cta-contact b{color:#fff}

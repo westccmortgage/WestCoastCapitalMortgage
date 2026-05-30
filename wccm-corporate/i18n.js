@@ -937,7 +937,15 @@
     "Continue to Full 1003 Application": ["Continuar a la Solicitud 1003 Completa", "Перейти к полной заявке 1003"],
     "Full 1003 Application": ["Solicitud 1003 Completa", "Полная заявка 1003"],
     "Start Full Application": ["Iniciar Solicitud Completa", "Начать полную заявку"],
-    "You will be redirected to our secure mortgage application portal.": ["Será redirigido a nuestro portal seguro de solicitud hipotecaria.", "Вы будете перенаправлены на наш защищённый портал ипотечных заявок."]
+    "You will be redirected to our secure mortgage application portal.": ["Será redirigido a nuestro portal seguro de solicitud hipotecaria.", "Вы будете перенаправлены на наш защищённый портал ипотечных заявок."],
+
+    /* Contact labels */
+    "Office / Loan Officer Questions:": ["Oficina / Preguntas para el Oficial de Préstamos:", "Офис / Вопросы кредитному специалисту:"],
+    "Office:": ["Oficina:", "Офис:"],
+    "Anatoliy Direct:": ["Anatoliy Directo:", "Анатолий напрямую:"],
+    "Questions before applying?": ["¿Preguntas antes de solicitar?", "Вопросы перед подачей заявки?"],
+    "Need help reviewing your scenario?": ["¿Necesita ayuda para revisar su escenario?", "Нужна помощь с разбором вашего сценария?"],
+    "Speak with West Coast Capital Mortgage": ["Hable con West Coast Capital Mortgage", "Свяжитесь с West Coast Capital Mortgage"]
   };
 
   /* ===== Engine ===== */

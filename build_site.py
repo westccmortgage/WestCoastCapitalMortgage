@@ -8,13 +8,20 @@ import os
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wccm-corporate")
 NMLS = "2817729"
-PHONE = "(800) 555-0199"          # placeholder — easy to replace
-PHONE_TEL = "+18005550199"
-EMAIL = "info@westcoastcapitalmortgage.com"
+OFFICE_PHONE = "310-654-1577"
+OFFICE_TEL = "3106541577"
+DIRECT_PHONE = "310-686-5053"
+DIRECT_TEL = "3106865053"
+EMAIL = "westccmortgage@gmail.com"
 # Real external portals
 APPLY_URL = "https://2817729.my1003app.com/2775380/register"      # full borrower 1003
 AGENT_URL = "https://2817729.myagentloans.com/register"           # agent / partner portal
 APPLY_NOTE_TEXT = "You will be redirected to our secure mortgage application portal."
+
+def contact_block(office_label="Office / Loan Officer Questions"):
+    return (f'<b>{office_label}:</b> <a href="tel:{OFFICE_TEL}">{OFFICE_PHONE}</a><br>'
+            f'<b>Anatoliy Direct:</b> <a href="tel:{DIRECT_TEL}">{DIRECT_PHONE}</a><br>'
+            f'<b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a>')
 
 # ----------------------------------------------------------------------------
 # Stylesheet
@@ -309,6 +316,15 @@ section{padding:88px 0}
 .wcci-intro .feature-list{margin-top:18px}
 .wcci-intro .feature-list li{padding-bottom:12px}
 @media(max-width:860px){.wcci-split{grid-template-columns:1fr;gap:28px}}
+.contact-lines{line-height:2.1}
+.contact-lines a{color:var(--blue);font-weight:600}
+.contact-lines.light a{color:#cfe0fb}
+.footer-contact{margin-top:10px;line-height:2}
+.footer-contact a{color:#fff}
+.apply-support{margin-top:34px}
+.apply-support h3{margin-bottom:.3em}
+.cta-contact{margin-top:20px;color:#c7d0db;font-size:.95rem}
+.cta-contact b{color:#fff}
 """
 
 # ----------------------------------------------------------------------------
@@ -386,7 +402,6 @@ JS = r"""/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) 
 NAV_ITEMS = [
     ("buy.html", "Buy a Home", "buy"),
     ("refinance.html", "Refinance", "refinance"),
-    (AGENT_URL, "Find a Loan Officer", "loan-officer"),
     ("loans.html", "Loans", "loans"),
     ("resources.html", "Resources", "resources"),
     ("about.html", "About Us", "about"),
@@ -429,7 +444,6 @@ def header(active):
         <button type="button" data-lang="es">ES</button>
         <button type="button" data-lang="ru">RU</button>
       </div>
-      <a href="#" aria-label="Search"><span class="ico">&#9906;</span></a>
     </div>
   </div>
 </div>
@@ -444,7 +458,6 @@ def header(active):
       <nav class="mainnav" aria-label="Primary">{links}</nav>
       <div class="header-cta">
         <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Now</a>
-        <a class="btn btn-outline" href="payment.html">Make a Payment</a>
       </div>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
@@ -464,7 +477,7 @@ def footer():
     cols = "".join([
         f'<div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE INC.</div>'
         f'<p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p>'
-        f'<p><a href="tel:{PHONE_TEL}" style="color:#fff;font-weight:700;display:inline">{PHONE}</a></p>'
+        f'<p class="footer-contact">{contact_block()}</p>'
         f'<p class="powered-wcci">Powered by WCCI.Online</p></div>',
         col("Buy A Home", [("Homebuying Guide","homebuying-guide.html"),("Mortgage Pre-Approval","apply.html"),
             ("First-Time Homebuyers","first-time-homebuyer.html"),("Down Payment Assistance","buy.html"),
@@ -488,10 +501,8 @@ def footer():
     <div class="footer-bottom">
       <div class="row">
         <nav aria-label="Legal">
-          <a href="#" style="display:inline;margin-right:18px">Privacy Policy</a>
-          <a href="#" style="display:inline;margin-right:18px">Terms and Conditions</a>
           <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
-          <a href="https://www.nmlsconsumeraccess.org/" style="display:inline">NMLS Consumer Access</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
         </nav>
         <span class="eho">&#8962; Equal Housing Opportunity</span>
       </div>
@@ -697,6 +708,12 @@ def _home():
 <section class="bg-light"><div class="wrap">
   <div class="section-head"><span class="eyebrow">Insights</span><h2>Mortgage articles</h2></div>
   <div class="grid grid-3">{articles}</div>
+</div></section>
+
+<section><div class="wrap center">
+  <span class="eyebrow">Talk to us</span>
+  <h2>Speak with West Coast Capital Mortgage</h2>
+  <p class="contact-lines" style="font-size:1.05rem">{contact_block("Office")}</p>
 </div></section>
 
 {cta_band()}
@@ -1242,6 +1259,7 @@ def _apply():
     <div class="card"><span class="label">WCCI AI Review</span><h3>Start with WCCI AI Review</h3><p>Best if you want to understand your options before completing a full mortgage application.</p><a class="btn btn-blue" href="ai-mortgage-review.html">Start AI Review</a></div>
     <div class="card"><span class="label">Full 1003 Application</span><h3>Continue to Full 1003 Application</h3><p>Best if you are ready to provide complete borrower details and move forward.</p><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Full Application</a>{apply_note()}</div>
   </div>
+  <div class="apply-support center"><h3>Questions before applying?</h3><p class="contact-lines">{contact_block()}</p></div>
   {wcci_disclosure()}
 </div></section>
 <section id="apply-form"><div class="wrap" style="max-width:880px">{form}</div></section>
@@ -1269,7 +1287,7 @@ def _lo():
     <span class="eyebrow">We&rsquo;re here to help</span>
     <h2>Speak with a loan advisor</h2>
     <p class="lead">Whether you&rsquo;re just exploring or ready to apply, a licensed professional will help you understand your options with no pressure.</p>
-    <p><b>Phone:</b> <a href="tel:{PHONE_TEL}" style="color:var(--blue)">{PHONE}</a><br><b>Email:</b> <a href="mailto:{EMAIL}" style="color:var(--blue)">{EMAIL}</a></p>
+    <p class="contact-lines">{contact_block()}</p>
     <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start an Application</a>
   </div>
   {form}
@@ -1328,8 +1346,7 @@ def _contact():
     <span class="eyebrow">Get in touch</span>
     <h2>We&rsquo;re here to help</h2>
     <p class="lead">We&rsquo;re here to make your home financing simple and clear.</p>
-    <p><b>Phone:</b> <a href="tel:{PHONE_TEL}" style="color:var(--blue)">{PHONE}</a><br>
-       <b>Email:</b> <a href="mailto:{EMAIL}" style="color:var(--blue)">{EMAIL}</a></p>
+    <p class="contact-lines">{contact_block()}</p>
     <p class="muted">Equal Housing Opportunity &middot; NMLS #{NMLS}</p>
   </div>
   {form}
@@ -1359,7 +1376,7 @@ def _payment():
   <div class="btn-row"><a class="btn btn-lg btn-blue" href="contact.html">Contact Support</a></div>
 </div></div></section>
 """
-PAGES["payment.html"] = dict(title="Make a Payment", desc="Make a mortgage payment, access the servicing portal, and find borrower support. Follow your servicer's instructions if your loan is serviced elsewhere.", nav="", body=_payment())
+# payment.html intentionally not generated (Make a Payment removed sitewide).
 
 # ---------------- WCCI AI Mortgage Review (dedicated page) ----------------
 def _airev():
@@ -1485,6 +1502,7 @@ def _airev():
   <p>Start with WCCI, then connect with West Coast Capital Mortgage for licensed mortgage guidance.</p>
   <div class="btn-row">{btn("Start AI Mortgage Review", "#wcci-tool", "btn-blue")}{btn("Apply Now", APPLY_URL, "btn-outline-light")}</div>
   {apply_note(light=True)}
+  <div class="cta-contact"><b>Need help reviewing your scenario?</b><p class="contact-lines light">{contact_block()}</p></div>
 </div></div></section>
 """
 PAGES["ai-mortgage-review.html"] = dict(title="WCCI AI Mortgage Assistant",
