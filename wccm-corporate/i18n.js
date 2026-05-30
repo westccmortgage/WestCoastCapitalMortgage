@@ -945,7 +945,24 @@
     "Anatoliy Direct:": ["Anatoliy Directo:", "Анатолий напрямую:"],
     "Questions before applying?": ["¿Preguntas antes de solicitar?", "Вопросы перед подачей заявки?"],
     "Need help reviewing your scenario?": ["¿Necesita ayuda para revisar su escenario?", "Нужна помощь с разбором вашего сценария?"],
-    "Speak with West Coast Capital Mortgage": ["Hable con West Coast Capital Mortgage", "Свяжитесь с West Coast Capital Mortgage"]
+    "Speak with West Coast Capital Mortgage": ["Hable con West Coast Capital Mortgage", "Свяжитесь с West Coast Capital Mortgage"],
+
+    /* WCCI small/external tool (final adjustment) */
+    "WCCI.Online AI Mortgage Review": ["WCCI.Online Revisión Hipotecaria con IA", "WCCI.Online ИИ-обзор ипотеки"],
+    "Want to organize your scenario before applying? Start a quick AI-powered mortgage review.": ["¿Quiere organizar su escenario antes de solicitar? Inicie una rápida revisión hipotecaria con IA.", "Хотите организовать сценарий перед подачей заявки? Начните быстрый ипотечный обзор на базе ИИ."],
+    "Open WCCI.Online": ["Abrir WCCI.Online", "Открыть WCCI.Online"],
+    "A quick AI-assisted way to prepare your mortgage questions before speaking with us.": ["Una forma rápida y asistida por IA de preparar sus preguntas hipotecarias antes de hablar con nosotros.", "Быстрый способ с помощью ИИ подготовить ипотечные вопросы перед разговором с нами."],
+    "Open Tool": ["Abrir herramienta", "Открыть инструмент"],
+    "Not ready for the full application? Try WCCI.Online AI Mortgage Review first.": ["¿No está listo para la solicitud completa? Pruebe primero WCCI.Online Revisión Hipotecaria con IA.", "Не готовы к полной заявке? Сначала попробуйте WCCI.Online ИИ-обзор ипотеки."],
+    "Start Full 1003 Application": ["Iniciar Solicitud 1003 Completa", "Начать полную заявку 1003"],
+    "Ready to move forward? Start the full 1003 application below — a licensed mortgage professional reviews every submission.": ["¿Listo para avanzar? Inicie la solicitud 1003 completa a continuación: un profesional hipotecario con licencia revisa cada envío.", "Готовы двигаться дальше? Начните полную заявку 1003 ниже — лицензированный ипотечный специалист проверяет каждую заявку."],
+    "Or send a quick request": ["O envíe una solicitud rápida", "Или отправьте быстрый запрос"],
+    "Prefer we reach out first? Share a few details and a licensed professional will follow up.": ["¿Prefiere que lo contactemos primero? Comparta algunos datos y un profesional con licencia se comunicará.", "Хотите, чтобы мы связались первыми? Поделитесь данными, и лицензированный специалист свяжется с вами."],
+    "Prepare your mortgage scenario before you apply.": ["Prepare su escenario hipotecario antes de solicitar.", "Подготовьте свой ипотечный сценарий перед подачей заявки."],
+    "Start a quick AI mortgage review": ["Inicie una rápida revisión hipotecaria con IA", "Начните быстрый ИИ-обзор ипотеки"],
+    "Use WCCI.Online to organize your scenario and questions, then come back to apply with West Coast Capital Mortgage. It's an optional shortcut — not required to apply.": ["Use WCCI.Online para organizar su escenario y preguntas, luego regrese para solicitar con West Coast Capital Mortgage. Es un atajo opcional, no es obligatorio para solicitar.", "Используйте WCCI.Online, чтобы организовать сценарий и вопросы, затем вернитесь, чтобы подать заявку в West Coast Capital Mortgage. Это необязательный вариант — не требуется для подачи заявки."],
+    "WCCI.Online is our AI-powered mortgage review tool. It can help you organize your goals and questions before speaking with West Coast Capital Mortgage.": ["WCCI.Online es nuestra herramienta de revisión hipotecaria con IA. Puede ayudarle a organizar sus metas y preguntas antes de hablar con West Coast Capital Mortgage.", "WCCI.Online — наш инструмент ипотечного обзора на базе ИИ. Он поможет организовать ваши цели и вопросы перед разговором с West Coast Capital Mortgage."],
+    "WCCI.Online provides preliminary educational mortgage guidance only and is not a loan approval, rate quote, rate lock, or commitment to lend.": ["WCCI.Online ofrece únicamente orientación hipotecaria preliminar y educativa y no es una aprobación de préstamo, cotización de tasa, bloqueo de tasa ni compromiso de préstamo.", "WCCI.Online предоставляет только предварительные образовательные ипотечные рекомендации и не является одобрением кредита, котировкой ставки, фиксацией ставки или обязательством о кредитовании."]
   };
 
   /* ===== Engine ===== */
