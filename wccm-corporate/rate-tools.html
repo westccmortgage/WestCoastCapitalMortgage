@@ -62,21 +62,26 @@
       <tbody id="tbody"></tbody>
     </table>
 
-    <h2 style="font-size:1.1rem;margin-top:30px">rates.json (this is what the website uses)</h2>
+    <h2 style="font-size:1.1rem;margin-top:30px">Publish to the website</h2>
     <div class="btn-row">
-      <button class="btn btn-blue" id="download" type="button">Download rates.json</button>
+      <button class="btn btn-blue" id="publish" type="button">&#9650; Publish to website</button>
+      <button class="btn btn-outline" id="download" type="button">Download rates.json</button>
       <button class="btn btn-outline" id="copy" type="button">Copy</button>
     </div>
+    <p id="pubstatus" class="rt-status" style="margin-top:10px"></p>
+    <details class="rt-tok" id="tokwrap">
+      <summary style="cursor:pointer;font-weight:600;font-size:.9rem">GitHub access token (set once)</summary>
+      <p class="muted" style="font-size:.85rem;margin:8px 0">Paste a GitHub <b>fine&#8209;grained token</b> with <b>Contents: Read &amp; write</b> on <code>westccmortgage/WestCoastCapitalMortgage</code>. Stored only in this browser, never in the page or repo.</p>
+      <div class="btn-row" style="align-items:center">
+        <input id="ghtoken" type="password" placeholder="github_pat_&hellip;" style="flex:1;min-width:240px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font:inherit">
+        <button class="btn btn-outline" id="savetok" type="button">Save token</button>
+        <button class="btn btn-outline" id="cleartok" type="button">Forget</button>
+      </div>
+    </details>
     <textarea id="json" spellcheck="false" readonly></textarea>
 
     <div class="rt-note">
-      <b>To publish:</b>
-      <ol class="rt-steps">
-        <li>Click <b>Download rates.json</b>.</li>
-        <li>On GitHub, open <code>wccm-corporate/assets/</code> → <b>Add file → Upload files</b> → drop <code>rates.json</code> (replace the old one) → Commit.</li>
-        <li>Netlify auto‑deploys in ~1 minute; the public <b>Mortgage Rates</b> page shows the new numbers.</li>
-      </ol>
-      The full wholesale sheet stays private — only these curated, marked‑up borrower numbers go live.
+      <b>One&#8209;click publish:</b> click <b>Publish to website</b> &rarr; it commits <code>rates.json</code> to GitHub &rarr; Netlify auto&#8209;deploys &rarr; the public <b>Today&rsquo;s Rates</b> page updates in about a minute. The full wholesale sheet stays private &mdash; only these curated borrower numbers go live. (<b>Download</b> remains as a manual fallback.)
     </div>
   </div>
 
@@ -229,6 +234,43 @@
   });
   document.getElementById('copy').addEventListener('click',function(){
     document.getElementById('json').select(); document.execCommand('copy'); status("Copied rates.json to clipboard.");
+  });
+
+  /* ---- Publish: commit rates.json to GitHub (Netlify auto-deploys) ---- */
+  var GH={owner:"westccmortgage", repo:"WestCoastCapitalMortgage", branch:"main", path:"wccm-corporate/assets/rates.json"};
+  var TOKKEY="wccm_gh_token";
+  var tokInput=document.getElementById('ghtoken');
+  if(tokInput && localStorage.getItem(TOKKEY)) tokInput.value=localStorage.getItem(TOKKEY);
+  function pub(msg,err){var e=document.getElementById('pubstatus'); if(e){e.textContent=msg; e.className="rt-status"+(err?" rt-err":"");}}
+  var stBtn=document.getElementById('savetok');
+  if(stBtn) stBtn.addEventListener('click',function(){ var v=(tokInput.value||"").trim(); if(v){localStorage.setItem(TOKKEY,v); pub("Token saved in this browser.");} else pub("Paste a token first.",true); });
+  var clBtn=document.getElementById('cleartok');
+  if(clBtn) clBtn.addEventListener('click',function(){ localStorage.removeItem(TOKKEY); if(tokInput)tokInput.value=""; pub("Token removed from this browser."); });
+  function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
+  var pubBtn=document.getElementById('publish');
+  if(pubBtn) pubBtn.addEventListener('click',function(){
+    if(!window.__rates){ pub("Load a rate sheet first.",true); return; }
+    var token=((tokInput&&tokInput.value)||localStorage.getItem(TOKKEY)||"").trim();
+    if(!token){ pub("Add your GitHub token first (open “GitHub access token” below).",true); var w=document.getElementById('tokwrap'); if(w)w.open=true; return; }
+    localStorage.setItem(TOKKEY,token);
+    pubBtn.disabled=true; pub("Publishing…");
+    var url="https://api.github.com/repos/"+GH.owner+"/"+GH.repo+"/contents/"+GH.path;
+    var headers={"Authorization":"Bearer "+token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+    var content=b64utf8(JSON.stringify(window.__rates,null,2));
+    fetch(url+"?ref="+encodeURIComponent(GH.branch),{headers:headers})
+      .then(function(r){ if(r.status===200) return r.json(); if(r.status===404) return null; return r.json().then(function(j){ throw new Error((j&&j.message)||("HTTP "+r.status)); }); })
+      .then(function(cur){
+        var body={message:"Update rates.json via rate-tools ("+(window.__rates.effective||"")+")", content:content, branch:GH.branch};
+        if(cur&&cur.sha) body.sha=cur.sha;
+        return fetch(url,{method:"PUT",headers:headers,body:JSON.stringify(body)});
+      })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,status:r.status,j:j}; }); })
+      .then(function(res){
+        pubBtn.disabled=false;
+        if(res.ok) pub("✓ Published to GitHub. The live Today’s Rates page updates in ~1 minute.");
+        else pub("Publish failed: "+((res.j&&res.j.message)||("HTTP "+res.status))+" — check the token has Contents: Read & write on this repo.",true);
+      })
+      .catch(function(e){ pubBtn.disabled=false; pub("Publish failed: "+e.message+" (token, permissions, or network).",true); });
   });
 })();
 </script>
