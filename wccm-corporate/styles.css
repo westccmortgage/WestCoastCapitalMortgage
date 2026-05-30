@@ -303,6 +303,9 @@ section{padding:88px 0}
 .rate-name{font-weight:600;color:var(--charcoal)}
 .rate-val{font-weight:800;font-size:1.18rem;color:var(--navy);font-variant-numeric:tabular-nums}
 .rate-effective{font-size:.82rem;color:var(--gray);margin-top:12px;letter-spacing:.02em}
+.rate-snap{display:grid;grid-template-columns:1fr 1.1fr;gap:36px;align-items:center}
+.rate-snap .rate-table{max-width:none}
+@media(max-width:760px){.rate-snap{grid-template-columns:1fr;gap:22px}}
 /* ---------- Founder ---------- */
 .founder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
 .founder-photo{border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 18px 44px rgba(17,17,17,.12);background:var(--light)}

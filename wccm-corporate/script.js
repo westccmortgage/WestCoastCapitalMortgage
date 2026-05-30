@@ -68,20 +68,25 @@
     calc();
   }
 
-  /* Sample rate board — reads assets/rates.json (updated via rate-tools.html) */
-  var rb=document.getElementById('rate-board');
-  if(rb){
+  /* Sample rate boards (homepage snapshot + Today's Rates page) — read assets/rates.json */
+  document.querySelectorAll('.rate-board[data-src]').forEach(function(rb){
+    var lim=parseInt(rb.getAttribute('data-limit')||'0',10);
+    var more=rb.getAttribute('data-more');
     fetch(rb.getAttribute('data-src'),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
       if(!d||!d.products||!d.products.length){throw 0;}
-      var rows=d.products.map(function(p){
+      var list=(lim>0)?d.products.slice(0,lim):d.products;
+      var rows=list.map(function(p){
         var rate=(typeof p.rate==='number')?(p.rate.toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+'%'):p.rate;
         return '<div class="rate-row"><span class="rate-name">'+p.name+'</span><span class="rate-val">'+rate+'</span></div>';
       }).join('');
-      rb.innerHTML='<div class="rate-table">'+rows+'</div>'+(d.effective?'<p class="rate-effective">Effective '+d.effective+'</p>':'');
+      var html='<div class="rate-table">'+rows+'</div>';
+      if(d.effective) html+='<p class="rate-effective">Effective '+d.effective+'</p>';
+      if(more) html+='<p style="margin-top:10px"><a href="'+more+'" style="color:var(--blue);font-weight:600">See all rates →</a></p>';
+      rb.innerHTML=html;
     }).catch(function(){
       rb.innerHTML='<p class="muted">Current sample rates are updated regularly. <a href="contact.html" style="color:var(--blue);font-weight:600">Request today’s rate quote →</a></p>';
     });
-  }
+  });
 
   /* Year stamp */
   document.querySelectorAll('.year').forEach(function(el){el.textContent=new Date().getFullYear();});
