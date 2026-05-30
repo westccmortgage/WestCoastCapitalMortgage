@@ -1,3 +1,0 @@
-# West Coast Capital Mortgage Inc. — static site (no build step, no functions)
-[build]
-  publish = "."

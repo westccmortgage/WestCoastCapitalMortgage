@@ -1,0 +1,4 @@
+# West Coast Capital Mortgage Inc. — static site
+# Deployable site lives in wccm-corporate/. No build step.
+[build]
+  publish = "wccm-corporate"
