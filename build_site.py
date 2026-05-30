@@ -1439,6 +1439,20 @@ PAGES["ai-mortgage-review.html"] = dict(title="WCCI.Online AI Mortgage Review",
     desc="WCCI AI Mortgage Assistant by West Coast Capital Mortgage — organize your goals, review your scenario, and prepare a document checklist before speaking with a licensed mortgage professional. Preliminary educational guidance only.",
     nav="", body=_airev())
 
+# ---------------- 404 ----------------
+def _404():
+    return page_hero("Page not found", "The page you are looking for may have moved or may no longer be available.") + f'''
+<section><div class="wrap center" style="max-width:680px">
+  <div class="btn-row" style="justify-content:center">
+    <a class="btn btn-lg btn-blue" href="index.html">Return Home</a>
+    <a class="btn btn-lg btn-outline" href="resources.html">View Mortgage Resources</a>
+    <a class="btn btn-lg btn-black" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Application</a>
+  </div>
+  {apply_note()}
+</div></section>
+'''
+PAGES["404.html"] = dict(title="Page not found", desc="The page you are looking for may have moved or may no longer be available.", nav="", body=_404())
+
 # >>> INSERT PAGES HERE <<<
 
 # ----------------------------------------------------------------------------
@@ -1448,6 +1462,7 @@ def main():
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     with open(os.path.join(OUT, "styles.css"), "w", encoding="utf-8") as f: f.write(CSS)
     with open(os.path.join(OUT, "script.js"), "w", encoding="utf-8") as f: f.write(JS)
+    with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f: f.write("/*    /404.html    404\n")
     # favicon
     fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
            '<rect width="64" height="64" rx="12" fill="#0c1c33"/>'
