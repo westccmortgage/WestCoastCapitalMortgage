@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Sister generator for the Sun Coast Capital Mortgage (Florida-facing) brand.
+"""Sister generator for the Suncoast Capital Mortgage (Florida-facing) brand.
 
-Sun Coast is NOT a separate codebase. It REUSES West Coast Capital Mortgage's
+Suncoast is NOT a separate codebase. It REUSES West Coast Capital Mortgage's
 page bodies, content builders, and JavaScript from build_site.py — editing a loan
 page (or any inner page) in build_site.py updates BOTH brands. This file only
 overrides the brand chrome (head / header / footer), the homepage, the About
@@ -16,34 +16,34 @@ import re
 import shutil
 import build_site as wc  # West Coast generator: shared bodies, builders, JS
 
-# ---- shared facts (identical operating company — Sun Coast is operated through WCCM) ----
+# ---- shared facts (identical operating company — Suncoast is operated through WCCM) ----
 APPLY_URL = wc.APPLY_URL          # https://2817729.my1003app.com/2775380/register
 WCCI_URL = wc.WCCI_URL            # https://wcci.online
 NMLS = wc.NMLS                    # 2817729
 card = wc.card
 card_ext = wc.card_ext
 
-# Florida / Sun Coast contact line (added to the shared West Coast contact block, Sun Coast only).
+# Florida / Suncoast contact line (added to the shared West Coast contact block, Suncoast only).
 FL_PHONE = "(561) 925-9444"
 FL_TEL = "5619259444"
 
 
 def contact_block(office_label="Office / Loan Officer Questions"):
     return (wc.contact_block(office_label) +
-            f'<br><b>Florida / Sun Coast Contact:</b> <a href="tel:{FL_TEL}">{FL_PHONE}</a>')
+            f'<br><b>Florida / Suncoast Contact:</b> <a href="tel:{FL_TEL}">{FL_PHONE}</a>')
 
 OUT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "suncoast-corporate"))
 SRC_ASSETS = os.path.join(os.path.dirname(wc.OUT), "wccm-corporate", "assets")
 
 COMPLIANCE_BAR = ("Licensed &amp; operated under West Coast Capital Mortgage Inc. "
                   "&middot; NMLS #2817729 &middot; Equal Housing Lender &middot; Licensed in FL &amp; CA")
-FOOTER_LEGAL = ("Sun Coast Capital Mortgage is a Florida-facing mortgage brand experience operated through "
+FOOTER_LEGAL = ("Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through "
                 "West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Lender. Licensed in FL &amp; CA. "
                 "Information is provided for educational purposes only and is not a commitment to lend. All loans "
                 "are subject to credit, income, property, and underwriting approval.")
 
 # ----------------------------------------------------------------------------
-# Palette: remap West Coast's CSS variables to the Sun Coast (navy + gold) system.
+# Palette: remap West Coast's CSS variables to the Suncoast (navy + gold) system.
 # Because the shared stylesheet is written entirely against CSS variables, swapping
 # :root turns the whole site navy/professional. Gold (--sun) is then used only as a
 # deliberate accent (hero CTA, hero glow, card top-borders) — never sitewide.
@@ -70,7 +70,7 @@ SUN_ROOT = """:root{
 }"""
 
 SUN_EXTRA = r"""
-/* ===================== Sun Coast brand layer ===================== */
+/* ===================== Suncoast brand layer ===================== */
 .btn-sun{background:var(--sun);color:#1f2933;border-color:var(--sun)}
 .btn-sun:hover{background:var(--sun-dark);border-color:var(--sun-dark);color:#fff}
 .eyebrow.gold{color:var(--sun-dark)}
@@ -151,7 +151,7 @@ def head(title, desc):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} | Sun Coast Capital Mortgage</title>
+<title>{title} | Suncoast Capital Mortgage</title>
 <meta name="description" content="{desc}">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,10 +175,10 @@ def header(active):
 </div>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo brand" href="index.html" aria-label="Sun Coast Capital Mortgage home">
+    <a class="logo brand" href="index.html" aria-label="Suncoast Capital Mortgage home">
       <span class="sun" aria-hidden="true"></span>
       <span class="brand-text">
-        <span class="l1">SUN COAST CAPITAL</span>
+        <span class="l1">SUNCOAST CAPITAL</span>
         <span class="l2">MORTGAGE</span>
       </span>
     </a>
@@ -203,7 +203,7 @@ def footer():
             return f'<a href="{h}">{t}</a>'
         return f'<div><h4>{title}</h4>{"".join(fl(t, h) for t, h in items)}</div>'
     cols = "".join([
-        f'<div class="footer-brand"><div class="l1">SUN COAST CAPITAL</div><div class="l2">MORTGAGE</div>'
+        f'<div class="footer-brand"><div class="l1">SUNCOAST CAPITAL</div><div class="l2">MORTGAGE</div>'
         f'<p style="color:#aab2bd;font-size:.9rem">A Florida-facing mortgage experience, operated through '
         f'West Coast Capital Mortgage Inc.</p>'
         f'<p class="footer-contact">{contact_block()}</p></div>',
@@ -224,7 +224,7 @@ def footer():
         <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
       </div>
       <p>{FOOTER_LEGAL}</p>
-      <p>&copy; 2026 Sun Coast Capital Mortgage. All rights reserved.</p>
+      <p>&copy; 2026 Suncoast Capital Mortgage. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -238,7 +238,7 @@ def page(title, desc, active, body):
 
 
 # ----------------------------------------------------------------------------
-# Sun Coast homepage
+# Suncoast homepage
 # ----------------------------------------------------------------------------
 def info_card(label, h, body):
     return (f'<div class="card info"><span class="label">{label}</span>'
@@ -267,41 +267,27 @@ def _home():
     return f"""
 <section class="hero-sun">
   <div class="hero-wallpaper" aria-hidden="true">
-    <div class="wallpaper-line" style="top:6%">SUN COAST CAPITAL MORTGAGE</div>
-    <div class="wallpaper-line w2" style="top:44%">SUN COAST CAPITAL MORTGAGE</div>
-    <div class="wallpaper-line w3" style="top:78%">SUN COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line" style="top:6%">SUNCOAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:40%">SUNCOAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w3" style="top:74%">SUNCOAST CAPITAL MORTGAGE</div>
   </div>
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Florida Mortgage Guidance</span>
-      <h1>Your Florida Home Loan Starts Here</h1>
-      <p class="lead">Sun Coast Capital Mortgage helps Florida buyers, homeowners, investors, and self-employed borrowers explore mortgage options through West Coast Capital Mortgage Inc.</p>
-      <div class="btn-row">
-        <a class="btn btn-lg btn-sun" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Online</a>
-        <a class="btn btn-lg btn-outline-light" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Review My Scenario</a>
-      </div>
-      <p class="hero-note">Applications and mortgage review tools are provided through West Coast Capital Mortgage Inc. and related secure platforms.</p>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Florida Mortgage Guidance</span>
+    <h1>Your Florida Home Loan Starts Here</h1>
+    <p class="lead">Suncoast Capital Mortgage helps Florida buyers, homeowners, investors, and self-employed borrowers explore mortgage options through West Coast Capital Mortgage Inc.</p>
+    <div class="btn-row">
+      <a class="btn btn-lg btn-sun" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Online</a>
+      <a class="btn btn-lg btn-outline-light" href="calculators.html">View Mortgage Tools</a>
+      <a class="btn btn-lg btn-outline-light" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Talk to AI</a>
     </div>
-    <div class="lead-card">
-      <h3>Start Your Florida Mortgage Review</h3>
-      <p class="sub">Tell us a little about your goal and we&rsquo;ll point you in the right direction.</p>
-      <div class="field"><label for="lc-name">Name</label><input id="lc-name" type="text" autocomplete="name"></div>
-      <div class="field"><label for="lc-phone">Phone</label><input id="lc-phone" type="tel" autocomplete="tel"></div>
-      <div class="field"><label for="lc-email">Email</label><input id="lc-email" type="email" autocomplete="email"></div>
-      <div class="field"><label for="lc-goal">Loan Goal</label><select id="lc-goal">
-        <option>Buy a Home</option><option>Refinance</option><option>Cash-Out / Equity</option>
-        <option>Investment Property</option><option>Self-Employed / Bank Statement</option></select></div>
-      <div class="field"><label for="lc-city">Florida City</label><input id="lc-city" type="text" placeholder="e.g., Miami, Tampa, Orlando"></div>
-      <a class="btn btn-sun" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Start Review</a>
-      <p class="fineprint">Opens WCCI.Online &mdash; a preliminary, educational mortgage review. Not a loan approval or commitment to lend.</p>
-    </div>
+    <p class="hero-note">Applications are processed through West Coast Capital Mortgage Inc. AI review opens WCCI.Online in a separate secure experience.</p>
   </div>
 </section>
 
 <section><div class="wrap">
   <div class="section-head"><span class="eyebrow gold">Powered by West Coast</span>
   <h2>Florida-focused guidance, backed by West Coast Capital Mortgage.</h2>
-  <p class="lead">Sun Coast Capital Mortgage gives Florida borrowers a warmer local entry point while using the same mortgage platform, application process, educational resources, and licensed review structure operated through West Coast Capital Mortgage Inc.</p></div>
+  <p class="lead">Suncoast Capital Mortgage gives Florida borrowers a warmer local entry point while using the same mortgage platform, application process, educational resources, and licensed review structure operated through West Coast Capital Mortgage Inc.</p></div>
   <div class="grid grid-3">{powered}</div>
 </div></section>
 
@@ -317,7 +303,7 @@ def _home():
     <div>
       <span class="eyebrow gold">Our founder</span>
       <h2>Mortgage guidance with real estate experience.</h2>
-      <p class="lead">Sun Coast Capital Mortgage is connected to the broader West Coast Capital Mortgage platform led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
+      <p class="lead">Suncoast Capital Mortgage is connected to the broader West Coast Capital Mortgage platform led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
       <a class="btn btn-sun" href="about.html#anatoliy">Meet Anatoliy</a>
     </div>
   </div>
@@ -325,7 +311,7 @@ def _home():
 
 <section class="bg-cream"><div class="wrap center">
   <span class="eyebrow gold">Talk to us</span>
-  <h2>Speak with Sun Coast Capital Mortgage</h2>
+  <h2>Speak with Suncoast Capital Mortgage</h2>
   <p class="contact-lines" style="font-size:1.05rem">{contact_block("Office")}</p>
 </div></section>
 
@@ -342,17 +328,17 @@ def _home():
 
 
 # ----------------------------------------------------------------------------
-# Sun Coast About page
+# Suncoast About page
 # ----------------------------------------------------------------------------
 def _about():
-    return wc.page_hero("About Sun Coast Capital Mortgage",
+    return wc.page_hero("About Suncoast Capital Mortgage",
         "A Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support &mdash; connected to West Coast Capital Mortgage Inc.",
         "About") + f"""
 <section><div class="wrap split">
   <div>
     <span class="eyebrow gold">Who we are</span>
     <h2>Florida guidance, West Coast platform</h2>
-    <p class="lead">Sun Coast Capital Mortgage was created as a Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support. The platform is connected to West Coast Capital Mortgage Inc., allowing clients to access the same application process, mortgage resources, and licensed review structure.</p>
+    <p class="lead">Suncoast Capital Mortgage was created as a Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support. The platform is connected to West Coast Capital Mortgage Inc., allowing clients to access the same application process, mortgage resources, and licensed review structure.</p>
     <p class="muted">Serving borrowers where properly licensed. Equal Housing Lender. Licensed in FL &amp; CA.</p>
   </div>
   <ul class="feature-list">
@@ -367,8 +353,8 @@ def _about():
   <div class="founder-grid">
     <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky" loading="lazy"></div>
     <div>
-      <p>Sun Coast Capital Mortgage is connected to the broader West Coast Capital Mortgage platform led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
-      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows Sun Coast borrowers to access both lending discipline and practical real estate experience &mdash; all operated through West Coast Capital Mortgage Inc.</p>
+      <p>Suncoast Capital Mortgage is connected to the broader West Coast Capital Mortgage platform led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
+      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows Suncoast borrowers to access both lending discipline and practical real estate experience &mdash; all operated through West Coast Capital Mortgage Inc.</p>
       <p>Whether a Florida client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, the focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client&rsquo;s actual situation.</p>
       <ul class="founder-cred">
         <li>California Real Estate Broker</li>
@@ -383,13 +369,13 @@ def _about():
   </div>
 </div></section>
 <section class="bg-cream"><div class="wrap">
-  <div class="section-head center"><span class="eyebrow gold">Why Sun Coast</span><h2>Why Florida borrowers choose us</h2></div>
+  <div class="section-head center"><span class="eyebrow gold">Why Suncoast</span><h2>Why Florida borrowers choose us</h2></div>
   <div class="grid grid-3">
     {card("","Mortgage solutions","Conventional, FHA, VA, jumbo, Non-QM, DSCR, and more.","See programs","loans.html")}
     {card("","Modern tools","Calculators and a short application to move quickly.","Try our tools","calculators.html")}
     {card("","Human guidance","Licensed professionals who explain every step.","Talk to us","contact.html")}
   </div>
-  <p class="form-note center" style="margin-top:30px">Sun Coast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Lender. Licensed in FL &amp; CA. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
+  <p class="form-note center" style="margin-top:30px">Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Lender. Licensed in FL &amp; CA. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
 </div></div></section>
 """
 
@@ -415,30 +401,30 @@ def _notfound():
 def build_pages():
     pages = {}
     for name, p in wc.PAGES.items():
-        # Sun Coast has no "Find a Loan Officer" page (not in nav or footer per spec).
+        # Suncoast has no "Find a Loan Officer" page (not in nav or footer per spec).
         # Repoint the shared West Coast CTA links to the contact page instead, and skip the page.
         if name == "loan-officer.html":
             continue
         body = p["body"].replace('href="loan-officer.html"', 'href="contact.html"')
         # Rebrand only the decorative all-caps wallpaper text (page_hero); mixed-case
-        # "West Coast Capital Mortgage" prose stays — Sun Coast is operated through WCCM.
-        body = body.replace("WEST COAST CAPITAL MORTGAGE", "SUN COAST CAPITAL MORTGAGE")
-        # Add the Florida / Sun Coast contact line wherever the shared contact block is rendered.
+        # "West Coast Capital Mortgage" prose stays — Suncoast is operated through WCCM.
+        body = body.replace("WEST COAST CAPITAL MORTGAGE", "SUNCOAST CAPITAL MORTGAGE")
+        # Add the Florida / Suncoast contact line wherever the shared contact block is rendered.
         body = body.replace(wc.contact_block(), contact_block())
         pages[name] = dict(title=p["title"], desc=p["desc"], nav=p.get("nav", ""), body=body)
     # Brand-specific overrides
     pages["index.html"] = dict(
         title="Florida Home Loans, Refinance & Mortgage Guidance",
-        desc="Sun Coast Capital Mortgage — a Florida-facing mortgage experience operated through West Coast Capital Mortgage Inc. Explore purchase, refinance, jumbo, FHA/VA, self-employed, bank statement, DSCR, and investment property options.",
+        desc="Suncoast Capital Mortgage — a Florida-facing mortgage experience operated through West Coast Capital Mortgage Inc. Explore purchase, refinance, jumbo, FHA/VA, self-employed, bank statement, DSCR, and investment property options.",
         nav="home", body=_home())
     pages["404.html"] = dict(
         title="Page not found",
         desc="The page you are looking for may have moved or may no longer be available.",
         nav="", body=_notfound())
     pages["about.html"] = dict(
-        title="About Sun Coast Capital Mortgage",
-        desc="Sun Coast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Lender. Licensed in FL & CA.",
-        nav="about", body=_about().replace("WEST COAST CAPITAL MORTGAGE", "SUN COAST CAPITAL MORTGAGE"))
+        title="About Suncoast Capital Mortgage",
+        desc="Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Lender. Licensed in FL & CA.",
+        nav="about", body=_about().replace("WEST COAST CAPITAL MORTGAGE", "SUNCOAST CAPITAL MORTGAGE"))
     return pages
 
 
@@ -451,7 +437,7 @@ def main():
     with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f:
         f.write("/*    /404.html    404\n")
 
-    # Sun Coast favicon: deep navy tile with a warm gold sun arc
+    # Suncoast favicon: deep navy tile with a warm gold sun arc
     fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
            '<rect width="64" height="64" rx="12" fill="#16395f"/>'
            '<circle cx="32" cy="34" r="11" fill="#f5a623"/>'
@@ -463,7 +449,7 @@ def main():
         f.write(fav)
     logo = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64">'
             '<circle cx="20" cy="30" r="13" fill="#f5a623"/>'
-            '<text x="44" y="26" font-family="Inter,Arial" font-size="19" font-weight="800" fill="#16395f">SUN COAST CAPITAL</text>'
+            '<text x="44" y="26" font-family="Inter,Arial" font-size="19" font-weight="800" fill="#16395f">SUNCOAST CAPITAL</text>'
             '<text x="44" y="48" font-family="Inter,Arial" font-size="12" font-weight="700" letter-spacing="6" fill="#cf8410">MORTGAGE</text></svg>')
     with open(os.path.join(OUT, "assets", "logo.svg"), "w", encoding="utf-8") as f:
         f.write(logo)

@@ -719,6 +719,7 @@ def _home():
     <div class="btn-row">
       <a class="btn btn-lg btn-black" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Get Preapproved</a>
       <a class="btn btn-lg btn-outline" href="calculators.html">View Mortgage Tools</a>
+      <a class="btn btn-lg btn-outline" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Talk to AI</a>
     </div>
     <p class="apply-note">{APPLY_NOTE_TEXT}</p>
     <p class="hero-supporting">Purchase &bull; Refinance &bull; Jumbo &bull; FHA &bull; VA &bull; Non-QM &bull; DSCR</p>

@@ -330,7 +330,7 @@ section{padding:88px 0}
   .founder-photo{max-width:440px;margin:0 auto}
 }
 
-/* ===================== Sun Coast brand layer ===================== */
+/* ===================== Suncoast brand layer ===================== */
 .btn-sun{background:var(--sun);color:#1f2933;border-color:var(--sun)}
 .btn-sun:hover{background:var(--sun-dark);border-color:var(--sun-dark);color:#fff}
 .eyebrow.gold{color:var(--sun-dark)}
