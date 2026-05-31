@@ -1,2 +1,5 @@
 # Generated download/deploy artifacts
 *.zip
+
+# Python cache
+__pycache__/
