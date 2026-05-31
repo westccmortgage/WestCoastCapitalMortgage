@@ -20,9 +20,17 @@ import build_site as wc  # West Coast generator: shared bodies, builders, JS
 APPLY_URL = wc.APPLY_URL          # https://2817729.my1003app.com/2775380/register
 WCCI_URL = wc.WCCI_URL            # https://wcci.online
 NMLS = wc.NMLS                    # 2817729
-contact_block = wc.contact_block
 card = wc.card
 card_ext = wc.card_ext
+
+# Florida / Sun Coast contact line (added to the shared West Coast contact block, Sun Coast only).
+FL_PHONE = "(561) 925-9444"
+FL_TEL = "5619259444"
+
+
+def contact_block(office_label="Office / Loan Officer Questions"):
+    return (wc.contact_block(office_label) +
+            f'<br><b>Florida / Sun Coast Contact:</b> <a href="tel:{FL_TEL}">{FL_PHONE}</a>')
 
 OUT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "suncoast-corporate"))
 SRC_ASSETS = os.path.join(os.path.dirname(wc.OUT), "wccm-corporate", "assets")
@@ -415,6 +423,8 @@ def build_pages():
         # Rebrand only the decorative all-caps wallpaper text (page_hero); mixed-case
         # "West Coast Capital Mortgage" prose stays — Sun Coast is operated through WCCM.
         body = body.replace("WEST COAST CAPITAL MORTGAGE", "SUN COAST CAPITAL MORTGAGE")
+        # Add the Florida / Sun Coast contact line wherever the shared contact block is rendered.
+        body = body.replace(wc.contact_block(), contact_block())
         pages[name] = dict(title=p["title"], desc=p["desc"], nav=p.get("nav", ""), body=body)
     # Brand-specific overrides
     pages["index.html"] = dict(
