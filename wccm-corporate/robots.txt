@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /rate-tools
+Sitemap: https://westccmortgage.com/sitemap.xml
