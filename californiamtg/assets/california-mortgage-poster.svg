@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" preserveAspectRatio="xMidYMid slice">
+  <!--
+    Hero poster / fallback placeholder.
+    Replace with a real cinematic California photo at:
+      images/california-mortgage-poster.jpg
+    (see images/README.txt). This SVG is the gradient fallback used until then.
+  -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1730"/>
+      <stop offset="0.55" stop-color="#102844"/>
+      <stop offset="1" stop-color="#1b3a5c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="28%" r="55%">
+      <stop offset="0" stop-color="#cda349" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#cda349" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#cda349" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <!-- distant coastline ridge -->
+  <path d="M0 660 C 260 600 460 700 760 640 C 1040 585 1280 690 1600 620 L1600 900 L0 900 Z" fill="#0a1a30" opacity="0.85"/>
+  <path d="M0 720 C 320 680 520 760 860 710 C 1160 668 1360 740 1600 700 L1600 900 L0 900 Z" fill="#08152a" opacity="0.9"/>
+</svg>
