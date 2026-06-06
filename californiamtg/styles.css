@@ -48,26 +48,30 @@ a{color:inherit;text-decoration:none}
 
 .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons — muted, architectural, private-banking ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-  font-weight:600;font-size:.98rem;letter-spacing:.2px;
-  padding:.85rem 1.6rem;border-radius:999px;border:1px solid transparent;
-  cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease;
+  font-weight:600;font-size:.96rem;letter-spacing:.3px;
+  padding:.85rem 1.6rem;border-radius:10px;border:1px solid transparent;
+  cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease;
   white-space:nowrap;
 }
-.btn-gold{
-  background:linear-gradient(135deg,var(--gold-soft),var(--gold) 55%,var(--gold-deep));
-  color:#2a2013;box-shadow:0 10px 26px rgba(138,106,55,.28);
+/* Primary — muted bronze, ivory text, subtle border, very soft shadow (no glow/gradient) */
+.btn-primary,.btn-gold{
+  background:#8c6a3a;color:#f7f1e8;border-color:rgba(111,85,47,.55);
+  box-shadow:0 4px 14px rgba(80,70,60,.14);
 }
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(138,106,55,.38)}
-/* Outlined charcoal/taupe secondary — for light (hero) backgrounds */
-.btn-outline-dark{border-color:rgba(43,40,37,.35);color:var(--ink)}
-.btn-outline-dark:hover{background:rgba(43,40,37,.06);border-color:rgba(43,40,37,.6);transform:translateY(-2px)}
-/* Outlined light secondary — for dark warm backgrounds */
-.btn-outline-light{border-color:rgba(255,255,255,.5);color:#fff}
-.btn-outline-light:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
-.btn-lg{padding:1.02rem 2rem;font-size:1.04rem}
+.btn-primary:hover,.btn-gold:hover{background:#6f552f;border-color:rgba(80,70,60,.5);box-shadow:0 6px 18px rgba(80,70,60,.18);transform:translateY(-1px)}
+/* Secondary — light/transparent, thin taupe-bronze border, charcoal text, soft taupe hover */
+.btn-outline-dark{background:rgba(247,241,232,.4);border-color:rgba(80,70,60,.2);color:#2b2926}
+.btn-outline-dark:hover{background:rgba(184,174,160,.22);border-color:rgba(140,106,58,.45);transform:translateY(-1px)}
+/* Charcoal — refined header CTA, ivory text, subtle bronze border */
+.btn-charcoal{background:#2b2926;color:#f7f1e8;border-color:rgba(140,106,58,.45);box-shadow:0 3px 10px rgba(60,50,40,.16)}
+.btn-charcoal:hover{background:#3a342d;border-color:rgba(140,106,58,.7)}
+/* Light secondary for dark warm backgrounds */
+.btn-outline-light{border-color:rgba(247,241,232,.45);color:#f7f1e8}
+.btn-outline-light:hover{background:rgba(247,241,232,.12);transform:translateY(-1px)}
+.btn-lg{padding:1rem 2rem;font-size:1.02rem}
 .btn-ghost{background:transparent;color:var(--muted);border-color:transparent;padding:.85rem 1.1rem}
 .btn-ghost:hover{color:var(--ink)}
 
@@ -172,7 +176,7 @@ a{color:inherit;text-decoration:none}
     linear-gradient(90deg,rgba(247,243,236,.55) 0%,rgba(247,243,236,.05) 60%);
 }
 
-.hero-content{position:relative;z-index:2;color:var(--ink);max-width:1000px}
+.hero-content{position:relative;z-index:2;color:var(--ink);max-width:var(--maxw)}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:.8rem;
   text-transform:uppercase;letter-spacing:4px;font-size:.78rem;font-weight:600;
@@ -185,9 +189,8 @@ a{color:inherit;text-decoration:none}
   text-shadow:0 1px 0 rgba(255,255,255,.35);
 }
 .hero-title .gold{
-  color:var(--gold-deep);
-  background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 60%,#6f5526);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  color:#6f552f;            /* deep bronze — stronger contrast on warm sand */
+  -webkit-text-fill-color:#6f552f;
 }
 .hero-subtitle{font-size:clamp(1.05rem,1.6vw,1.32rem);max-width:700px;color:#4a443c;margin-bottom:1.2rem}
 .hero-trust{font-size:.85rem;color:var(--muted);letter-spacing:.3px;margin-bottom:2.6rem}
@@ -222,19 +225,48 @@ a{color:inherit;text-decoration:none}
 .action-arrow{position:absolute;right:1.3rem;bottom:1.2rem;color:var(--gold);font-size:1.25rem;transition:transform .25s ease}
 .action-card:hover .action-arrow{transform:translateX(5px)}
 
+/* ---- Hero two-column layout ---- */
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:center;width:100%}
+.hero-copy{max-width:620px}
+
 /* ---- Hero entrance motion ---- */
-.hero-content > *{animation:heroIn .9s cubic-bezier(.22,.61,.36,1) both}
+.hero-copy > *, .hero-aside{animation:heroIn .9s cubic-bezier(.22,.61,.36,1) both}
 .hero-eyebrow{animation-delay:.05s}
 .hero-title{animation-delay:.15s}
 .hero-subtitle{animation-delay:.28s}
 .hero-trust{animation-delay:.4s}
-.hero-cards{animation-delay:.52s}
 .hero-actions{animation-delay:.5s}
 .hero-note{animation-delay:.6s}
+.hero-aside{animation-delay:.42s}
 
 /* Hero primary/secondary actions + supporting note */
 .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1rem}
 .hero-note{font-size:.92rem;color:var(--muted);font-style:italic;letter-spacing:.2px}
+
+/* ---- Hero Scenario Preview card ---- */
+.hero-aside{display:flex;justify-content:flex-end}
+.preview-card{
+  position:relative;width:100%;max-width:420px;
+  background:linear-gradient(165deg,rgba(255,253,249,.86),rgba(244,237,225,.82));
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid rgba(80,70,60,.16);border-radius:20px;
+  box-shadow:0 26px 60px rgba(70,58,44,.16), inset 0 1px 0 rgba(255,255,255,.6);
+  padding:1.9rem 1.9rem 1.7rem;
+}
+.preview-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem}
+.preview-tag{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--gold-deep);
+  padding:.35rem .7rem;border:1px solid rgba(140,106,58,.35);border-radius:999px;background:rgba(140,106,58,.06)}
+.preview-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;color:var(--gold-deep);
+  background:rgba(140,106,58,.08);border:1px solid rgba(140,106,58,.22)}
+.preview-title{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--ink);line-height:1.15;margin-bottom:1.1rem;letter-spacing:.2px}
+.preview-quote{display:flex;flex-direction:column;gap:.28rem;border:0;margin:0;padding-left:1rem;
+  border-left:2px solid rgba(140,106,58,.5)}
+.preview-quote span{font-size:1.02rem;color:#43403a;line-height:1.4;font-style:italic}
+.preview-divider{height:1px;margin:1.4rem 0 1.1rem;background:linear-gradient(90deg,rgba(80,70,60,.22),rgba(80,70,60,0))}
+.preview-next{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.preview-next-label{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.preview-next-value{font-weight:600;color:var(--ink);font-size:1rem;display:inline-flex;align-items:center;gap:.5rem}
+.preview-next-value::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold-deep)}
 
 @keyframes heroIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes floatA{0%,100%{transform:translate(0,0)}50%{transform:translate(-34px,30px)}}
@@ -498,6 +530,11 @@ textarea.field-input{resize:vertical;min-height:84px}
   .grid-4{grid-template-columns:repeat(2,1fr)}
   .ai-layout{grid-template-columns:1fr;gap:36px}
   .footer-grid{grid-template-columns:1fr 1fr}
+  /* Hero stacks: copy first, preview card below */
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-copy{max-width:680px}
+  .hero-aside{justify-content:flex-start}
+  .preview-card{max-width:520px}
 }
 
 @media (max-width:760px){
@@ -513,7 +550,7 @@ textarea.field-input{resize:vertical;min-height:84px}
   .main-nav.open{transform:translateX(0)}
   .main-nav a{font-size:1.1rem;color:var(--ink)}
   .nav-toggle{display:flex;z-index:60}
-  .header-cta .btn-gold{display:none}     /* keep header tidy; CTA lives in menu/hero */
+  .header-cta .btn-charcoal{display:none}  /* keep header tidy; CTA lives in menu/hero */
 
   .section{padding:70px 0}
   .grid-3{grid-template-columns:1fr}
@@ -543,6 +580,11 @@ textarea.field-input{resize:vertical;min-height:84px}
   .hero-actions{flex-direction:column;align-items:stretch}
   .hero-actions .btn{width:100%}
   .builder-nav .btn-gold{flex:1}
+
+  /* Hero preview card full width on mobile */
+  .hero-grid{gap:32px}
+  .preview-card{max-width:none;padding:1.5rem 1.4rem 1.4rem}
+  .preview-title{font-size:1.45rem}
 }
 
 @media (max-width:1024px){
