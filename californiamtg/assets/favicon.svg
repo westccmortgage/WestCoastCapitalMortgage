@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#cda349"/>
-      <stop offset="1" stop-color="#b8862f"/>
+      <stop offset="0" stop-color="#cdb079"/>
+      <stop offset="1" stop-color="#8a6a37"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#0b1c33"/>
+  <rect width="64" height="64" rx="14" fill="#2c2722"/>
   <!-- Roofline mark -->
   <path d="M14 36 L32 18 L50 36" fill="none" stroke="url(#g)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M20 34 L20 48 L44 48 L44 34" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M20 34 L20 48 L44 48 L44 34" fill="none" stroke="#f3efe7" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <rect x="29" y="40" width="6" height="8" rx="1" fill="url(#g)"/>
 </svg>
