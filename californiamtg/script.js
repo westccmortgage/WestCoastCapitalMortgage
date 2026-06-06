@@ -41,6 +41,25 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  /* ---- Scenario Builder quick-start ----
+     Any element with [data-start] scrolls to the builder and (re)starts it.
+     An optional [data-goal] preselects the entry scenario (e.g. Investors,
+     Self-Employed, Rates "Check My Scenario"). */
+  function startBuilder(goal) {
+    var target = document.getElementById("builder");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.CMScenario && typeof window.CMScenario.start === "function") {
+      window.CMScenario.start(goal || null);
+    }
+  }
+  document.querySelectorAll("[data-start]").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      closeNav && nav && nav.classList.contains("open") && closeNav();
+      startBuilder(link.getAttribute("data-goal"));
+    });
+  });
+
   /* ---- Hero video: only attempt playback once sources exist ----
      The <video> ships with its <source> tags commented out, so until a real
      file is added the poster/gradient shows. When sources are added, this

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>California Mortgage | Home Loans, Jumbo, DSCR &amp; Non-QM Options</title>
-<meta name="description" content="California Mortgage provides concierge mortgage guidance for buyers, homeowners, self-employed borrowers, real estate investors, and Realtors. Powered by West Coast Capital Mortgage Inc.">
+<title>California Mortgage Concierge | Mortgage Scenario Builder &amp; Guidance</title>
+<meta name="description" content="California Mortgage Concierge — start with your situation, not a loan program. Build your mortgage scenario in a few simple steps, then route to AI review or a licensed mortgage professional. Powered by West Coast Capital Mortgage Inc.">
 <meta name="theme-color" content="#0b1c33">
 <meta name="robots" content="index, follow">
 <meta name="author" content="West Coast Capital Mortgage Inc.">
@@ -17,15 +17,15 @@
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="California Mortgage">
-<meta property="og:title" content="California Mortgage | Home Loans, Jumbo, DSCR &amp; Non-QM Options">
-<meta property="og:description" content="Concierge mortgage guidance for buyers, homeowners, self-employed borrowers, real estate investors, and Realtors. Powered by West Coast Capital Mortgage Inc.">
+<meta property="og:title" content="California Mortgage Concierge | Mortgage Scenario Builder">
+<meta property="og:description" content="Start with your situation. Build your mortgage scenario in a few simple steps, then connect with AI review or a licensed mortgage professional.">
 <meta property="og:url" content="https://californiamtg.com/">
-<meta property="og:image" content="https://californiamtg.com/assets/california-mortgage-poster.svg">
+<meta property="og:image" content="https://californiamtg.com/public/images/california-mortgage-poster.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="California Mortgage | Home Loans, Jumbo, DSCR &amp; Non-QM Options">
-<meta name="twitter:description" content="Concierge mortgage guidance for buyers, homeowners, self-employed borrowers, real estate investors, and Realtors. Powered by West Coast Capital Mortgage Inc.">
-<meta name="twitter:image" content="https://californiamtg.com/assets/california-mortgage-poster.svg">
+<meta name="twitter:title" content="California Mortgage Concierge | Mortgage Scenario Builder">
+<meta name="twitter:description" content="Start with your situation. Build your mortgage scenario, then connect with AI review or a licensed mortgage professional.">
+<meta name="twitter:image" content="https://californiamtg.com/public/images/california-mortgage-poster.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,10 +37,9 @@
   "@context": "https://schema.org",
   "@type": "MortgageLender",
   "name": "California Mortgage",
-  "alternateName": "Powered by West Coast Capital Mortgage Inc.",
+  "alternateName": "California Mortgage Concierge",
   "url": "https://californiamtg.com",
   "logo": "https://californiamtg.com/assets/favicon.svg",
-  "image": "https://californiamtg.com/assets/california-mortgage-poster.svg",
   "telephone": "+1-310-686-5053",
   "email": "info@californiamtg.com",
   "areaServed": "California",
@@ -50,11 +49,7 @@
     "identifier": "NMLS #2817729",
     "url": "https://westccmortgage.com"
   },
-  "address": {
-    "@type": "PostalAddress",
-    "addressRegion": "CA",
-    "addressCountry": "US"
-  }
+  "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" }
 }
 </script>
 </head>
@@ -73,23 +68,21 @@
       </span>
       <span class="brand-text">
         <span class="brand-name">California Mortgage</span>
-        <span class="brand-sub">Powered by West Coast Capital Mortgage Inc.</span>
       </span>
     </a>
 
     <nav class="main-nav" id="mainNav" aria-label="Primary">
-      <a href="#top">Home</a>
-      <a href="#loan-paths">Purchase</a>
-      <a href="#loan-paths">Refinance</a>
-      <a href="#loan-paths">Jumbo</a>
-      <a href="#who-we-help">Self-Employed</a>
-      <a href="#loan-paths">Investor Loans</a>
-      <a href="#ai-scenario">AI Scenario</a>
+      <a href="#concierge">Concierge</a>
+      <a href="#builder" data-start>Scenarios</a>
+      <a href="#rates">Rates &amp; Payments</a>
+      <a href="#builder" data-start data-goal="investment">Investors</a>
+      <a href="#builder" data-start data-goal="self-employed">Self-Employed</a>
+      <a href="https://wcci.online">AI Review</a>
       <a href="/contact">Contact</a>
     </nav>
 
     <div class="header-cta">
-      <a class="btn btn-gold" href="/apply">Get Started</a>
+      <a class="btn btn-gold" href="#builder" data-start>Begin</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
       </button>
@@ -100,7 +93,7 @@
 <main id="top">
 
 <!-- ============================ HERO ============================ -->
-<section class="hero" aria-label="California Mortgage introduction">
+<section class="hero" aria-label="California Mortgage Concierge introduction">
   <!--
     HERO BACKGROUND VIDEO
     Drop cinematic California footage in /public/videos and a poster frame in
@@ -108,8 +101,7 @@
       /public/videos/california-mortgage-hero.mp4
       /public/videos/california-mortgage-hero.webm
       /public/images/california-mortgage-poster.jpg   (poster + mobile / slow-connection fallback)
-    Until a video exists, the premium dark-navy + ambient-gold lighting
-    fallback (.hero / .hero-ambient below) is shown automatically.
+    Until a video exists, the premium dark-navy + ambient-gold lighting fallback is shown.
   -->
   <video
     class="hero-video"
@@ -119,246 +111,127 @@
     <!-- <source src="/public/videos/california-mortgage-hero.mp4"  type="video/mp4"> -->
   </video>
 
-  <!-- Premium ambient-lighting fallback: soft luxury glow + depth (always behind video) -->
   <div class="hero-ambient" aria-hidden="true">
     <span class="orb orb-gold"></span>
     <span class="orb orb-blue"></span>
     <span class="beam"></span>
     <span class="grid-lines"></span>
   </div>
-
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="container hero-content">
-    <p class="hero-eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>California Mortgage</p>
-    <h1 class="hero-title">California Mortgage,<br><span class="gold">Elevated.</span></h1>
+    <p class="hero-eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>California Mortgage Concierge</p>
+    <h1 class="hero-title">Mortgage Guidance<br><span class="gold">Starts Here</span></h1>
     <p class="hero-subtitle">
-      Concierge mortgage solutions for buyers, homeowners, self-employed borrowers,
-      Realtors, and real estate investors across California.
+      Start with your situation — purchase, refinance, lower payment, investment property,
+      self-employed income, or a difficult loan scenario. Answer a few simple questions and
+      we'll help organize your mortgage path before connecting you with AI review or a licensed
+      mortgage professional.
     </p>
-    <p class="hero-trust">
-      Powered by West Coast Capital Mortgage Inc. &nbsp;|&nbsp; Licensed mortgage professionals &nbsp;|&nbsp; Human guidance available
-    </p>
+    <p class="hero-trust">No credit check to start. &nbsp;|&nbsp; No pressure. &nbsp;|&nbsp; No full application required.</p>
 
-    <div class="hero-cards">
-      <a class="action-card" href="/loan-options">
-        <span class="action-title">Explore Loan Options</span>
-        <span class="action-desc">Compare programs tailored to your goals.</span>
-        <span class="action-arrow" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="action-card" href="https://wcci.online">
-        <span class="action-title">Start AI Scenario</span>
-        <span class="action-desc">Describe your situation and get a faster starting point.</span>
-        <span class="action-arrow" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="action-card" href="/contact">
-        <span class="action-title">Talk to a Broker</span>
-        <span class="action-desc">Speak with a California mortgage professional.</span>
-        <span class="action-arrow" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="action-card" href="/apply">
-        <span class="action-title">Get Pre-Approved</span>
-        <span class="action-desc">Continue to a secure mortgage application.</span>
-        <span class="action-arrow" aria-hidden="true">&rarr;</span>
-      </a>
+    <div class="hero-actions">
+      <a class="btn btn-gold btn-lg" href="#builder" data-start>Begin Scenario Builder</a>
+      <a class="btn btn-outline-light btn-lg" href="/contact">Talk to a Mortgage Professional</a>
     </div>
+    <p class="hero-note">You don't need to know the loan program. Start with the situation.</p>
   </div>
 
   <div class="hero-scroll" aria-hidden="true"><span></span></div>
 </section>
 
-<!-- ===================== SECTION 1: WHO WE HELP ===================== -->
-<section class="section" id="who-we-help">
+<!-- ===================== SCENARIO BUILDER ===================== -->
+<section class="section builder-section" id="builder">
   <div class="container">
     <div class="section-head">
-      <h2>Tailored Guidance. California Focused.</h2>
-      <p class="section-sub">Smart loan solutions and expert guidance for every moment of your mortgage journey.</p>
+      <p class="eyebrow gold">Mortgage Scenario Builder</p>
+      <h2>Tell Us About Your Situation</h2>
+      <p class="section-sub">A few simple questions help us organize your scenario. No credit check, no full application — just a clear starting point.</p>
+    </div>
+
+    <!-- Scenario builder mounts here (rendered by scenario-builder.js) -->
+    <div id="scenarioBuilder" class="builder-card" aria-live="polite"></div>
+
+    <p class="fineprint center compliance-inline">
+      This is not a loan approval, loan commitment, or rate quote. Final loan options are
+      subject to review by a licensed mortgage professional.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== UNDERSTANDING RATES ===================== -->
+<section class="section section-navy" id="rates">
+  <div class="container rates-layout">
+    <div class="rates-copy">
+      <p class="eyebrow gold">Rates &amp; Payments</p>
+      <h2 class="on-dark">Understanding Mortgage Rates</h2>
+      <p>
+        Mortgage rates are not one-size-fits-all. Your rate may depend on credit score, loan
+        amount, down payment, property type, occupancy, loan program, points, market conditions,
+        and lender guidelines.
+      </p>
+      <p class="compliance-note on-dark-note">
+        The information on this page is educational only and is not a rate quote, loan approval,
+        or commitment to lend.
+      </p>
+      <a class="btn btn-gold" href="#builder" data-start data-goal="rates">Check My Scenario</a>
+    </div>
+
+    <ul class="rate-factors" aria-label="Factors that influence your rate">
+      <li>Credit score</li>
+      <li>Loan amount</li>
+      <li>Down payment</li>
+      <li>Property type</li>
+      <li>Occupancy</li>
+      <li>Loan program</li>
+      <li>Points</li>
+      <li>Market conditions</li>
+      <li>Lender guidelines</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== WHY START HERE ===================== -->
+<section class="section section-tint" id="concierge">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow gold">The Concierge Difference</p>
+      <h2>Why Start Here?</h2>
+      <p class="section-sub">A premium, low-pressure way to organize a mortgage scenario — built for real situations, not templates.</p>
     </div>
 
     <div class="grid grid-4">
       <article class="card audience-card">
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="32" height="32"><path d="M8 22 L24 9 L40 22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20 L12 39 L36 39 L36 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="21" y="30" width="6" height="9" stroke="currentColor" stroke-width="2.5" fill="none"/></svg>
+          <svg viewBox="0 0 48 48" width="32" height="32"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M16 24 l5 5 11-11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3>Home Buyers</h3>
-        <p>Guidance for first-time and move-up buyers with purchase, pre-approval, and jumbo loan options.</p>
-        <a class="link-arrow" href="/loan-options">Explore Buyer Loans <span aria-hidden="true">&rarr;</span></a>
+        <h3>No Credit Check to Start</h3>
+        <p>You can explain the situation before starting a full application.</p>
       </article>
 
       <article class="card audience-card">
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="32" height="32"><rect x="9" y="14" width="30" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M9 21 H39" stroke="currentColor" stroke-width="2.5"/><path d="M15 30 H21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 48 48" width="32" height="32"><path d="M24 10 a8 8 0 0 1 5 14 c-2 2-3 3-3 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="37" r="1.8" fill="currentColor"/></svg>
         </div>
-        <h3>Self-Employed Borrowers</h3>
-        <p>Bank statement, 1099, P&amp;L, and Non-QM options for borrowers with complex income.</p>
-        <a class="link-arrow" href="/loan-options">View Self-Employed Options <span aria-hidden="true">&rarr;</span></a>
+        <h3>Not Sure Which Program Fits?</h3>
+        <p>You do not need to know whether it is conventional, jumbo, DSCR, bank statement, or Non-QM.</p>
       </article>
 
       <article class="card audience-card">
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="32" height="32"><path d="M10 38 V24 M19 38 V18 M28 38 V28 M37 38 V14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M9 38 H39" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 48 48" width="32" height="32"><path d="M10 38 V22 M19 38 V14 M28 38 V26 M37 38 V18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M9 38 H39" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
         </div>
-        <h3>Real Estate Investors</h3>
-        <p>DSCR, rental income, investment property, and portfolio financing options.</p>
-        <a class="link-arrow" href="/loan-options">Explore Investor Loans <span aria-hidden="true">&rarr;</span></a>
+        <h3>Built for Complex Scenarios</h3>
+        <p>Self-employed income, investor loans, jumbo purchases, lower-payment questions, and second opinions.</p>
       </article>
 
       <article class="card audience-card">
         <div class="card-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="32" height="32"><circle cx="24" cy="18" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M11 39 c0-8 6-12 13-12 s13 4 13 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 48 48" width="32" height="32"><circle cx="24" cy="17" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M11 39 c0-8 6-12 13-12 s13 4 13 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
         </div>
-        <h3>Realtors</h3>
-        <p>Scenario reviews, second opinions, and fast support for purchase clients.</p>
-        <a class="link-arrow" href="/contact">Partner With Us <span aria-hidden="true">&rarr;</span></a>
+        <h3>Human Review Available</h3>
+        <p>Technology can organize the scenario. Licensed mortgage professionals can review the next step.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SECTION 2: LOAN PATHS ===================== -->
-<section class="section section-tint" id="loan-paths">
-  <div class="container">
-    <div class="section-head">
-      <h2>Multiple Loan Paths. One Clear Starting Point.</h2>
-      <p class="section-sub">Explore the programs we work with — then let a licensed professional help you find the right fit.</p>
-    </div>
-
-    <div class="grid grid-4 loan-grid">
-      <article class="card loan-card">
-        <h3>Purchase Loans</h3>
-        <p>Financing to help you buy a primary home or second home in California.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>Refinance</h3>
-        <p>Options to restructure an existing mortgage around your current goals.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>Jumbo Loans</h3>
-        <p>Higher loan amounts for California's premium property markets.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>FHA / VA</h3>
-        <p>Government-backed paths with flexible qualifying for eligible borrowers.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>Bank Statement Loans</h3>
-        <p>Income documented through bank deposits for self-employed borrowers.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>DSCR Investor Loans</h3>
-        <p>Qualify investment properties using projected rental cash flow.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>Non-QM Options</h3>
-        <p>Flexible programs for unique income, credit, or property scenarios.</p>
-      </article>
-      <article class="card loan-card">
-        <h3>Cash-Out Refinance</h3>
-        <p>Access home equity for renovations, investing, or consolidation.</p>
-      </article>
-    </div>
-    <p class="fineprint center">Loan options are subject to review and approval. Program availability varies by scenario.</p>
-  </div>
-</section>
-
-<!-- ===================== SECTION 3: AI SCENARIO ===================== -->
-<section class="section" id="ai-scenario">
-  <div class="container ai-layout">
-    <div class="ai-copy">
-      <p class="eyebrow gold">AI-Assisted Scenario Review</p>
-      <h2>Need a Faster Starting Point?</h2>
-      <p>Use our AI-assisted scenario review to organize your mortgage situation before speaking with a licensed mortgage professional.</p>
-      <p class="compliance-note">
-        AI-assisted results are for informational purposes only and are not a loan approval, loan commitment,
-        or rate quote. Final loan options must be reviewed by a licensed mortgage professional.
-      </p>
-      <a class="btn btn-gold" href="https://wcci.online">Start AI Scenario</a>
-    </div>
-
-    <div class="ai-preview" aria-label="Example AI scenario conversation">
-      <div class="ai-window">
-        <div class="ai-window-bar"><span></span><span></span><span></span></div>
-        <div class="chat">
-          <div class="bubble bubble-ai">
-            <span class="who">AI</span>
-            What are you looking to do — purchase, refinance, or review a difficult loan scenario?
-          </div>
-          <div class="bubble bubble-user">
-            <span class="who">You</span>
-            Purchase in California. $1.2M home. I'm self-employed.
-          </div>
-          <div class="bubble bubble-ai">
-            <span class="who">AI</span>
-            This may involve jumbo, bank statement, or Non-QM options. A licensed mortgage professional can review the best path.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SECTION 4: WHY CALIFORNIA MORTGAGE ===================== -->
-<section class="section section-navy" id="why">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="on-dark">Built for California. Backed by Expertise.</h2>
-    </div>
-    <div class="grid grid-3">
-      <div class="why-col">
-        <div class="why-num">01</div>
-        <h3>California-Focused Guidance</h3>
-        <p>We understand California property values, competitive markets, and lending requirements.</p>
-      </div>
-      <div class="why-col">
-        <div class="why-num">02</div>
-        <h3>Multiple Loan Paths</h3>
-        <p>Conventional, jumbo, FHA, VA, DSCR, bank statement, and Non-QM options.</p>
-      </div>
-      <div class="why-col">
-        <div class="why-num">03</div>
-        <h3>Support from Licensed Professionals</h3>
-        <p>Technology helps organize the scenario. Real mortgage professionals help guide the next step.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SECTION 5: TRUST STRIP ===================== -->
-<section class="section trust-strip" aria-label="Why clients trust California Mortgage">
-  <div class="container">
-    <div class="grid grid-4 trust-grid">
-      <div class="trust-item">
-        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><path d="M24 6 l14 6 v9 c0 10-6 16-14 21 -8-5-14-11-14-21 v-9 z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
-        <span>Licensed in California</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><rect x="11" y="21" width="26" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M17 21 v-5 a7 7 0 0 1 14 0 v5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
-        <span>Secure &amp; Confidential</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><circle cx="24" cy="17" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M11 39 c0-8 6-12 13-12 s13 4 13 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-        <span>Human Review Available</span>
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><path d="M24 8 l4.8 9.7 10.7 1.6 -7.7 7.5 1.8 10.6 -9.6-5 -9.6 5 1.8-10.6 -7.7-7.5 10.7-1.6 z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
-        <span>5-Star Client Experience</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SECTION 6: FINAL CTA ===================== -->
-<section class="section final-cta">
-  <div class="container">
-    <div class="cta-inner">
-      <h2>Start With the Right Mortgage Path.</h2>
-      <p>Whether you are buying, refinancing, investing, or reviewing a complex scenario,
-        California Mortgage gives you a clear place to start.</p>
-      <div class="cta-buttons">
-        <a class="btn btn-gold" href="https://wcci.online">Start AI Scenario</a>
-        <a class="btn btn-outline-light" href="/contact">Talk to a Broker</a>
-        <a class="btn btn-outline-light" href="/apply">Get Pre-Approved</a>
-      </div>
     </div>
   </div>
 </section>
@@ -386,12 +259,12 @@
     </div>
 
     <div class="footer-col">
-      <h4>Explore</h4>
+      <h4>Concierge</h4>
       <ul>
-        <li><a href="/loan-options">Loan Options</a></li>
-        <li><a href="https://wcci.online">AI Scenario</a></li>
-        <li><a href="/apply">Get Pre-Approved</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="#builder" data-start>Scenario Builder</a></li>
+        <li><a href="#rates">Rates &amp; Payments</a></li>
+        <li><a href="https://wcci.online">AI Review</a></li>
+        <li><a href="/apply">Secure Pre-Approval</a></li>
       </ul>
     </div>
 
@@ -408,9 +281,9 @@
 
   <div class="container footer-bottom">
     <p class="footer-compliance">
-      AI-assisted results are for informational purposes only and are not a loan approval, loan commitment,
-      or rate quote. Final loan options must be reviewed by a licensed mortgage professional. Loan options
-      are subject to review and approval.
+      This is not a loan approval, loan commitment, or rate quote. Final loan options are subject
+      to review by a licensed mortgage professional. AI-assisted results are for informational
+      purposes only. Loan options are subject to review and approval.
     </p>
     <div class="footer-links">
       <a href="/privacy">Privacy Policy</a>
@@ -418,10 +291,11 @@
       <a href="https://westccmortgage.com">Main Website</a>
       <a href="/contact">Contact</a>
     </div>
-    <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. All rights reserved.</p>
+    <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. Powered by West Coast Capital Mortgage Inc. All rights reserved.</p>
   </div>
 </footer>
 
 <script src="script.js" defer></script>
+<script src="scenario-builder.js" defer></script>
 </body>
 </html>
