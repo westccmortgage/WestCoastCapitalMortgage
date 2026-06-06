@@ -103,23 +103,34 @@
 <section class="hero" aria-label="California Mortgage introduction">
   <!--
     HERO BACKGROUND VIDEO
-    Drop your cinematic California footage here and uncomment <source> lines below:
-      videos/california-mortgage-hero.mp4
-      videos/california-mortgage-hero.webm
-      images/california-mortgage-poster.jpg   (poster / mobile + slow-connection fallback)
-    Until a video exists, the gradient + SVG poster below is shown automatically.
+    Drop cinematic California footage in /public/videos and a poster frame in
+    /public/images, then UNCOMMENT the two <source> lines below:
+      /public/videos/california-mortgage-hero.mp4
+      /public/videos/california-mortgage-hero.webm
+      /public/images/california-mortgage-poster.jpg   (poster + mobile / slow-connection fallback)
+    Until a video exists, the premium dark-navy + ambient-gold lighting
+    fallback (.hero / .hero-ambient below) is shown automatically.
   -->
   <video
     class="hero-video"
     autoplay muted loop playsinline preload="none"
-    poster="assets/california-mortgage-poster.svg">
-    <!-- <source src="videos/california-mortgage-hero.webm" type="video/webm"> -->
-    <!-- <source src="videos/california-mortgage-hero.mp4" type="video/mp4"> -->
+    poster="/public/images/california-mortgage-poster.jpg">
+    <!-- <source src="/public/videos/california-mortgage-hero.webm" type="video/webm"> -->
+    <!-- <source src="/public/videos/california-mortgage-hero.mp4"  type="video/mp4"> -->
   </video>
+
+  <!-- Premium ambient-lighting fallback: soft luxury glow + depth (always behind video) -->
+  <div class="hero-ambient" aria-hidden="true">
+    <span class="orb orb-gold"></span>
+    <span class="orb orb-blue"></span>
+    <span class="beam"></span>
+    <span class="grid-lines"></span>
+  </div>
+
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="container hero-content">
-    <p class="hero-eyebrow">California Mortgage</p>
+    <p class="hero-eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>California Mortgage</p>
     <h1 class="hero-title">California Mortgage,<br><span class="gold">Elevated.</span></h1>
     <p class="hero-subtitle">
       Concierge mortgage solutions for buyers, homeowners, self-employed borrowers,
