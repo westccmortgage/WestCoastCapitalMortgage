@@ -1,22 +1,25 @@
 California Mortgage — hero background video
 ===========================================
 
-Drop your cinematic California footage here:
+ACTIVE FILE (currently used by the hero):
+  california_mortgage_hero_my_pick_24s.mp4
 
-  /public/videos/california-mortgage-hero.mp4    (H.264/MP4, ~6-12s loop, 1920x1080, muted)
-  /public/videos/california-mortgage-hero.webm   (VP9/WebM, same loop - better compression)
+How it is wired
+---------------
+- index.html references it via the hero <video data-src="..."> attribute:
+    public/videos/california_mortgage_hero_my_pick_24s.mp4
+- script.js attaches the <source> and autoplays (muted, looped, playsinline,
+  no controls, object-fit: cover) only on screens >= 768px with a normal
+  connection and no reduced-motion preference.
+- On mobile, data-saver, or prefers-reduced-motion, the video element is
+  removed and the hero falls back to the poster image + warm gradient.
 
-Then open ../../index.html and UNCOMMENT the two <source> lines inside the
-<video class="hero-video"> tag in the HERO section:
-
-  <source src="/public/videos/california-mortgage-hero.webm" type="video/webm">
-  <source src="/public/videos/california-mortgage-hero.mp4"  type="video/mp4">
+Poster / fallback image (add this file)
+---------------------------------------
+  ../images/california_mortgage_poster.jpg
 
 Notes
 -----
-- The video already has: autoplay muted loop playsinline preload="none".
-- Poster / fallback: /public/images/california-mortgage-poster.jpg
-- Until a video AND poster exist, the hero shows a premium CSS fallback:
-  a dark-navy cinematic gradient with soft gold ambient lighting (no blank space).
-- Keep files small (aim < 4-6 MB) for performance on mobile / slow connections.
-- On mobile and slow connections the poster image is shown instead of the video.
+- Keep replacements reasonably small for performance (this clip is ~15 MB).
+- To swap the video, replace the .mp4 above (keep the name) or update the
+  data-src in index.html.

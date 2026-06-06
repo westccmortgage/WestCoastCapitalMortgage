@@ -96,19 +96,18 @@
 <section class="hero" aria-label="California Mortgage Concierge introduction">
   <!--
     HERO BACKGROUND VIDEO
-    Drop cinematic California footage in /public/videos and a poster frame in
-    /public/images, then UNCOMMENT the two <source> lines below:
-      /public/videos/california-mortgage-hero.mp4
-      /public/videos/california-mortgage-hero.webm
-      /public/images/california-mortgage-poster.jpg   (poster + mobile / slow-connection fallback)
-    Until a video exists, the premium dark-navy + ambient-gold lighting fallback is shown.
+    Active file: public/videos/california_mortgage_hero_my_pick_24s.mp4
+    The <source> is attached by script.js on desktop / good connections; on
+    mobile, data-saver, or reduced-motion the hero falls back to the poster
+    image + warm gradient (keeps mobile light and fast).
+    Poster frame to add later: public/images/california_mortgage_poster.jpg
   -->
   <video
     class="hero-video"
     autoplay muted loop playsinline preload="none"
-    poster="/public/images/california-mortgage-poster.jpg">
-    <!-- <source src="/public/videos/california-mortgage-hero.webm" type="video/webm"> -->
-    <!-- <source src="/public/videos/california-mortgage-hero.mp4"  type="video/mp4"> -->
+    poster="public/images/california_mortgage_poster.jpg"
+    data-src="public/videos/california_mortgage_hero_my_pick_24s.mp4"
+    data-type="video/mp4">
   </video>
 
   <div class="hero-ambient" aria-hidden="true">

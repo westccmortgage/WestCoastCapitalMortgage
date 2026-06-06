@@ -60,16 +60,32 @@
     });
   });
 
-  /* ---- Hero video: only attempt playback once sources exist ----
-     The <video> ships with its <source> tags commented out, so until a real
-     file is added the poster/gradient shows. When sources are added, this
-     ensures muted autoplay resumes cleanly on browsers that pause it. */
+  /* ---- Hero background video ----
+     The <video> ships with no <source> (only data-src) so nothing heavy loads
+     by default. On larger screens with a normal connection we attach the source
+     and autoplay it muted. On mobile, data-saver, or reduced-motion we drop the
+     video element entirely and let the poster image + warm gradient show. */
   var heroVideo = document.querySelector(".hero-video");
-  if (heroVideo && heroVideo.querySelector("source")) {
-    heroVideo.load();
-    var tryPlay = heroVideo.play();
-    if (tryPlay && typeof tryPlay.catch === "function") {
-      tryPlay.catch(function () { /* autoplay blocked — poster remains */ });
+  if (heroVideo) {
+    var src = heroVideo.getAttribute("data-src");
+    var mq = function (q) { return window.matchMedia ? window.matchMedia(q).matches : false; };
+    var bigEnough = window.matchMedia ? mq("(min-width: 768px)") : true;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    var reduceMotion = mq("(prefers-reduced-motion: reduce)");
+
+    if (src && bigEnough && !saveData && !reduceMotion) {
+      var source = document.createElement("source");
+      source.src = src;
+      source.type = heroVideo.getAttribute("data-type") || "video/mp4";
+      heroVideo.appendChild(source);
+      heroVideo.load();
+      var tryPlay = heroVideo.play();
+      if (tryPlay && typeof tryPlay.catch === "function") {
+        tryPlay.catch(function () { /* autoplay blocked — poster/gradient remain */ });
+      }
+    } else {
+      // Fall back to poster image + warm gradient (lighter for mobile/slow links)
+      heroVideo.remove();
     }
   }
 })();

@@ -167,13 +167,19 @@ a{color:inherit;text-decoration:none}
           mask-image:radial-gradient(120% 90% at 70% 22%,#000 25%,transparent 78%);
 }
 
-/* Readability overlay + vignette — warm stone/taupe veil (works over video too) */
+/* Readability overlay + vignette — warm sandy/taupe veil over the video.
+   Keeps the video subtle (not too bright), warms it, and guarantees the
+   charcoal headline/buttons stay readable on the left (copy) side.
+   No blue tones. */
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
   background:
-    radial-gradient(120% 100% at 50% 32%, transparent 42%, rgba(74,62,48,.16) 100%),
-    linear-gradient(180deg,rgba(250,247,241,.5) 0%,rgba(236,227,213,.28) 38%,rgba(216,203,182,.55) 100%),
-    linear-gradient(90deg,rgba(247,243,236,.55) 0%,rgba(247,243,236,.05) 60%);
+    /* soft cinematic edge vignette for depth */
+    radial-gradient(120% 110% at 50% 28%, transparent 46%, rgba(60,50,38,.22) 100%),
+    /* light scrim behind the copy so charcoal text stays legible */
+    linear-gradient(90deg,rgba(247,242,234,.86) 0%,rgba(247,242,234,.6) 30%,rgba(247,242,234,.2) 56%,rgba(247,242,234,.04) 78%),
+    /* overall warm sand/taupe wash — dims & warms the footage, blends to page */
+    linear-gradient(180deg,rgba(236,227,213,.42) 0%,rgba(220,208,189,.4) 45%,rgba(216,203,182,.66) 100%);
 }
 
 .hero-content{position:relative;z-index:2;color:var(--ink);max-width:var(--maxw)}
