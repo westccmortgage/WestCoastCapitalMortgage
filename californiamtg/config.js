@@ -15,7 +15,7 @@
    with a console warning.
    ============================================================ */
 window.CM_CONFIG = {
-  SUPABASE_URL: "",
+  SUPABASE_URL: "https://npxibfmhrlgqiubfkouu.supabase.co",
   SUPABASE_ANON_KEY: "",
   SITE: "californiamtg.com"
 };
