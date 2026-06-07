@@ -1,1 +1,13 @@
-/*    /index.html    200
+# Clean URLs -> .html (Netlify). Links in the site use .html so it also works
+# under a plain static server; these are a convenience for typed/clean URLs.
+/contact              /contact.html              200
+/about                /about.html                200
+/about-human-review   /about-human-review.html   200
+/scenarios            /scenarios.html            200
+/rates-payments       /rates-payments.html       200
+/privacy              /privacy.html              200
+/terms                /terms.html                200
+/education            /education/index.html      200
+/education/no-credit-check-to-start  /education/no-credit-check-to-start.html  200
+/education/which-program-fits        /education/which-program-fits.html        200
+/education/complex-scenarios         /education/complex-scenarios.html         200

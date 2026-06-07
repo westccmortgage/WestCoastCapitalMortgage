@@ -409,6 +409,9 @@ a{color:inherit;text-decoration:none}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
 .footer-brand .brand-name{font-family:var(--serif);font-size:1.6rem;color:#fff;display:block}
 .footer-brand .brand-sub{display:block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-soft);margin-top:.3rem}
+.footer-contact{list-style:none;margin-top:1.1rem;display:flex;flex-direction:column;gap:.5rem}
+.footer-contact li{font-size:.9rem}
+.footer-contact a:hover{color:var(--gold-soft)}
 .footer-eho{margin-top:1.2rem;opacity:.85}
 .footer-col h4{color:#fff;font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1rem}
 .footer-col ul{list-style:none}
@@ -529,6 +532,73 @@ textarea.field-input{resize:vertical;min-height:84px}
 .rate-factors li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);flex:0 0 auto}
 
 /* ============================================================
+   SUBPAGES — education / about / scenarios / rates / contact
+   ============================================================ */
+/* Clickable Why-Start cards: arrow sits at the bottom */
+.audience-card{display:flex;flex-direction:column;height:100%}
+.audience-card .link-arrow{margin-top:auto}
+
+/* Page hero band (warm sand) */
+.page-hero{position:relative;padding:132px 0 58px;
+  background:radial-gradient(120% 130% at 50% -25%, #fbf8f2 0%, #ece2d2 58%, #e1d5c2 100%);
+  border-bottom:1px solid var(--line)}
+.page-hero .eyebrow{color:var(--gold-deep)}
+.page-hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--ink);line-height:1.08;margin:.3rem 0 0;letter-spacing:.3px}
+.page-lead{margin-top:1.1rem;max-width:740px;font-size:1.14rem;color:#4a443c}
+
+/* Article / editorial prose */
+.article{max-width:840px;margin:0 auto}
+.prose > p{color:var(--muted);font-size:1.05rem;margin-bottom:1.1rem}
+.prose h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.5rem,3vw,2.05rem);color:var(--ink);margin:2.3rem 0 .7rem;letter-spacing:.2px}
+.prose h3{font-size:1.16rem;color:var(--ink);margin:1.5rem 0 .45rem}
+.prose ul{margin:.3rem 0 1.3rem 1.15rem;color:var(--muted)}
+.prose li{margin-bottom:.5rem}
+.prose strong{color:var(--ink)}
+
+/* Ivory content card */
+.info-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.7rem;box-shadow:var(--shadow-sm);margin-bottom:1.1rem}
+.info-card h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.45rem}
+.info-card p{color:var(--muted)}
+.info-card p:last-child{margin-bottom:0}
+
+/* Two-up card grid */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1.4rem 0}
+
+/* Check list (bronze diamonds) */
+.check-list{list-style:none;display:grid;gap:.65rem;margin:1rem 0 1.3rem}
+.check-list li{position:relative;padding-left:1.7rem;color:var(--muted)}
+.check-list li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;background:var(--gold);transform:rotate(45deg);border-radius:2px}
+
+/* Bottom CTA panel */
+.cta-block{margin-top:2.6rem;text-align:center;border-radius:20px;padding:2.6rem 2rem;
+  background:linear-gradient(160deg,#f4ede1,#e8dcc8);border:1px solid var(--line)}
+.cta-block h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3vw,2.1rem);color:var(--ink);margin-bottom:.6rem}
+.cta-block p{color:var(--muted);max-width:580px;margin:0 auto 1.4rem}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* Compliance callout */
+.compliance-box{margin-top:1.8rem;background:rgba(176,138,76,.08);border:1px solid rgba(176,138,76,.26);
+  border-left:3px solid var(--gold);border-radius:12px;padding:1rem 1.2rem;color:#5f4a22;font-size:.86rem;line-height:1.6}
+
+/* Scenarios list */
+.scenario-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1.5rem}
+.scenario-link{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.15rem 1.35rem;
+  box-shadow:var(--shadow-sm);color:var(--ink);font-weight:500;font-size:1.04rem;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.scenario-link:hover{transform:translateY(-2px);border-color:rgba(176,138,76,.6);box-shadow:var(--shadow-md)}
+.scenario-link .s-arrow{color:var(--gold-deep);font-size:1.15rem}
+
+/* Contact layout + form */
+.contact-layout{display:grid;grid-template-columns:1.35fr .65fr;gap:34px;align-items:start}
+.cm-form .field-grid{margin-bottom:.4rem}
+.cm-form .form-actions{display:flex;justify-content:flex-end;margin-top:1.4rem}
+.hidden-field{position:absolute !important;left:-9999px;height:0;overflow:hidden}
+.contact-aside .info-card h3{font-size:1.15rem}
+.contact-aside .info-card a{color:var(--gold-deep)}
+.contact-aside .info-card a:hover{color:var(--ink)}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width:1024px){
@@ -591,6 +661,14 @@ textarea.field-input{resize:vertical;min-height:84px}
   .hero-grid{gap:32px}
   .preview-card{max-width:none;padding:1.5rem 1.4rem 1.4rem}
   .preview-title{font-size:1.45rem}
+
+  /* Subpages */
+  .edu-grid{grid-template-columns:1fr}
+  .scenario-list{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr;gap:26px}
+  .page-hero{padding:118px 0 48px}
+  .cta-row{flex-direction:column}
+  .cta-row .btn{width:100%}
 }
 
 @media (max-width:1024px){

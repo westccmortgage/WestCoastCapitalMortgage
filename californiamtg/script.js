@@ -42,23 +42,74 @@
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   /* ---- Scenario Builder quick-start ----
-     Any element with [data-start] scrolls to the builder and (re)starts it.
-     An optional [data-goal] preselects the entry scenario (e.g. Investors,
-     Self-Employed, Rates "Check My Scenario"). */
-  function startBuilder(goal) {
-    var target = document.getElementById("builder");
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    if (window.CMScenario && typeof window.CMScenario.start === "function") {
-      window.CMScenario.start(goal || null);
-    }
-  }
+     On the homepage (where #builder exists) a [data-start] link scrolls to the
+     builder and (re)starts it, optionally at a preselected [data-goal]. On other
+     pages there is no builder, so we let the link navigate normally to the
+     homepage (e.g. /index.html#builder). */
   document.querySelectorAll("[data-start]").forEach(function (link) {
     link.addEventListener("click", function (e) {
+      var builder = document.getElementById("builder");
+      if (!builder || !window.CMScenario) return; // off-home: follow the href
       e.preventDefault();
-      closeNav && nav && nav.classList.contains("open") && closeNav();
-      startBuilder(link.getAttribute("data-goal"));
+      if (nav && nav.classList.contains("open")) closeNav();
+      builder.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.CMScenario.start(link.getAttribute("data-goal") || null);
     });
   });
+
+  /* ---- Contact form (Netlify-Forms ready) ----
+     Submits via fetch so the page shows an inline success message. Works with
+     Netlify Forms when deployed (the static form is detected at build, and the
+     POST below is captured). Locally the fetch fails harmlessly and we still
+     thank the user. */
+  var contactForm = document.querySelector("form.cm-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // basic required validation
+      var ok = true;
+      contactForm.querySelectorAll("[required]").forEach(function (el) {
+        var bad = !String(el.value || "").trim();
+        var f = el.closest(".field");
+        var err = f && f.querySelector(".field-error");
+        if (err) err.textContent = bad ? "This field is required." : "";
+        if (bad) ok = false;
+      });
+      if (!ok) return;
+
+      var data = new FormData(contactForm);
+      var body = new URLSearchParams(data).toString();
+
+      /* =========================================================
+         TODO: connect this form to the existing WCCM workflow:
+           - WCCM email workflow / shared inbox
+           - CRM (HubSpot / Salesforce / GoHighLevel)
+           - Netlify Forms (already wired: data-netlify + hidden form-name)
+           - Zapier webhook   (https://hooks.zapier.com/...)
+           - Make webhook     (https://hook.make.com/...)
+         The POST below feeds Netlify Forms; add additional destinations here.
+         ========================================================= */
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body
+      }).then(showContactSuccess).catch(showContactSuccess);
+    });
+  }
+  function showContactSuccess() {
+    var card = document.getElementById("contactCard") || (contactForm && contactForm.parentNode);
+    if (!card) return;
+    card.innerHTML =
+      '<div class="thankyou">' +
+        '<div class="ty-mark" aria-hidden="true">&#10003;</div>' +
+        '<h3>Thank you.</h3>' +
+        '<p class="ty-lead">Your message has been received. A licensed mortgage professional ' +
+        'can review your situation and contact you about the next step.</p>' +
+        '<p class="ty-compliance">This is not a loan approval, loan commitment, or rate quote. ' +
+        'Final loan options are subject to review by a licensed mortgage professional.</p>' +
+      '</div>';
+    card.classList.add("is-thankyou");
+  }
 
   /* ---- Hero background video ----
      The <video> ships with no <source> (only data-src) so nothing heavy loads

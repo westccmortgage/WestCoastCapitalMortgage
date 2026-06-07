@@ -556,9 +556,9 @@
     var next = lead.preferredNextStep;
 
     var primary = { label: "Continue to AI Scenario Review", href: "https://wcci.online" };
-    if (next === "Talk to a licensed mortgage professional") primary = { label: "Talk to a Licensed Mortgage Professional", href: "/contact" };
+    if (next === "Talk to a licensed mortgage professional") primary = { label: "Talk to a Licensed Mortgage Professional", href: "/contact.html" };
     else if (next === "Get pre-approved") primary = { label: "Continue to Secure Pre-Approval", href: "/apply" };
-    else if (next === "Learn loan options first") primary = { label: "Explore Loan Options", href: "/loan-options" };
+    else if (next === "Learn loan options first") primary = { label: "Explore Loan Options", href: "/education/which-program-fits.html" };
 
     var cats = lead.leadCategories.length ? lead.leadCategories.join(" &middot; ") : "Scenario received";
 
@@ -575,7 +575,7 @@
         '<div class="ty-alt">' +
           '<span>Or choose another path:</span>' +
           '<a href="https://wcci.online">AI Scenario Review</a>' +
-          '<a href="/contact">Talk to a Professional</a>' +
+          '<a href="/contact.html">Talk to a Professional</a>' +
           '<a href="/apply">Secure Pre-Approval</a>' +
         '</div>' +
         '<p class="ty-compliance">This is not a loan approval, loan commitment, or rate quote. ' +
@@ -601,6 +601,8 @@
     }
   };
 
-  // Initial render (Step 1)
-  render();
+  // Initial render — honor ?goal=<scenario> deep links (e.g. from /scenarios.html)
+  var qpGoal = new URLSearchParams(window.location.search).get("goal");
+  if (qpGoal && SCENARIO.hasOwnProperty(qpGoal)) { window.CMScenario.start(qpGoal); }
+  else { render(); }
 })();
