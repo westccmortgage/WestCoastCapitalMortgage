@@ -137,27 +137,28 @@
         <p class="hero-note">You don't need to know the loan program. Start with the situation.</p>
       </div>
 
-      <!-- Right-side premium Scenario Preview card -->
-      <aside class="hero-aside" aria-label="Scenario preview example">
-        <div class="preview-card">
+      <!-- Right-side Rotating Scenario Preview Card (rotates every ~4.5s; rendered by script.js) -->
+      <aside class="hero-aside" aria-label="Example mortgage scenarios">
+        <div class="preview-card rotating" id="scenarioRotator" role="link" tabindex="0"
+             aria-label="See how California Mortgage helps with different situations — open the scenario builder">
           <div class="preview-top">
-            <span class="preview-tag">Scenario Preview</span>
+            <span class="preview-tag fade" data-role="label">Scenario Preview</span>
             <span class="preview-mark" aria-hidden="true">
               <svg viewBox="0 0 48 48" width="26" height="26"><path d="M12 38 L24 14 L36 38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 34 L17 42 L31 42 L31 34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
             </span>
           </div>
-          <h2 class="preview-title">Your Scenario, Organized</h2>
-          <blockquote class="preview-quote">
+          <h2 class="preview-title fade" data-role="title">Your Scenario, Organized</h2>
+          <blockquote class="preview-quote fade" data-role="quote">
             <span>"I'm buying in California.</span>
-            <span>$1.4M purchase.</span>
-            <span>Self-employed income.</span>
-            <span>Need rate and payment options."</span>
+            <span>$1.2M purchase.</span>
+            <span>Need pre-approval and payment options."</span>
           </blockquote>
           <div class="preview-divider" aria-hidden="true"></div>
           <div class="preview-next">
             <span class="preview-next-label">Next step</span>
-            <span class="preview-next-value">Concierge Review</span>
+            <span class="preview-next-value fade" data-role="next">Purchase Review</span>
           </div>
+          <div class="preview-dots" id="previewDots" role="tablist" aria-label="Scenario examples"></div>
         </div>
       </aside>
     </div>
@@ -329,14 +330,16 @@
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
-      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Use</a>
     </div>
     <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. Powered by West Coast Capital Mortgage Inc. All rights reserved.</p>
   </div>
 </footer>
 
+<script src="/config.js"></script>
 <script src="/script.js" defer></script>
 <script src="/scenario-builder.js" defer></script>
+<script type="module" src="/src/app.js"></script>
 </body>
 </html>

@@ -274,6 +274,18 @@ a{color:inherit;text-decoration:none}
 .preview-next-value{font-weight:600;color:var(--ink);font-size:1rem;display:inline-flex;align-items:center;gap:.5rem}
 .preview-next-value::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold-deep)}
 
+/* Rotating preview card: smooth crossfade + dots + clickable */
+.preview-card.rotating{cursor:pointer}
+.preview-card.rotating:hover{border-color:rgba(176,138,76,.4);box-shadow:0 30px 66px rgba(70,58,44,.2)}
+.preview-card .fade{transition:opacity .36s ease}
+.preview-card.swapping .fade{opacity:0}
+.preview-card .preview-quote{min-height:4.6em}
+.preview-dots{display:flex;gap:8px;justify-content:center;margin-top:1.3rem}
+.preview-dot{width:7px;height:7px;padding:0;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(80,70,60,.25);transition:background .25s ease,transform .25s ease}
+.preview-dot:hover{background:rgba(80,70,60,.45)}
+.preview-dot.active{background:var(--gold-deep);transform:scale(1.25)}
+
 @keyframes heroIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes floatA{0%,100%{transform:translate(0,0)}50%{transform:translate(-34px,30px)}}
 @keyframes floatB{0%,100%{transform:translate(0,0)}50%{transform:translate(42px,-32px)}}
@@ -599,6 +611,21 @@ textarea.field-input{resize:vertical;min-height:84px}
 .contact-aside .info-card a:hover{color:var(--ink)}
 
 /* ============================================================
+   COOKIE / CONSENT BANNER
+   ============================================================ */
+.cm-consent{position:fixed;left:0;right:0;bottom:0;z-index:80;padding:0 16px 16px;
+  transform:translateY(120%);transition:transform .35s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+.cm-consent.show{transform:translateY(0);pointer-events:auto}
+.cm-consent-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:1.6rem;
+  background:linear-gradient(165deg,#fdfbf6,#f1e9db);border:1px solid var(--line);
+  border-radius:16px;box-shadow:0 24px 60px rgba(70,58,44,.22);padding:1.2rem 1.4rem}
+.cm-consent-copy h3{font-family:var(--serif);font-size:1.2rem;color:var(--ink);margin-bottom:.25rem}
+.cm-consent-copy p{font-size:.9rem;color:var(--muted);line-height:1.5;margin:0}
+.cm-consent-copy a{color:var(--gold-deep);text-decoration:underline;text-underline-offset:2px}
+.cm-consent-actions{display:flex;gap:10px;flex:0 0 auto}
+.cm-consent-actions .btn{padding:.7rem 1.2rem;font-size:.9rem}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width:1024px){
@@ -669,6 +696,11 @@ textarea.field-input{resize:vertical;min-height:84px}
   .page-hero{padding:118px 0 48px}
   .cta-row{flex-direction:column}
   .cta-row .btn{width:100%}
+
+  /* Consent banner stacks on mobile */
+  .cm-consent-inner{flex-direction:column;align-items:stretch;gap:1rem}
+  .cm-consent-actions{flex-direction:column}
+  .cm-consent-actions .btn{width:100%}
 }
 
 @media (max-width:1024px){

@@ -5,7 +5,8 @@
 /about-human-review   /about-human-review.html   200
 /scenarios            /scenarios.html            200
 /rates-payments       /rates-payments.html       200
-/privacy              /privacy.html              200
+/privacy-policy       /privacy-policy.html       200
+/privacy              /privacy-policy.html       301
 /terms                /terms.html                200
 /education            /education/index.html      200
 /education/no-credit-check-to-start  /education/no-credit-check-to-start.html  200

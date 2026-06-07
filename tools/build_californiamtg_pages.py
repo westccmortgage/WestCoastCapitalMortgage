@@ -100,7 +100,7 @@ FOOTER = '''<footer class="site-footer">
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
-      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Use</a>
     </div>
     <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. Powered by West Coast Capital Mortgage Inc. All rights reserved.</p>
@@ -136,7 +136,9 @@ def page(path, title, description, body, canonical_path):
 
 {FOOTER}
 
+<script src="/config.js"></script>
 <script src="/script.js" defer></script>
+<script type="module" src="/src/app.js"></script>
 </body>
 </html>
 '''
@@ -613,20 +615,53 @@ scenarios_body = hero(
 # ----------------------------------------------------------------------------
 # PRIVACY + TERMS (lightweight)
 # ----------------------------------------------------------------------------
-privacy_body = hero("Legal", "Privacy Policy", "How information submitted through California Mortgage is handled.") + '''
+privacy_body = hero("Legal", "Privacy Policy", "How information you share with California Mortgage is collected, used, and protected.") + '''
 <section class="section">
   <div class="container article prose">
     <p>California Mortgage, powered by West Coast Capital Mortgage Inc., respects your privacy.
-    Information you submit (such as your name, contact details, and scenario details) is used to
-    review your mortgage situation and to contact you about next steps.</p>
-    <h2>What we collect</h2>
-    <ul><li>Contact information you provide</li><li>Scenario details you choose to share</li><li>Basic analytics and source information</li></ul>
-    <h2>How it is used</h2>
-    <p>To organize your scenario, respond to your request, and connect you with a licensed mortgage
-    professional. We do not sell your personal information.</p>
+    This policy explains, in plain English, what we collect and how it is used.</p>
+
+    <h2>What data we collect</h2>
+    <ul>
+      <li><strong>Information you submit</strong> &mdash; name, phone, email, preferred contact method,
+      and the scenario details you choose to share through the scenario builder or contact form.</li>
+      <li><strong>Cookies &amp; a first-party visitor ID</strong> &mdash; an anonymous identifier stored on
+      your device so we can remember your visit and your cookie choice.</li>
+      <li><strong>Analytics (only with your consent)</strong> &mdash; pages viewed, general device and
+      browser information, screen size, referrer, and UTM/source parameters.</li>
+    </ul>
+
+    <h2>Cookies and analytics</h2>
+    <p>On your first visit we ask for your cookie preference. If you choose <em>Essential Only</em>,
+    we store just the functional basics (your visitor ID, your consent choice, and any form you
+    submit). If you choose <em>Accept &amp; Continue</em>, we also record page views and basic events
+    to understand which mortgage topics are helpful. We do not claim to know who you are before you
+    submit your contact information.</p>
+
+    <h2>Scenario &amp; contact form data</h2>
+    <p>When you submit the scenario builder or contact form, your details are stored so a licensed
+    mortgage professional can review your situation and follow up.</p>
+
+    <h2>How your data is used</h2>
+    <p>We use your information to respond to your request, operate and improve the website, and route
+    your mortgage inquiry to West Coast Capital Mortgage Inc. To do this, data <em>may</em> be processed
+    by service providers and tools we use (for example, our database, analytics, CRM, automation
+    webhooks, or email). We do not sell your personal information.</p>
+
+    <h2>Your California privacy rights</h2>
+    <p>California residents may have rights to know, access, or request deletion of personal
+    information, and to opt out of certain uses, under California privacy law. To make a request,
+    contact us using the details below.</p>
+
+    <h2>Managing your cookie choice</h2>
+    <p>You can change your cookie preference at any time.</p>
+    <p><button type="button" id="manageConsent" class="btn btn-outline-dark">Manage cookie preferences</button></p>
+
     <h2>Contact</h2>
-    <p>Questions? Email <a href="mailto:info@californiamtg.com">info@californiamtg.com</a> or call
+    <p>Questions or privacy requests? Email
+    <a href="mailto:info@californiamtg.com">info@californiamtg.com</a> or call
     <a href="tel:+13106865053">(310) 686-5053</a>.</p>
+
     <p class="compliance-box">This page is provided for general information and is not legal advice.</p>
   </div>
 </section>'''
@@ -658,7 +693,7 @@ PAGES = [
     ("education/no-credit-check-to-start.html", "Why No Credit Check to Start? | California Mortgage", "Why no credit check is required to start the concierge review, and how it differs from a full application.", no_credit_body, "/education/no-credit-check-to-start"),
     ("education/which-program-fits.html", "Which Mortgage Program Fits? | California Mortgage", "You do not need to know the loan program before starting. Explore conventional, jumbo, FHA, VA, bank statement, DSCR, and Non-QM paths.", which_program_body, "/education/which-program-fits"),
     ("education/complex-scenarios.html", "Built for Complex Scenarios | California Mortgage", "Self-employed income, jumbo, investor loans, bank denials, payment strategy, and second opinions.", complex_body, "/education/complex-scenarios"),
-    ("privacy.html", "Privacy Policy | California Mortgage", "How information submitted through California Mortgage is handled.", privacy_body, "/privacy"),
+    ("privacy-policy.html", "Privacy Policy | California Mortgage", "How information you share with California Mortgage is collected, used, and protected.", privacy_body, "/privacy-policy"),
     ("terms.html", "Terms of Use | California Mortgage", "Terms that apply to your use of the California Mortgage website.", terms_body, "/terms"),
 ]
 

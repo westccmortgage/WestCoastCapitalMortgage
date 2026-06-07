@@ -32,9 +32,33 @@ Pages (concierge funnel)
 Contact form / lead capture
 ---------------------------
   contact.html uses a Netlify-Forms-ready <form name="contact" data-netlify="true">
-  with a honeypot; script.js submits via fetch and shows an inline success message.
-  Add WCCM email / CRM / Zapier / Make at the TODO marker in script.js
-  (search: "TODO: connect this form").
+  with a honeypot. Submission is handled by the lead layer (src/app.js -> CMLeads):
+  Supabase insert + CRM webhook when configured, otherwise Netlify Forms + a
+  localStorage copy. Inline success message either way.
+
+Consent + tracking + Supabase + CRM (privacy-conscious)
+-------------------------------------------------------
+  config.js                Runtime config (SUPABASE_URL / SUPABASE_ANON_KEY /
+                           CRM_WEBHOOK_URL). No bundler, so values live here at
+                           runtime (the anon key is publishable; RLS protects data).
+  src/lib/supabaseClient.js  Lazy Supabase client (CDN ESM); null when unconfigured.
+  src/lib/consent.js         First-party visitor_id (UUID) + cookie consent state.
+  src/lib/tracking.js        Event tracking — ONLY when consent = "accepted".
+  src/lib/crmWebhook.js      sendLeadToCRM() (no-op unless CRM_WEBHOOK_URL set).
+  src/app.js                 Orchestrator: consent banner, visitor row, tracking,
+                             and window.CMTrack / CMLeads / CMConsent.
+  supabase/schema.sql        Tables (visitors, visitor_events, leads) + RLS
+                             (anon may INSERT only; no anon reads).
+
+  Consent: a one-time premium banner offers "Accept & Continue" (full tracking)
+  or "Essential Only" (minimal functional data). The choice + visitor_id are kept
+  in localStorage/cookie; the banner does not reappear. Manage/reset from the
+  Privacy Policy page ("Manage cookie preferences" -> window.CMConsent.reset()).
+  Works with NO backend configured (graceful fallback + console warning).
+
+  Required env / config (set in config.js, or inject at deploy):
+    SUPABASE_URL, SUPABASE_ANON_KEY, CRM_WEBHOOK_URL (optional)
+  SQL to run in Supabase: supabase/schema.sql
 
 Files
 -----

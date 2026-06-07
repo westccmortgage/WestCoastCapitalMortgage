@@ -539,11 +539,13 @@
        //   .catch(function(){ renderThankYou(lead); }); // still thank the user
        ========================================================= */
 
-    // Placeholder: log + persist locally so nothing is lost before integration.
-    try {
-      console.log("[California Mortgage] Lead captured (placeholder):", lead);
-      window.localStorage.setItem("cm_last_lead", JSON.stringify(lead));
-    } catch (e) { /* storage may be unavailable */ }
+    // Persist locally so nothing is lost before integration.
+    try { window.localStorage.setItem("cm_last_lead", JSON.stringify(lead)); } catch (e) {}
+
+    // Save via the lead layer (Supabase + CRM, or Netlify/local fallback). Fire and
+    // forget — the user is thanked immediately. See src/app.js (CMLeads).
+    try { if (window.CMLeads && window.CMLeads.saveScenarioLead) window.CMLeads.saveScenarioLead(lead); }
+    catch (e) { console.warn("[California Mortgage] lead save failed:", e); }
 
     renderThankYou(lead);
   }
@@ -597,6 +599,7 @@
     start: function (goal) {
       if (goal && SCENARIO.hasOwnProperty(goal)) { answers = { goal: goal }; index = 1; }
       else { answers = {}; index = 0; }
+      try { if (window.CMTrack) window.CMTrack("scenario_started", { goal: goal || "" }); } catch (e) {}
       render();
     }
   };
