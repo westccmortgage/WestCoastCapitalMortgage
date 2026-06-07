@@ -57,11 +57,12 @@ create table if not exists public.leads (
   estimated_price_or_value text,
   message                  text,
   answers                  jsonb,
+  landing_page             text,
   utm_source               text,
   utm_medium               text,
   utm_campaign             text,
   referrer                 text,
-  crm_status               text default 'new',
+  crm_status               text default 'not_connected',
   created_at               timestamptz default now()
 );
 create index if not exists leads_visitor_idx on public.leads (visitor_id);
@@ -87,7 +88,8 @@ drop policy if exists "anon insert leads" on public.leads;
 create policy "anon insert leads"
   on public.leads for insert to anon, authenticated with check (true);
 
--- NOTE: No SELECT policies are created, so the anon key cannot read any rows.
--- Use the service_role key (server-side only) or an authenticated dashboard to
--- read leads/visitors. crm_status is set to 'new' on insert; reconcile delivery
--- status (sent/pending) server-side, since the browser role is insert-only.
+-- NOTE: No SELECT/UPDATE/DELETE policies are created, so the anon key can only
+-- INSERT — it cannot read, change, or delete rows. View data in the Supabase
+-- Dashboard (Table Editor) or with the service_role key (server-side only).
+-- CRM is intentionally disabled for now: leads are stored with
+-- crm_status = 'not_connected'. CRM delivery will be added in a later phase.

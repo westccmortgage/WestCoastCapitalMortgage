@@ -36,8 +36,12 @@ Contact form / lead capture
   Supabase insert + CRM webhook when configured, otherwise Netlify Forms + a
   localStorage copy. Inline success message either way.
 
-Consent + tracking + Supabase + CRM (privacy-conscious)
--------------------------------------------------------
+Consent + tracking + Supabase (Supabase-ONLY; CRM disabled)
+-----------------------------------------------------------
+  CRM/Zapier/Make/email and analytics (GA/Pixel) are intentionally OFF.
+  Leads are stored in Supabase with crm_status = "not_connected".
+  src/lib/crmWebhook.js is a disabled placeholder (not imported).
+
   config.js                Runtime config (SUPABASE_URL / SUPABASE_ANON_KEY /
                            CRM_WEBHOOK_URL). No bundler, so values live here at
                            runtime (the anon key is publishable; RLS protects data).

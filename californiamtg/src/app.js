@@ -13,12 +13,15 @@
    Works with no backend configured (graceful fallback).
    ============================================================ */
 import { getSupabase, isConfigured } from "./lib/supabaseClient.js";
-import { sendLeadToCRM } from "./lib/crmWebhook.js";
 import { track, initAutoTracking } from "./lib/tracking.js";
 import {
   getVisitorId, getConsentStatus, hasConsentDecision, setConsentStatus,
-  resetConsent, bumpVisit, buildVisitorRecord, getUTM
+  resetConsent, bumpVisit, buildVisitorRecord, getUTM, getLandingPage, getReferrer
 } from "./lib/consent.js";
+
+/* CRM is intentionally DISABLED for now (Supabase-only). The crmWebhook.js
+   placeholder is kept for a future phase but is not imported or called.
+   Leads are saved to Supabase with crm_status = "not_connected". */
 
 const VISITOR_SAVED = "cm_visitor_saved";
 
@@ -94,11 +97,12 @@ function leadRowFromScenario(lead) {
     estimated_price_or_value: lead.estimatedValue || "",
     message: c.message || "",
     answers: lead.answers || {},
+    landing_page: getLandingPage(),
     utm_source: s.utm_source || "",
     utm_medium: s.utm_medium || "",
     utm_campaign: s.utm_campaign || "",
-    referrer: s.referrer || "",
-    crm_status: "new"
+    referrer: s.referrer || getReferrer(),
+    crm_status: "not_connected"
   };
 }
 
@@ -121,40 +125,31 @@ function leadRowFromContactForm(form) {
     estimated_price_or_value: "",
     message: get("message"),
     answers: { iAmA: get("iAmA"), helpWith: get("helpWith"), via: "contact_form" },
+    landing_page: getLandingPage(),
     utm_source: utm.utm_source || "",
     utm_medium: utm.utm_medium || "",
     utm_campaign: utm.utm_campaign || "",
-    referrer: document.referrer || "",
-    crm_status: "new"
+    referrer: getReferrer() || document.referrer || "",
+    crm_status: "not_connected"
   };
 }
 
-// Save a lead: Supabase first, then CRM webhook. Always resolves (never breaks UX).
+// Save a lead to Supabase only (CRM disabled). Always resolves (never breaks UX).
 async function saveLead(row, eventName) {
-  // Always keep a local copy so a lead is never lost before integration.
+  // Always keep a local copy so a lead is never lost.
   try { window.localStorage.setItem("cm_last_lead", JSON.stringify(row)); } catch (e) {}
 
   const supabase = await getSupabase();
   if (supabase) {
     try {
-      await supabase.from("leads").insert(row);                  // 1) save first
+      await supabase.from("leads").insert(row);                  // store in Supabase
     } catch (e) {
       console.warn("[California Mortgage] lead insert failed:", e);
     }
     try { await track(eventName, { lead_category: row.lead_category }); } catch (e) {}
-
-    // 2) attempt CRM; lead already stored. Status reconciliation (sent/pending)
-    //    is intended to run server-side, since the browser anon role is insert-only.
-    try {
-      const res = await sendLeadToCRM(row);
-      if (!res.ok && !res.skipped) console.warn("[California Mortgage] CRM webhook failed; lead remains in Supabase (crm_status=new/pending).");
-    } catch (e) { /* ignore */ }
     return { stored: "supabase" };
   }
-
-  // No Supabase configured -> Netlify Forms fallback (contact form only carries the form),
-  // plus CRM attempt and the localStorage copy above.
-  try { await sendLeadToCRM(row); } catch (e) {}
+  // No Supabase configured -> Netlify Forms fallback is handled by the caller.
   return { stored: "local" };
 }
 

@@ -48,6 +48,9 @@
      homepage (e.g. /index.html#builder). */
   document.querySelectorAll("[data-start]").forEach(function (link) {
     link.addEventListener("click", function (e) {
+      if (window.CMTrack) window.CMTrack("begin_button_clicked", {
+        label: (link.textContent || "").trim(), goal: link.getAttribute("data-goal") || ""
+      });
       var builder = document.getElementById("builder");
       if (!builder || !window.CMScenario) return; // off-home: follow the href
       e.preventDefault();

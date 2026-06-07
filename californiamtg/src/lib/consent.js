@@ -98,6 +98,8 @@ export function bumpVisit() {
 
 export function getVisitCount() { return parseInt(ls(true, K.count) || "1", 10); }
 export function getUTM() { try { return JSON.parse(ls(true, K.utm) || "{}"); } catch (e) { return {}; } }
+export function getLandingPage() { return ls(true, K.landing) || ""; }
+export function getReferrer() { return ls(true, K.ref) || ""; }
 
 /* Build the visitors-table record. Minimal under "essential". */
 export function buildVisitorRecord() {

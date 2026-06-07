@@ -1,42 +1,22 @@
 /* ============================================================
-   CRM webhook (placeholder, opt-in)
+   CRM webhook — DISABLED PLACEHOLDER (do not enable yet)
    ------------------------------------------------------------
-   Forwards a saved lead to an external workflow when a webhook URL is
-   configured (window.CM_CONFIG.CRM_WEBHOOK_URL / VITE_CRM_WEBHOOK_URL).
-   No-op when not configured — leads still live in Supabase.
+   Per current plan, the site is Supabase-only. Nothing is sent to any
+   CRM, Zapier, Make, or email workflow. This file is intentionally NOT
+   imported anywhere and performs no network calls.
 
-   Flow expected by the caller (src/app.js):
-     1. Save lead to Supabase first.
-     2. Then call sendLeadToCRM(lead).
-     3. If this fails, the lead stays in Supabase with crm_status = 'pending'.
+   Leads are stored in Supabase with crm_status = "not_connected".
+
+   FUTURE (do not enable now): when CRM is approved, add a webhook URL to
+   config.js, import sendLeadToCRM() in src/app.js, call it AFTER the
+   Supabase insert, and update crm_status server-side.
    ============================================================ */
 
-const cfg = (typeof window !== "undefined" && window.CM_CONFIG) || {};
-const CRM_WEBHOOK_URL = cfg.CRM_WEBHOOK_URL || "";
-
-/**
- * Attempt to deliver a lead to the configured CRM/automation webhook.
- * @returns {Promise<{ok:boolean, skipped?:boolean, error?:any}>}
- */
-export async function sendLeadToCRM(lead) {
-  // TODO: connect WCCM CRM endpoint
-  // TODO: connect Zapier / Make webhook
-  // TODO: connect email notification workflow
-  if (!CRM_WEBHOOK_URL) {
-    return { ok: false, skipped: true };
-  }
-  try {
-    const res = await fetch(CRM_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead)
-    });
-    return { ok: res.ok };
-  } catch (error) {
-    return { ok: false, error };
-  }
+// Hard-disabled. Returns immediately without sending anything.
+export async function sendLeadToCRM(/* lead */) {
+  return { ok: false, disabled: true };
 }
 
 export function isCRMConfigured() {
-  return Boolean(CRM_WEBHOOK_URL);
+  return false;
 }
