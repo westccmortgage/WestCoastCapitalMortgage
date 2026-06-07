@@ -220,8 +220,11 @@ def footer():
     <div class="footer-grid suncoast">{cols}</div>
     <div class="footer-bottom">
       <div class="row">
+        <nav aria-label="Legal">
+          <a href="sitemap.html" style="display:inline;margin-right:18px">Site Map</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
+        </nav>
         <span class="eho">&#8962; Equal Housing Lender</span>
-        <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
       </div>
       <p>{FOOTER_LEGAL}</p>
       <p>&copy; 2026 Suncoast Capital Mortgage. All rights reserved.</p>
@@ -411,6 +414,8 @@ def build_pages():
         body = body.replace("WEST COAST CAPITAL MORTGAGE", "SUNCOAST CAPITAL MORTGAGE")
         # Add the Florida / Suncoast contact line wherever the shared contact block is rendered.
         body = body.replace(wc.contact_block(), contact_block())
+        # Sitemap intro: reword to the Suncoast brand.
+        body = body.replace("West Coast Capital Mortgage pages", "Suncoast Capital Mortgage pages")
         pages[name] = dict(title=p["title"], desc=p["desc"], nav=p.get("nav", ""), body=body)
     # Brand-specific overrides
     pages["index.html"] = dict(

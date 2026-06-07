@@ -7,6 +7,7 @@ Running this is a convenience only — the OUTPUT has no build step or dependenc
 import os
 
 OUT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "wccm-corporate"))
+SITE_URL = "https://www.westccmortgage.com"
 NMLS = "2817729"
 OFFICE_PHONE = "310-654-1577"
 OFFICE_TEL = "3106541577"
@@ -351,6 +352,12 @@ section{padding:88px 0}
   .founder-grid{grid-template-columns:1fr;gap:26px}
   .founder-photo{max-width:440px;margin:0 auto}
 }
+/* ---------- Site map ---------- */
+.sitemap-col h3{color:var(--charcoal);margin-bottom:14px}
+.sitemap-list{list-style:none;margin:0;padding:0}
+.sitemap-list li{border-bottom:1px solid var(--border)}
+.sitemap-list a{display:block;padding:11px 2px;color:var(--blue);font-weight:600}
+.sitemap-list a:hover{color:var(--blue-dark)}
 """
 
 # ----------------------------------------------------------------------------
@@ -556,6 +563,7 @@ def footer():
       <div class="row">
         <nav aria-label="Legal">
           <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
+          <a href="sitemap.html" style="display:inline;margin-right:18px">Site Map</a>
           <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
         </nav>
         <span class="eho">&#8962; Equal Housing Opportunity</span>
@@ -1505,6 +1513,70 @@ PAGES["ai-mortgage-review.html"] = dict(title="WCCI.Online AI Mortgage Review",
     desc="WCCI AI Mortgage Assistant by West Coast Capital Mortgage — organize your goals, review your scenario, and prepare a document checklist before speaking with a licensed mortgage professional. Preliminary educational guidance only.",
     nav="", body=_airev())
 
+# ---------------- Site map (user-facing) ----------------
+def _sitemap():
+    def lst(items):
+        return ('<ul class="sitemap-list">'
+                + "".join(f'<li><a href="{h}">{t}</a></li>' for t, h in items)
+                + "</ul>")
+    main_pages = [("Home","index.html"),("Buy a Home","buy.html"),("Refinance","refinance.html"),
+        ("Loans","loans.html"),("Rates","rates.html"),("Calculators","calculators.html"),
+        ("Resources","resources.html"),("Apply Now","apply.html"),("About Us","about.html"),
+        ("Contact Us","contact.html")]
+    loan_programs = [("Conventional Loans","conventional-loans.html"),("FHA Loans","fha-loans.html"),
+        ("VA Loans","va-loans.html"),("Jumbo Loans","jumbo-loans.html"),("Non-QM Loans","non-qm-loans.html"),
+        ("Bank Statement Loans","bank-statement-loans.html"),("DSCR Loans","dscr-loans.html"),
+        ("HELOC / Home Equity","heloc.html"),("Investment Property Loans","investment-property-loans.html"),
+        ("Self-Employed Borrowers","self-employed-borrowers.html")]
+    resources = [("First-Time Homebuyer Hub","first-time-homebuyer.html"),("Homebuying Guide","homebuying-guide.html"),
+        ("Refinancing Guide","refinancing-guide.html"),("Mortgage Articles","mortgage-articles.html"),
+        ("Mortgage Glossary","glossary.html"),("FAQ","faq.html"),
+        ("WCCI.Online AI Mortgage Review","ai-mortgage-review.html")]
+    return page_hero("Site Map",
+        "Use this page to quickly access West Coast Capital Mortgage pages, mortgage resources, loan programs, calculators, and contact information.",
+        "Site Map") + f"""
+<section><div class="wrap">
+  <div class="grid grid-3">
+    <div class="sitemap-col"><h3>Main Pages</h3>{lst(main_pages)}</div>
+    <div class="sitemap-col"><h3>Loan Programs</h3>{lst(loan_programs)}</div>
+    <div class="sitemap-col"><h3>Mortgage Resources</h3>{lst(resources)}</div>
+  </div>
+</div></section>
+{cta_band()}
+"""
+PAGES["sitemap.html"] = dict(title="Site Map",
+    desc="Site map for West Coast Capital Mortgage Inc. — quickly access all pages, loan programs, mortgage calculators, resources, and contact information.",
+    nav="", body=_sitemap())
+
+# Canonical URL list + priorities for sitemap.xml (changefreq monthly).
+SITEMAP_URLS = (
+    [("", "1.0")]
+    + [(p, "0.8") for p in ("buy.html", "refinance.html", "loans.html")]
+    + [(p, "0.7") for p in ("conventional-loans.html", "fha-loans.html", "va-loans.html",
+        "jumbo-loans.html", "non-qm-loans.html", "bank-statement-loans.html", "dscr-loans.html",
+        "heloc.html", "investment-property-loans.html", "self-employed-borrowers.html")]
+    + [(p, "0.8") for p in ("calculators.html", "rates.html", "resources.html")]
+    + [(p, "0.7") for p in ("first-time-homebuyer.html", "homebuying-guide.html", "refinancing-guide.html",
+        "mortgage-articles.html", "glossary.html", "faq.html")]
+    + [(p, "0.8") for p in ("apply.html", "about.html", "contact.html")]
+    + [("ai-mortgage-review.html", "0.7")]
+)
+
+def sitemap_xml():
+    rows = []
+    for path, prio in SITEMAP_URLS:
+        loc = f"{SITE_URL}/{path}"
+        rows.append("  <url>\n"
+                    f"    <loc>{loc}</loc>\n"
+                    "    <changefreq>monthly</changefreq>\n"
+                    f"    <priority>{prio}</priority>\n"
+                    "  </url>")
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + "\n".join(rows) + "\n</urlset>\n")
+
+ROBOTS_TXT = f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n"
+
 # >>> INSERT PAGES HERE <<<
 
 # ----------------------------------------------------------------------------
@@ -1515,6 +1587,8 @@ def main():
     with open(os.path.join(OUT, "styles.css"), "w", encoding="utf-8") as f: f.write(CSS)
     with open(os.path.join(OUT, "script.js"), "w", encoding="utf-8") as f: f.write(JS)
     with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f: f.write("/*    /404.html    404\n")
+    with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f: f.write(sitemap_xml())
+    with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f: f.write(ROBOTS_TXT)
     # favicon
     fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
            '<rect width="64" height="64" rx="12" fill="#0c1c33"/>'
