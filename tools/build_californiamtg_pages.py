@@ -186,7 +186,25 @@ BTN_START = '<a class="btn btn-primary btn-lg" href="/index.html#builder" data-s
 BTN_SITUATION = '<a class="btn btn-primary btn-lg" href="/index.html#builder" data-start>Tell Us Your Situation</a>'
 BTN_CONTACT = '<a class="btn btn-outline-dark btn-lg" href="/contact.html">Contact Us</a>'
 BTN_PRO = '<a class="btn btn-primary btn-lg" href="/contact.html">Talk to a Mortgage Professional</a>'
+BTN_PRO_OUTLINE = '<a class="btn btn-outline-dark btn-lg" href="/contact.html">Talk to a Mortgage Professional</a>'
+BTN_CONTACT_PRO = '<a class="btn btn-outline-dark btn-lg" href="/contact.html">Contact a Mortgage Professional</a>'
 BTN_RATES = '<a class="btn btn-primary btn-lg" href="/index.html?goal=rates#builder">Check My Scenario</a>'
+
+# Shared licensed-company trust block.
+TRUST_BLOCK = '''<div class="trust-block">
+  <div class="trust-eho" aria-hidden="true">
+    <img src="/assets/equal-housing.svg" alt="" width="40" height="44" loading="lazy">
+  </div>
+  <div class="trust-lines">
+    <p class="trust-name">West Coast Capital Mortgage Inc.</p>
+    <ul>
+      <li>NMLS #2817729</li>
+      <li>CA DRE #01385024</li>
+      <li>Phone: <a href="tel:+13106865053">(310) 686-5053</a></li>
+      <li>Equal Housing Opportunity</li>
+    </ul>
+  </div>
+</div>'''
 
 
 # ----------------------------------------------------------------------------
@@ -295,39 +313,52 @@ contact_body = hero(
 # ABOUT
 # ----------------------------------------------------------------------------
 about_body = hero(
-    "About",
     "About California Mortgage",
-    "A premium mortgage concierge experience powered by licensed mortgage professionals."
+    "A Premium Mortgage Concierge Backed by Licensed Professionals",
+    "California Mortgage is the educational and concierge entry point. West Coast Capital "
+    "Mortgage Inc. is the licensed mortgage company behind professional review and follow-up."
 ) + '''
 <section class="section">
   <div class="container article prose">
     <p>California Mortgage helps buyers, homeowners, Realtors, self-employed borrowers, and
-    investors organize their mortgage situation before taking the next step. Instead of
-    starting with a loan program or a full application, you start with your situation — and
-    we help structure it for review.</p>
+    investors organize their mortgage situation before taking the next step. You start with your
+    situation &mdash; not a loan program or a full application &mdash; and we help structure it so a
+    licensed mortgage professional can review the right path.</p>
 
-    <div class="edu-grid">
-      <div class="info-card"><h3>Built for California real estate</h3><p>Designed around California property values, competitive markets, and lending requirements.</p></div>
-      <div class="info-card"><h3>Designed for real-world situations</h3><p>Self-employed income, jumbo purchases, investor loans, lower-payment questions, and second opinions.</p></div>
-      <div class="info-card"><h3>AI-assisted intake available</h3><p>Technology helps organize the scenario quickly and clearly before a human reviews it.</p></div>
-      <div class="info-card"><h3>Human review available</h3><p>Final guidance and mortgage options are reviewed by licensed mortgage professionals.</p></div>
-    </div>
+    <h2>Built for California Real Estate</h2>
+    <p>California is its own market. We organize scenarios around California property values,
+    competitive offer timelines, high-value and jumbo purchases, and the lending requirements that
+    come with them &mdash; from coastal metros to inland communities.</p>
+
+    <h2>Designed for Real-World Mortgage Scenarios</h2>
+    <p>Most strong borrowers do not fit a one-size-fits-all box. This experience is built for the
+    real situations people actually bring to the table:</p>
+    <ul class="check-list">
+      <li>Self-employed, 1099, and business-owner income</li>
+      <li>Jumbo and high-value California purchases</li>
+      <li>Investor and DSCR / rental-income financing</li>
+      <li>Refinance, lower-payment, and cash-out questions</li>
+      <li>Bank denials and second opinions</li>
+    </ul>
+
+    <h2>Technology Helps Organize the Scenario</h2>
+    <p>Our scenario builder and AI-assisted intake help organize your details quickly and clearly
+    &mdash; goals, property, income type, and timeline &mdash; so nothing important is missing before a
+    professional review. Technology organizes; it does not approve.</p>
+
+    <h2>Human Review Available</h2>
+    <p>Once your scenario is organized, a licensed mortgage professional can review it and guide the
+    next step. The goal is not to push a full application &mdash; it is to understand the situation
+    first. <a href="/about-human-review.html">See the human guidance behind the technology &rarr;</a></p>
 
     <h2>Powered by West Coast Capital Mortgage Inc.</h2>
-    <p>California Mortgage is the premium educational and concierge entry point. West Coast
-    Capital Mortgage Inc. is the licensed mortgage company behind the professional review and
-    follow-up — California Mortgage is not trying to replace it.</p>
-
-    <div class="info-card">
-      <h3>West Coast Capital Mortgage Inc.</h3>
-      <p>NMLS #2817729 &middot; CA DRE #01385024<br>
-      Phone: <a href="tel:+13106865053">(310) 686-5053</a><br>
-      Serving California &middot; Equal Housing Opportunity</p>
-    </div>
-''' + cta_block(
+    <p>California Mortgage is the premium educational and concierge entry point. West Coast Capital
+    Mortgage Inc. is the licensed mortgage company behind the professional review and follow-up &mdash;
+    California Mortgage is not trying to replace it.</p>
+''' + TRUST_BLOCK + cta_block(
     "Start With the Situation",
     "Organize your mortgage scenario in a few simple steps, or reach out to a licensed mortgage professional.",
-    [BTN_START, BTN_CONTACT]
+    [BTN_START, BTN_CONTACT_PRO]
 ) + compliance() + '''
   </div>
 </section>'''
@@ -336,33 +367,68 @@ about_body = hero(
 # ABOUT — HUMAN REVIEW
 # ----------------------------------------------------------------------------
 human_review_body = hero(
-    "Trust",
-    "Human Review Behind the Technology",
-    "California Mortgage is a premium mortgage concierge entry point — with licensed mortgage "
-    "professionals behind the review."
+    "Human Review",
+    "Human Guidance Behind the Technology",
+    "AI can help organize the scenario. Real mortgage professionals help review the next step."
 ) + '''
 <section class="section">
-  <div class="container article prose">
-    <p>California Mortgage is a premium mortgage concierge entry point. The site may use
-    technology and AI-assisted intake to organize scenarios quickly and clearly. That is where
-    the technology stops and the people begin.</p>
-
-    <ul class="check-list">
-      <li>The site may use technology and AI-assisted intake to organize your scenario.</li>
-      <li>Final guidance and mortgage options should be reviewed by licensed mortgage professionals.</li>
-      <li>This is not just an AI website — there is a real licensed mortgage company behind it.</li>
-      <li>West Coast Capital Mortgage Inc. provides the professional mortgage review.</li>
-    </ul>
-
-    <h2>The licensed company behind the review</h2>
-    <div class="info-card">
-      <h3>West Coast Capital Mortgage Inc.</h3>
-      <p>NMLS #2817729 &middot; CA DRE #01385024<br>Equal Housing Opportunity</p>
+  <div class="container">
+    <div class="person">
+      <div class="person-photo">
+        <img src="/public/images/anatoliy-kanevsky.png"
+             alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc."
+             width="520" height="600" loading="lazy" decoding="async">
+      </div>
+      <div class="person-copy prose">
+        <h2>Reviewed by Experience, Not Just Automation</h2>
+        <p>California Mortgage is a premium educational and concierge entry point. Behind the
+        experience is West Coast Capital Mortgage Inc., a licensed mortgage company helping buyers,
+        homeowners, Realtors, self-employed borrowers, and investors review real mortgage scenarios.</p>
+        <p>Anatoliy Kanevsky brings decades of real estate, mortgage, and luxury residential
+        development experience to help clients understand their financing path before starting a
+        full application.</p>
+        <ul class="check-list">
+          <li>California real estate broker</li>
+          <li>Mortgage professional experience</li>
+          <li>Luxury residential development background</li>
+          <li>Purchase, refinance, jumbo, DSCR, Non-QM, and self-employed borrower scenarios</li>
+          <li>Founder, West Coast Capital Mortgage Inc.</li>
+        </ul>
+      </div>
     </div>
+''' + TRUST_BLOCK + '''
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow gold">Why It Matters</p>
+      <h2>Why Human Review Matters</h2>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>Real review, not just automation</h3>
+        <p>Technology can organize the situation, but mortgage options require professional review.</p>
+      </article>
+      <article class="card">
+        <h3>Built for complex scenarios</h3>
+        <p>Self-employed income, jumbo purchases, investor loans, DSCR, refinance, and second opinions.</p>
+      </article>
+      <article class="card">
+        <h3>Clear next step</h3>
+        <p>The goal is not to push a full application. The goal is to understand the situation first.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container article">
 ''' + cta_block(
-    "Talk to a Real Mortgage Professional",
-    "When you are ready, a licensed mortgage professional can review your scenario and guide the next step.",
-    [BTN_PRO]
+    "Start With the Situation",
+    "Organize your scenario in a few simple steps, or speak with a licensed mortgage professional.",
+    [BTN_START, BTN_PRO_OUTLINE]
 ) + compliance() + '''
   </div>
 </section>'''
