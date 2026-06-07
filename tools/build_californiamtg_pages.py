@@ -313,48 +313,75 @@ contact_body = hero(
 # ABOUT
 # ----------------------------------------------------------------------------
 about_body = hero(
+    "About",
     "About California Mortgage",
-    "A Premium Mortgage Concierge Backed by Licensed Professionals",
-    "California Mortgage is the educational and concierge entry point. West Coast Capital "
-    "Mortgage Inc. is the licensed mortgage company behind professional review and follow-up."
+    "A premium mortgage concierge experience backed by real licensed professionals."
 ) + '''
 <section class="section">
   <div class="container article prose">
-    <p>California Mortgage helps buyers, homeowners, Realtors, self-employed borrowers, and
-    investors organize their mortgage situation before taking the next step. You start with your
-    situation &mdash; not a loan program or a full application &mdash; and we help structure it so a
-    licensed mortgage professional can review the right path.</p>
+    <p>California Mortgage is a premium educational and concierge entry point for people who want to
+    explain their mortgage situation before starting a full application. The purpose is to help
+    organize the scenario, create a clearer starting point, and route the visitor toward AI-assisted
+    review or professional mortgage review.</p>
+    <p>California Mortgage is powered by West Coast Capital Mortgage Inc., the licensed mortgage
+    company behind professional review and follow-up.</p>
+  </div>
+</section>
 
-    <h2>Built for California Real Estate</h2>
-    <p>California is its own market. We organize scenarios around California property values,
-    competitive offer timelines, high-value and jumbo purchases, and the lending requirements that
-    come with them &mdash; from coastal metros to inland communities.</p>
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow gold">Real People Behind the Guidance</p>
+    </div>
+    <div class="person">
+      <div class="person-photo">
+        <div class="photo-placeholder" aria-hidden="true">Photo coming soon</div>
+        <img class="person-img" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc."
+             src="/images/anatoliy-kanevsky.jpg" width="520" height="600" loading="lazy" decoding="async"
+             onerror="if(this.dataset.s!=='1'){this.dataset.s='1';this.src='/public/images/anatoliy-kanevsky.png';}else{this.parentNode.classList.add('show-placeholder');}">
+      </div>
+      <div class="person-copy prose">
+        <h2>Meet Anatoliy Kanevsky</h2>
+        <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage Inc. and a California real
+        estate and mortgage professional with decades of experience helping borrowers, homeowners,
+        Realtors, investors, and self-employed clients navigate real-world financing scenarios.</p>
+        <p>His background combines mortgage lending, real estate brokerage, luxury residential
+        development, and practical deal analysis. That experience helps California Mortgage focus on
+        clear guidance, smart scenario organization, and human review behind the technology.</p>
+        <ul class="check-list">
+          <li>Founder, West Coast Capital Mortgage Inc.</li>
+          <li>California real estate broker</li>
+          <li>Mortgage and real estate professional experience</li>
+          <li>Luxury residential development background</li>
+          <li>Experience with purchase, refinance, jumbo, DSCR, Non-QM, and self-employed borrower scenarios</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h2>Designed for Real-World Mortgage Scenarios</h2>
-    <p>Most strong borrowers do not fit a one-size-fits-all box. This experience is built for the
-    real situations people actually bring to the table:</p>
-    <ul class="check-list">
-      <li>Self-employed, 1099, and business-owner income</li>
-      <li>Jumbo and high-value California purchases</li>
-      <li>Investor and DSCR / rental-income financing</li>
-      <li>Refinance, lower-payment, and cash-out questions</li>
-      <li>Bank denials and second opinions</li>
-    </ul>
-
-    <h2>Technology Helps Organize the Scenario</h2>
-    <p>Our scenario builder and AI-assisted intake help organize your details quickly and clearly
-    &mdash; goals, property, income type, and timeline &mdash; so nothing important is missing before a
-    professional review. Technology organizes; it does not approve.</p>
-
-    <h2>Human Review Available</h2>
-    <p>Once your scenario is organized, a licensed mortgage professional can review it and guide the
-    next step. The goal is not to push a full application &mdash; it is to understand the situation
-    first. <a href="/about-human-review.html">See the human guidance behind the technology &rarr;</a></p>
-
-    <h2>Powered by West Coast Capital Mortgage Inc.</h2>
-    <p>California Mortgage is the premium educational and concierge entry point. West Coast Capital
-    Mortgage Inc. is the licensed mortgage company behind the professional review and follow-up &mdash;
-    California Mortgage is not trying to replace it.</p>
+<section class="section">
+  <div class="container article">
+    <div class="section-head" style="text-align:left;margin-bottom:1.4rem">
+      <h2>Human Review Behind the Technology</h2>
+      <p class="section-sub" style="margin-left:0">Technology can help organize a scenario, but mortgage
+      options require professional review. California Mortgage is designed to help people explain their
+      situation first, then connect with the right next step.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>Scenario first</h3>
+        <p>Start by explaining the situation before a full application.</p>
+      </article>
+      <article class="card">
+        <h3>Professional review available</h3>
+        <p>A licensed mortgage professional can review the information and guide the next step.</p>
+      </article>
+      <article class="card">
+        <h3>Trust and transparency</h3>
+        <p>No credit check is required to start the concierge review. Full loan options are subject to professional review.</p>
+      </article>
+    </div>
 ''' + TRUST_BLOCK + cta_block(
     "Start With the Situation",
     "Organize your mortgage scenario in a few simple steps, or reach out to a licensed mortgage professional.",
