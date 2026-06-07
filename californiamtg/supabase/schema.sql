@@ -16,6 +16,7 @@ create table if not exists public.visitors (
   last_visit_at  timestamptz,
   visit_count   int default 1,
   consent_status text,
+  site          text,
   landing_page  text,
   referrer      text,
   utm_source    text,
@@ -32,6 +33,7 @@ create table if not exists public.visitors (
 create table if not exists public.visitor_events (
   id          uuid primary key default gen_random_uuid(),
   visitor_id  text,
+  site        text,
   event_name  text,
   page_path   text,
   event_data  jsonb,
@@ -45,6 +47,7 @@ create table if not exists public.leads (
   id                       uuid primary key default gen_random_uuid(),
   visitor_id               text,
   lead_source              text default 'californiamtg.com',
+  site                     text,
   lead_category            text,
   full_name                text,
   phone                    text,

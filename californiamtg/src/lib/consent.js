@@ -108,6 +108,7 @@ export function buildVisitorRecord() {
   const base = {
     visitor_id: getVisitorId(),
     consent_status: status,
+    site: (window.CM_CONFIG && window.CM_CONFIG.SITE) || "",
     first_visit_at: ls(true, K.first),
     last_visit_at: new Date().toISOString(),
     visit_count: getVisitCount()

@@ -85,6 +85,7 @@ function leadRowFromScenario(lead) {
   return {
     visitor_id: getVisitorId(),
     lead_source: "californiamtg.com",
+    site: (window.CM_CONFIG && window.CM_CONFIG.SITE) || "californiamtg.com",
     lead_category: (lead.leadCategories || []).join(", "),
     full_name: c.fullName || "",
     phone: c.phone || "",
@@ -113,6 +114,7 @@ function leadRowFromContactForm(form) {
   return {
     visitor_id: getVisitorId(),
     lead_source: "californiamtg.com",
+    site: (window.CM_CONFIG && window.CM_CONFIG.SITE) || "californiamtg.com",
     lead_category: get("helpWith") || "Contact",
     full_name: get("fullName"),
     phone: get("phone"),

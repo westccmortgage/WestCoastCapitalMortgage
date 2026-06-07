@@ -15,6 +15,7 @@ export async function track(eventName, data) {
   try {
     await supabase.from("visitor_events").insert({
       visitor_id: getVisitorId(),
+      site: (window.CM_CONFIG && window.CM_CONFIG.SITE) || "",
       event_name: eventName,
       page_path: window.location.pathname,
       event_data: data || {}

@@ -228,7 +228,7 @@ def footer():
     </div>
   </div>
 </footer>
-<script src="script.js"></script>
+<script src="script.js"></script>{wc.TRACKING_SCRIPTS}
 </body>
 </html>"""
 
@@ -434,6 +434,11 @@ def main():
         f.write(CSS)
     with open(os.path.join(OUT, "script.js"), "w", encoding="utf-8") as f:
         f.write(wc.JS)  # shared, brand-neutral JS
+    # Supabase tracking — same project, tagged as the Suncoast brand, gold accent.
+    with open(os.path.join(OUT, "assets", "cm-config.js"), "w", encoding="utf-8") as f:
+        f.write(wc.cm_config_js("suncoastcapitalmortgage.com", "#f5a623"))
+    with open(os.path.join(OUT, "assets", "cm-tracking.js"), "w", encoding="utf-8") as f:
+        f.write(wc.CM_TRACKING_JS)
     with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f:
         f.write("/*    /404.html    404\n")
 
