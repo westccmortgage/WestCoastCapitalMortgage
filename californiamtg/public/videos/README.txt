@@ -16,7 +16,7 @@ How it is wired
 
 Poster / fallback image (add this file)
 ---------------------------------------
-  ../images/california_mortgage_poster.jpg
+  ../images/california_mortgage_poster.png
 
 Notes
 -----

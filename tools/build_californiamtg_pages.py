@@ -121,6 +121,16 @@ def page(path, title, description, body, canonical_path):
 <meta name="author" content="West Coast Capital Mortgage Inc.">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://californiamtg.com{canonical_path}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="California Mortgage">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="https://californiamtg.com{canonical_path}">
+<meta property="og:image" content="https://californiamtg.com/public/images/california_mortgage_poster.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="https://californiamtg.com/public/images/california_mortgage_poster.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
