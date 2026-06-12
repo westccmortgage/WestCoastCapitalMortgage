@@ -321,3 +321,8 @@ section{padding:88px 0}
   .founder-grid{grid-template-columns:1fr;gap:26px}
   .founder-photo{max-width:440px;margin:0 auto}
 }
+/* ---------- City links (program hubs) ---------- */
+h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:10px}
+.city-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:6px}
+.city-links a{color:var(--blue);font-size:.92rem;font-weight:600;line-height:1.5}
+.city-links a:hover{color:var(--blue-dark);text-decoration:underline}
