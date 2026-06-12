@@ -24,8 +24,8 @@ card = wc.card
 card_ext = wc.card_ext
 
 # Florida / Suncoast contact line (added to the shared West Coast contact block, Suncoast only).
-FL_PHONE = "(561) 925-9444"
-FL_TEL = "5619259444"
+FL_PHONE = "(561) 956-8866"
+FL_TEL = "5619568866"
 
 
 def contact_block(office_label="Office / Loan Officer Questions"):
