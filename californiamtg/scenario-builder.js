@@ -560,7 +560,7 @@
     var primary = { label: "Continue to AI Scenario Review", href: "https://wcci.online" };
     if (next === "Talk to a licensed mortgage professional") primary = { label: "Talk to a Licensed Mortgage Professional", href: "/contact.html" };
     else if (next === "Get pre-approved") primary = { label: "Continue to Secure Pre-Approval", href: "/apply" };
-    else if (next === "Learn loan options first") primary = { label: "Explore Loan Options", href: "/education/which-program-fits.html" };
+    else if (next === "Learn loan options first") primary = { label: "Explore Loan Options", href: "/loan-options.html" };
 
     var cats = lead.leadCategories.length ? lead.leadCategories.join(" &middot; ") : "Scenario received";
 

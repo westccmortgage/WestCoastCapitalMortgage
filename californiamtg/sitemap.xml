@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://californiamtg.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://californiamtg.com/loan-options</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://californiamtg.com/jumbo-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/high-balance-conforming</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/fha-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/va-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/dscr-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/bank-statement-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/self-employed-mortgage</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/conventional-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/cash-out-refinance</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/non-qm-loans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/second-home-financing</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://californiamtg.com/condo-financing</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://californiamtg.com/scenarios</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://californiamtg.com/rates-payments</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://californiamtg.com/rates-payments</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://californiamtg.com/education</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://californiamtg.com/education/no-credit-check-to-start</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://californiamtg.com/education/which-program-fits</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>

@@ -10,6 +10,7 @@ Run:  python3 tools/build_californiamtg_pages.py
 Output: ../californiamtg/*.html and ../californiamtg/education/*.html
 """
 import os
+import json
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "californiamtg")
 
@@ -33,6 +34,7 @@ HEADER = '''<header class="site-header" id="siteHeader">
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="/index.html#concierge">Concierge</a>
       <a href="/scenarios.html">Scenarios</a>
+      <a href="/loan-options.html">Loan Options</a>
       <a href="/rates-payments.html">Rates &amp; Payments</a>
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
@@ -66,6 +68,7 @@ FOOTER = '''<footer class="site-footer">
       <ul>
         <li><a href="/index.html#concierge">Concierge</a></li>
         <li><a href="/scenarios.html">Scenarios</a></li>
+        <li><a href="/loan-options.html">Loan Options</a></li>
         <li><a href="/rates-payments.html">Rates &amp; Payments</a></li>
         <li><a href="/education/index.html">Education</a></li>
         <li><a href="/about.html">About</a></li>
@@ -108,7 +111,7 @@ FOOTER = '''<footer class="site-footer">
 </footer>'''
 
 
-def page(path, title, description, body, canonical_path):
+def page(path, title, description, body, canonical_path, head_extra=""):
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,7 +138,7 @@ def page(path, title, description, body, canonical_path):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
-</head>
+{head_extra}</head>
 <body>
 
 {HEADER}
@@ -786,6 +789,406 @@ terms_body = hero("Legal", "Terms of Use", "The terms that apply to your use of 
 </section>'''
 
 
+# ============================================================
+# LOAN PROGRAM LANDING PAGES (SEO + lead capture)
+# Each becomes /<slug> with FAQ schema, internal links, and CTAs into the
+# scenario builder + contact. California-focused, compliance-safe.
+# ============================================================
+LOANS = [
+    {
+        "slug": "jumbo-loans", "nav_label": "Jumbo Loans",
+        "card": "Financing above conforming limits for California's higher‑value homes.",
+        "title": "Jumbo Loans in California | California Mortgage",
+        "desc": "Jumbo home loans for higher‑value California properties — purchase and refinance options above conforming and high‑balance limits. Powered by West Coast Capital Mortgage Inc.",
+        "eyebrow": "Loan Program", "h1": "Jumbo Loans in California",
+        "lead": "Financing for California homes priced above the conforming and high‑balance limits — for primary residences, second homes, and investment properties.",
+        "intro": [
+            "A jumbo loan is a mortgage that exceeds the conforming (and high‑balance) loan limits set for a county. In California's higher‑cost markets, many homes fall into jumbo territory, so jumbo financing is a common path for buyers and homeowners of premium properties.",
+            "Jumbo guidelines vary by lender and program. We help organize your scenario first, then a licensed mortgage professional can review the options that fit."],
+        "who": ["Buyers purchasing above the county's conforming/high‑balance limit",
+                "Homeowners refinancing a higher‑value California property",
+                "Self‑employed borrowers needing alternative income documentation",
+                "Second‑home and investment‑property buyers in premium markets"],
+        "how_title": "What's typically reviewed",
+        "how": ["Credit profile and history", "Down payment or available equity",
+                "Income documentation (full‑doc or alternative options for self‑employed)",
+                "Reserves (post‑closing assets)", "Property type and occupancy"],
+        "benefits": ["Finance higher‑value California homes beyond conforming limits",
+                     "Options for primary, second home, and investment properties",
+                     "Full‑doc and alternative‑documentation paths for complex income",
+                     "Structured guidance before a full application"],
+        "faqs": [
+            ("What is the jumbo loan limit in California?",
+             "Jumbo applies above the conforming and high‑balance limits, which vary by county. A licensed mortgage professional can confirm the current limit for your county and whether your scenario is jumbo or high‑balance conforming."),
+            ("Can self‑employed borrowers get a jumbo loan?",
+             "Yes — there are jumbo options that use alternative income documentation, such as bank statements, for self‑employed borrowers. The right path depends on your full picture and is subject to review."),
+            ("How much down payment is needed for a jumbo loan?",
+             "Down payment requirements vary by program, credit, and property type. We help organize your numbers first so a licensed professional can review realistic options.")],
+    },
+    {
+        "slug": "high-balance-conforming", "nav_label": "High‑Balance Conforming",
+        "card": "Above the baseline limit but within your county's high‑cost ceiling.",
+        "title": "High‑Balance Conforming Loans in California | California Mortgage",
+        "desc": "High‑balance conforming loans for California high‑cost counties — above the baseline conforming limit but within the county ceiling, using conventional guidelines.",
+        "eyebrow": "Loan Program", "h1": "High‑Balance Conforming Loans in California",
+        "lead": "For California's higher‑cost counties: loan amounts above the baseline conforming limit but within the county's high‑cost ceiling — under conventional guidelines.",
+        "intro": [
+            "High‑balance conforming loans sit between the standard conforming limit and a full jumbo loan. In designated high‑cost California counties, the conforming ceiling is raised, so some higher loan amounts can still follow conventional guidelines instead of jumbo guidelines.",
+            "Whether your scenario is high‑balance conforming or jumbo depends on your county's limit and your loan amount — something a licensed mortgage professional can confirm."],
+        "who": ["Buyers in high‑cost California counties above the baseline limit",
+                "Homeowners refinancing within the county high‑cost ceiling",
+                "Borrowers who prefer conventional guidelines over jumbo"],
+        "how_title": "What's typically reviewed",
+        "how": ["Your county's current high‑cost conforming ceiling", "Credit and income documentation",
+                "Down payment or equity", "Occupancy and property type"],
+        "benefits": ["Conventional guidelines on higher loan amounts in high‑cost counties",
+                     "Potential alternative to a full jumbo loan", "Options for low‑down‑payment scenarios where eligible"],
+        "faqs": [
+            ("How is high‑balance conforming different from jumbo?",
+             "High‑balance conforming stays within the county's raised conforming ceiling and follows conventional guidelines; jumbo exceeds that ceiling and uses jumbo guidelines. Limits vary by county."),
+            ("Do California loan limits change?",
+             "Yes — conforming and high‑cost limits are set annually and vary by county. A licensed mortgage professional can confirm the current figure for your area."),
+            ("Is mortgage insurance required?",
+             "It depends on your down payment and program. We help organize the scenario so the options can be reviewed.")],
+    },
+    {
+        "slug": "fha-loans", "nav_label": "FHA Loans",
+        "card": "Government‑backed financing with flexible qualifying and a low down payment.",
+        "title": "FHA Loans in California | California Mortgage",
+        "desc": "FHA home loans in California — flexible credit guidelines and low down payment options for eligible buyers. Educational guidance, not a rate quote.",
+        "eyebrow": "Loan Program", "h1": "FHA Loans in California",
+        "lead": "Government‑backed financing with flexible qualifying and a low down payment — a common path for first‑time and credit‑building buyers.",
+        "intro": [
+            "FHA loans are insured by the Federal Housing Administration and are known for flexible qualifying and lower down‑payment options. They can be a strong fit for first‑time buyers or borrowers rebuilding credit.",
+            "FHA has mortgage insurance and county loan limits. We help organize your situation, then a licensed professional can review whether FHA or another program fits best."],
+        "who": ["First‑time homebuyers in California", "Borrowers with limited down payment",
+                "Buyers building or rebuilding credit"],
+        "how_title": "What's typically reviewed",
+        "how": ["Credit profile", "Down payment source", "Income and debt‑to‑income",
+                "Occupancy (primary residence)", "FHA county loan limit"],
+        "benefits": ["Low down‑payment options for eligible buyers", "Flexible credit guidelines",
+                     "A common path for first‑time buyers"],
+        "faqs": [
+            ("How much down payment does FHA require?",
+             "FHA allows a low down payment for eligible borrowers; the exact amount depends on credit and program guidelines and is subject to review."),
+            ("Does FHA have mortgage insurance?",
+             "Yes, FHA loans include mortgage insurance. A licensed professional can explain how it works for your scenario."),
+            ("Is there an FHA loan limit in California?",
+             "Yes — FHA limits vary by county. We can confirm the current limit for your area.")],
+    },
+    {
+        "slug": "va-loans", "nav_label": "VA Loans",
+        "card": "$0‑down options and no monthly mortgage insurance for eligible veterans.",
+        "title": "VA Loans in California | California Mortgage",
+        "desc": "VA home loans in California for eligible veterans, service members, and surviving spouses — $0 down options and no monthly mortgage insurance.",
+        "eyebrow": "Loan Program", "h1": "VA Loans in California",
+        "lead": "A benefit earned through service: $0‑down options and no monthly mortgage insurance for eligible veterans, service members, and surviving spouses.",
+        "intro": [
+            "VA loans are guaranteed by the U.S. Department of Veterans Affairs and offer some of the most borrower‑friendly terms available, including no‑down‑payment options and no monthly mortgage insurance for those who qualify.",
+            "Eligibility is based on service and a Certificate of Eligibility (COE). We help organize the details so a licensed professional can guide the next step."],
+        "who": ["Eligible veterans and active‑duty service members",
+                "National Guard and Reserve members who qualify", "Eligible surviving spouses"],
+        "how_title": "What's typically reviewed",
+        "how": ["Certificate of Eligibility (COE)", "Residual income and credit",
+                "Occupancy (primary residence)", "VA funding fee (and exemptions)"],
+        "benefits": ["$0 down payment options for eligible borrowers", "No monthly mortgage insurance",
+                     "Competitive, service‑earned terms", "Reusable benefit for eligible borrowers"],
+        "faqs": [
+            ("Do VA loans really require no down payment?",
+             "Many eligible borrowers can purchase with no down payment. Eligibility and terms are subject to VA guidelines and review."),
+            ("Is there mortgage insurance on a VA loan?",
+             "VA loans do not have monthly mortgage insurance. There is typically a one‑time VA funding fee, which some borrowers are exempt from."),
+            ("Can the VA benefit be used more than once?",
+             "Yes — the VA benefit can often be reused. A licensed professional can review your entitlement.")],
+    },
+    {
+        "slug": "dscr-loans", "nav_label": "DSCR Investor Loans",
+        "card": "Qualify an investment property using rental cash flow — not personal income.",
+        "title": "DSCR Investor Loans in California | California Mortgage",
+        "desc": "DSCR loans for California real estate investors — qualify rental property using projected rental income instead of personal income. LLC ownership options.",
+        "eyebrow": "Investor Program", "h1": "DSCR Investor Loans in California",
+        "lead": "Qualify an investment property using its rental cash flow — not your personal income. Built for real estate investors and portfolio growth.",
+        "intro": [
+            "A DSCR (Debt‑Service Coverage Ratio) loan qualifies an investment property based on whether its rental income covers the mortgage payment, rather than on the borrower's personal income documents. It's a popular tool for real estate investors.",
+            "DSCR programs often allow ownership in an LLC and can scale across multiple properties. We help organize the scenario so a licensed professional can review the fit."],
+        "who": ["Real estate investors buying or refinancing rentals",
+                "Borrowers who prefer to qualify on property cash flow",
+                "Investors holding property in an LLC", "Long‑term and short‑term rental owners"],
+        "how_title": "What's typically reviewed",
+        "how": ["Property value or purchase price", "Estimated rental income vs. payment (the DSCR)",
+                "Down payment and reserves", "Property type and rental strategy", "Personal vs. LLC ownership"],
+        "benefits": ["Qualify on rental income, not personal income documents",
+                     "LLC ownership options", "Scalable for multiple investment properties",
+                     "Long‑term or short‑term rental scenarios"],
+        "faqs": [
+            ("What is DSCR?",
+             "DSCR is the ratio of a property's rental income to its mortgage payment. Lenders use it to gauge whether the property can support the loan. Required ratios vary by program."),
+            ("Do I need tax returns for a DSCR loan?",
+             "DSCR loans focus on property cash flow rather than personal income documents, though requirements vary and are subject to review."),
+            ("Can I close in an LLC?",
+             "Many DSCR programs allow ownership through an LLC. A licensed professional can confirm options for your scenario.")],
+    },
+    {
+        "slug": "bank-statement-loans", "nav_label": "Bank Statement Loans",
+        "card": "Use bank deposits to document income — built for self‑employed borrowers.",
+        "title": "Bank Statement Loans in California | California Mortgage",
+        "desc": "Bank statement loans for self‑employed California borrowers — qualify using business or personal bank deposits instead of tax returns.",
+        "eyebrow": "Self‑Employed Program", "h1": "Bank Statement Loans in California",
+        "lead": "For self‑employed borrowers whose tax returns don't show their full income — qualify using bank deposits instead.",
+        "intro": [
+            "Bank statement loans let self‑employed borrowers document income through business or personal bank deposits, typically over 12–24 months, rather than tax returns. They're designed for owners whose write‑offs reduce their taxable income.",
+            "These are Non‑QM programs with their own guidelines. We help organize your statements and scenario so a licensed professional can review the options."],
+        "who": ["Self‑employed borrowers and business owners",
+                "1099 and contractor income earners", "Owners whose tax returns understate cash flow"],
+        "how_title": "What's typically reviewed",
+        "how": ["12–24 months of business or personal bank statements", "Credit profile",
+                "Down payment or equity", "Business ownership and time self‑employed"],
+        "benefits": ["Qualify without tax returns", "Income based on real deposit activity",
+                     "Purchase or refinance options", "A fit for complex self‑employed income"],
+        "faqs": [
+            ("How many months of statements are needed?",
+             "Programs commonly use 12 or 24 months of bank statements. The exact requirement depends on the program and is subject to review."),
+            ("Whose statements can be used — business or personal?",
+             "Depending on the program, business statements, personal statements, or both may be used. A licensed professional can review which fits."),
+            ("Is a bank statement loan more expensive?",
+             "Terms vary by program and scenario. We organize the details first so the options can be reviewed without rate promises.")],
+    },
+    {
+        "slug": "self-employed-mortgage", "nav_label": "Self‑Employed Mortgage",
+        "card": "Bank statement, 1099, P&L, and Non‑QM paths for complex income.",
+        "title": "Self‑Employed Mortgage Options in California | California Mortgage",
+        "desc": "Mortgage options for self‑employed California borrowers — bank statement, 1099, P&L, and Non‑QM paths for business owners and contractors.",
+        "eyebrow": "Self‑Employed", "h1": "Self‑Employed Mortgage Options in California",
+        "lead": "Business owners, 1099 earners, and contractors don't fit a one‑size‑fits‑all box. Several paths exist to document income the right way.",
+        "intro": [
+            "Self‑employed borrowers often have strong cash flow that tax returns don't fully reflect. Beyond conventional loans, options like bank statement, 1099, profit‑and‑loss, and other Non‑QM programs are designed for exactly these situations.",
+            "The best path depends on how your income is structured. We help organize it, then a licensed professional can review which program fits."],
+        "who": ["Business owners and the self‑employed", "1099 and contract earners",
+                "Borrowers with mixed or complex income", "Owners whose returns show reduced income"],
+        "how_title": "Paths we can review",
+        "how": ["Bank statement loans (12–24 months of deposits)", "1099‑based income programs",
+                "Profit‑and‑loss (P&L) options", "Conventional/jumbo where tax returns support it",
+                "Other Non‑QM options"],
+        "benefits": ["Multiple ways to document self‑employed income", "Purchase, refinance, and cash‑out scenarios",
+                     "Options for complex or mixed income", "Guidance before a full application"],
+        "faqs": [
+            ("Can I get a mortgage if my tax returns show low income?",
+             "Often yes — programs like bank statement and other Non‑QM options are designed for self‑employed borrowers whose returns understate cash flow, subject to review."),
+            ("How long do I need to be self‑employed?",
+             "Many programs look for a track record, but requirements vary. A licensed professional can review your situation."),
+            ("Which program is best for me?",
+             "It depends on your income structure and goals. Start with your situation and a licensed professional can help narrow it down.")],
+    },
+    {
+        "slug": "conventional-loans", "nav_label": "Conventional Loans",
+        "card": "A common path for primary homes, second homes, and investment properties.",
+        "title": "Conventional Loans in California | California Mortgage",
+        "desc": "Conventional home loans in California — a flexible, common path for primary residences, second homes, and investment properties.",
+        "eyebrow": "Loan Program", "h1": "Conventional Loans in California",
+        "lead": "A flexible, widely used path for many California buyers and homeowners — for primary residences, second homes, and investment properties.",
+        "intro": [
+            "Conventional loans follow guidelines set by Fannie Mae and Freddie Mac and are among the most common mortgages. They offer a range of down‑payment and term options and can include high‑balance amounts in high‑cost counties.",
+            "We help organize your scenario so a licensed professional can review whether conventional or another program is the best fit."],
+        "who": ["Buyers with established credit and income", "Homeowners refinancing to change rate or term",
+                "Second‑home and investment‑property buyers"],
+        "how_title": "What's typically reviewed",
+        "how": ["Credit profile", "Down payment or equity", "Income and debt‑to‑income",
+                "Occupancy and property type", "Mortgage insurance (if applicable)"],
+        "benefits": ["Flexible down‑payment and term options", "Primary, second‑home, and investment options",
+                     "Mortgage‑insurance can often be removed as equity grows", "High‑balance options in high‑cost counties"],
+        "faqs": [
+            ("How much down payment do I need for a conventional loan?",
+             "Down payment options vary by program, occupancy, and credit. We help organize your numbers so realistic options can be reviewed."),
+            ("Can I avoid mortgage insurance?",
+             "Mortgage insurance depends on your down payment and program; it can often be removed later as equity grows. A licensed professional can explain the options."),
+            ("Can I use a conventional loan for a rental property?",
+             "Yes, conventional financing can be used for investment properties, subject to guidelines and review.")],
+    },
+    {
+        "slug": "cash-out-refinance", "nav_label": "Cash‑Out Refinance",
+        "card": "Access home equity for renovations, investing, or consolidation.",
+        "title": "Cash‑Out Refinance in California | California Mortgage",
+        "desc": "Cash‑out refinance options in California — access home equity for renovations, investing, debt consolidation, or other goals. Subject to review and approval.",
+        "eyebrow": "Refinance", "h1": "Cash‑Out Refinance in California",
+        "lead": "Turn a portion of your California home equity into funds for renovations, investing, debt consolidation, or other goals.",
+        "intro": [
+            "A cash‑out refinance replaces your current mortgage with a new, larger loan and returns the difference to you in cash, based on your available equity. Homeowners use it for renovations, investment, consolidating higher‑interest debt, and more.",
+            "Whether a cash‑out refinance makes sense depends on your equity, goals, and the overall numbers. We help organize the scenario for review."],
+        "who": ["Homeowners with built‑up equity", "Owners planning renovations or investments",
+                "Borrowers consolidating higher‑interest debt"],
+        "how_title": "What's typically reviewed",
+        "how": ["Current home value and equity", "Existing loan balance",
+                "Credit and income", "Goals for the funds and how long you'll keep the property"],
+        "benefits": ["Access equity for flexible goals", "Potentially consolidate higher‑interest debt",
+                     "Available on primary, second‑home, and investment properties (where eligible)"],
+        "faqs": [
+            ("How much equity can I access?",
+             "The amount depends on your home value, loan balance, program limits, and review. We help organize the numbers first."),
+            ("Is a cash‑out refinance a good idea?",
+             "It depends on your goals, your rate, closing costs, and how long you'll keep the property. A licensed professional can review the full picture."),
+            ("Can I do a cash‑out refinance on a rental?",
+             "Yes, cash‑out options exist for investment properties, subject to guidelines and review.")],
+    },
+    {
+        "slug": "non-qm-loans", "nav_label": "Non‑QM Loans",
+        "card": "Flexible programs for unique income, credit, or property scenarios.",
+        "title": "Non‑QM Loans in California | California Mortgage",
+        "desc": "Non‑QM loans in California — flexible mortgage programs for self‑employed income, investors, and unique credit or property scenarios.",
+        "eyebrow": "Loan Program", "h1": "Non‑QM Loans in California",
+        "lead": "Flexible programs for borrowers who don't fit standard guidelines — self‑employed income, investors, and unique credit or property situations.",
+        "intro": [
+            "Non‑QM (non‑qualified mortgage) programs use alternative ways to document income and evaluate a borrower, beyond standard conventional or government guidelines. They include bank statement, DSCR, asset‑based, and other options.",
+            "Non‑QM is broad — the right path depends entirely on your scenario. We help organize it for a licensed professional to review."],
+        "who": ["Self‑employed and business‑owner borrowers", "Real estate investors",
+                "Borrowers with recent credit events or unique situations", "Foreign‑national and asset‑based scenarios (where eligible)"],
+        "how_title": "Common Non‑QM paths",
+        "how": ["Bank statement loans", "DSCR investor loans", "Asset‑based qualification",
+                "1099 and P&L options", "Other alternative‑documentation programs"],
+        "benefits": ["Flexible documentation and qualifying", "Solutions for complex or non‑traditional income",
+                     "Purchase, refinance, and investment scenarios", "A second look when a bank says no"],
+        "faqs": [
+            ("What does Non‑QM mean?",
+             "Non‑QM means a loan that doesn't meet the standard 'qualified mortgage' guidelines, using alternative documentation or qualifying methods instead. Terms vary widely by program."),
+            ("Are Non‑QM loans safe?",
+             "Non‑QM loans are legitimate mortgage programs offered by licensed lenders; they simply use alternative qualifying. All options are subject to review and approval."),
+            ("Who should consider Non‑QM?",
+             "Self‑employed borrowers, investors, and those with unique credit or property scenarios often benefit. Start with your situation for a professional review.")],
+    },
+    {
+        "slug": "second-home-financing", "nav_label": "Second Home Financing",
+        "card": "Vacation and second‑home options across California.",
+        "title": "Second Home Financing in California | California Mortgage",
+        "desc": "Second home and vacation home financing in California — options for buyers purchasing a getaway or part‑time residence.",
+        "eyebrow": "Loan Program", "h1": "Second Home Financing in California",
+        "lead": "Buying a vacation place or part‑time residence in California? Second‑home financing has its own guidelines, separate from primary and investment loans.",
+        "intro": [
+            "Second‑home (vacation home) financing is for a property you'll use part of the year, not as a rental business. It typically follows different occupancy and down‑payment guidelines than primary or investment loans.",
+            "We help organize your scenario so a licensed professional can review whether a second‑home or investment structure fits your plans."],
+        "who": ["Buyers purchasing a California vacation or getaway home",
+                "Owners refinancing an existing second home", "Borrowers splitting time between residences"],
+        "how_title": "What's typically reviewed",
+        "how": ["Intended use and occupancy", "Down payment or equity", "Credit and income",
+                "Property type and location"],
+        "benefits": ["Financing tailored to part‑time residences", "Conventional and jumbo options where eligible",
+                     "Guidance on second‑home vs. investment structure"],
+        "faqs": [
+            ("What's the difference between a second home and an investment property?",
+             "A second home is for personal part‑time use; an investment property is held to generate rental income. They follow different guidelines, which a licensed professional can explain."),
+            ("How much down payment for a second home?",
+             "It varies by program and credit. We help organize the numbers so options can be reviewed."),
+            ("Can I rent out my second home?",
+             "Occupancy rules differ by program; significant rental use may make it an investment property. A licensed professional can review your plans.")],
+    },
+    {
+        "slug": "condo-financing", "nav_label": "Condo Financing",
+        "card": "Condo‑specific guidelines for California condominium purchases and refinances.",
+        "title": "Condo Financing in California | California Mortgage",
+        "desc": "Condo financing in California — condominium‑specific mortgage guidelines for purchases and refinances, including warrantable and non‑warrantable scenarios.",
+        "eyebrow": "Loan Program", "h1": "Condo Financing in California",
+        "lead": "Condominiums have their own financing guidelines. We help organize condo scenarios — including warrantable and non‑warrantable situations — for review.",
+        "intro": [
+            "Financing a condo involves reviewing both you as the borrower and the condo project itself (HOA, budget, occupancy mix, and more). Projects are often classified as 'warrantable' or 'non‑warrantable,' which affects available programs.",
+            "If a condo has been difficult to finance elsewhere, there may still be a path. We help organize the details for a licensed professional to review."],
+        "who": ["Buyers purchasing a California condominium", "Owners refinancing a condo",
+                "Borrowers facing non‑warrantable condo challenges"],
+        "how_title": "What's typically reviewed",
+        "how": ["Borrower credit, income, and down payment", "Condo project status (warrantable vs. non‑warrantable)",
+                "HOA and project details", "Occupancy and property type"],
+        "benefits": ["Guidance on warrantable and non‑warrantable condos", "Conventional, government, and Non‑QM options where eligible",
+                     "A second look when a condo was declined elsewhere"],
+        "faqs": [
+            ("What is a non‑warrantable condo?",
+             "A non‑warrantable condo is a project that doesn't meet standard agency guidelines (due to occupancy mix, litigation, budget, or other factors). Specialized programs may still finance it, subject to review."),
+            ("Why was my condo loan denied?",
+             "Condo denials often relate to the project rather than the borrower. A licensed professional can review the project details and possible options."),
+            ("Are condo loans different from house loans?",
+             "Yes — condo financing adds a review of the project and HOA in addition to the borrower, which can affect the program and terms.")],
+    },
+]
+
+def _ul(items):
+    return '<ul class="check-list">' + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+
+def faq_jsonld(faqs):
+    data = {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": q,
+                            "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]}
+    return '<script type="application/ld+json">' + json.dumps(data) + '</script>\n'
+
+def loan_cards(exclude=None):
+    cards = ""
+    for d in LOANS:
+        if d["slug"] == exclude:
+            continue
+        cards += (f'<a class="card audience-card" href="/{d["slug"]}.html">'
+                  f'<h3>{d["nav_label"]}</h3><p>{d["card"]}</p>'
+                  f'<span class="link-arrow">Learn more <span aria-hidden="true">&rarr;</span></span></a>')
+    return cards
+
+def loan_body(d):
+    intro = "".join(f"<p>{p}</p>" for p in d["intro"])
+    faqs = "".join(f'<div class="info-card"><h3>{q}</h3><p>{a}</p></div>' for q, a in d["faqs"])
+    return hero(d["eyebrow"], d["h1"], d["lead"]) + f'''
+<section class="section">
+  <div class="container article prose">
+    {intro}
+    <h2>Who it's for</h2>
+    {_ul(d["who"])}
+    <h2>{d["how_title"]}</h2>
+    {_ul(d["how"])}
+    <h2>Why borrowers choose it</h2>
+    {_ul(d["benefits"])}
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container article">
+    <div class="section-head" style="text-align:left;margin-bottom:1.2rem">
+      <p class="eyebrow gold">FAQ</p>
+      <h2>{d["nav_label"]} &mdash; common questions</h2>
+    </div>
+    <div class="edu-grid">{faqs}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container article">
+    <h2>Explore other California loan programs</h2>
+    <div class="edu-grid">{loan_cards(exclude=d["slug"])}</div>
+''' + cta_block(
+        "See Which Program Fits Your Scenario",
+        "Start with your situation &mdash; a few simple questions, then a licensed mortgage professional can review the right path.",
+        [BTN_START, BTN_CONTACT_PRO]) + compliance(
+        "This information is for educational purposes only and is not a loan approval, loan commitment, or rate quote. "
+        "Program availability, terms, and eligibility are subject to review and approval by a licensed mortgage professional.") + '''
+  </div>
+</section>'''
+
+loan_options_body = hero(
+    "Loan Options",
+    "California Mortgage Loan Programs",
+    "Explore the loan programs we work with across California &mdash; purchase, refinance, jumbo, government, self-employed, and investor options. Not sure which fits? Start with your situation."
+) + '''
+<section class="section">
+  <div class="container article">
+    <div class="edu-grid">''' + loan_cards() + '''</div>
+''' + cta_block(
+    "Not Sure Which Program Fits?",
+    "You do not need to know the program. Start with your situation and a licensed mortgage professional can help narrow it down.",
+    [BTN_START, BTN_CONTACT_PRO]) + compliance() + '''
+  </div>
+</section>'''
+
+LOAN_ENTRIES = [
+    ("loan-options.html", "Loan Options | California Mortgage Programs",
+     "Explore California mortgage loan programs — jumbo, high-balance conforming, FHA, VA, DSCR, bank statement, self-employed, conventional, cash-out refinance, Non-QM, second home, and condo financing.",
+     loan_options_body, "/loan-options"),
+]
+for _d in LOANS:
+    LOAN_ENTRIES.append((f'{_d["slug"]}.html', _d["title"], _d["desc"], loan_body(_d),
+                         f'/{_d["slug"]}', faq_jsonld(_d["faqs"])))
+
+
 PAGES = [
     ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage Inc. can review it.", contact_body, "/contact"),
     ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage Inc.", about_body, "/about"),
@@ -800,7 +1203,11 @@ PAGES = [
     ("terms.html", "Terms of Use | California Mortgage", "Terms that apply to your use of the California Mortgage website.", terms_body, "/terms"),
 ]
 
+ALL_PAGES = PAGES + LOAN_ENTRIES
+
 if __name__ == "__main__":
-    for path, title, desc, body, canon in PAGES:
-        page(path, title, desc, body, canon)
-    print("Done:", len(PAGES), "pages.")
+    for entry in ALL_PAGES:
+        path, title, desc, body, canon = entry[:5]
+        head_extra = entry[5] if len(entry) > 5 else ""
+        page(path, title, desc, body, canon, head_extra)
+    print("Done:", len(ALL_PAGES), "pages.")
