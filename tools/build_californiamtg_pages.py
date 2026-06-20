@@ -41,7 +41,7 @@ HEADER = '''<header class="site-header" id="siteHeader">
       <a href="/contact.html">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-charcoal" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Begin</a>
+      <a class="btn btn-charcoal" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
       </button>
