@@ -119,6 +119,9 @@
   ];
 
   var STORAGE_KEY = "cm_tutorial_done_v1";
+  // Shared still image for the avatar when a step has no video clip.
+  // Drop a file here to use it; if it is missing a neutral placeholder shows.
+  var AVATAR_IMG = "/assets/video/avatar/navigator.jpg";
   var MOBILE = function () { return window.matchMedia("(max-width: 760px)").matches; };
 
   /* Are we running inside the homepage iframe embed? If so, the parent
@@ -133,6 +136,7 @@
      ---------------------------------------------------------- */
   var state = { idx: 0, order: [], open: false, prevFocus: null };
   var els = {};
+  var brokenImg = {}; // remembers avatar image srcs that failed to load
 
   function qTarget(key) {
     if (!key) return null;
@@ -166,23 +170,36 @@
     root.innerHTML =
       '<div class="cmtut__spot" data-tut-spot></div>' +
       '<div class="cmtut__card" data-tut-card>' +
-        '<button type="button" class="cmtut__close" data-tut-skip aria-label="Close tutorial">×</button>' +
-        '<div class="cmtut__avatar" data-tut-avatar>' +
-          '<div class="cmtut__media" data-tut-media hidden>' +
-            '<video class="cmtut__video" data-tut-video playsinline preload="metadata"></video>' +
-            '<button type="button" class="cmtut__mute" data-tut-mute aria-label="Unmute" hidden>&#128263;</button>' +
+        // LEFT — avatar / video
+        '<div class="cmtut__media" data-tut-media>' +
+          '<div class="cmtut__media-ph" data-tut-ph aria-hidden="true">' +
+            '<svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">' +
+              '<circle cx="32" cy="24" r="12" fill="rgba(255,255,255,.85)"/>' +
+              '<path d="M12 58c0-12 9-19 20-19s20 7 20 19Z" fill="rgba(255,255,255,.85)"/>' +
+            '</svg>' +
           '</div>' +
-          '<span class="cmtut__avatar-tag">Financial Navigator</span>' +
-          '<p class="cmtut__avatar-text" data-tut-avatartext>Avatar explanation will appear here</p>' +
+          '<img class="cmtut__img" data-tut-img alt="" />' +
+          '<video class="cmtut__video" data-tut-video playsinline preload="metadata"></video>' +
+          '<span class="cmtut__badge"><i></i>Financial Navigator</span>' +
+          '<button type="button" class="cmtut__mute" data-tut-mute aria-label="Unmute" hidden>&#128263;</button>' +
+          '<div class="cmtut__media-foot">Your Financial Navigator</div>' +
         '</div>' +
-        '<p class="cmtut__step" data-tut-count>Step 1 of 1</p>' +
-        '<h3 class="cmtut__title" data-tut-title></h3>' +
-        '<p class="cmtut__body" data-tut-body></p>' +
-        '<div class="cmtut__nav">' +
-          '<button type="button" class="cmtut__btn cmtut__btn--ghost" data-tut-skip>Skip</button>' +
-          '<div class="cmtut__nav-right">' +
-            '<button type="button" class="cmtut__btn cmtut__btn--ghost" data-tut-back>Back</button>' +
-            '<button type="button" class="cmtut__btn cmtut__btn--primary" data-tut-next>Next</button>' +
+        // RIGHT — text + controls
+        '<div class="cmtut__panel">' +
+          '<button type="button" class="cmtut__close" data-tut-skip aria-label="Close tutorial">&#215;</button>' +
+          '<p class="cmtut__step" data-tut-count>Step 1 of 1</p>' +
+          '<h3 class="cmtut__title" data-tut-title></h3>' +
+          '<span class="cmtut__rule" aria-hidden="true"></span>' +
+          '<p class="cmtut__body" data-tut-body></p>' +
+          '<div class="cmtut__nav">' +
+            '<button type="button" class="cmtut__btn cmtut__btn--skip" data-tut-skip>Skip</button>' +
+            '<div class="cmtut__nav-right">' +
+              '<button type="button" class="cmtut__btn cmtut__btn--back" data-tut-back>Back</button>' +
+              '<button type="button" class="cmtut__btn cmtut__btn--next" data-tut-next>' +
+                '<span data-tut-nextlabel>Next</span>' +
+                '<svg class="cmtut__chev" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5.5 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '</button>' +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -192,9 +209,9 @@
     els.root = root;
     els.spot = root.querySelector("[data-tut-spot]");
     els.card = root.querySelector("[data-tut-card]");
-    els.avatar = root.querySelector("[data-tut-avatar]");
-    els.avatarText = root.querySelector("[data-tut-avatartext]");
     els.media = root.querySelector("[data-tut-media]");
+    els.ph = root.querySelector("[data-tut-ph]");
+    els.img = root.querySelector("[data-tut-img]");
     els.video = root.querySelector("[data-tut-video]");
     els.mute = root.querySelector("[data-tut-mute]");
     els.count = root.querySelector("[data-tut-count]");
@@ -202,6 +219,7 @@
     els.body = root.querySelector("[data-tut-body]");
     els.back = root.querySelector("[data-tut-back]");
     els.next = root.querySelector("[data-tut-next]");
+    els.nextLabel = root.querySelector("[data-tut-nextlabel]");
 
     // Buttons
     Array.prototype.forEach.call(root.querySelectorAll("[data-tut-skip]"), function (b) {
@@ -218,12 +236,13 @@
       els.mute.setAttribute("aria-label", els.video.muted ? "Unmute" : "Mute");
       if (!els.video.muted) { try { els.video.play(); } catch (e2) {} }
     });
-    // If the clip path is wrong/missing, fall back to text silently.
-    els.video.addEventListener("error", function () { showMedia(false); });
-
-    // Clicking the dimmed backdrop (not the card) advances.
-    root.addEventListener("click", function (e) {
-      if (e.target === root || e.target === els.spot) advance();
+    // If the clip is wrong/missing, fall back to the avatar image silently.
+    els.video.addEventListener("error", function () { showLayer("img"); els.mute.hidden = true; });
+    // If the image is also missing, remember it and show the placeholder
+    // (caching avoids re-requesting a 404 on every step).
+    els.img.addEventListener("error", function () {
+      if (els.img.getAttribute("src")) brokenImg[els.img.getAttribute("src")] = true;
+      showLayer("ph");
     });
 
     // Reposition on resize/scroll while open.
@@ -278,13 +297,14 @@
     els.count.textContent = "Step " + (state.idx + 1) + " of " + state.order.length;
     els.title.textContent = step.title;
     els.body.textContent = step.body;
-    els.avatarText.textContent = step.avatarText || "Avatar explanation will appear here";
 
-    // Avatar media: play the step's clip if one is set, else show text.
+    // Avatar media: video → image → neutral placeholder.
     loadStepMedia(step);
 
+    var last = state.idx === state.order.length - 1;
     els.back.disabled = state.idx === 0;
-    els.next.textContent = (state.idx === state.order.length - 1) ? "Done" : "Next";
+    els.nextLabel.textContent = last ? "Done" : "Next";
+    els.next.classList.toggle("is-done", last);
 
     applyDemo(step);
 
@@ -318,52 +338,60 @@
     return { top: top, bottom: bottom };
   }
 
-  /* ---- Avatar video (optional, per step) ---- */
-  function showMedia(on) {
-    if (!els.media) return;
-    els.media.hidden = !on;
-    if (els.avatar) els.avatar.classList.toggle("cmtut__avatar--video", !!on);
-    if (!on && els.mute) els.mute.hidden = true;
+  /* ---- Avatar media (video → image → placeholder) ----
+     Each step may set videoSrc and/or imageSrc; otherwise the shared
+     AVATAR_IMG still is used, and if that is missing too a neutral
+     placeholder shows. Nothing here can throw or stall the tour. */
+  function showLayer(which) {
+    if (els.video) els.video.style.display = which === "video" ? "block" : "none";
+    if (els.img) els.img.style.display = which === "img" ? "block" : "none";
+    if (els.ph) els.ph.style.display = which === "ph" ? "flex" : "none";
   }
 
   function loadStepMedia(step) {
-    if (!els.video) return;
-    var v = els.video;
-    // Stop whatever was playing.
-    try { v.pause(); } catch (e) {}
+    var v = els.video, img = els.img;
+    try { if (v) v.pause(); } catch (e) {}
+    if (els.mute) els.mute.hidden = true;
 
-    var src = step.videoSrc;
-    if (!src) {                       // no clip for this step → text only
-      showMedia(false);
-      v.removeAttribute("src");
-      try { v.load(); } catch (e) {}
-      return;
+    var imgSrc = step.imageSrc || AVATAR_IMG;
+
+    function tryImage() {
+      if (!img || !imgSrc || brokenImg[imgSrc]) { showLayer("ph"); return; }
+      if (img.getAttribute("src") !== imgSrc) img.setAttribute("src", imgSrc);
+      // 'load' shows img; 'error' (wired in buildOverlay) falls to placeholder.
+      if (img.complete && img.naturalWidth > 0) showLayer("img");
+      else { showLayer("ph"); img.onload = function () { showLayer("img"); }; }
     }
 
-    if (v.getAttribute("src") !== src) {
-      v.setAttribute("src", src);
-      try { v.load(); } catch (e) {}
+    if (step.videoSrc && v) {
+      if (v.getAttribute("src") !== step.videoSrc) {
+        v.setAttribute("src", step.videoSrc);
+        try { v.load(); } catch (e) {}
+      }
+      if (imgSrc && img) v.setAttribute("poster", imgSrc);
+      v.muted = true;
+      if (els.mute) {
+        els.mute.hidden = false;
+        els.mute.innerHTML = "&#128263;";
+        els.mute.setAttribute("aria-label", "Unmute");
+      }
+      showLayer("video");
+      var p = v.play();
+      if (p && typeof p.catch === "function") p.catch(function () {/* autoplay blocked: poster stays */});
+    } else {
+      if (v) { v.removeAttribute("src"); try { v.load(); } catch (e) {} }
+      tryImage();
     }
-    // Autoplay requires muted; a clip with sound shows the unmute button.
-    v.muted = true;
-    els.mute.hidden = false;
-    els.mute.innerHTML = "&#128263;";
-    els.mute.setAttribute("aria-label", "Unmute");
-    showMedia(true);
-    var p = v.play();
-    if (p && typeof p.catch === "function") p.catch(function () {/* ignore */});
-
-    // Optional separate audio track (rarely needed; structure kept).
-    if (step.audioSrc) { try { new Audio(step.audioSrc); } catch (e) {} }
   }
 
-  /* Place the spotlight over the target and the card beside/below it. */
+  /* Glow the target and center the wide card over the calculator, nudging
+     it to the band half opposite the target so the field stays peeking. */
   function positionFor(target) {
     if (!target) return;
     var r = target.getBoundingClientRect();
-    var pad = 8;
+    var pad = 7;
 
-    // Spotlight box (the dim is a big box-shadow around this rect).
+    // Subtle gold glow ring around the active field.
     var s = els.spot.style;
     s.top = (r.top - pad) + "px";
     s.left = (r.left - pad) + "px";
@@ -372,46 +400,38 @@
 
     var card = els.card;
     var band = getBand();
+    var bandH = band.bottom - band.top;
+    var ch = card.offsetHeight || 360;
 
     if (MOBILE()) {
-      if (EMBEDDED) {
-        // Embedded mobile: CSS can't dock to the *visible* bottom (fixed
-        // resolves against the tall content), so place it with JS.
-        var mch = card.offsetHeight || 220;
-        card.style.position = "fixed";
-        card.style.left = "8px";
-        card.style.right = "8px";
-        card.style.width = "auto";
-        card.style.bottom = "auto";
-        card.style.top = Math.round(band.bottom - mch - 10) + "px";
-      } else {
-        // Standalone mobile: CSS bottom-sheet handles layout.
-        card.removeAttribute("style");
-      }
+      // Stacked layout (CSS). Place vertically within the visible band.
+      card.style.position = "fixed";
+      card.style.left = "10px";
+      card.style.right = "10px";
+      card.style.width = "auto";
+      card.style.bottom = "auto";
+      var mt = band.top + Math.max(10, (bandH - ch) / 2);
+      if (ch > bandH - 16) mt = band.top + 8;
+      card.style.top = Math.round(mt) + "px";
       return;
     }
 
-    // Desktop: try right of target, then left, then below, then above —
-    // clamped to the currently visible band so it never lands off-screen.
-    var cw = card.offsetWidth || 340;
-    var ch = card.offsetHeight || 240;
+    // Desktop: horizontally centered; vertically biased away from the target.
     var vw = window.innerWidth;
-    var gap = 18, top, left;
-    var minTop = band.top + 12, maxTop = band.bottom - ch - 12;
-    if (maxTop < minTop) maxTop = minTop;
+    var cw = card.offsetWidth || 900;
+    var left = clamp(Math.round((vw - cw) / 2), 12, Math.max(12, vw - cw - 12));
 
-    if (r.right + gap + cw <= vw) {                   // right
-      left = r.right + gap;
-      top = clamp(r.top, minTop, maxTop);
-    } else if (r.left - gap - cw >= 0) {              // left
-      left = r.left - gap - cw;
-      top = clamp(r.top, minTop, maxTop);
-    } else if (r.bottom + gap + ch <= band.bottom) {  // below
-      top = r.bottom + gap;
-      left = clamp(r.left, 12, vw - cw - 12);
-    } else {                                          // above
-      top = clamp(r.top - gap - ch, minTop, maxTop);
-      left = clamp(r.left, 12, vw - cw - 12);
+    var top;
+    var topSlot = band.top + 16;
+    var botSlot = band.bottom - ch - 16;
+    if (ch <= bandH - 24 && botSlot > topSlot) {
+      var targetMid = r.top + r.height / 2;
+      // Target in the upper half → drop the card low (and vice versa) so the
+      // highlighted field stays visible in the opposite half.
+      top = (targetMid < band.top + bandH * 0.5) ? botSlot : topSlot;
+      top = clamp(top, topSlot, botSlot);
+    } else {
+      top = clamp(band.top + (bandH - ch) / 2, 12, Math.max(12, band.bottom - ch - 12));
     }
 
     card.style.position = "fixed";
@@ -451,13 +471,19 @@
       try { window.parent.postMessage({ cmTut: "needViewport" }, "*"); } catch (e) {}
     }
     render();
-    window.setTimeout(function () { els.next.focus(); }, 60);
+    // Trigger the fade/slide-in on the next frame.
+    requestAnimationFrame(function () { els.root.classList.add("cmtut--in"); });
+    window.setTimeout(function () { try { els.next.focus(); } catch (e) {} }, 80);
   }
 
   function finish(completed) {
     state.open = false;
     if (els.video) { try { els.video.pause(); } catch (e) {} }
-    if (els.root) els.root.hidden = true;
+    if (els.root) {
+      els.root.classList.remove("cmtut--in");
+      // Hide after the exit transition so it fades out gracefully.
+      window.setTimeout(function () { if (!state.open && els.root) els.root.hidden = true; }, 260);
+    }
     document.body.classList.remove("cmtut-lock");
     document.removeEventListener("keydown", onKey, true);
     if (EMBEDDED) { try { window.parent.postMessage({ cmTut: "close" }, "*"); } catch (e) {} }
@@ -470,6 +496,19 @@
     if (e.key === "Escape") { e.preventDefault(); finish(true); }
     else if (e.key === "ArrowRight") { e.preventDefault(); advance(); }
     else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    else if (e.key === "Tab") { trapFocus(e); }   // keep focus inside the modal
+  }
+
+  // Simple focus trap across the modal's focusable controls.
+  function trapFocus(e) {
+    if (!els.card) return;
+    var f = els.card.querySelectorAll(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], a = document.activeElement;
+    if (e.shiftKey && (a === first || !els.card.contains(a))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
   }
 
   /* ----------------------------------------------------------
