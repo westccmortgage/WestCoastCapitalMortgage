@@ -106,8 +106,10 @@ body.cmtut-lock{overflow:hidden}
 .cmtut__btn:disabled{opacity:.4;cursor:default}
 
 /* ---- Mobile: card docks to the bottom ---- */
+/* Standalone only — when embedded in the homepage iframe the card is
+   positioned with JS against the visible band (see tutorial.js). */
 @media (max-width:760px){
-  .cmtut__card{
+  .cmtut:not(.cmtut--embed) .cmtut__card{
     left:8px!important;right:8px!important;
     bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;
     top:auto!important;

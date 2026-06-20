@@ -121,6 +121,13 @@
   var STORAGE_KEY = "cm_tutorial_done_v1";
   var MOBILE = function () { return window.matchMedia("(max-width: 760px)").matches; };
 
+  /* Are we running inside the homepage iframe embed? If so, the parent
+     page owns the scrollbar, so we drive it through a postMessage bridge
+     (see the matching handler in the homepage). When standalone, we use
+     normal in-page scrolling. */
+  var EMBEDDED = (function () { try { return window.top !== window.self; } catch (e) { return true; } })();
+  var viewport = { iframeTop: 0, parentH: 640 }; // updated by the parent while embedded
+
   /* ----------------------------------------------------------
      2. State + element refs (built lazily)
      ---------------------------------------------------------- */
@@ -154,6 +161,7 @@
     root.setAttribute("aria-modal", "true");
     root.setAttribute("aria-label", "How this tool works");
     root.hidden = true;
+    if (EMBEDDED) root.classList.add("cmtut--embed");
 
     root.innerHTML =
       '<div class="cmtut__spot" data-tut-spot></div>' +
@@ -203,6 +211,15 @@
     // Reposition on resize/scroll while open.
     window.addEventListener("resize", onReflow, { passive: true });
     window.addEventListener("scroll", onReflow, { passive: true });
+
+    // Embed bridge: the parent feeds us its visible viewport so the card
+    // stays within the slice of the studio the user can actually see.
+    window.addEventListener("message", function (e) {
+      var d = e && e.data; if (!d || d.cmTut !== "viewport") return;
+      viewport.iframeTop = typeof d.iframeTop === "number" ? d.iframeTop : viewport.iframeTop;
+      viewport.parentH = d.parentH || viewport.parentH;
+      if (state.open) positionFor(currentTarget());
+    });
   }
 
   function onReflow() { if (state.open) positionFor(currentTarget()); }
@@ -254,11 +271,34 @@
 
     applyDemo(step);
 
-    // Scroll the target into view, then spotlight it.
-    try { target.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
-    // Wait a tick for smooth-scroll to settle before measuring.
-    window.setTimeout(function () { positionFor(currentTarget()); }, 220);
+    // Scroll the target into view. When embedded, the parent owns the
+    // scrollbar, so ask it to center the target; otherwise scroll in-page.
+    var r = target.getBoundingClientRect();
+    if (EMBEDDED) {
+      try { window.parent.postMessage({ cmTut: "scrollTo", y: r.top + r.height / 2 }, "*"); } catch (e) {}
+    } else {
+      try { target.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+    }
     positionFor(target);
+    // Re-measure after the smooth scroll settles.
+    window.setTimeout(function () { positionFor(currentTarget()); }, 260);
+  }
+
+  /* The vertical band (in the SAME coordinate space as getBoundingClientRect
+     and our fixed-positioned overlay) that the user can currently see.
+       • Standalone: the whole window viewport.
+       • Embedded: the slice of the studio visible inside the parent page. */
+  function getBand() {
+    if (!EMBEDDED) return { top: 0, bottom: window.innerHeight };
+    var top = Math.max(0, -viewport.iframeTop);
+    var bottom = viewport.parentH - viewport.iframeTop;
+    var contentH = document.documentElement.scrollHeight;
+    if (bottom > contentH) bottom = contentH;
+    if (bottom - top < 160) {                 // viewport not ready / tiny sliver
+      var h = Math.min(viewport.parentH || 640, 640);
+      return { top: top, bottom: top + h };
+    }
+    return { top: top, bottom: bottom };
   }
 
   /* Place the spotlight over the target and the card beside/below it. */
@@ -275,29 +315,46 @@
     s.height = (r.height + pad * 2) + "px";
 
     var card = els.card;
+    var band = getBand();
+
     if (MOBILE()) {
-      // Mobile: card docks to the bottom (CSS handles layout).
-      card.removeAttribute("style");
+      if (EMBEDDED) {
+        // Embedded mobile: CSS can't dock to the *visible* bottom (fixed
+        // resolves against the tall content), so place it with JS.
+        var mch = card.offsetHeight || 220;
+        card.style.position = "fixed";
+        card.style.left = "8px";
+        card.style.right = "8px";
+        card.style.width = "auto";
+        card.style.bottom = "auto";
+        card.style.top = Math.round(band.bottom - mch - 10) + "px";
+      } else {
+        // Standalone mobile: CSS bottom-sheet handles layout.
+        card.removeAttribute("style");
+      }
       return;
     }
 
-    // Desktop: try right of target, then left, then below.
+    // Desktop: try right of target, then left, then below, then above —
+    // clamped to the currently visible band so it never lands off-screen.
     var cw = card.offsetWidth || 340;
     var ch = card.offsetHeight || 240;
-    var vw = window.innerWidth, vh = window.innerHeight;
+    var vw = window.innerWidth;
     var gap = 18, top, left;
+    var minTop = band.top + 12, maxTop = band.bottom - ch - 12;
+    if (maxTop < minTop) maxTop = minTop;
 
-    if (r.right + gap + cw <= vw) {            // right
+    if (r.right + gap + cw <= vw) {                   // right
       left = r.right + gap;
-      top = clamp(r.top, 12, vh - ch - 12);
-    } else if (r.left - gap - cw >= 0) {       // left
+      top = clamp(r.top, minTop, maxTop);
+    } else if (r.left - gap - cw >= 0) {              // left
       left = r.left - gap - cw;
-      top = clamp(r.top, 12, vh - ch - 12);
-    } else if (r.bottom + gap + ch <= vh) {    // below
+      top = clamp(r.top, minTop, maxTop);
+    } else if (r.bottom + gap + ch <= band.bottom) {  // below
       top = r.bottom + gap;
       left = clamp(r.left, 12, vw - cw - 12);
-    } else {                                   // above
-      top = clamp(r.top - gap - ch, 12, vh - ch - 12);
+    } else {                                          // above
+      top = clamp(r.top - gap - ch, minTop, maxTop);
       left = clamp(r.left, 12, vw - cw - 12);
     }
 
@@ -306,6 +363,7 @@
     card.style.left = Math.round(left) + "px";
     card.style.right = "auto";
     card.style.bottom = "auto";
+    card.style.width = "";
   }
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
@@ -332,6 +390,10 @@
     els.root.hidden = false;
     document.body.classList.add("cmtut-lock");
     document.addEventListener("keydown", onKey, true);
+    if (EMBEDDED) {
+      try { window.parent.postMessage({ cmTut: "open" }, "*"); } catch (e) {}
+      try { window.parent.postMessage({ cmTut: "needViewport" }, "*"); } catch (e) {}
+    }
     render();
     window.setTimeout(function () { els.next.focus(); }, 60);
   }
@@ -341,6 +403,7 @@
     if (els.root) els.root.hidden = true;
     document.body.classList.remove("cmtut-lock");
     document.removeEventListener("keydown", onKey, true);
+    if (EMBEDDED) { try { window.parent.postMessage({ cmTut: "close" }, "*"); } catch (e) {} }
     try { if (completed) localStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
     try { if (state.prevFocus && state.prevFocus.focus) state.prevFocus.focus(); } catch (e) {}
   }

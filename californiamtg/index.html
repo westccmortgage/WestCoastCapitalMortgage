@@ -172,13 +172,55 @@
   </div>
 </section>
 <script>
-/* Auto-size the embedded Strategy Studio to its content height. */
-window.addEventListener("message", function (e) {
-  if (e && e.data && e.data.cmStudioHeight) {
-    var f = document.getElementById("studioFrame");
-    if (f) f.style.height = (e.data.cmStudioHeight + 24) + "px";
+/* Auto-size the embedded Strategy Studio + tutorial scroll bridge.
+   The studio runs inside this iframe; when its "How This Works" tour is
+   open it asks the parent (this page) to scroll a section into view and
+   asks for the visible viewport so its overlay card stays on screen. */
+(function () {
+  function frame() { return document.getElementById("studioFrame"); }
+  var tutActive = false;
+
+  function sendViewport() {
+    var f = frame(); if (!f || !f.contentWindow) return;
+    var r = f.getBoundingClientRect();
+    try {
+      f.contentWindow.postMessage({
+        cmTut: "viewport",
+        iframeTop: Math.round(r.top),     // iframe top vs. this viewport (can be negative)
+        parentH: window.innerHeight
+      }, "*");
+    } catch (e) {}
   }
-});
+
+  window.addEventListener("message", function (e) {
+    var d = e && e.data; if (!d) return;
+
+    if (d.cmStudioHeight) {
+      var f = frame(); if (f) f.style.height = (d.cmStudioHeight + 24) + "px";
+      return;
+    }
+    if (d.cmTut === "open") { tutActive = true; sendViewport(); return; }
+    if (d.cmTut === "close") { tutActive = false; return; }
+    if (d.cmTut === "needViewport") { sendViewport(); return; }
+    if (d.cmTut === "scrollTo") {
+      var f2 = frame(); if (!f2) return;
+      var top = window.pageYOffset + f2.getBoundingClientRect().top + (d.y || 0) - window.innerHeight / 2;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      // Push fresh viewport while the smooth scroll settles.
+      var n = 0, iv = setInterval(function () { sendViewport(); if (++n > 9) clearInterval(iv); }, 80);
+      return;
+    }
+  });
+
+  var ticking = false;
+  function onScrollResize() {
+    if (!tutActive || ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; sendViewport(); });
+  }
+  window.addEventListener("scroll", onScrollResize, { passive: true });
+  window.addEventListener("resize", onScrollResize, { passive: true });
+})();
 </script>
 
 <!-- ===================== UNDERSTANDING RATES ===================== -->
