@@ -19,6 +19,7 @@
 <script>try{if(window.top===window.self)document.documentElement.classList.add("cm-standalone");}catch(e){document.documentElement.classList.add("cm-standalone");}</script>
 <link rel="stylesheet" href="css/studio.css">
 <link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="/assets/css/tutorial.css">
 <style>/* Embedded inside California Mortgage — show only the Strategy Console */
 .skip-link,.site-header,.mobile-menu,.site-footer,.cookie,.cockpit--head,.compliance-strip{display:none!important}
 html,body{background:#faf7f1!important}
@@ -83,6 +84,9 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
         <div class="scanner__head">
           <h2 class="scanner__title">Strategy Console</h2>
           <span class="scanner__live"><i></i>property-location intelligence engine</span>
+          <button type="button" class="tut-launch" data-tutorial-launch>
+            <span class="tut-launch__icon" aria-hidden="true">?</span> How This Works
+          </button>
         </div>
 
         <!-- What matters most — the first things to understand -->
@@ -97,7 +101,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
         </div>
 
         <!-- A. Scenario type -->
-        <div class="purpose">
+        <div class="purpose" data-tutorial="loan-purpose">
           <p class="purpose__label" id="hs-purpose-label">What are you trying to structure?</p>
           <div class="purpose__opts" data-purpose role="group" aria-labelledby="hs-purpose-label">
             <button type="button" class="purpose__opt" data-purpose-opt="purchase">Purchase</button>
@@ -110,7 +114,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
         </div>
 
         <!-- B. Property location -->
-        <div class="cmd">
+        <div class="cmd" data-tutorial="zip">
           <label class="cmd__label" for="hs-q">Where is the property?</label>
           <input id="hs-q" class="cmd__input" type="text" inputmode="search" autocomplete="off"
                  placeholder="ZIP, city, county, or property location" aria-label="Where is the property?">
@@ -173,7 +177,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                   <select id="hs-units"><option value="1">1 unit</option><option value="2">2 units</option><option value="3">3 units</option><option value="4">4 units</option></select></div>
                 <div class="ig"><label>Occupancy</label><output class="ig__out" data-occ-out>Primary residence</output></div>
 
-                <div class="ig ig--full">
+                <div class="ig ig--full" data-tutorial="income-type">
                   <label for="hs-doc">Income type — drives your rate</label>
                   <select id="hs-doc">
                     <option value="w2">W-2 (full documentation)</option>
@@ -184,24 +188,24 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                   <p class="ig__hint" data-ho-docnote></p>
                 </div>
 
-                <div class="ig ig--full ig--score">
+                <div class="ig ig--full ig--score" data-tutorial="income">
                   <label for="hs-income">Approximate income (per year) — estimates the loan you could support <b id="hs-income-out">$180,000</b></label>
                   <input id="hs-income" type="range" min="0" max="1000000" step="5000" value="180000">
                   <p class="ig__hint" data-ho-qualnote></p>
                   <p class="ig__hint" data-ho-taxnote></p>
                 </div>
 
-                <div class="ig ig--full ig--score">
+                <div class="ig ig--full ig--score" data-tutorial="fico">
                   <label for="hs-score">Credit score (FICO) — drives your rate <b id="hs-score-out">760</b></label>
                   <input id="hs-score" type="range" min="580" max="800" step="5" value="760">
                   <p class="ig__hint" data-ho-scoretier>Strong (740+) — already great for pricing</p>
                 </div>
 
-                <div class="ig ig--full" data-show="purchase rate_term cash_out investment second_home unknown">
+                <div class="ig ig--full" data-show="purchase rate_term cash_out investment second_home unknown" data-tutorial="property-value">
                   <label for="hs-value"><span data-value-label>Estimated property value or purchase price</span> <b id="hs-value-out">$1,600,000</b></label>
                   <input id="hs-value" type="range" min="200000" max="5000000" step="10000" value="1600000"></div>
 
-                <div class="ig ig--full" data-show="purchase second_home">
+                <div class="ig ig--full" data-show="purchase second_home" data-tutorial="down-payment">
                   <label for="hs-down">Down payment <b id="hs-down-out">18%</b></label>
                   <input id="hs-down" type="range" min="0" max="60" step="1" value="18"></div>
 
@@ -228,7 +232,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                   <input id="hs-rent" type="range" min="0" max="25000" step="50" value="7500"></div>
               </div>
 
-              <div class="paymode" role="group" aria-label="Payment mode">
+              <div class="paymode" role="group" aria-label="Payment mode" data-tutorial="payment-strategy">
                 <span class="paymode__k">Payment mode</span>
                 <button type="button" class="paymode__opt is-sel" data-paymode="pi">Principal &amp; Interest</button>
                 <button type="button" class="paymode__opt" data-paymode="io">Interest Only</button>
@@ -247,13 +251,13 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
 
             <!-- D. Main result + county line -->
             <div class="console__col console__col--result">
-              <div class="hero-result" data-hero-wrap>
+              <div class="hero-result" data-hero-wrap data-tutorial="result">
                 <p class="hero-result__k" data-hero-k>Vs. the selected county line</p>
                 <p class="hero-result__v" data-hero>—</p>
                 <p class="hero-result__sub" data-hero-sub></p>
               </div>
 
-              <div class="meter" data-meter>
+              <div class="meter" data-meter data-tutorial="county-limit">
                 <div class="meter__track">
                   <span class="meter__fill" data-meter-loan></span>
                   <span class="meter__over" data-meter-over hidden></span>
@@ -274,7 +278,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                 <div class="so"><dt>Assumed rate (score + income type)</dt><dd data-ho="raterow">—</dd></div>
                 <div class="so" data-ho-dscr-row hidden><dt>DSCR preview</dt><dd data-ho="dscr">—</dd></div>
                 <div class="so"><dt>Estimated P&amp;I preview</dt><dd data-ho="pi">—</dd></div>
-                <div class="so"><dt>Estimated interest-only preview</dt><dd data-ho="io">—</dd></div>
+                <div class="so" data-tutorial="interest-only"><dt>Estimated interest-only preview</dt><dd data-ho="io">—</dd></div>
                 <div class="so"><dt>Interest-only vs amortizing</dt><dd data-ho="iodiff">—</dd></div>
               </dl>
               <p class="scanner__rate" data-ho="ratefactors"></p>
@@ -308,7 +312,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
           <!-- E. Payment & buydown strategy (integrated) -->
           <div class="console__section">
             <h3 class="console__h">Payment &amp; buydown strategy</h3>
-            <div class="bd-points" role="group" aria-label="Buydown points">
+            <div class="bd-points" role="group" aria-label="Buydown points" data-tutorial="buydown">
               <span class="bd-points__k">How much do you want to pay for the permanent buydown?</span>
               <button type="button" class="chip" data-bd-points="0.5">0.5 pts</button>
               <button type="button" class="chip is-sel" data-bd-points="1">1 pt</button>
@@ -341,7 +345,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
         </div>
 
         <!-- Conversion CTA — state-gated lender application (CA/FL) -->
-        <div class="console__cta" data-cta>
+        <div class="console__cta" data-cta data-tutorial="final-review">
           <!-- confirmed + supported state → secure lender application (ARIVE) -->
           <a class="btn btn--primary btn--lg" data-cta-app href="#" target="_blank" rel="noopener" hidden>Continue to Secure Lender Application →</a>
           <p class="cta-helper" data-cta-helper hidden>You’ll continue to a secure lender application portal powered by ARIVE. BeforeJumboLoan.com does not replace a licensed mortgage application or underwriting review.</p>
@@ -390,6 +394,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
 <script src="js/site.js" defer></script>
 <script src="js/compliance.js" defer></script>
 <script src="js/home.js" defer></script>
+<script src="/assets/js/tutorial.js" defer></script>
 <script>(function(){function ph(){try{parent.postMessage({cmStudioHeight:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}window.addEventListener("load",ph);try{new ResizeObserver(ph).observe(document.body);}catch(e){}document.addEventListener("click",function(){setTimeout(ph,90);},true);document.addEventListener("input",function(){setTimeout(ph,90);},true);document.addEventListener("change",function(){setTimeout(ph,90);},true);})();</script>
 </body>
 </html>
