@@ -42,8 +42,9 @@
     },
     {
       target: "county-limit",
-      title: "Your county's loan limit",
+      title: "Understand County Loan Limits",
       body: "Every county has a cut-off loan amount. Stay under it and your loan is a regular “conforming” loan. Go over it and it becomes a bigger “jumbo” loan. This bar shows where your loan sits versus that line.",
+      videoSrc: "/assets/video/avatar/step-county.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
