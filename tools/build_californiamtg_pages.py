@@ -29,13 +29,10 @@ HEADER = '''<header class="site-header" id="siteHeader">
           <rect x="29" y="40" width="6" height="8" rx="1" fill="#b08a4c"/>
         </svg>
       </span>
-      <span class="brand-text"><span class="brand-name">California Mortgage</span></span>
+      <span class="brand-text"><span class="brand-name">California Mortgage</span><span class="brand-sub">Powered by West Coast Capital Mortgage Inc.</span></span>
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="/index.html#concierge">Concierge</a>
-      <a href="/scenarios.html">Scenarios</a>
-      <a href="/loan-options.html">Loan Options</a>
-      <a href="/rates-payments.html">Rates &amp; Payments</a>
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
@@ -67,7 +64,6 @@ FOOTER = '''<footer class="site-footer">
       <h4>Explore</h4>
       <ul>
         <li><a href="/index.html#concierge">Concierge</a></li>
-        <li><a href="/scenarios.html">Scenarios</a></li>
         <li><a href="/loan-options.html">Loan Options</a></li>
         <li><a href="/rates-payments.html">Rates &amp; Payments</a></li>
         <li><a href="/education/index.html">Education</a></li>
@@ -98,7 +94,7 @@ FOOTER = '''<footer class="site-footer">
     <p class="footer-compliance">''' + EDU_COMPLIANCE + '''</p>
     <div class="footer-links">
       <a href="/index.html#concierge">Concierge</a>
-      <a href="/scenarios.html">Scenarios</a>
+      <a href="/loan-options.html">Loan Options</a>
       <a href="/rates-payments.html">Rates &amp; Payments</a>
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
@@ -499,10 +495,10 @@ education_index_body = hero(
         <p>Licensed mortgage professionals review the scenario and next step.</p>
         <span class="link-arrow">About Human Review <span aria-hidden="true">&rarr;</span></span>
       </a>
-      <a class="card audience-card" href="/scenarios.html">
-        <h3>Start With the Situation</h3>
-        <p>Find the situation that sounds like yours and begin there.</p>
-        <span class="link-arrow">See Situations <span aria-hidden="true">&rarr;</span></span>
+      <a class="card audience-card" href="/loan-options.html">
+        <h3>Loan Program Options</h3>
+        <p>Jumbo, high-balance, FHA, VA, DSCR, bank statement, Non-QM, and more.</p>
+        <span class="link-arrow">Explore Programs <span aria-hidden="true">&rarr;</span></span>
       </a>
     </div>
 ''' + cta_block("Start With the Situation", "You do not need to know the loan program. Start with the situation.", [BTN_START]) + compliance() + '''
@@ -1193,7 +1189,6 @@ PAGES = [
     ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage Inc. can review it.", contact_body, "/contact"),
     ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage Inc.", about_body, "/about"),
     ("about-human-review.html", "Human Review | California Mortgage", "Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.", human_review_body, "/about-human-review"),
-    ("scenarios.html", "Scenarios | California Mortgage", "Start with the situation — buying, refinancing, lowering payment, self-employed, investor, denied by a bank, or a Realtor scenario.", scenarios_body, "/scenarios"),
     ("rates-payments.html", "Rates & Payments | California Mortgage", "Understanding mortgage rates and payments — educational guidance, not a rate quote.", rates_body, "/rates-payments"),
     ("education/index.html", "Education | California Mortgage", "Mortgage education — credit, programs, complex scenarios, rates, and human review.", education_index_body, "/education"),
     ("education/no-credit-check-to-start.html", "Why No Credit Check to Start? | California Mortgage", "Why no credit check is required to start the concierge review, and how it differs from a full application.", no_credit_body, "/education/no-credit-check-to-start"),
