@@ -640,6 +640,37 @@
   if (copyBtn) copyBtn.addEventListener("click", function () { copySummary(copyBtn); });
 
   /* ---------- submit to Netlify ("/" urlencoded) ---------- */
+  /* Send the studio lead to Supabase `leads` (same place as the contact form ->
+     triggers the lead-email function), with Netlify Forms as a safety fallback. */
+  function cmStudioSubmit(body, data, S) {
+    var CFG = window.CM_CONFIG || {};
+    function netlify() {
+      return fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return { ok: true }; });
+    }
+    if (CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY) {
+      var vid = ""; try { vid = localStorage.getItem("visitor_id") || ""; } catch (e) {}
+      var row = {
+        visitor_id: vid, site: CFG.SITE || "californiamtg.com",
+        lead_source: "Strategy Studio (californiamtg.com)",
+        lead_category: data.suggested_review_paths || "Strategy Studio",
+        full_name: S.name || "", phone: S.phone || "", email: S.email || "",
+        preferred_contact_method: S.preferred_contact_method || "",
+        user_type: data.occupancy || "", scenario_type: data.scenario_type || "",
+        property_state: S.property_state || "", timeline: data.lead_intent_level || "",
+        estimated_price_or_value: data.purchase_price_or_value || "",
+        message: S.message || "", answers: data, crm_status: "not_connected"
+      };
+      return fetch(CFG.SUPABASE_URL + "/rest/v1/leads", {
+        method: "POST",
+        headers: { apikey: CFG.SUPABASE_ANON_KEY, Authorization: "Bearer " + CFG.SUPABASE_ANON_KEY, "Content-Type": "application/json", Prefer: "return=minimal" },
+        body: JSON.stringify(row)
+      }).then(function (r) { if (!r.ok) throw new Error(r.status); return { ok: true }; })
+        .catch(function () { return netlify(); });
+    }
+    return netlify();
+  }
+
   if (sendBtn) sendBtn.addEventListener("click", function () {
     if (consentEl && !consentEl.checked) {
       if (sendNote) sendNote.textContent = "Please check the consent box so a licensed mortgage professional can contact you.";
@@ -711,7 +742,7 @@
 
     sendBtn.disabled = true; sendBtn.textContent = "Sending…";
     if (sendNote) sendNote.textContent = "This is not a loan approval or commitment to lend.";
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() })
+    cmStudioSubmit(body, data, S)
       .then(function (res) { if (!res.ok) throw new Error(res.status); trackEvent("lead_form_submitted"); showThanks(); })
       .catch(function () {
         trackEvent("lead_form_error");
