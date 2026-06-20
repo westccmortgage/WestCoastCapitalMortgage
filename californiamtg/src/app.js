@@ -113,9 +113,9 @@ function leadRowFromContactForm(form) {
   const get = function (k) { return (f.get(k) || "").toString().trim(); };
   return {
     visitor_id: getVisitorId(),
-    lead_source: "californiamtg.com",
+    lead_source: form.getAttribute("data-lead-source") || "californiamtg.com",
     site: (window.CM_CONFIG && window.CM_CONFIG.SITE) || "californiamtg.com",
-    lead_category: get("helpWith") || "Contact",
+    lead_category: form.getAttribute("data-lead-category") || get("helpWith") || "Contact",
     full_name: get("fullName"),
     phone: get("phone"),
     email: get("email"),

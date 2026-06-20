@@ -38,6 +38,7 @@ HEADER = '''<header class="site-header" id="siteHeader">
       <a href="/contact.html">Contact</a>
     </nav>
     <div class="header-cta">
+      <a class="btn btn-primary" href="/get-preapproved.html">Get Pre-Approved</a>
       <a class="btn btn-charcoal" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
@@ -74,8 +75,8 @@ FOOTER = '''<footer class="site-footer">
     <div class="footer-col">
       <h4>Concierge</h4>
       <ul>
-        <li><a href="/index.html#builder" data-start>Start My Scenario</a></li>
-        <li><a href="https://wcci.online">AI Review</a></li>
+        <li><a href="/get-preapproved.html">Get Pre-Approved</a></li>
+        <li><a href="/index.html#builder">Strategy Studio</a></li>
         <li><a href="/about-human-review.html">Human Review</a></li>
         <li><a href="https://westccmortgage.com">Main Website</a></li>
       </ul>
@@ -1185,7 +1186,82 @@ for _d in LOANS:
                          f'/{_d["slug"]}', faq_jsonld(_d["faqs"])))
 
 
+# ----------------------------------------------------------------------------
+# GET PRE-APPROVED (short form -> Supabase leads -> email)
+# ----------------------------------------------------------------------------
+get_preapproved_body = hero(
+    "Get Pre-Approved",
+    "Start Your Pre-Approval",
+    "Share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. "
+    "will reach out to start your pre-approval. No credit check to begin."
+) + '''
+<section class="section">
+  <div class="container" style="max-width:760px">
+    <div class="builder-card" id="contactCard">
+      <form name="contact" class="cm-form" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+            action="/get-preapproved.html" data-lead-category="Pre-Approval" data-lead-source="Get Pre-Approved (californiamtg.com)">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hidden-field" aria-hidden="true"><label>Do not fill this out: <input name="bot-field"></label></p>
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label" for="p_name">Full Name <span class="req">*</span></label>
+            <input class="field-input" id="p_name" name="fullName" type="text" placeholder="First and last name" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_phone">Phone <span class="req">*</span></label>
+            <input class="field-input" id="p_phone" name="phone" type="tel" placeholder="(310) 555-0199" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field field-full">
+            <label class="field-label" for="p_email">Email <span class="req">*</span></label>
+            <input class="field-input" id="p_email" name="email" type="email" placeholder="you@example.com" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_purpose">Loan purpose</label>
+            <select class="field-input" id="p_purpose" name="helpWith">
+              <option value="">Select...</option>
+              <option>Purchase</option>
+              <option>Refinance</option>
+              <option>Cash-out refinance</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_iama">I am a</label>
+            <select class="field-input" id="p_iama" name="iAmA">
+              <option value="">Select...</option>
+              <option>Home Buyer</option>
+              <option>Homeowner</option>
+              <option>Investor</option>
+              <option>Self-Employed Borrower</option>
+              <option>Not Sure</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label class="field-label">Preferred contact method <span class="req">*</span></label>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Call" required><span>Call</span></label>
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Text"><span>Text</span></label>
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Email"><span>Email</span></label>
+            </div>
+            <p class="field-error"></p>
+          </div>
+          <div class="field field-full">
+            <label class="field-label" for="p_msg">Anything else? (optional)</label>
+            <textarea class="field-input" id="p_msg" name="message" rows="3" placeholder="Estimated price, timeline, or any questions."></textarea>
+          </div>
+        </div>
+        <p class="compliance-box">No credit check is required to start. This is not a loan approval, loan commitment, or rate quote. Final loan options are subject to review by a licensed mortgage professional.</p>
+        <div class="form-actions"><button class="btn btn-primary" type="submit">Request Pre-Approval</button></div>
+      </form>
+    </div>
+  </div>
+</section>'''
+
 PAGES = [
+    ("get-preapproved.html", "Get Pre-Approved | California Mortgage", "Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.", get_preapproved_body, "/get-preapproved"),
     ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage Inc. can review it.", contact_body, "/contact"),
     ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage Inc.", about_body, "/about"),
     ("about-human-review.html", "Human Review | California Mortgage", "Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.", human_review_body, "/about-human-review"),

@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Human Review | California Mortgage</title>
-<meta name="description" content="Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.">
+<title>Get Pre-Approved | California Mortgage</title>
+<meta name="description" content="Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.">
 <meta name="theme-color" content="#2c2722">
 <meta name="robots" content="index, follow">
 <meta name="author" content="West Coast Capital Mortgage Inc.">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-<link rel="canonical" href="https://californiamtg.com/about-human-review">
+<link rel="canonical" href="https://californiamtg.com/get-preapproved">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="California Mortgage">
-<meta property="og:title" content="Human Review | California Mortgage">
-<meta property="og:description" content="Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.">
-<meta property="og:url" content="https://californiamtg.com/about-human-review">
+<meta property="og:title" content="Get Pre-Approved | California Mortgage">
+<meta property="og:description" content="Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.">
+<meta property="og:url" content="https://californiamtg.com/get-preapproved">
 <meta property="og:image" content="https://californiamtg.com/public/images/california_mortgage_poster.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Human Review | California Mortgage">
-<meta name="twitter:description" content="Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.">
+<meta name="twitter:title" content="Get Pre-Approved | California Mortgage">
+<meta name="twitter:description" content="Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.">
 <meta name="twitter:image" content="https://californiamtg.com/public/images/california_mortgage_poster.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,83 +58,73 @@
 <main>
 <section class="page-hero">
   <div class="container">
-    <p class="eyebrow">Human Review</p>
-    <h1>Human Guidance Behind the Technology</h1>
-    <p class="page-lead">AI can help organize the scenario. Real mortgage professionals help review the next step.</p>
+    <p class="eyebrow">Get Pre-Approved</p>
+    <h1>Start Your Pre-Approval</h1>
+    <p class="page-lead">Share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out to start your pre-approval. No credit check to begin.</p>
   </div>
 </section>
 <section class="section">
-  <div class="container">
-    <div class="person">
-      <div class="person-photo">
-        <img src="/public/images/anatoliy-kanevsky.png"
-             alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc."
-             width="520" height="600" loading="lazy" decoding="async">
-      </div>
-      <div class="person-copy prose">
-        <h2>Reviewed by Experience, Not Just Automation</h2>
-        <p>California Mortgage is a premium educational and concierge entry point. Behind the
-        experience is West Coast Capital Mortgage Inc., a licensed mortgage company helping buyers,
-        homeowners, Realtors, self-employed borrowers, and investors review real mortgage scenarios.</p>
-        <p>Anatoliy Kanevsky brings decades of real estate, mortgage, and luxury residential
-        development experience to help clients understand their financing path before starting a
-        full application.</p>
-        <ul class="check-list">
-          <li>California real estate broker</li>
-          <li>Mortgage professional experience</li>
-          <li>Luxury residential development background</li>
-          <li>Purchase, refinance, jumbo, DSCR, Non-QM, and self-employed borrower scenarios</li>
-          <li>Founder, West Coast Capital Mortgage Inc.</li>
-        </ul>
-      </div>
+  <div class="container" style="max-width:760px">
+    <div class="builder-card" id="contactCard">
+      <form name="contact" class="cm-form" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+            action="/get-preapproved.html" data-lead-category="Pre-Approval" data-lead-source="Get Pre-Approved (californiamtg.com)">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hidden-field" aria-hidden="true"><label>Do not fill this out: <input name="bot-field"></label></p>
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label" for="p_name">Full Name <span class="req">*</span></label>
+            <input class="field-input" id="p_name" name="fullName" type="text" placeholder="First and last name" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_phone">Phone <span class="req">*</span></label>
+            <input class="field-input" id="p_phone" name="phone" type="tel" placeholder="(310) 555-0199" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field field-full">
+            <label class="field-label" for="p_email">Email <span class="req">*</span></label>
+            <input class="field-input" id="p_email" name="email" type="email" placeholder="you@example.com" required>
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_purpose">Loan purpose</label>
+            <select class="field-input" id="p_purpose" name="helpWith">
+              <option value="">Select...</option>
+              <option>Purchase</option>
+              <option>Refinance</option>
+              <option>Cash-out refinance</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p_iama">I am a</label>
+            <select class="field-input" id="p_iama" name="iAmA">
+              <option value="">Select...</option>
+              <option>Home Buyer</option>
+              <option>Homeowner</option>
+              <option>Investor</option>
+              <option>Self-Employed Borrower</option>
+              <option>Not Sure</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label class="field-label">Preferred contact method <span class="req">*</span></label>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Call" required><span>Call</span></label>
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Text"><span>Text</span></label>
+              <label class="radio-pill"><input type="radio" name="contactMethod" value="Email"><span>Email</span></label>
+            </div>
+            <p class="field-error"></p>
+          </div>
+          <div class="field field-full">
+            <label class="field-label" for="p_msg">Anything else? (optional)</label>
+            <textarea class="field-input" id="p_msg" name="message" rows="3" placeholder="Estimated price, timeline, or any questions."></textarea>
+          </div>
+        </div>
+        <p class="compliance-box">No credit check is required to start. This is not a loan approval, loan commitment, or rate quote. Final loan options are subject to review by a licensed mortgage professional.</p>
+        <div class="form-actions"><button class="btn btn-primary" type="submit">Request Pre-Approval</button></div>
+      </form>
     </div>
-<div class="trust-block">
-  <div class="trust-eho" aria-hidden="true">
-    <img src="/assets/equal-housing.svg" alt="" width="40" height="44" loading="lazy">
-  </div>
-  <div class="trust-lines">
-    <p class="trust-name">West Coast Capital Mortgage Inc.</p>
-    <ul>
-      <li>NMLS #2817729</li>
-      <li>CA DRE #01385024</li>
-      <li>Phone: <a href="tel:+13106865053">(310) 686-5053</a></li>
-      <li>Equal Housing Opportunity</li>
-    </ul>
-  </div>
-</div>
-  </div>
-</section>
-
-<section class="section section-tint">
-  <div class="container">
-    <div class="section-head">
-      <p class="eyebrow gold">Why It Matters</p>
-      <h2>Why Human Review Matters</h2>
-    </div>
-    <div class="grid grid-3">
-      <article class="card">
-        <h3>Real review, not just automation</h3>
-        <p>Technology can organize the situation, but mortgage options require professional review.</p>
-      </article>
-      <article class="card">
-        <h3>Built for complex scenarios</h3>
-        <p>Self-employed income, jumbo purchases, investor loans, DSCR, refinance, and second opinions.</p>
-      </article>
-      <article class="card">
-        <h3>Clear next step</h3>
-        <p>The goal is not to push a full application. The goal is to understand the situation first.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container article">
-<div class="cta-block">
-  <h2>Start With the Situation</h2>
-  <p>Organize your scenario in a few simple steps, or speak with a licensed mortgage professional.</p>
-  <div class="cta-row"><a class="btn btn-primary btn-lg" href="/index.html#builder" data-start>Start My Scenario</a><a class="btn btn-outline-dark btn-lg" href="/contact.html">Talk to a Mortgage Professional</a></div>
-</div><p class="compliance-box">This information is for educational purposes only and is not a loan approval, loan commitment, or rate quote. Final loan options are subject to review by a licensed mortgage professional.</p>
   </div>
 </section>
 </main>
