@@ -146,6 +146,11 @@ def page(path, title, description, body, canonical_path, head_extra=""):
 
 {FOOTER}
 
+<div class="mobile-cta-bar" aria-label="Quick actions">
+  <a class="mcta mcta-call" href="tel:+13106865053">Call</a>
+  <a class="mcta mcta-primary" href="/get-preapproved.html">Get Pre-Approved</a>
+</div>
+
 <script src="/config.js"></script>
 <script src="/script.js" defer></script>
 <script type="module" src="/src/app.js"></script>
