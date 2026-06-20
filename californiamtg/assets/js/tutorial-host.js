@@ -15,7 +15,7 @@
 (function () {
   "use strict";
 
-  var host = null, els = {}, brokenImg = {};
+  var host = null, els = {}, brokenImg = {}, prefMuted = false; // sound ON by default
 
   function frameWin() {
     var f = document.getElementById("studioFrame");
@@ -85,8 +85,8 @@
     els.mute.addEventListener("click", function (e) {
       e.preventDefault();
       els.video.muted = !els.video.muted;
-      els.mute.innerHTML = els.video.muted ? "&#128263;" : "&#128266;";
-      els.mute.setAttribute("aria-label", els.video.muted ? "Unmute" : "Mute");
+      prefMuted = els.video.muted;            // remember the choice across steps
+      setMuteIcon();
       if (!els.video.muted) { try { els.video.play(); } catch (e2) {} }
     });
     els.video.addEventListener("error", function () { showLayer("img"); els.mute.hidden = true; });
@@ -100,6 +100,12 @@
     if (els.video) els.video.style.display = which === "video" ? "block" : "none";
     if (els.img) els.img.style.display = which === "img" ? "block" : "none";
     if (els.ph) els.ph.style.display = which === "ph" ? "flex" : "none";
+  }
+
+  function setMuteIcon() {
+    if (!els.mute || !els.video) return;
+    if (els.video.muted) { els.mute.innerHTML = "&#128263;"; els.mute.setAttribute("aria-label", "Unmute"); }
+    else { els.mute.innerHTML = "&#128266;"; els.mute.setAttribute("aria-label", "Mute"); }
   }
 
   function loadMedia(d) {
@@ -118,10 +124,20 @@
     if (d.videoSrc && v) {
       if (v.getAttribute("src") !== d.videoSrc) { v.setAttribute("src", d.videoSrc); try { v.load(); } catch (e) {} }
       if (imgSrc) v.setAttribute("poster", imgSrc);
-      v.muted = true;
-      els.mute.hidden = false; els.mute.innerHTML = "&#128263;"; els.mute.setAttribute("aria-label", "Unmute");
+      els.mute.hidden = false;
+      // Sound ON by default (unless the user muted earlier). If the browser
+      // blocks autoplay-with-sound, fall back to muted so it still plays, and
+      // leave the unmute button so they can enable it.
+      v.muted = prefMuted;
+      setMuteIcon();
       showLayer("video");
-      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {
+        if (!prefMuted) {
+          v.muted = true; setMuteIcon();
+          try { var p2 = v.play(); if (p2 && p2.catch) p2.catch(function () {}); } catch (e) {}
+        }
+      });
     } else {
       if (v) { v.removeAttribute("src"); try { v.load(); } catch (e) {} }
       tryImage();
