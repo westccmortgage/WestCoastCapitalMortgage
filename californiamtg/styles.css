@@ -681,6 +681,9 @@ textarea.field-input{resize:vertical;min-height:84px}
 .hiw-bar span{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--gold-soft),var(--gold-deep));transition:width .4s ease}
 .hiw-guide{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:1.3rem}
 .hiw-avatar{flex:0 0 auto}
+.hiw-speech{flex:1;min-width:0}
+.hiw-name{font-size:.78rem;font-weight:700;letter-spacing:.02em;color:var(--ink);margin:0 0 .35rem;text-transform:uppercase}
+.hiw-name span{color:var(--muted);font-weight:500;letter-spacing:.01em;text-transform:none}
 .hiw-bubble{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:.9rem 1.1rem;color:var(--ink);font-size:1rem;line-height:1.5;box-shadow:var(--shadow-sm)}
 .hiw-bubble::before{content:"";position:absolute;left:-8px;top:18px;width:14px;height:14px;background:#fff;

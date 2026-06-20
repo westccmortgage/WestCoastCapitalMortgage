@@ -1275,11 +1275,21 @@ get_preapproved_body = hero(
 # ----------------------------------------------------------------------------
 # HOW IT WORKS — guided explainer (avatar + bubbles + voice + 5 live demos)
 # ----------------------------------------------------------------------------
-AVATAR_SVG = ('<svg viewBox="0 0 72 72" width="56" height="56" role="img" aria-label="Your guide">'
-              '<rect width="72" height="72" rx="18" fill="#2c2722"/>'
-              '<circle cx="36" cy="29" r="12" fill="#cdb079"/>'
-              '<path d="M16 60 c0-12 9-18 20-18 s20 6 20 18 z" fill="#cdb079"/>'
-              '<circle cx="36" cy="29" r="12" fill="none" stroke="#f7f1e8" stroke-width="1.5" opacity=".25"/></svg>')
+# Financial Navigator — stylized portrait (navy blazer, light-blue shirt, no tie, ~50-55, glasses)
+AVATAR_SVG = ('<svg viewBox="0 0 80 80" width="60" height="60" role="img" aria-label="Financial Navigator">'
+  '<rect width="80" height="80" rx="18" fill="#f1ece2"/>'
+  '<path d="M11 80 C11 64 24 56 40 56 C56 56 69 64 69 80 Z" fill="#1c3a5e"/>'
+  '<path d="M33 57 L40 70 L47 57 L43 53 L37 53 Z" fill="#cfe0f0"/>'
+  '<path d="M37 53 L40 65 M43 53 L40 65" stroke="#1c3a5e" stroke-width="1.3" opacity=".35" fill="none"/>'
+  '<rect x="35.5" y="46" width="9" height="10" rx="3.5" fill="#e7b793"/>'
+  '<circle cx="40" cy="35" r="13" fill="#efc59b"/>'
+  '<path d="M27 35 C27 24 33 19 40 19 C47 19 53 24 53 35 C50 28 46 25 40 25 C34 25 30 28 27 35 Z" fill="#9b958c"/>'
+  '<path d="M27 34 C26 39 27 43 30 45 L31 42 C29 40 28 37 28 34 Z" fill="#9b958c"/>'
+  '<path d="M53 34 C54 39 53 43 50 45 L49 42 C51 40 52 37 52 34 Z" fill="#9b958c"/>'
+  '<g stroke="#3a332b" stroke-width="1.3" fill="none" opacity=".7">'
+  '<circle cx="35" cy="36" r="3"/><circle cx="45" cy="36" r="3"/>'
+  '<path d="M38 36 H42 M32 35 L29.5 34 M48 35 L50.5 34"/></g>'
+  '<path d="M36 42 Q40 45 44 42" stroke="#a06f4c" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>')
 
 how_it_works_body = hero(
     "How It Works",
@@ -1297,7 +1307,10 @@ how_it_works_body = hero(
 
       <div class="hiw-guide">
         <div class="hiw-avatar">''' + AVATAR_SVG + '''</div>
-        <div class="hiw-bubble" id="hiwBubble">Move one control at a time and watch the numbers react.</div>
+        <div class="hiw-speech">
+          <p class="hiw-name">Financial Navigator <span>&middot; Financial Educator</span></p>
+          <div class="hiw-bubble" id="hiwBubble">Hi, I&rsquo;m your Financial Navigator. I&rsquo;m here to help you understand your options and guide you through important financing decisions.</div>
+        </div>
       </div>
 
       <div class="hiw-steps">

@@ -20,7 +20,7 @@
 
   /* ---- step bubbles ---- */
   var BUBBLES = [
-    "Lenders draw a line called the county limit. Below it your loan is “conforming”; above it you go “jumbo.” Drag the price and watch where the line is crossed.",
+    "Hi, I’m your Financial Navigator — here to help you understand your options, no pressure. Let’s start with the county limit: lenders draw a line, and below it your loan is “conforming,” above it you go “jumbo.” Drag the price and watch where the line is crossed.",
     "Put 20% down and monthly mortgage insurance (PMI) goes away. Slide the down payment and watch PMI appear or disappear.",
     "Your credit score moves your rate. Lower the score and both the rate and the monthly payment climb.",
     "More income usually means you can support a larger loan — but taxes rise too. Slide your income to see both move.",
