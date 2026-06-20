@@ -33,6 +33,7 @@ HEADER = '''<header class="site-header" id="siteHeader">
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="/index.html#concierge">Concierge</a>
+      <a href="/how-it-works.html">How It Works</a>
       <a href="/education/index.html">Education</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
@@ -65,6 +66,7 @@ FOOTER = '''<footer class="site-footer">
       <h4>Explore</h4>
       <ul>
         <li><a href="/index.html#concierge">Concierge</a></li>
+        <li><a href="/how-it-works.html">How It Works</a></li>
         <li><a href="/loan-options.html">Loan Options</a></li>
         <li><a href="/rates-payments.html">Rates &amp; Payments</a></li>
         <li><a href="/education/index.html">Education</a></li>
@@ -476,6 +478,11 @@ education_index_body = hero(
 <section class="section">
   <div class="container article">
     <div class="edu-grid">
+      <a class="card audience-card" href="/how-it-works.html">
+        <h3>How It Works (Interactive)</h3>
+        <p>A guided tour with live sliders — see how the county line, PMI, rate, and taxes move.</p>
+        <span class="link-arrow">Take the tour <span aria-hidden="true">&rarr;</span></span>
+      </a>
       <a class="card audience-card" href="/education/no-credit-check-to-start.html">
         <h3>Why No Credit Check to Start?</h3>
         <p>How a soft scenario review differs from a full mortgage application.</p>
@@ -1265,7 +1272,108 @@ get_preapproved_body = hero(
   </div>
 </section>'''
 
+# ----------------------------------------------------------------------------
+# HOW IT WORKS — guided explainer (avatar + bubbles + voice + 5 live demos)
+# ----------------------------------------------------------------------------
+AVATAR_SVG = ('<svg viewBox="0 0 72 72" width="56" height="56" role="img" aria-label="Your guide">'
+              '<rect width="72" height="72" rx="18" fill="#2c2722"/>'
+              '<circle cx="36" cy="29" r="12" fill="#cdb079"/>'
+              '<path d="M16 60 c0-12 9-18 20-18 s20 6 20 18 z" fill="#cdb079"/>'
+              '<circle cx="36" cy="29" r="12" fill="none" stroke="#f7f1e8" stroke-width="1.5" opacity=".25"/></svg>')
+
+how_it_works_body = hero(
+    "How It Works",
+    "See How Your Mortgage Math Moves",
+    "A quick guided tour. Move one control at a time and watch the numbers react — the county line, PMI, your rate, taxes, and payment. Educational only."
+) + '''
+<section class="section">
+  <div class="container" style="max-width:840px">
+    <div class="hiw-card" id="hiw">
+      <div class="hiw-progress">
+        <span>Step <b id="hiwCur">1</b> of 5</span>
+        <button id="hiwVoice" class="hiw-voice" type="button" aria-pressed="false">&#128266; Listen</button>
+      </div>
+      <div class="hiw-bar"><span id="hiwBar"></span></div>
+
+      <div class="hiw-guide">
+        <div class="hiw-avatar">''' + AVATAR_SVG + '''</div>
+        <div class="hiw-bubble" id="hiwBubble">Move one control at a time and watch the numbers react.</div>
+      </div>
+
+      <div class="hiw-steps">
+        <div class="hiw-step is-active" data-step="1">
+          <h3>Where the jumbo line is</h3>
+          <div class="hiw-field"><label>Purchase price <b id="hiw1-priceout">$1,150,000</b></label>
+            <input id="hiw1-price" type="range" min="400000" max="3000000" step="10000" value="1150000"></div>
+          <div class="hiw-field"><label>Down payment <b id="hiw1-downout">20%</b></label>
+            <input id="hiw1-down" type="range" min="0" max="40" step="1" value="20"></div>
+          <div class="hiw-out"><span>Estimated loan</span><b id="hiw1-loan">$920,000</b></div>
+          <div class="hiw-out"><span>Review path</span><b class="hiw-zone" id="hiw1-zone">Conforming Review</b></div>
+          <p class="hiw-takeaway">&#128161; A bigger down payment can keep you under the jumbo line.</p>
+        </div>
+
+        <div class="hiw-step" data-step="2">
+          <h3>Down payment &amp; PMI</h3>
+          <div class="hiw-field"><label>Down payment <b id="hiw2-downout">10%</b></label>
+            <input id="hiw2-down" type="range" min="0" max="40" step="1" value="10"></div>
+          <div class="hiw-out"><span>Loan-to-value (LTV)</span><b id="hiw2-ltv">90%</b></div>
+          <div class="hiw-out"><span>Mortgage insurance</span><b class="hiw-zone" id="hiw2-pmi">$450/mo</b></div>
+          <p class="hiw-takeaway">&#128161; 20% down removes monthly mortgage insurance (PMI).</p>
+        </div>
+
+        <div class="hiw-step" data-step="3">
+          <h3>Credit score &rarr; your rate</h3>
+          <div class="hiw-field"><label>Credit score (FICO) <b id="hiw3-scoreout">760</b></label>
+            <input id="hiw3-score" type="range" min="580" max="800" step="5" value="760"></div>
+          <div class="hiw-out"><span>Assumed rate</span><b id="hiw3-rate">6.5%</b></div>
+          <div class="hiw-out"><span>Est. payment (on $800k)</span><b id="hiw3-pi">$5,057/mo</b></div>
+          <p class="hiw-takeaway">&#128161; Better credit = lower rate = lower payment.</p>
+        </div>
+
+        <div class="hiw-step" data-step="4">
+          <h3>Income &rarr; buying power &amp; taxes</h3>
+          <div class="hiw-field"><label>Annual income <b id="hiw4-incomeout">$180,000</b></label>
+            <input id="hiw4-income" type="range" min="40000" max="600000" step="5000" value="180000"></div>
+          <div class="hiw-out"><span>Loan you could support</span><b id="hiw4-loan">&mdash;</b></div>
+          <div class="hiw-out"><span>Est. income taxes</span><b id="hiw4-tax">&mdash;</b></div>
+          <p class="hiw-takeaway">&#128161; Higher income raises both your buying power and your taxes.</p>
+        </div>
+
+        <div class="hiw-step" data-step="5">
+          <h3>Payment type &amp; buydown</h3>
+          <div class="hiw-toggle">
+            <button type="button" data-hiw-mode="pi" class="is-sel">Principal &amp; Interest</button>
+            <button type="button" data-hiw-mode="io">Interest-Only</button>
+          </div>
+          <div class="hiw-field"><label>Buydown <b id="hiw5-ptsout">0 points</b></label>
+            <input id="hiw5-pts" type="range" min="0" max="3" step="1" value="0"></div>
+          <div class="hiw-out"><span>Estimated payment (on $800k)</span><b id="hiw5-pay">&mdash;</b></div>
+          <div class="hiw-out"><span>Assumed rate</span><b id="hiw5-rate">6.84%</b></div>
+          <p class="hiw-note" id="hiw5-diff">&mdash;</p>
+          <p class="hiw-takeaway">&#128161; The lowest payment isn&rsquo;t always the lowest total cost.</p>
+        </div>
+      </div>
+
+      <div class="hiw-nav">
+        <button id="hiwBack" class="btn btn-ghost" type="button">&larr; Back</button>
+        <button id="hiwNext" class="btn btn-primary" type="button">Next &rarr;</button>
+      </div>
+    </div>
+
+    <div class="cta-block" id="hiwCta" style="margin-top:1.6rem">
+      <h2>Ready to put it to work?</h2>
+      <p>Use the full Strategy Studio with your own numbers, or get pre-approved.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="/get-preapproved.html">Get Pre-Approved</a>
+        <a class="btn btn-outline-dark btn-lg" href="/index.html#builder">Open the Strategy Studio</a>
+      </div>
+    </div>
+''' + compliance("These are simplified educational illustrations only — not a rate quote, loan approval, or commitment to lend. Your actual numbers depend on full review by a licensed mortgage professional.") + '''
+  </div>
+</section>'''
+
 PAGES = [
+    ("how-it-works.html", "How It Works | California Mortgage", "A guided, interactive explainer — move a slider and watch the county line, PMI, your rate, taxes, and payment react. Educational only.", how_it_works_body, "/how-it-works", '<script src="/how-it-works.js" defer></script>\n'),
     ("get-preapproved.html", "Get Pre-Approved | California Mortgage", "Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.", get_preapproved_body, "/get-preapproved"),
     ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage Inc. can review it.", contact_body, "/contact"),
     ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage Inc.", about_body, "/about"),
