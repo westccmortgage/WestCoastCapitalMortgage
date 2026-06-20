@@ -1,0 +1,191 @@
+/* ============================================================
+   California Mortgage — Guided Tool Tutorial styles
+   Modular overlay layer. Scoped under .cmtut / .tut-launch so it
+   never collides with the calculator's own styles.
+   ============================================================ */
+
+/* ---- Launch button (lives in the console header) ---- */
+.tut-launch{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.5rem .85rem;
+  font:600 .82rem/1 Inter,system-ui,sans-serif;
+  color:#2b2825;background:#f1e7d3;
+  border:1px solid rgba(80,70,60,.22);border-radius:999px;
+  cursor:pointer;transition:background .15s,box-shadow .15s,transform .1s;
+}
+.tut-launch:hover{background:#e7d8ba;box-shadow:0 4px 14px rgba(138,106,55,.18)}
+.tut-launch:active{transform:translateY(1px)}
+.tut-launch__icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:1.15rem;height:1.15rem;border-radius:50%;
+  background:#8c6a3a;color:#f7f1e8;font-weight:700;font-size:.75rem;
+}
+/* gentle pulse the first time, until the visitor has used it once */
+.tut-launch--new{animation:cmtutPulse 2.4s ease-in-out infinite}
+@keyframes cmtutPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(138,106,55,.35)}
+  50%{box-shadow:0 0 0 7px rgba(138,106,55,0)}
+}
+
+/* ---- Body lock while the tour is open ---- */
+body.cmtut-lock{overflow:hidden}
+
+/* ============================================================
+   Overlay — soft blurred glass backdrop (page stays visible)
+   ============================================================ */
+.cmtut{
+  position:fixed;inset:0;z-index:9999;
+  font-family:Inter,system-ui,sans-serif;
+  background:rgba(33,29,24,.26);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .28s ease;
+}
+.cmtut[hidden]{display:none}
+.cmtut.cmtut--in{opacity:1}
+
+/* Subtle gold glow ring on the active field (no heavy dim — the blur
+   above does the dimming, so the highlighted field stays readable). */
+.cmtut__spot{
+  position:fixed;border-radius:12px;pointer-events:none;
+  background:rgba(255,255,255,.04);
+  box-shadow:0 0 0 2px rgba(184,139,77,.85),
+             0 0 0 6px rgba(184,139,77,.22),
+             0 0 30px 8px rgba(184,139,77,.34);
+  transition:top .25s ease,left .25s ease,width .25s ease,height .25s ease;
+}
+
+/* ============================================================
+   Card — wide horizontal glass panel (avatar | text)
+   ============================================================ */
+.cmtut__card{
+  position:fixed;
+  display:flex;overflow:hidden;
+  width:min(560px,calc(100vw - 32px));
+  color:#2b2825;
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+  border:1px solid rgba(184,139,77,.25);
+  border-radius:22px;
+  box-shadow:0 24px 60px -18px rgba(33,29,24,.40),0 2px 8px rgba(33,29,24,.06);
+  /* entrance: slide up + fade (paired with .cmtut--in) */
+  opacity:0;transform:translateY(16px);
+  transition:opacity .3s ease,transform .3s ease;
+}
+.cmtut--in .cmtut__card{opacity:1;transform:translateY(0)}
+
+/* ---- Left: avatar / video (≈42%) ---- */
+.cmtut__media{
+  position:relative;flex:0 0 44%;align-self:stretch;
+  min-height:236px;background:#211d18;line-height:0;overflow:hidden;
+}
+.cmtut__video,.cmtut__img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 22%;background:#211d18;display:none;
+}
+.cmtut__media-ph{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,#6f675b,#3a332b);
+}
+.cmtut__media-ph svg{opacity:.6}
+/* gradient scrim at the bottom so the footer text reads */
+.cmtut__media::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:42%;
+  background:linear-gradient(to top,rgba(20,17,14,.72),rgba(20,17,14,0));
+  pointer-events:none;
+}
+.cmtut__badge{
+  position:absolute;top:.7rem;left:.7rem;z-index:3;
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1;
+  color:#f7f1e8;background:rgba(33,29,24,.46);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.18);
+  padding:.4rem .6rem;border-radius:999px;
+}
+.cmtut__badge i{width:6px;height:6px;border-radius:50%;background:#cdb079;box-shadow:0 0 6px #cdb079}
+.cmtut__media-foot{
+  position:absolute;left:.9rem;bottom:.8rem;z-index:3;
+  font-size:.9rem;font-weight:600;line-height:1.1;color:#fff;
+  text-shadow:0 1px 6px rgba(0,0,0,.45);
+}
+.cmtut__mute{
+  position:absolute;top:.6rem;right:.6rem;z-index:3;
+  width:2rem;height:2rem;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(33,29,24,.55);color:#f7f1e8;font-size:.85rem;line-height:1;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+}
+.cmtut__mute:hover{background:rgba(33,29,24,.8)}
+.cmtut__mute[hidden]{display:none}
+
+/* ---- Right: text + controls (≈58%) ---- */
+.cmtut__panel{
+  position:relative;flex:1 1 58%;
+  display:flex;flex-direction:column;
+  padding:1.6rem 1.7rem 1.35rem;
+}
+.cmtut__close{
+  position:absolute;top:.7rem;right:.8rem;
+  width:1.9rem;height:1.9rem;line-height:1;
+  border:none;background:transparent;color:#9a9186;
+  font-size:1.35rem;cursor:pointer;border-radius:8px;transition:background .15s,color .15s;
+}
+.cmtut__close:hover{background:rgba(184,139,77,.12);color:#2b2825}
+
+.cmtut__step{
+  margin:.15rem 0 .5rem;font-size:.7rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:#a07e44;
+}
+.cmtut__title{
+  margin:0 0 .55rem;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:1.7rem;font-weight:600;line-height:1.12;color:#211d18;letter-spacing:.01em;
+}
+.cmtut__rule{display:block;width:46px;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,#b08a4c,#cdb079);margin:0 0 .9rem}
+.cmtut__body{margin:0;font-size:.97rem;line-height:1.55;color:#544d44;max-width:42ch}
+
+/* ---- Buttons: refined SaaS controls ---- */
+.cmtut__nav{
+  margin-top:auto;padding-top:1.4rem;
+  display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+}
+.cmtut__nav-right{display:flex;align-items:center;gap:.5rem}
+.cmtut__btn{
+  display:inline-flex;align-items:center;gap:.3rem;
+  height:36px;padding:0 14px;
+  font-size:13px;font-weight:600;line-height:1;
+  border-radius:10px;border:1px solid transparent;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s,opacity .15s;
+}
+.cmtut__btn--skip{background:transparent;color:#9a9186;padding:0 8px}
+.cmtut__btn--skip:hover{color:#544d44}
+.cmtut__btn--back{background:#fff;color:#544d44;border-color:rgba(80,70,60,.22)}
+.cmtut__btn--back:hover{border-color:rgba(80,70,60,.4);background:#faf7f1}
+.cmtut__btn--next{background:#8c6a3a;color:#f7f1e8;padding-right:11px}
+.cmtut__btn--next:hover{background:#74552c}
+.cmtut__chev{margin-top:1px}
+.cmtut__btn--next.is-done .cmtut__chev{display:none}
+.cmtut__btn:disabled{opacity:.38;cursor:default}
+
+/* ============================================================
+   Mobile — stack avatar on top, text below
+   ============================================================ */
+@media (max-width:760px){
+  .cmtut__card{flex-direction:column;width:calc(100vw - 20px);border-radius:18px}
+  .cmtut__media{flex:0 0 auto;width:100%;min-height:180px;height:190px}
+  .cmtut__video,.cmtut__img{object-position:center 18%}
+  .cmtut__panel{padding:1.15rem 1.2rem 1.1rem}
+  .cmtut__title{font-size:1.45rem}
+  .cmtut__body{font-size:.92rem}
+  .cmtut__nav{padding-top:1rem}
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  .cmtut,.cmtut__card,.cmtut__spot{transition:none}
+  .cmtut__card{transform:none}
+  .tut-launch--new{animation:none}
+}

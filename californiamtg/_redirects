@@ -1,0 +1,28 @@
+# Clean URLs -> .html (Netlify). Links in the site use .html so it also works
+# under a plain static server; these are a convenience for typed/clean URLs.
+/get-preapproved      /get-preapproved.html      200
+/how-it-works         /how-it-works.html         200
+/contact              /contact.html              200
+/about                /about.html                200
+/about-human-review   /about-human-review.html   200
+/rates-payments       /rates-payments.html       200
+/privacy-policy       /privacy-policy.html       200
+/privacy              /privacy-policy.html       301
+/terms                /terms.html                200
+/education            /education/index.html      200
+/loan-options         /loan-options.html         200
+/jumbo-loans          /jumbo-loans.html          200
+/high-balance-conforming  /high-balance-conforming.html  200
+/fha-loans            /fha-loans.html            200
+/va-loans             /va-loans.html             200
+/dscr-loans           /dscr-loans.html           200
+/bank-statement-loans /bank-statement-loans.html 200
+/self-employed-mortgage   /self-employed-mortgage.html   200
+/conventional-loans   /conventional-loans.html   200
+/cash-out-refinance   /cash-out-refinance.html   200
+/non-qm-loans         /non-qm-loans.html         200
+/second-home-financing    /second-home-financing.html    200
+/condo-financing      /condo-financing.html      200
+/education/no-credit-check-to-start  /education/no-credit-check-to-start.html  200
+/education/which-program-fits        /education/which-program-fits.html        200
+/education/complex-scenarios         /education/complex-scenarios.html         200
