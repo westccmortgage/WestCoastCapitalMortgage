@@ -250,13 +250,20 @@
     window.addEventListener("resize", onReflow, { passive: true });
     window.addEventListener("scroll", onReflow, { passive: true });
 
-    // Embed bridge: the parent feeds us its visible viewport so the card
-    // stays within the slice of the studio the user can actually see.
+    // Embed bridge: the parent feeds us its visible viewport, and (when the
+    // card is hosted on the page) relays Next/Back/Skip clicks back to us.
     window.addEventListener("message", function (e) {
-      var d = e && e.data; if (!d || d.cmTut !== "viewport") return;
-      viewport.iframeTop = typeof d.iframeTop === "number" ? d.iframeTop : viewport.iframeTop;
-      viewport.parentH = d.parentH || viewport.parentH;
-      if (state.open) positionFor(currentTarget());
+      var d = e && e.data; if (!d) return;
+      if (d.cmTut === "viewport") {
+        viewport.iframeTop = typeof d.iframeTop === "number" ? d.iframeTop : viewport.iframeTop;
+        viewport.parentH = d.parentH || viewport.parentH;
+        if (state.open) positionFor(currentTarget());
+      } else if (d.cmTut === "nav") {
+        if (!state.open) return;
+        if (d.dir === "next") advance();
+        else if (d.dir === "back") go(-1);
+        else if (d.dir === "skip") finish(true);
+      }
     });
   }
 
@@ -295,31 +302,45 @@
     // Defensive: if the target vanished, rebuild and bail gracefully.
     if (!target) { buildOrder(); if (!state.order.length) { finish(false); return; } }
 
-    els.count.textContent = "Step " + (state.idx + 1) + " of " + state.order.length;
-    els.title.textContent = step.title;
-    els.body.textContent = step.body;
-
-    // Avatar media: video → image → neutral placeholder.
-    loadStepMedia(step);
-
     var last = state.idx === state.order.length - 1;
-    els.back.disabled = state.idx === 0;
-    els.nextLabel.textContent = last ? "Done" : "Next";
-    els.next.classList.toggle("is-done", last);
+
+    if (EMBEDDED) {
+      // Card is hosted on the page (off the calculator frame); send it data.
+      postStep(step, last);
+    } else {
+      els.count.textContent = "Step " + (state.idx + 1) + " of " + state.order.length;
+      els.title.textContent = step.title;
+      els.body.textContent = step.body;
+      loadStepMedia(step);                 // video → image → placeholder
+      els.back.disabled = state.idx === 0;
+      els.nextLabel.textContent = last ? "Done" : "Next";
+      els.next.classList.toggle("is-done", last);
+    }
 
     applyDemo(step);
 
-    // Scroll the field into a spot that leaves room for the card next to it,
-    // so the highlighted field stays visible (never hidden behind the card).
+    // Scroll the field into a spot that leaves it visible next to the card.
     var r = target.getBoundingClientRect();
-    var place = sideFor(r, els.card.offsetWidth || 560, window.innerWidth);
-    // Card beside the field → keep field centered; card stacked → field high
-    // up so the card sits comfortably below it.
-    var frac = MOBILE() ? 0.22 : (place === "stack" ? 0.28 : 0.5);
+    var place = EMBEDDED ? "host" : sideFor(r, els.card.offsetWidth || 560, window.innerWidth);
+    var frac = MOBILE() ? 0.3 : (place === "host" ? 0.42 : (place === "stack" ? 0.28 : 0.5));
     scrollTargetTo(r, frac);
     positionFor(target);
     // Re-measure after the smooth scroll settles.
     window.setTimeout(function () { positionFor(currentTarget()); }, 280);
+  }
+
+  // Tell the page-hosted card which step to show (embedded mode only).
+  function postStep(step, last) {
+    try {
+      window.parent.postMessage({
+        cmTut: "step",
+        idx: state.idx, total: state.order.length,
+        title: step.title, body: step.body,
+        videoSrc: step.videoSrc || null,
+        imageSrc: step.imageSrc || AVATAR_IMG || null,
+        first: state.idx === 0, last: !!last
+      }, "*");
+    } catch (e) {}
   }
 
   /* Where does the card fit relative to the field without covering it? */
@@ -418,6 +439,9 @@
     s.left = (r.left - pad) + "px";
     s.width = (r.width + pad * 2) + "px";
     s.height = (r.height + pad * 2) + "px";
+
+    // Embedded: the card lives on the page, so we only place the glow here.
+    if (EMBEDDED) return;
 
     var card = els.card;
     var band = getBand();
