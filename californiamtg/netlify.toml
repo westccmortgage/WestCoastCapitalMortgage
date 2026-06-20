@@ -1,0 +1,7 @@
+# California Mortgage (californiamtg.com) — static site, no build step.
+# Used when the Netlify site's "Base directory" is set to `californiamtg`.
+# With base = californiamtg, publish = "." means this folder is the site root,
+# so /_redirects and /assets/... resolve correctly.
+[build]
+  publish = "."
+  command = ""
