@@ -37,8 +37,8 @@ body.cmtut-lock{overflow:hidden}
 .cmtut{
   position:fixed;inset:0;z-index:9999;
   font-family:Inter,system-ui,sans-serif;
-  background:rgba(33,29,24,.34);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  background:rgba(33,29,24,.26);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
   opacity:0;transition:opacity .28s ease;
 }
 .cmtut[hidden]{display:none}
@@ -48,9 +48,10 @@ body.cmtut-lock{overflow:hidden}
    above does the dimming, so the highlighted field stays readable). */
 .cmtut__spot{
   position:fixed;border-radius:12px;pointer-events:none;
-  box-shadow:0 0 0 1.5px rgba(184,139,77,.55),
-             0 0 0 6px rgba(184,139,77,.16),
-             0 0 26px 6px rgba(184,139,77,.28);
+  background:rgba(255,255,255,.04);
+  box-shadow:0 0 0 2px rgba(184,139,77,.85),
+             0 0 0 6px rgba(184,139,77,.22),
+             0 0 30px 8px rgba(184,139,77,.34);
   transition:top .25s ease,left .25s ease,width .25s ease,height .25s ease;
 }
 
@@ -60,7 +61,7 @@ body.cmtut-lock{overflow:hidden}
 .cmtut__card{
   position:fixed;
   display:flex;overflow:hidden;
-  width:min(900px,calc(100vw - 32px));
+  width:min(560px,calc(100vw - 32px));
   color:#2b2825;
   background:rgba(255,255,255,.92);
   -webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
@@ -75,8 +76,8 @@ body.cmtut-lock{overflow:hidden}
 
 /* ---- Left: avatar / video (≈42%) ---- */
 .cmtut__media{
-  position:relative;flex:0 0 42%;align-self:stretch;
-  min-height:300px;background:#211d18;line-height:0;overflow:hidden;
+  position:relative;flex:0 0 44%;align-self:stretch;
+  min-height:236px;background:#211d18;line-height:0;overflow:hidden;
 }
 .cmtut__video,.cmtut__img{
   position:absolute;inset:0;width:100%;height:100%;

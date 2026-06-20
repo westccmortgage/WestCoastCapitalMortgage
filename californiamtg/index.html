@@ -204,7 +204,8 @@
     if (d.cmTut === "needViewport") { sendViewport(); return; }
     if (d.cmTut === "scrollTo") {
       var f2 = frame(); if (!f2) return;
-      var top = window.pageYOffset + f2.getBoundingClientRect().top + (d.y || 0) - window.innerHeight / 2;
+      var frac = (typeof d.frac === "number") ? d.frac : 0.5;
+      var top = window.pageYOffset + f2.getBoundingClientRect().top + (d.y || 0) - window.innerHeight * frac;
       window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
       // Push fresh viewport while the smooth scroll settles.
       var n = 0, iv = setInterval(function () { sendViewport(); if (++n > 9) clearInterval(iv); }, 80);

@@ -309,17 +309,37 @@
 
     applyDemo(step);
 
-    // Scroll the target into view. When embedded, the parent owns the
-    // scrollbar, so ask it to center the target; otherwise scroll in-page.
+    // Scroll the field into a spot that leaves room for the card next to it,
+    // so the highlighted field stays visible (never hidden behind the card).
     var r = target.getBoundingClientRect();
-    if (EMBEDDED) {
-      try { window.parent.postMessage({ cmTut: "scrollTo", y: r.top + r.height / 2 }, "*"); } catch (e) {}
-    } else {
-      try { target.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
-    }
+    var place = sideFor(r, els.card.offsetWidth || 560, window.innerWidth);
+    // Card beside the field → keep field centered; card stacked → field high
+    // up so the card sits comfortably below it.
+    var frac = MOBILE() ? 0.22 : (place === "stack" ? 0.28 : 0.5);
+    scrollTargetTo(r, frac);
     positionFor(target);
     // Re-measure after the smooth scroll settles.
-    window.setTimeout(function () { positionFor(currentTarget()); }, 260);
+    window.setTimeout(function () { positionFor(currentTarget()); }, 280);
+  }
+
+  /* Where does the card fit relative to the field without covering it? */
+  function sideFor(r, cw, vw) {
+    if (MOBILE()) return "stack";
+    if (r.right + 22 + cw <= vw) return "right";
+    if (r.left - 22 - cw >= 0) return "left";
+    return "stack";
+  }
+
+  /* Scroll so the field's center sits at `frac` of the visible height. */
+  function scrollTargetTo(r, frac) {
+    if (EMBEDDED) {
+      try { window.parent.postMessage({ cmTut: "scrollTo", y: r.top + r.height / 2, frac: frac }, "*"); } catch (e) {}
+    } else {
+      try {
+        var delta = (r.top + r.height / 2) - window.innerHeight * frac;
+        window.scrollBy({ top: delta, behavior: "smooth" });
+      } catch (e) { try { r && null; } catch (e2) {} }
+    }
   }
 
   /* The vertical band (in the SAME coordinate space as getBoundingClientRect
@@ -402,45 +422,46 @@
     var card = els.card;
     var band = getBand();
     var bandH = band.bottom - band.top;
-    var ch = card.offsetHeight || 360;
+    var ch = card.offsetHeight || 320;
+    var cw = card.offsetWidth || 560;
+    var vw = window.innerWidth;
+    var gap = 18;
+
+    card.style.position = "fixed";
+    card.style.right = "auto";
+    card.style.bottom = "auto";
 
     if (MOBILE()) {
-      // Stacked layout (CSS). Place vertically within the visible band.
-      card.style.position = "fixed";
+      // Card docks to the bottom; the field is scrolled high above it.
       card.style.left = "10px";
       card.style.right = "10px";
       card.style.width = "auto";
-      card.style.bottom = "auto";
-      var mt = band.top + Math.max(10, (bandH - ch) / 2);
-      if (ch > bandH - 16) mt = band.top + 8;
-      card.style.top = Math.round(mt) + "px";
+      card.style.top = Math.round(Math.max(band.top + 8, band.bottom - ch - 10)) + "px";
       return;
     }
+    card.style.width = "";
 
-    // Desktop: horizontally centered; vertically biased away from the target.
-    var vw = window.innerWidth;
-    var cw = card.offsetWidth || 900;
-    var left = clamp(Math.round((vw - cw) / 2), 12, Math.max(12, vw - cw - 12));
+    var place = sideFor(r, cw, vw);
+    var left, top;
 
-    var top;
-    var topSlot = band.top + 16;
-    var botSlot = band.bottom - ch - 16;
-    if (ch <= bandH - 24 && botSlot > topSlot) {
-      var targetMid = r.top + r.height / 2;
-      // Target in the upper half → drop the card low (and vice versa) so the
-      // highlighted field stays visible in the opposite half.
-      top = (targetMid < band.top + bandH * 0.5) ? botSlot : topSlot;
-      top = clamp(top, topSlot, botSlot);
+    if (place === "right" || place === "left") {
+      // Beside the field — horizontal separation means it never covers it.
+      left = (place === "right") ? r.right + gap : r.left - gap - cw;
+      top = clamp(r.top + r.height / 2 - ch / 2, band.top + 12, Math.max(band.top + 12, band.bottom - ch - 12));
     } else {
-      top = clamp(band.top + (bandH - ch) / 2, 12, Math.max(12, band.bottom - ch - 12));
+      // Stacked — sit fully below the field (or above if no room below).
+      left = clamp(Math.round((vw - cw) / 2), 12, Math.max(12, vw - cw - 12));
+      if (r.bottom + gap + ch <= band.bottom - 8) {
+        top = r.bottom + gap;                         // below, field visible above
+      } else if (r.top - gap - ch >= band.top + 8) {
+        top = r.top - gap - ch;                       // above, field visible below
+      } else {
+        top = clamp(band.bottom - ch - 12, band.top + 12, Math.max(band.top + 12, band.bottom - ch - 12));
+      }
     }
 
-    card.style.position = "fixed";
+    card.style.left = Math.round(clamp(left, 12, Math.max(12, vw - cw - 12))) + "px";
     card.style.top = Math.round(top) + "px";
-    card.style.left = Math.round(left) + "px";
-    card.style.right = "auto";
-    card.style.bottom = "auto";
-    card.style.width = "";
   }
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
