@@ -37,8 +37,8 @@
       title: "Start with the property ZIP code",
       body: "Type the ZIP code where the home is located. We use it to find the county, because each county has its own loan size limits.",
       demo: { sel: "#hs-q", value: "90210" },
-      avatarText: "Avatar explanation will appear here",
-      videoSrc: null, audioSrc: null
+      avatarText: "Your Financial Navigator — a quick intro to how this tool works.",
+      videoSrc: "/assets/video/avatar/intro.mp4", audioSrc: null
     },
     {
       target: "county-limit",
@@ -168,7 +168,11 @@
       '<div class="cmtut__card" data-tut-card>' +
         '<button type="button" class="cmtut__close" data-tut-skip aria-label="Close tutorial">×</button>' +
         '<div class="cmtut__avatar" data-tut-avatar>' +
-          '<span class="cmtut__avatar-tag">Guide</span>' +
+          '<div class="cmtut__media" data-tut-media hidden>' +
+            '<video class="cmtut__video" data-tut-video playsinline preload="metadata"></video>' +
+            '<button type="button" class="cmtut__mute" data-tut-mute aria-label="Unmute" hidden>&#128263;</button>' +
+          '</div>' +
+          '<span class="cmtut__avatar-tag">Financial Navigator</span>' +
           '<p class="cmtut__avatar-text" data-tut-avatartext>Avatar explanation will appear here</p>' +
         '</div>' +
         '<p class="cmtut__step" data-tut-count>Step 1 of 1</p>' +
@@ -190,6 +194,9 @@
     els.card = root.querySelector("[data-tut-card]");
     els.avatar = root.querySelector("[data-tut-avatar]");
     els.avatarText = root.querySelector("[data-tut-avatartext]");
+    els.media = root.querySelector("[data-tut-media]");
+    els.video = root.querySelector("[data-tut-video]");
+    els.mute = root.querySelector("[data-tut-mute]");
     els.count = root.querySelector("[data-tut-count]");
     els.title = root.querySelector("[data-tut-title]");
     els.body = root.querySelector("[data-tut-body]");
@@ -202,6 +209,17 @@
     });
     els.back.addEventListener("click", function (e) { e.preventDefault(); go(-1); });
     els.next.addEventListener("click", function (e) { e.preventDefault(); advance(); });
+
+    // Mute / unmute toggle (only relevant for clips with sound).
+    els.mute.addEventListener("click", function (e) {
+      e.preventDefault();
+      els.video.muted = !els.video.muted;
+      els.mute.innerHTML = els.video.muted ? "&#128263;" : "&#128266;";
+      els.mute.setAttribute("aria-label", els.video.muted ? "Unmute" : "Mute");
+      if (!els.video.muted) { try { els.video.play(); } catch (e2) {} }
+    });
+    // If the clip path is wrong/missing, fall back to text silently.
+    els.video.addEventListener("error", function () { showMedia(false); });
 
     // Clicking the dimmed backdrop (not the card) advances.
     root.addEventListener("click", function (e) {
@@ -262,9 +280,8 @@
     els.body.textContent = step.body;
     els.avatarText.textContent = step.avatarText || "Avatar explanation will appear here";
 
-    // Future avatar media hook — structure only, no real files required.
-    els.avatar.setAttribute("data-has-video", step.videoSrc ? "true" : "false");
-    els.avatar.setAttribute("data-has-audio", step.audioSrc ? "true" : "false");
+    // Avatar media: play the step's clip if one is set, else show text.
+    loadStepMedia(step);
 
     els.back.disabled = state.idx === 0;
     els.next.textContent = (state.idx === state.order.length - 1) ? "Done" : "Next";
@@ -299,6 +316,45 @@
       return { top: top, bottom: top + h };
     }
     return { top: top, bottom: bottom };
+  }
+
+  /* ---- Avatar video (optional, per step) ---- */
+  function showMedia(on) {
+    if (!els.media) return;
+    els.media.hidden = !on;
+    if (els.avatar) els.avatar.classList.toggle("cmtut__avatar--video", !!on);
+    if (!on && els.mute) els.mute.hidden = true;
+  }
+
+  function loadStepMedia(step) {
+    if (!els.video) return;
+    var v = els.video;
+    // Stop whatever was playing.
+    try { v.pause(); } catch (e) {}
+
+    var src = step.videoSrc;
+    if (!src) {                       // no clip for this step → text only
+      showMedia(false);
+      v.removeAttribute("src");
+      try { v.load(); } catch (e) {}
+      return;
+    }
+
+    if (v.getAttribute("src") !== src) {
+      v.setAttribute("src", src);
+      try { v.load(); } catch (e) {}
+    }
+    // Autoplay requires muted; a clip with sound shows the unmute button.
+    v.muted = true;
+    els.mute.hidden = false;
+    els.mute.innerHTML = "&#128263;";
+    els.mute.setAttribute("aria-label", "Unmute");
+    showMedia(true);
+    var p = v.play();
+    if (p && typeof p.catch === "function") p.catch(function () {/* ignore */});
+
+    // Optional separate audio track (rarely needed; structure kept).
+    if (step.audioSrc) { try { new Audio(step.audioSrc); } catch (e) {} }
   }
 
   /* Place the spotlight over the target and the card beside/below it. */
@@ -400,6 +456,7 @@
 
   function finish(completed) {
     state.open = false;
+    if (els.video) { try { els.video.pause(); } catch (e) {} }
     if (els.root) els.root.hidden = true;
     document.body.classList.remove("cmtut-lock");
     document.removeEventListener("keydown", onKey, true);

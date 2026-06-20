@@ -65,14 +65,34 @@ body.cmtut-lock{overflow:hidden}
 }
 .cmtut__close:hover{background:#f1e7d3;color:#2b2825}
 
-/* Avatar placeholder — future video/audio drops in here */
+/* Avatar — text placeholder by default; a video clip drops in per step */
 .cmtut__avatar{
   position:relative;
-  display:flex;align-items:center;gap:.6rem;
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
   min-height:54px;margin-bottom:.85rem;padding:.6rem .7rem;
   background:linear-gradient(135deg,#f4ecdc,#efe4cf);
   border:1px dashed rgba(138,106,55,.45);border-radius:12px;
 }
+/* When a clip is present the box becomes a solid media frame */
+.cmtut__avatar--video{
+  border-style:solid;border-color:rgba(138,106,55,.3);
+  background:#211d18;padding:0;overflow:hidden;
+}
+.cmtut__media{position:relative;width:100%;line-height:0}
+.cmtut__media[hidden]{display:none}
+.cmtut__video{display:block;width:100%;max-height:200px;object-fit:cover;background:#211d18}
+.cmtut__mute{
+  position:absolute;right:.5rem;bottom:.5rem;
+  width:2rem;height:2rem;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(33,29,24,.65);color:#f7f1e8;font-size:.9rem;line-height:1;
+}
+.cmtut__mute:hover{background:rgba(33,29,24,.85)}
+.cmtut__mute[hidden]{display:none}
+/* When a video shows, the tag sits on the dark frame and text hides */
+.cmtut__avatar--video .cmtut__avatar-tag{
+  position:absolute;top:.5rem;left:.5rem;z-index:2;
+}
+.cmtut__avatar--video .cmtut__avatar-text{display:none}
 .cmtut__avatar-tag{
   flex:0 0 auto;
   font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
