@@ -184,9 +184,9 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                   <p class="ig__hint" data-ho-docnote></p>
                 </div>
 
-                <div class="ig ig--full">
-                  <label for="hs-income">Approximate income (per year) — estimates the loan you could support</label>
-                  <input id="hs-income" type="number" inputmode="numeric" min="0" step="5000" value="180000" placeholder="$ per year">
+                <div class="ig ig--full ig--score">
+                  <label for="hs-income">Approximate income (per year) — estimates the loan you could support <b id="hs-income-out">$180,000</b></label>
+                  <input id="hs-income" type="range" min="0" max="1000000" step="5000" value="180000">
                   <p class="ig__hint" data-ho-qualnote></p>
                   <p class="ig__hint" data-ho-taxnote></p>
                 </div>

@@ -616,6 +616,7 @@
     set("#hs-cashout-out", fmt(E.cashout ? num(E.cashout.value) : S.cashOut));
     set("#hs-loanamt-out", fmt(E.loanamt ? num(E.loanamt.value) : S.loanAmt));
     set("#hs-score-out", String(E.score ? (parseInt(E.score.value, 10) || S.creditScore) : S.creditScore));
+    set("#hs-income-out", fmt(E.income ? num(E.income.value) : S.annualIncome));
   }
 
   function bind() {
