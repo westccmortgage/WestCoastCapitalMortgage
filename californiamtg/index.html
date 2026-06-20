@@ -152,20 +152,17 @@
       <p class="section-sub">Adjust your purchase price, down payment, occupancy, property type, and income to organize your scenario — high-balance conforming, jumbo, and more — before a licensed mortgage professional reviews your options.</p>
     </div>
 
-    <!-- Strategy Studio (self-contained app under /studio/), embedded and auto-sized -->
+    <!-- Desktop: full Strategy Studio (loaded by script.js on >=768px only) -->
     <div class="studio-embed">
-      <iframe id="studioFrame" src="/studio/" title="California Mortgage Strategy Studio"
+      <iframe id="studioFrame" data-src="/studio/" title="California Mortgage Strategy Studio"
               loading="lazy" scrolling="no"></iframe>
     </div>
 
-    <!-- Mobile: compact launch card instead of the long inline tool -->
-    <a class="studio-launch" href="/studio/">
-      <span class="studio-launch__txt">
-        <strong>Open the Strategy Studio</strong>
-        <small>Adjust price, down payment &amp; income and see your review path — jumbo, high-balance, and more.</small>
-      </span>
-      <span class="studio-launch__arrow" aria-hidden="true">&rarr;</span>
-    </a>
+    <!-- Mobile: fast step-by-step builder (auto-advances; sends to Supabase + email) -->
+    <div class="mobile-builder">
+      <div id="scenarioBuilder" class="builder-card" aria-live="polite"></div>
+      <p class="studio-fulllink"><a href="/studio/">Prefer the full Strategy Studio? Open it &rarr;</a></p>
+    </div>
 
     <p class="fineprint center compliance-inline">
       This is not a loan approval, loan commitment, or rate quote. Final loan options are
@@ -341,6 +338,7 @@ window.addEventListener("message", function (e) {
 
 <script src="/config.js"></script>
 <script src="/script.js" defer></script>
+<script src="/scenario-builder.js" defer></script>
 <script type="module" src="/src/app.js"></script>
 </body>
 </html>

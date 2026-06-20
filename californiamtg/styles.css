@@ -542,13 +542,10 @@ textarea.field-input{resize:vertical;min-height:84px}
 .studio-embed iframe{display:block;width:100%;height:1120px;border:0}
 @media(max-width:760px){.studio-embed iframe{height:1600px}}
 
-/* Mobile launch card (shown instead of the inline studio on small screens) */
-.studio-launch{display:none;align-items:center;gap:1rem;max-width:560px;margin:0 auto;
-  padding:1.15rem 1.3rem;border:1px solid var(--line);border-radius:16px;
-  background:linear-gradient(160deg,#fdfbf6,#f3ece0);box-shadow:var(--shadow-sm);color:var(--ink)}
-.studio-launch strong{display:block;font-family:var(--serif);font-size:1.25rem;font-weight:600}
-.studio-launch small{display:block;color:var(--muted);font-size:.9rem;line-height:1.45;margin-top:.25rem}
-.studio-launch__arrow{margin-left:auto;color:var(--gold-deep);font-size:1.4rem;flex:0 0 auto}
+/* Mobile: fast step builder shown instead of the heavy inline studio */
+.mobile-builder{display:none}
+.studio-fulllink{text-align:center;margin-top:1.1rem;font-size:.9rem}
+.studio-fulllink a{color:var(--gold-deep);text-decoration:underline;text-underline-offset:3px}
 
 /* Understanding mortgage rates */
 .rates-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
@@ -741,9 +738,9 @@ textarea.field-input{resize:vertical;min-height:84px}
   .options{grid-template-columns:1fr}
   .field-grid{grid-template-columns:1fr}
 
-  /* Mobile: swap the long inline Strategy Studio for a compact launch card */
+  /* Mobile: swap the heavy inline Strategy Studio for the fast step builder */
   .studio-embed{display:none!important}
-  .studio-launch{display:flex!important}
+  .mobile-builder{display:block!important}
   /* Tidy header on phones */
   .brand-sub{display:none}
   .brand-name{font-size:1.3rem}

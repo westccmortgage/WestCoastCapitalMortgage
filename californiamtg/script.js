@@ -141,6 +141,15 @@
     }
   }
 
+  /* ---- Strategy Studio iframe: load only on desktop (>=768px) ----
+     On mobile we use the fast step builder instead, so we never fetch the
+     heavy studio app there. */
+  var studioFrame = document.getElementById("studioFrame");
+  if (studioFrame && studioFrame.getAttribute("data-src")) {
+    var wide = window.matchMedia ? window.matchMedia("(min-width: 768px)").matches : true;
+    if (wide) studioFrame.src = studioFrame.getAttribute("data-src");
+  }
+
   /* ---- Rotating Scenario Preview Card ----
      Elegant auto-rotating preview of different mortgage situations. Preview only
      (no approval implied). Fades every ~4.5s, pauses on hover/focus, dots to jump,
