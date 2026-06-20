@@ -172,13 +172,16 @@
 <section class="section builder-section" id="builder">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow gold">Mortgage Scenario Builder</p>
-      <h2>Tell Us About Your Situation</h2>
-      <p class="section-sub">A few simple questions help us organize your scenario. No credit check, no full application — just a clear starting point.</p>
+      <p class="eyebrow gold">Mortgage Strategy Studio</p>
+      <h2>Build Your Mortgage Scenario</h2>
+      <p class="section-sub">Adjust your purchase price, down payment, occupancy, property type, and income to organize your scenario — high-balance conforming, jumbo, and more — before a licensed mortgage professional reviews your options.</p>
     </div>
 
-    <!-- Scenario builder mounts here (rendered by scenario-builder.js) -->
-    <div id="scenarioBuilder" class="builder-card" aria-live="polite"></div>
+    <!-- Strategy Studio (self-contained app under /studio/), embedded and auto-sized -->
+    <div class="studio-embed">
+      <iframe id="studioFrame" src="/studio/" title="California Mortgage Strategy Studio"
+              loading="lazy" scrolling="no"></iframe>
+    </div>
 
     <p class="fineprint center compliance-inline">
       This is not a loan approval, loan commitment, or rate quote. Final loan options are
@@ -186,6 +189,15 @@
     </p>
   </div>
 </section>
+<script>
+/* Auto-size the embedded Strategy Studio to its content height. */
+window.addEventListener("message", function (e) {
+  if (e && e.data && e.data.cmStudioHeight) {
+    var f = document.getElementById("studioFrame");
+    if (f) f.style.height = (e.data.cmStudioHeight + 24) + "px";
+  }
+});
+</script>
 
 <!-- ===================== UNDERSTANDING RATES ===================== -->
 <section class="section section-navy" id="rates">
@@ -341,7 +353,6 @@
 
 <script src="/config.js"></script>
 <script src="/script.js" defer></script>
-<script src="/scenario-builder.js" defer></script>
 <script type="module" src="/src/app.js"></script>
 </body>
 </html>
