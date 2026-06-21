@@ -97,6 +97,7 @@
       target: "result",
       title: "Conforming vs. jumbo result",
       body: "Putting it all together, your scenario fits either conforming (under the county limit) or jumbo (above it). Neither is automatically better — the goal is the most efficient structure for your situation.",
+      videoSrc: "/assets/video/avatar/step-result.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
