@@ -71,9 +71,10 @@
     },
     {
       target: "fico",
-      title: "Your credit score (FICO)",
+      title: "Credit Score Impact",
       body: "A higher score usually means a lower interest rate. Slide it and watch the assumed rate and payment change. 740 and up is already strong.",
       demo: { sel: "#hs-score", value: "760" },
+      videoSrc: "/assets/video/avatar/step-fico.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
