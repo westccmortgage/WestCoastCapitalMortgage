@@ -28,6 +28,28 @@
   50%{box-shadow:0 0 0 7px rgba(138,106,55,0)}
 }
 
+/* ---- Prominent full-width tour launcher (top of the console) ---- */
+.tut-banner{
+  display:flex;align-items:center;gap:.85rem;width:100%;
+  margin:.2rem 0 1rem;padding:.95rem 1.15rem;
+  text-align:left;cursor:pointer;
+  color:#f7f1e8;background:linear-gradient(135deg,#8c6a3a,#6f552f);
+  border:1px solid rgba(0,0,0,.08);border-radius:14px;
+  box-shadow:0 8px 22px rgba(138,106,55,.28);
+  transition:transform .1s ease,box-shadow .15s ease,filter .15s ease;
+  animation:cmtutPulse 2.4s ease-in-out 3;
+}
+.tut-banner:hover{filter:brightness(1.05);box-shadow:0 10px 26px rgba(138,106,55,.34)}
+.tut-banner:active{transform:translateY(1px)}
+.tut-banner__play{
+  flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  width:2.4rem;height:2.4rem;border-radius:50%;
+  background:#f7f1e8;color:#8c6a3a;font-size:.95rem;
+}
+.tut-banner__txt{display:flex;flex-direction:column;gap:.15rem;line-height:1.2}
+.tut-banner__txt b{font:700 1.02rem/1.1 Inter,system-ui,sans-serif}
+.tut-banner__txt small{font:500 .8rem/1.25 Inter,system-ui,sans-serif;opacity:.88}
+
 /* ---- Body lock while the tour is open ---- */
 body.cmtut-lock{overflow:hidden}
 
