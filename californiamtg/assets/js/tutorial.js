@@ -81,44 +81,44 @@
     {
       target: "income-type",
       title: "How your income is evaluated",
-      body: "Not all income is reviewed the same way. W-2, self-employed, 1099, and business owners may each need different documentation and calculations. Identifying the right category is key to an accurate strategy — the goal is understanding how your income may be evaluated for qualification, not just how much you earn.",
+      body: "Not all income is reviewed the same way. W-2, self-employed, and 1099 each use different documentation — so the goal is how your income is evaluated for qualification, not just how much you earn.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "income",
       title: "Qualifying income vs. gross income",
-      body: "Gross income and qualifying income aren't always the same. Lenders apply underwriting guidelines — business expenses, deductions, rental income, self-employment history, and documentation can all change the final number. The more accurately we evaluate income, the more accurate your financing strategy becomes.",
+      body: "Gross income and qualifying income aren't always the same. Deductions, business expenses, and documentation can change the final number — and a more accurate income picture means a more accurate strategy.",
       demo: { sel: "#hs-income", value: "180000" },
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "result",
       title: "Conforming vs. jumbo result",
-      body: "Bringing it all together — location, loan amount, down payment, credit, and income — some scenarios fit conforming or high-balance conforming, others require jumbo. Neither is automatically better. The goal isn't simply to get a loan, it's to identify the most efficient financing structure for your situation.",
+      body: "Putting it all together, your scenario fits either conforming (under the county limit) or jumbo (above it). Neither is automatically better — the goal is the most efficient structure for your situation.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "payment-strategy",
       title: "Payment strategy",
-      body: "Monthly payment is a major factor, but it's part of a broader picture. Rates, terms, down payment, and loan structure all shape the final obligation. The lowest payment isn't always best, and the highest isn't always necessary — the aim is a payment that supports both qualification and your long-term goals.",
+      body: "Your monthly payment is shaped by rate, term, down payment, and loan structure. The lowest payment isn't always best — the aim is one that supports both qualification and your long-term goals.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "buydown",
       title: "Buydowns & points",
-      body: "Paying points at closing can lower your rate, and temporary buydowns can reduce payments in the early years. Every buydown has a cost, so we compare the upfront investment against the long-term benefit. Sometimes it creates meaningful savings; sometimes keeping those funds available is the better move.",
+      body: "Points at closing can lower your rate, and temporary buydowns reduce payments in the early years. Every buydown has a cost, so we weigh the upfront investment against the long-term benefit.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "interest-only",
       title: "Interest-only financing",
-      body: "Interest-only payments cover interest without reducing principal for a set period, creating lower payments and improved cash flow. That flexibility is valuable for some, but it isn't right for everyone. Used appropriately it's an effective planning tool; misunderstood it can create unrealistic expectations — so we compare all options before deciding.",
+      body: "Interest-only payments cover interest without reducing the balance for a set period — lower payments and better cash flow, but not right for everyone. It's a planning tool worth comparing against the other options.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "final-review",
       title: "Your strategy review",
-      body: "You've completed the Financial Navigator walkthrough — location, county limits, loan purpose, down payment, credit, income, financing structure, payment options, buydowns, and interest-only. Mortgage financing is rarely about a single number; the strongest strategy comes from seeing how the factors work together. When you're ready, a licensed mortgage professional can review your scenario in detail. Everything above is educational — no credit pull, nothing sent anywhere.",
+      body: "That's the full walkthrough. Mortgage financing is rarely about a single number — the strongest strategy comes from seeing how the factors work together. When you're ready, a licensed professional can review your scenario in detail. Everything here is educational — no credit pull, nothing sent anywhere.",
       avatarText: "Avatar explanation will appear here"
     }
   ];
