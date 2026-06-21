@@ -90,6 +90,7 @@
       title: "Qualifying income vs. gross income",
       body: "Gross income and qualifying income aren't always the same. Deductions, business expenses, and documentation can change the final number — and a more accurate income picture means a more accurate strategy.",
       demo: { sel: "#hs-income", value: "180000" },
+      videoSrc: "/assets/video/avatar/step-income.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
