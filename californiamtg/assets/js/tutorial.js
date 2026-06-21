@@ -80,8 +80,8 @@
     },
     {
       target: "income-type",
-      title: "How you earn your income",
-      body: "A regular paycheck (W-2) is the simplest to document. If you're self-employed or paid on 1099, lenders look at different paperwork, which can affect your rate.",
+      title: "How your income is evaluated",
+      body: "Not all income is reviewed the same way. W-2, self-employed, 1099, and business owners may each need different documentation and calculations. Identifying the right category is key to an accurate strategy — the goal is understanding how your income may be evaluated for qualification, not just how much you earn.",
       avatarText: "Avatar explanation will appear here"
     },
     {
