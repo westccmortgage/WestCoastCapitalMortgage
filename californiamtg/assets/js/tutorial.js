@@ -82,6 +82,7 @@
       target: "income-type",
       title: "How your income is evaluated",
       body: "Not all income is reviewed the same way. W-2, self-employed, and 1099 each use different documentation — so the goal is how your income is evaluated for qualification, not just how much you earn.",
+      videoSrc: "/assets/video/avatar/step-income-type.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
