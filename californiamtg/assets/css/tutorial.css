@@ -210,6 +210,16 @@ body.cmtut-lock{overflow:hidden}
   .cmtut__title{font-size:1.45rem}
   .cmtut__body{font-size:.92rem}
   .cmtut__nav{padding-top:1rem}
+  /* Make the tour-launch button impossible to miss on phones:
+     full width below the console title, larger tap target. */
+  .scanner__head{flex-wrap:wrap}
+  .tut-launch{
+    order:3;margin-left:0;width:100%;justify-content:center;
+    margin-top:.7rem;padding:.8rem 1rem;font-size:.95rem;
+    background:#8c6a3a;color:#f7f1e8;border-color:#8c6a3a;
+  }
+  .tut-launch:hover{background:#7a5c30}
+  .tut-launch__icon{background:#f7f1e8;color:#8c6a3a}
 }
 
 /* ============================================================
