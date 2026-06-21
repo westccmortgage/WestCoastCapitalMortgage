@@ -59,6 +59,7 @@
       target: "loan-purpose",
       title: "What you're trying to do",
       body: "Buying a home, refinancing, pulling cash out, or financing a rental? Pick the goal and the tool shows only the fields that matter for it.",
+      videoSrc: "/assets/video/avatar/step-purpose.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
