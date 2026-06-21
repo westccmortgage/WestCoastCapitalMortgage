@@ -105,7 +105,7 @@ body.cmtut-lock{overflow:hidden}
 }
 .cmtut__badge i{width:6px;height:6px;border-radius:50%;background:#cdb079;box-shadow:0 0 6px #cdb079}
 .cmtut__media-foot{
-  position:absolute;left:.9rem;bottom:.8rem;z-index:3;
+  position:absolute;left:.9rem;bottom:1.05rem;z-index:3;
   font-size:.9rem;font-weight:600;line-height:1.1;color:#fff;
   text-shadow:0 1px 6px rgba(0,0,0,.45);
 }
@@ -117,6 +117,21 @@ body.cmtut-lock{overflow:hidden}
 }
 .cmtut__mute:hover{background:rgba(33,29,24,.8)}
 .cmtut__mute[hidden]{display:none}
+
+/* Playback controls (pause/resume + replay) over the video */
+.cmtut__controls{position:absolute;right:.6rem;bottom:1rem;z-index:3;display:flex;gap:.4rem}
+.cmtut__controls[hidden]{display:none}
+.cmtut__ctrlbtn{
+  width:1.9rem;height:1.9rem;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(33,29,24,.55);color:#f7f1e8;font-size:.78rem;line-height:1;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+}
+.cmtut__ctrlbtn:hover{background:rgba(33,29,24,.82)}
+/* Seekable progress bar pinned to the bottom edge of the video */
+.cmtut__progress{position:absolute;left:0;right:0;bottom:0;height:5px;z-index:3;
+  background:rgba(255,255,255,.20);cursor:pointer}
+.cmtut__progress[hidden]{display:none}
+.cmtut__progress-fill{display:block;height:100%;width:0;background:#cdb079}
 
 /* ---- Right: text + controls (≈58%) ---- */
 .cmtut__panel{
