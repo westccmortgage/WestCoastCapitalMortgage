@@ -111,6 +111,7 @@
       target: "buydown",
       title: "Buydowns & points",
       body: "Points at closing can lower your rate, and temporary buydowns reduce payments in the early years. Every buydown has a cost, so we weigh the upfront investment against the long-term benefit.",
+      videoSrc: "/assets/video/avatar/step-buydown.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
