@@ -1,5 +1,9 @@
 # Financial Navigator — HeyGen Narration Scripts (revised)
 
+## HeyGen project config
+- **Avatar ID:** `891fdf2b7744459897d7a98adb2f146c`
+- (API key / voice_id NOT stored here — keep secrets out of the repo.)
+
 Editorial pass: grammar fixed, "however/that's why" repetition reduced, each
 episode trimmed toward ~45–60 seconds, key terms briefly defined on first use,
 no specific numbers/rates (compliance-safe). Tone and intent unchanged.
