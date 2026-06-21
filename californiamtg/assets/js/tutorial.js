@@ -36,7 +36,7 @@
       target: "zip",
       title: "Start with the property ZIP code",
       body: "Type the ZIP code where the home is located. We use it to find the county, because each county has its own loan size limits.",
-      demo: { sel: "#hs-q", value: "90210" },
+      demo: { sel: "#hs-q", value: "90210", silent: true },
       avatarText: "Your Financial Navigator — a quick intro to how this tool works.",
       videoSrc: "/assets/video/avatar/intro.mp4", audioSrc: null
     },
@@ -277,15 +277,19 @@
   function currentTarget() { return qTarget(currentStep().target); }
 
   function applyDemo(step) {
-    // Optional sample value — sets the field and fires the events the
-    // calculator already listens for, so its own logic recomputes.
+    // Optional sample value — sets the field and (unless silent) fires the
+    // events the calculator listens for so it recomputes. The ZIP field is
+    // set "silent": firing input there would collapse the example scenario
+    // (the engine hides everything below ZIP until a county is confirmed).
     if (step.demo && step.demo.sel) {
       try {
         var el = document.querySelector(step.demo.sel);
         if (el && el.value !== step.demo.value) {
           el.value = step.demo.value;
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
+          if (!step.demo.silent) {
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+          }
         }
       } catch (e) { /* never break the tool */ }
     }
