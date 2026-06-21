@@ -118,7 +118,7 @@
     {
       target: "final-review",
       title: "Your strategy review",
-      body: "When you're ready, this is where you can continue to a secure application or talk to a licensed mortgage professional. Everything above is educational — no credit pull, nothing sent anywhere.",
+      body: "You've completed the Financial Navigator walkthrough — location, county limits, loan purpose, down payment, credit, income, financing structure, payment options, buydowns, and interest-only. Mortgage financing is rarely about a single number; the strongest strategy comes from seeing how the factors work together. When you're ready, a licensed mortgage professional can review your scenario in detail. Everything above is educational — no credit pull, nothing sent anywhere.",
       avatarText: "Avatar explanation will appear here"
     }
   ];
