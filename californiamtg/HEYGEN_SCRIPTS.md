@@ -9,6 +9,15 @@
   - voice_id hash: _not provided yet — add here when available_
 - (API key NOT stored here — keep secrets out of the repo.)
 
+### Enabling HeyGen API later (for automation)
+The owner holds the HeyGen API key and can provide it on request. To enable
+API access (e.g. to look up the "Ben" voice_id or auto-generate videos from
+the scripts below), do NOT paste the key in chat — add it as an environment
+variable `HEYGEN_API_KEY` in the Claude Code web environment settings, then
+restart the session. Auth ladder: MCP (mcp__heygen__*) > CLI (`heygen`) >
+raw API. Network egress to api.heygen.com is allowed from this environment
+(returns 403 until authenticated).
+
 Editorial pass: grammar fixed, "however/that's why" repetition reduced, each
 episode trimmed toward ~45–60 seconds, key terms briefly defined on first use,
 no specific numbers/rates (compliance-safe). Tone and intent unchanged.
