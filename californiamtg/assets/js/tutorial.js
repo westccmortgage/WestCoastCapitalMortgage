@@ -111,8 +111,8 @@
     },
     {
       target: "interest-only",
-      title: "Interest-only preview",
-      body: "Here's the estimated payment if you only paid the interest each month. Lower now, but the balance doesn't go down — useful to compare, not always the goal.",
+      title: "Interest-only financing",
+      body: "Interest-only payments cover interest without reducing principal for a set period, creating lower payments and improved cash flow. That flexibility is valuable for some, but it isn't right for everyone. Used appropriately it's an effective planning tool; misunderstood it can create unrealistic expectations — so we compare all options before deciding.",
       avatarText: "Avatar explanation will appear here"
     },
     {
