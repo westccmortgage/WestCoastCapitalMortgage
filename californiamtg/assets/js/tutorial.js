@@ -49,9 +49,10 @@
     },
     {
       target: "property-value",
-      title: "Home price or value",
+      title: "Purchase Price vs. Loan Amount",
       body: "Drag this to the home's price (for a purchase) or its current value (for a refinance). Most other numbers update from this one.",
       demo: { sel: "#hs-value", value: "1600000" },
+      videoSrc: "/assets/video/avatar/step-value.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
