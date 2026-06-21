@@ -86,27 +86,27 @@
     },
     {
       target: "income",
-      title: "Your yearly income",
-      body: "We use this to estimate how large a loan your income could comfortably support. It's a rough guide, not an approval.",
+      title: "Qualifying income vs. gross income",
+      body: "Gross income and qualifying income aren't always the same. Lenders apply underwriting guidelines — business expenses, deductions, rental income, self-employment history, and documentation can all change the final number. The more accurately we evaluate income, the more accurate your financing strategy becomes.",
       demo: { sel: "#hs-income", value: "180000" },
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "result",
       title: "Conforming vs. jumbo result",
-      body: "This is the headline answer: whether your loan stays under the county line (conforming) or goes over it (jumbo). Jumbo loans have their own rules and rates.",
+      body: "Bringing it all together — location, loan amount, down payment, credit, and income — some scenarios fit conforming or high-balance conforming, others require jumbo. Neither is automatically better. The goal isn't simply to get a loan, it's to identify the most efficient financing structure for your situation.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "payment-strategy",
-      title: "How you want to pay",
-      body: "“Principal & Interest” slowly pays the loan off. “Interest Only” keeps the early payment lower but doesn't reduce what you owe. Tap to compare.",
+      title: "Payment strategy",
+      body: "Monthly payment is a major factor, but it's part of a broader picture. Rates, terms, down payment, and loan structure all shape the final obligation. The lowest payment isn't always best, and the highest isn't always necessary — the aim is a payment that supports both qualification and your long-term goals.",
       avatarText: "Avatar explanation will appear here"
     },
     {
       target: "buydown",
-      title: "Buying down your rate (points)",
-      body: "You can pay a little extra up front to lower your interest rate. This shows the cost, the monthly savings, and how long until it pays for itself.",
+      title: "Buydowns & points",
+      body: "Paying points at closing can lower your rate, and temporary buydowns can reduce payments in the early years. Every buydown has a cost, so we compare the upfront investment against the long-term benefit. Sometimes it creates meaningful savings; sometimes keeping those funds available is the better move.",
       avatarText: "Avatar explanation will appear here"
     },
     {
