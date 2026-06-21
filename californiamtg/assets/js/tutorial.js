@@ -104,6 +104,7 @@
       target: "payment-strategy",
       title: "Payment strategy",
       body: "Your monthly payment is shaped by rate, term, down payment, and loan structure. The lowest payment isn't always best — the aim is one that supports both qualification and your long-term goals.",
+      videoSrc: "/assets/video/avatar/step-payment.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
