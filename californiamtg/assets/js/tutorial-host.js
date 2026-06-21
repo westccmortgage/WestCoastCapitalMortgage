@@ -43,6 +43,9 @@
           '</div>' +
           '<img class="cmtut__img" alt="" />' +
           '<video class="cmtut__video" playsinline preload="metadata"></video>' +
+          '<button type="button" class="cmtut__playbig" data-bigplay aria-label="Play video" hidden>' +
+            '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>' +
+          '</button>' +
           '<span class="cmtut__badge"><i></i>Financial Navigator</span>' +
           '<button type="button" class="cmtut__mute" aria-label="Unmute" hidden>&#128263;</button>' +
           '<div class="cmtut__media-foot">Your Financial Navigator</div>' +
@@ -83,6 +86,7 @@
     els.back = host.querySelector(".cmtut__btn--back");
     els.next = host.querySelector(".cmtut__btn--next");
     els.nextLabel = host.querySelector(".cmtut__nextlabel");
+    els.bigplay = host.querySelector("[data-bigplay]");
     els.controls = host.querySelector("[data-controls]");
     els.pp = host.querySelector("[data-pp]");
     els.replay = host.querySelector("[data-replay]");
@@ -99,6 +103,15 @@
       prefMuted = els.video.muted;            // remember the choice across steps
       setMuteIcon();
       if (!els.video.muted) { try { els.video.play(); } catch (e2) {} }
+    });
+
+    // Big centered Play overlay — shown whenever the clip is paused (e.g.
+    // when mobile blocks autoplay). A tap is a user gesture, so play WITH
+    // sound and remember that choice for the rest of the tour.
+    els.bigplay.addEventListener("click", function (e) {
+      e.preventDefault();
+      els.video.muted = false; prefMuted = false; setMuteIcon();
+      try { var p = els.video.play(); if (p && p.catch) p.catch(function () {}); } catch (e2) {}
     });
 
     // Playback controls — pause/resume, replay, seek; auto-advance on end.
@@ -139,6 +152,11 @@
     if (!els.pp || !els.video) return;
     if (els.video.paused) { els.pp.innerHTML = "&#9654;"; els.pp.setAttribute("aria-label", "Play"); }
     else { els.pp.innerHTML = "&#9208;"; els.pp.setAttribute("aria-label", "Pause"); }
+    // Big overlay Play button: visible only while a clip is loaded but paused.
+    if (els.bigplay) {
+      var videoShown = els.video.style.display === "block";
+      els.bigplay.hidden = !(videoShown && els.video.paused);
+    }
   }
 
   function showLayer(which) {
@@ -149,6 +167,7 @@
     if (els.controls) els.controls.hidden = !vid;
     if (els.progress) els.progress.hidden = !vid;
     if (els.fill && !vid) els.fill.style.width = "0";
+    if (els.bigplay && !vid) els.bigplay.hidden = true;
   }
 
   function setMuteIcon() {

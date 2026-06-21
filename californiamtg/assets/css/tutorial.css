@@ -118,6 +118,22 @@ body.cmtut-lock{overflow:hidden}
 .cmtut__mute:hover{background:rgba(33,29,24,.8)}
 .cmtut__mute[hidden]{display:none}
 
+/* Big centered Play overlay — appears when a clip is paused (e.g. when a
+   mobile browser blocks autoplay) so it's obvious the panel holds a video. */
+.cmtut__playbig{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:4;
+  display:flex;align-items:center;justify-content:center;
+  width:4.4rem;height:4.4rem;border-radius:50%;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.55);
+  background:rgba(33,29,24,.5);color:#f7f1e8;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+  transition:background .2s ease,transform .15s ease;
+}
+.cmtut__playbig svg{margin-left:3px}
+.cmtut__playbig:hover{background:rgba(33,29,24,.78);transform:translate(-50%,-50%) scale(1.05)}
+.cmtut__playbig[hidden]{display:none}
+
 /* Playback controls (pause/resume + replay) over the video */
 .cmtut__controls{position:absolute;right:.6rem;bottom:1rem;z-index:3;display:flex;gap:.4rem}
 .cmtut__controls[hidden]{display:none}
@@ -188,7 +204,7 @@ body.cmtut-lock{overflow:hidden}
    ============================================================ */
 @media (max-width:760px){
   .cmtut__card{flex-direction:column;width:calc(100vw - 20px);border-radius:18px}
-  .cmtut__media{flex:0 0 auto;width:100%;min-height:180px;height:190px}
+  .cmtut__media{flex:0 0 auto;width:100%;min-height:220px;height:230px}
   .cmtut__video,.cmtut__img{object-position:center 18%}
   .cmtut__panel{padding:1.15rem 1.2rem 1.1rem}
   .cmtut__title{font-size:1.45rem}
@@ -228,7 +244,7 @@ body.cmtut-lock{overflow:hidden}
 @media (max-width:760px){
   .cmtut-host{left:10px;right:10px;top:auto;bottom:10px;width:auto}
   .cmtut-host .cmtut__card{flex-direction:column}
-  .cmtut-host .cmtut__media{flex:0 0 auto;width:100%;min-height:0;height:150px}
+  .cmtut-host .cmtut__media{flex:0 0 auto;width:100%;min-height:0;height:220px}
 }
 @media (prefers-reduced-motion:reduce){
   .cmtut-host{transition:none;transform:none}
