@@ -5,3 +5,23 @@
 [build]
   publish = "."
   command = ""
+
+# ---- Caching -------------------------------------------------------------
+# Assets (HTML/CSS/JS) are NOT fingerprinted, so force browsers to revalidate
+# on every load. Without this, Safari served stale HTML/CSS and site updates
+# (e.g. the tour launcher) didn't appear until the cache was cleared.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Big media rarely changes and is expensive to refetch — cache it longer.
+[[headers]]
+  for = "/assets/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
