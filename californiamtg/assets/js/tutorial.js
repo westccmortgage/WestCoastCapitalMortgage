@@ -125,6 +125,7 @@
       target: "final-review",
       title: "Your strategy review",
       body: "That's the full walkthrough. Mortgage financing is rarely about a single number — the strongest strategy comes from seeing how the factors work together. When you're ready, a licensed professional can review your scenario in detail. Everything here is educational — no credit pull, nothing sent anywhere.",
+      videoSrc: "/assets/video/avatar/step-final.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     }
   ];
