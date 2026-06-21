@@ -118,6 +118,7 @@
       target: "interest-only",
       title: "Interest-only financing",
       body: "Interest-only payments cover interest without reducing the balance for a set period — lower payments and better cash flow, but not right for everyone. It's a planning tool worth comparing against the other options.",
+      videoSrc: "/assets/video/avatar/step-io.mp4", audioSrc: null,
       avatarText: "Avatar explanation will appear here"
     },
     {
