@@ -274,6 +274,9 @@
         if (d.dir === "next") advance();
         else if (d.dir === "back") go(-1);
         else if (d.dir === "skip") finish(true);
+      } else if (d.cmTut === "launch") {
+        // Parent page (e.g. the homepage Navigator panel) asks to start the tour.
+        if (!state.open) open();
       }
     });
   }

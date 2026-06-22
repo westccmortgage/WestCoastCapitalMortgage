@@ -145,6 +145,72 @@
   <div class="hero-scroll" aria-hidden="true"><span></span></div>
 </section>
 
+<!-- ============ FINANCIAL NAVIGATOR — AVATAR INTRO PANEL ============ -->
+<section class="section navhero" id="navigator">
+  <div class="container">
+    <div class="navhero__card reveal">
+      <div class="navhero__media">
+        <video class="navhero__video" autoplay muted loop playsinline preload="metadata" src="/assets/video/avatar/overview.mp4"></video>
+        <span class="navhero__badge"><i></i>Financial Navigator</span>
+        <button type="button" class="navhero__sound" data-navhero-sound>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          Tap to play with sound
+        </button>
+      </div>
+      <div class="navhero__body">
+        <p class="eyebrow gold">Your Financial Navigator</p>
+        <h2>See how this works — in about 2 minutes</h2>
+        <p class="section-sub">Your Financial Navigator walks you through every step: county loan limits, down payment, credit, income, and how conforming vs. jumbo financing fits your California scenario.</p>
+        <button type="button" class="btn btn-primary btn-lg navhero__btn" data-navtour-launch>&#9654;&nbsp; Watch the guided tour</button>
+        <p class="navhero__note">~2 minutes &middot; educational only &middot; no credit check to start</p>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+/* Financial Navigator intro panel: silent looping teaser, one tap for sound
+   (native controls give pause / mute / seek). The "Watch the guided tour"
+   button scrolls to the Strategy Studio and asks the embedded studio to open
+   its guided tour; on mobile (no iframe) it simply scrolls to the builder. */
+(function () {
+  var v = document.querySelector(".navhero__video");
+  var b = document.querySelector("[data-navhero-sound]");
+  if (v) {
+    var playWithSound = function () {
+      v.muted = false; v.loop = false; v.controls = true;
+      try { v.currentTime = 0; } catch (e) {}
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      if (b) b.hidden = true;
+    };
+    var backToTeaser = function () {
+      v.controls = false; v.muted = true; v.loop = true;
+      try { v.currentTime = 0; } catch (e) {}
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      if (b) b.hidden = false;
+    };
+    if (b) b.addEventListener("click", playWithSound);
+    v.addEventListener("click", function () { if (v.muted) playWithSound(); });
+    v.addEventListener("ended", backToTeaser);
+  }
+
+  var btn = document.querySelector("[data-navtour-launch]");
+  if (btn) btn.addEventListener("click", function () {
+    var builder = document.getElementById("builder");
+    if (builder) builder.scrollIntoView({ behavior: "smooth", block: "start" });
+    var f = document.getElementById("studioFrame");
+    if (!f) return;                                   // mobile: studio not embedded
+    if (!f.src && f.getAttribute("data-src")) f.src = f.getAttribute("data-src");
+    var tries = 0, iv = setInterval(function () {
+      if (++tries > 24) { clearInterval(iv); return; }
+      if (f.contentWindow) { try { f.contentWindow.postMessage({ cmTut: "launch" }, "*"); } catch (e) {} }
+    }, 300);
+    window.addEventListener("message", function onOpen(e) {
+      if (e && e.data && e.data.cmTut === "open") { clearInterval(iv); window.removeEventListener("message", onOpen); }
+    });
+  });
+})();
+</script>
+
 <!-- ===================== SCENARIO BUILDER ===================== -->
 <section class="section builder-section" id="builder">
   <div class="container">

@@ -158,22 +158,21 @@
   var b = document.querySelector("[data-navhero-sound]");
   if (!v) return;
   function playWithSound() {
-    v.muted = false; v.loop = false;
+    v.muted = false; v.loop = false; v.controls = true; // native pause / mute / seek
     try { v.currentTime = 0; } catch (e) {}
     var p = v.play(); if (p && p.catch) p.catch(function () {});
     if (b) b.hidden = true;
   }
   function backToTeaser() {
-    v.muted = true; v.loop = true;
+    v.controls = false; v.muted = true; v.loop = true;
     try { v.currentTime = 0; } catch (e) {}
     var p = v.play(); if (p && p.catch) p.catch(function () {});
     if (b) b.hidden = false;
   }
   if (b) b.addEventListener("click", playWithSound);
-  v.addEventListener("click", function () {
-    if (v.muted) { playWithSound(); return; }
-    if (v.paused) { try { v.play(); } catch (e) {} } else { v.pause(); }
-  });
+  // Teaser (muted) → a tap starts sound; in sound mode the native controls
+  // own play/pause/seek, so the overlay click stays out of the way.
+  v.addEventListener("click", function () { if (v.muted) playWithSound(); });
   v.addEventListener("ended", backToTeaser);
 })();
 </script>
