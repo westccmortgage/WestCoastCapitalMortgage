@@ -195,6 +195,8 @@
 
   var btn = document.querySelector("[data-navtour-launch]");
   if (btn) btn.addEventListener("click", function () {
+    // Silence the big avatar so it doesn't talk over the guided-tour clips.
+    if (v) { try { v.pause(); } catch (e) {} v.muted = true; v.controls = false; if (b) b.hidden = false; }
     var builder = document.getElementById("builder");
     if (builder) builder.scrollIntoView({ behavior: "smooth", block: "start" });
     var f = document.getElementById("studioFrame");
