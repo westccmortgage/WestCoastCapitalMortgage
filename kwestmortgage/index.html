@@ -132,8 +132,12 @@
   <div class="wrap">
     <div class="navhero__card reveal">
       <div class="navhero__media">
-        <video class="navhero__video" autoplay muted loop playsinline preload="metadata" src="/assets/video/avatar/intro.mp4"></video>
+        <video class="navhero__video" autoplay muted loop playsinline preload="metadata" src="/assets/video/avatar/overview.mp4"></video>
         <span class="navhero__badge"><i></i>Financial Navigator</span>
+        <button type="button" class="navhero__sound" data-navhero-sound>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          Tap to play with sound
+        </button>
       </div>
       <div class="navhero__body">
         <span class="eyebrow gold">Your Financial Navigator</span>
@@ -145,6 +149,34 @@
     </div>
   </div>
 </section>
+<script>
+/* Financial Navigator intro panel: silent looping teaser, one tap for sound.
+   On tap (button or video) we unmute, restart, and play through once; when it
+   ends we quietly drop back to the muted loop so the avatar stays "alive". */
+(function () {
+  var v = document.querySelector(".navhero__video");
+  var b = document.querySelector("[data-navhero-sound]");
+  if (!v) return;
+  function playWithSound() {
+    v.muted = false; v.loop = false;
+    try { v.currentTime = 0; } catch (e) {}
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+    if (b) b.hidden = true;
+  }
+  function backToTeaser() {
+    v.muted = true; v.loop = true;
+    try { v.currentTime = 0; } catch (e) {}
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+    if (b) b.hidden = false;
+  }
+  if (b) b.addEventListener("click", playWithSound);
+  v.addEventListener("click", function () {
+    if (v.muted) { playWithSound(); return; }
+    if (v.paused) { try { v.play(); } catch (e) {} } else { v.pause(); }
+  });
+  v.addEventListener("ended", backToTeaser);
+})();
+</script>
 
 <!-- ================= MORTGAGE STRATEGY STUDIO (engine on the homepage) ================= -->
 <section class="section" id="builder">
