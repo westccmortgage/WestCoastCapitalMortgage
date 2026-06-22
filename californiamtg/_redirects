@@ -1,7 +1,6 @@
 # Clean URLs -> .html (Netlify). Links in the site use .html so it also works
 # under a plain static server; these are a convenience for typed/clean URLs.
 /get-preapproved      /get-preapproved.html      200
-/how-it-works         /how-it-works.html         200
 /contact              /contact.html              200
 /about                /about.html                200
 /about-human-review   /about-human-review.html   200
