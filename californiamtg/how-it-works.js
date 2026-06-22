@@ -91,25 +91,42 @@
   });
   on("#hiw5-pts", calc5);
 
-  /* ---- voice (Web Speech API) ---- */
-  function speak(text) {
-    if (!voiceOn || !window.speechSynthesis) return;
+  /* ---- voice: real Financial Navigator clips (same takes as the guided tour),
+     one per step, instead of the robotic Web-Speech synthesizer ---- */
+  var CLIPS = [
+    "/assets/video/avatar/step-county.mp4",  // 1 — where the jumbo line is
+    "/assets/video/avatar/step-down.mp4",    // 2 — down payment & PMI
+    "/assets/video/avatar/step-fico.mp4",    // 3 — credit score → rate
+    "/assets/video/avatar/step-income.mp4",  // 4 — income → buying power & taxes
+    "/assets/video/avatar/step-io.mp4"       // 5 — payment type & buydown
+  ];
+  // Hidden media element: we only need the avatar's audio track here.
+  var voiceEl = document.createElement("video");
+  voiceEl.setAttribute("playsinline", "");
+  voiceEl.preload = "none";
+  voiceEl.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none";
+  document.body.appendChild(voiceEl);
+
+  function speak() {
+    if (!voiceOn) return;
+    var src = CLIPS[step - 1] || CLIPS[0];
     try {
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.rate = 1; u.pitch = 1; u.lang = "en-US";
-      window.speechSynthesis.speak(u);
+      if (voiceEl.getAttribute("src") !== src) { voiceEl.setAttribute("src", src); voiceEl.load(); }
+      voiceEl.currentTime = 0;
+      voiceEl.muted = false;
+      var p = voiceEl.play(); if (p && p.catch) p.catch(function () {});
     } catch (e) { /* ignore */ }
   }
+  function stopVoice() { try { voiceEl.pause(); } catch (e) {} }
+
   var voiceBtn = $("#hiwVoice");
   if (voiceBtn) {
-    if (!window.speechSynthesis) voiceBtn.style.display = "none";
     voiceBtn.addEventListener("click", function () {
       voiceOn = !voiceOn;
       voiceBtn.setAttribute("aria-pressed", String(voiceOn));
       voiceBtn.classList.toggle("is-on", voiceOn);
       voiceBtn.textContent = voiceOn ? "🔊 Voice on" : "🔊 Listen";
-      if (voiceOn) speak(BUBBLES[step - 1]); else if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (voiceOn) speak(); else stopVoice();
     });
   }
 
@@ -124,7 +141,7 @@
     var back = $("#hiwBack"), next = $("#hiwNext");
     if (back) back.disabled = step === 1;
     if (next) next.textContent = step === TOTAL ? "Done ✓" : "Next →";
-    speak(BUBBLES[step - 1]);
+    speak();
   }
   var nextBtn = $("#hiwNext"), backBtn = $("#hiwBack");
   if (nextBtn) nextBtn.addEventListener("click", function () {
