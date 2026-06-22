@@ -1,0 +1,141 @@
+# K West Mortgage — KWestMortgage.com
+# Standalone static site (this IS the repo root). No base directory needed.
+# Intentionally separate from CaliforniaMTG.com and PegasusCapitalNetwork —
+# do not merge build settings.
+
+[build]
+  publish = "."
+  # No build step required — static HTML/CSS/JS.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# CSS/JS share the same filename across deploys, so they must always be
+# revalidated — otherwise a manual redeploy serves stale styles/scripts.
+# (Cache-busting query strings like kwest.css?v=N are bumped when needed.)
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Media (videos, images) rarely change — cache for a day.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Clean URLs (optional): /concierge -> /concierge.html
+[[redirects]]
+  from = "/concierge"
+  to = "/concierge.html"
+  status = 200
+[[redirects]]
+  from = "/jumbo-vs-conforming"
+  to = "/jumbo-vs-conforming.html"
+  status = 200
+[[redirects]]
+  from = "/loan-options"
+  to = "/loan-options.html"
+  status = 200
+[[redirects]]
+  from = "/rates"
+  to = "/rates.html"
+  status = 200
+[[redirects]]
+  from = "/education"
+  to = "/education.html"
+  status = 200
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+[[redirects]]
+  from = "/scenario-studio"
+  to = "/scenario-studio.html"
+  status = 200
+
+# Loan program landing pages (clean URLs)
+[[redirects]]
+  from = "/high-balance-conforming"
+  to = "/high-balance-conforming.html"
+  status = 200
+[[redirects]]
+  from = "/jumbo-loans"
+  to = "/jumbo-loans.html"
+  status = 200
+[[redirects]]
+  from = "/va-loans"
+  to = "/va-loans.html"
+  status = 200
+[[redirects]]
+  from = "/fha-loans"
+  to = "/fha-loans.html"
+  status = 200
+[[redirects]]
+  from = "/dscr-loans"
+  to = "/dscr-loans.html"
+  status = 200
+[[redirects]]
+  from = "/bank-statement-loans"
+  to = "/bank-statement-loans.html"
+  status = 200
+[[redirects]]
+  from = "/self-employed-mortgage"
+  to = "/self-employed-mortgage.html"
+  status = 200
+[[redirects]]
+  from = "/second-home-financing"
+  to = "/second-home-financing.html"
+  status = 200
+[[redirects]]
+  from = "/condo-financing"
+  to = "/condo-financing.html"
+  status = 200
+[[redirects]]
+  from = "/refinance-cash-out"
+  to = "/refinance-cash-out.html"
+  status = 200
+[[redirects]]
+  from = "/conventional-loans"
+  to = "/conventional-loans.html"
+  status = 200
+[[redirects]]
+  from = "/non-qm-loans"
+  to = "/non-qm-loans.html"
+  status = 200
+
+# Concierge, trust & education pages (clean URLs)
+[[redirects]]
+  from = "/get-preapproved"
+  to = "/get-preapproved.html"
+  status = 200
+[[redirects]]
+  from = "/human-review"
+  to = "/human-review.html"
+  status = 200
+[[redirects]]
+  from = "/no-credit-check"
+  to = "/no-credit-check.html"
+  status = 200
+[[redirects]]
+  from = "/which-program-fits"
+  to = "/which-program-fits.html"
+  status = 200
+[[redirects]]
+  from = "/complex-scenarios"
+  to = "/complex-scenarios.html"
+  status = 200
