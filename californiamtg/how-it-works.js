@@ -144,9 +144,19 @@
     speak();
   }
   var nextBtn = $("#hiwNext"), backBtn = $("#hiwBack");
+  function finishTour() {
+    // Stop the voice and reset the toggle.
+    voiceOn = false; stopVoice();
+    if (voiceBtn) { voiceBtn.classList.remove("is-on"); voiceBtn.setAttribute("aria-pressed", "false"); voiceBtn.textContent = "🔊 Listen"; }
+    // Scroll to the call-to-action (it lives OUTSIDE #hiw, so use the document).
+    var cta = document.getElementById("hiwCta");
+    if (cta) cta.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Reset the walkthrough back to the first step for next time.
+    step = 1; render();
+  }
   if (nextBtn) nextBtn.addEventListener("click", function () {
     if (step < TOTAL) { step++; render(); root.scrollIntoView({ behavior: "smooth", block: "start" }); }
-    else { var cta = $("#hiwCta"); if (cta) cta.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    else finishTour();
   });
   if (backBtn) backBtn.addEventListener("click", function () { if (step > 1) { step--; render(); } });
 
