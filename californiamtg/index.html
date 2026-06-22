@@ -249,6 +249,28 @@
   function frame() { return document.getElementById("studioFrame"); }
   var tutActive = false;
 
+  /* In-page anchor links (Concierge, Strategy Studio, Rates…) can land in the
+     wrong place: the lazy Strategy Studio iframe grows AFTER the jump and
+     shifts everything below it. We intercept these links and re-align the
+     target as the iframe settles its height. */
+  var pendingHash = null, pendingUntil = 0;
+  function alignTo(hash) {
+    var el = hash ? document.getElementById(hash.replace(/^#/, "")) : null;
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null; if (!a) return;
+    if (a.hasAttribute("data-start")) return;                // handled by script.js (scenario start)
+    var m = (a.getAttribute("href") || "").match(/(?:^|index\.html)#([\w-]+)$/);
+    if (!m || !document.getElementById(m[1])) return;        // not an on-page anchor
+    e.preventDefault();
+    if (history.replaceState) history.replaceState(null, "", "#" + m[1]);
+    pendingHash = "#" + m[1]; pendingUntil = Date.now() + 2000;
+    alignTo(pendingHash);
+    setTimeout(function () { if (Date.now() < pendingUntil) alignTo(pendingHash); }, 500);
+    setTimeout(function () { if (Date.now() < pendingUntil) alignTo(pendingHash); }, 1100);
+  });
+
   function sendViewport() {
     var f = frame(); if (!f || !f.contentWindow) return;
     var r = f.getBoundingClientRect();
@@ -266,6 +288,8 @@
 
     if (d.cmStudioHeight) {
       var f = frame(); if (f) f.style.height = (d.cmStudioHeight + 24) + "px";
+      // The iframe just changed height — re-align any pending anchor jump.
+      if (pendingHash && Date.now() < pendingUntil) alignTo(pendingHash);
       return;
     }
     if (d.cmTut === "open") { tutActive = true; sendViewport(); return; }
