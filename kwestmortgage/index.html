@@ -169,11 +169,21 @@
     var p = v.play(); if (p && p.catch) p.catch(function () {});
     if (b) b.hidden = false;
   }
+  function stopBig() {
+    // When the guided tour opens, silence the big avatar so the two clips
+    // don't talk over each other. It can be replayed via the sound button.
+    try { v.pause(); } catch (e) {}
+    v.muted = true; v.controls = false;
+    if (b) b.hidden = false;
+  }
   if (b) b.addEventListener("click", playWithSound);
   // Teaser (muted) → a tap starts sound; in sound mode the native controls
   // own play/pause/seek, so the overlay click stays out of the way.
   v.addEventListener("click", function () { if (v.muted) playWithSound(); });
   v.addEventListener("ended", backToTeaser);
+  // Any tour-launch button (panel, console banner, header) stops the big clip.
+  var launchers = document.querySelectorAll("[data-tutorial-launch]");
+  for (var i = 0; i < launchers.length; i++) launchers[i].addEventListener("click", stopBig);
 })();
 </script>
 
