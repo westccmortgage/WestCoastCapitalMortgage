@@ -360,8 +360,10 @@
 
     // Scroll the field into a spot that leaves it visible next to the card.
     var r = target.getBoundingClientRect();
-    var place = EMBEDDED ? "host" : sideFor(r, els.card.offsetWidth || 560, window.innerWidth);
-    var frac = MOBILE() ? 0.3 : (place === "host" ? 0.42 : (place === "stack" ? 0.28 : 0.5));
+    // Standalone desktop pins the card to the bottom-left corner, so scroll the
+    // field into the upper third where it stays clear of the card; the embedded
+    // host floats and prefers 0.42.
+    var frac = MOBILE() ? 0.3 : (EMBEDDED ? 0.42 : 0.34);
     scrollTargetTo(r, frac);
     positionFor(target);
     // Re-measure after the smooth scroll settles.
@@ -522,26 +524,12 @@
     }
     card.style.width = "";
 
-    var place = sideFor(r, cw, vw);
-    var left, top;
-
-    if (place === "right" || place === "left") {
-      // Beside the field — horizontal separation means it never covers it.
-      left = (place === "right") ? r.right + gap : r.left - gap - cw;
-      top = clamp(r.top + r.height / 2 - ch / 2, band.top + 12, Math.max(band.top + 12, band.bottom - ch - 12));
-    } else {
-      // Stacked — sit fully below the field (or above if no room below).
-      left = clamp(Math.round((vw - cw) / 2), 12, Math.max(12, vw - cw - 12));
-      if (r.bottom + gap + ch <= band.bottom - 8) {
-        top = r.bottom + gap;                         // below, field visible above
-      } else if (r.top - gap - ch >= band.top + 8) {
-        top = r.top - gap - ch;                       // above, field visible below
-      } else {
-        top = clamp(band.bottom - ch - 12, band.top + 12, Math.max(band.top + 12, band.bottom - ch - 12));
-      }
-    }
-
-    card.style.left = Math.round(clamp(left, 12, Math.max(12, vw - cw - 12))) + "px";
+    // Standalone desktop: pin the card to the bottom-left corner (California
+    // host style). The wide calculator stays fully visible behind it; only the
+    // gold glow ring tracks the active field.
+    var margin = 24;
+    var top = clamp(band.bottom - ch - margin, band.top + 12, Math.max(band.top + 12, band.bottom - ch - 12));
+    card.style.left = margin + "px";
     card.style.top = Math.round(top) + "px";
   }
 

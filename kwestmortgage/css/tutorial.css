@@ -83,7 +83,7 @@ body.cmtut-lock{overflow:hidden}
 .cmtut__card{
   position:fixed;
   display:flex;overflow:hidden;
-  width:min(560px,calc(100vw - 32px));
+  width:min(440px,calc(100vw - 32px));
   color:#2b2825;
   background:rgba(255,255,255,.92);
   -webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
