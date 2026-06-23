@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Public, indexable production URLs only. Excludes the internal scenario
+     engine (scenario-studio.html + market route rewrites), the noindex legal
+     pages (privacy/terms/disclosures), and pages that 301-redirect to
+     westccmortgage.com (loan-options / jumbo-vs-conforming / education). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://beforejumboloan.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://beforejumboloan.com/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>
