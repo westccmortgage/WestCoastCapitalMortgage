@@ -185,9 +185,9 @@
   /* Rate ASSUMPTIONS — education only. Edit in js/rate-config.js (window.BJLRates).
      Falls back to these defaults when the central config isn't loaded. */
   var RATE_CONFIG = {
-    lastUpdated: "2026-06-12",
+    lastUpdated: "2026-06-23",
     sourceLabel: "Owner-provided educational rate assumptions. Verify current pricing before use.",
-    conforming30: 6.58,
+    conforming30: 5.75,
     jumbo30: 6.84,
     fha30: 6.14,
     va30: 6.16,
