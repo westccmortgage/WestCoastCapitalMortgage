@@ -9,12 +9,12 @@
 (function (global) {
   "use strict";
   global.BJLRates = {
-    lastUpdated: "2026-06-12",
+    lastUpdated: "2026-06-23",
     label: "Owner-provided educational rate assumptions. Verify current pricing before use.",
     disclaimer: "Educational assumptions only — not live rates, rate quotes, APRs, locked rates, or commitments to lend. Pricing varies by lender, loan purpose, occupancy, property type, borrower profile, and market.",
     /* 30-year assumptions by review path (percent). */
     assumptions: {
-      conforming: 6.58,
+      conforming: 5.75,
       high_balance: 6.66,
       jumbo: 6.84,
       dscr: 7.49,
