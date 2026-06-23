@@ -54,27 +54,35 @@
 body.cmtut-lock{overflow:hidden}
 
 /* ============================================================
-   Overlay — soft blurred glass backdrop (page stays visible)
+   Overlay — light dim, NO blur, so the console stays sharp and
+   the user can read the numbers change while the tour explains.
    ============================================================ */
 .cmtut{
   position:fixed;inset:0;z-index:9999;
   font-family:Inter,system-ui,sans-serif;
-  background:rgba(33,29,24,.26);
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  background:transparent;
   opacity:0;transition:opacity .28s ease;
 }
 .cmtut[hidden]{display:none}
 .cmtut.cmtut--in{opacity:1}
 
-/* Subtle gold glow ring on the active field (no heavy dim — the blur
-   above does the dimming, so the highlighted field stays readable). */
+/* Spotlight: the active field stays crisp and undimmed inside the ring,
+   while a soft dark wash (the huge spread shadow) dims everything around
+   it. No page blur, so the numbers stay readable as they change. */
 .cmtut__spot{
   position:fixed;border-radius:12px;pointer-events:none;
-  background:rgba(255,255,255,.04);
-  box-shadow:0 0 0 2px rgba(184,139,77,.85),
-             0 0 0 6px rgba(184,139,77,.22),
-             0 0 30px 8px rgba(184,139,77,.34);
+  background:transparent;
+  box-shadow:0 0 0 2px rgba(184,139,77,.9),
+             0 0 0 6px rgba(184,139,77,.25),
+             0 0 30px 8px rgba(184,139,77,.34),
+             0 0 0 9999px rgba(33,29,24,.42);
   transition:top .25s ease,left .25s ease,width .25s ease,height .25s ease;
+}
+/* Embedded mode keeps only the gold glow — no surrounding dim. */
+.cmtut--embed .cmtut__spot{
+  box-shadow:0 0 0 2px rgba(184,139,77,.9),
+             0 0 0 6px rgba(184,139,77,.25),
+             0 0 30px 8px rgba(184,139,77,.34);
 }
 
 /* ============================================================
