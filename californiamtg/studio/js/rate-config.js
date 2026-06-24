@@ -71,6 +71,7 @@
        reserved for taxes / insurance / HOA / PMI (so the rest is P&I). */
     affordability: {
       max_dti: 0.43,
+      jumbo_max_dti: 0.38,
       ti_share: 0.18
     },
     /* Permanent buydown: the borrower chooses how many points to pay; each point
