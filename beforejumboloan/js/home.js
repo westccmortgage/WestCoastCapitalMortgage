@@ -268,7 +268,7 @@
     var dscr = (S.scenarioType === "investment" && S.rent > 0 && dscrBasis > 0) ? (S.rent / dscrBasis) : null;
 
     // Income-based qualifying loan (uses the assumed rate, so score + Non-QM flow in).
-    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: ra.rate, termYears: 30 }) : null;
+    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: ra.rate, termYears: 30, pathKey: ra.key }) : null;
 
     // Income-tax estimate (very rough, educational) for the confirmed state.
     var tax = KW.estimateIncomeTax ? KW.estimateIncomeTax({ annualIncome: S.annualIncome, state: S.state }) : null;
@@ -549,7 +549,7 @@
     q.set("income_doc_type", S.docType);
     if (S.annualIncome > 0) {
       q.set("annual_income", String(S.annualIncome));
-      if (KW.qualifyingLoan && pp) q.set("qualifying_loan_estimate", String(KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: pp.rate, termYears: 30 }).maxLoan));
+      if (KW.qualifyingLoan && pp) q.set("qualifying_loan_estimate", String(KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: pp.rate, termYears: 30, pathKey: pp.rateKey }).maxLoan));
     }
     if (ll.ltv != null && isFinite(ll.ltv) && KW.monthlyMI) q.set("mortgage_insurance_monthly", String(Math.round(KW.monthlyMI(ll.loan, ll.ltv * 100, S.creditScore))));
     if (pp) {

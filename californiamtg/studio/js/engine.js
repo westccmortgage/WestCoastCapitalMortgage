@@ -284,7 +284,10 @@
     var annual = parseNum(o.annualIncome);
     var rate = parseNum(o.ratePct);
     var term = o.termYears ? parseNum(o.termYears) : 30;
-    var dti = o.maxDti != null ? o.maxDti : (cfg.max_dti != null ? cfg.max_dti : 0.43);
+    var isJumbo = /jumbo/i.test(o.pathKey || "");
+    var baseDti = cfg.max_dti != null ? cfg.max_dti : 0.43;
+    var jumboDti = cfg.jumbo_max_dti != null ? cfg.jumbo_max_dti : 0.38;
+    var dti = o.maxDti != null ? o.maxDti : (isJumbo ? jumboDti : baseDti);
     var tiShare = o.tiShare != null ? o.tiShare : (cfg.ti_share != null ? cfg.ti_share : 0.18);
     var otherDebts = parseNum(o.monthlyDebts);
     var monthlyIncome = annual / 12;
