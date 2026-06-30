@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text Message Sign-Up | West Coast Capital Mortgage Inc.</title>
+<meta name="description" content="Opt in to receive text messages from West Coast Capital Mortgage Inc. NMLS #2817729. Loan updates, rate alerts, and reminders. Consent is not a condition of purchase.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="canonical" href="https://westccmortgage.com/sms-optin">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="West Coast Capital Mortgage Inc.">
+<style>
+  .optin-card{max-width:560px;margin:8px auto 0;background:#fff;border:1px solid #e3e7ee;border-radius:14px;padding:28px 26px;box-shadow:0 8px 30px rgba(16,42,77,.08)}
+  .optin-card h2{margin:0 0 4px}
+  .optin-field{margin:18px 0}
+  .optin-field label{display:block;font-weight:600;margin-bottom:6px;font-size:.95rem}
+  .optin-field input[type=text],.optin-field input[type=tel]{width:100%;box-sizing:border-box;padding:13px 14px;border:1px solid #c8cfdb;border-radius:9px;font:inherit}
+  .optin-consent{display:flex;gap:11px;align-items:flex-start;background:#f6f8fb;border:1px solid #e3e7ee;border-radius:10px;padding:14px 15px;margin:18px 0}
+  .optin-consent input{margin-top:4px;width:18px;height:18px;flex:0 0 auto}
+  .optin-consent label{font-size:.88rem;line-height:1.5;color:#3a4250}
+  .optin-fine{font-size:.8rem;color:#6b7480;line-height:1.55;margin:14px 0 0}
+  .optin-submit{margin-top:18px}
+  .optin-submit button{width:100%;padding:15px;font-size:1.05rem;font-weight:700;border:0;border-radius:10px;background:var(--blue,#0a4ea3);color:#fff;cursor:pointer}
+  .optin-ok{display:none;background:#eafaf1;border:1px solid #b8e6cc;border-radius:12px;padding:22px;text-align:center}
+  .optin-sample{font-size:.85rem;color:#3a4250;background:#f6f8fb;border-left:3px solid var(--blue,#0a4ea3);border-radius:6px;padding:10px 13px;margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <nav class="topbar-left" aria-label="Utility">
+      <a href="loans.html">Mortgage</a>
+      <a href="buy.html">Home Search</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ru">RU</button>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage Inc. home">
+      <span class="l1">WEST COAST CAPITAL</span>
+      <span class="l2">MORTGAGE INC.</span>
+    </a>
+    <div class="nav-collapse" id="navc">
+      <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="rates.html">Today's Rates</a><a href="loans.html">Loans</a><a href="resources.html">Resources</a><a href="about.html">About Us</a></nav>
+      <div class="header-cta">
+        <a class="btn btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Apply Now</a>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<section class="page-hero">
+  <div class="hero-wallpaper" aria-hidden="true">
+    <div class="wallpaper-line" style="top:18%">WEST COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:58%">WEST COAST CAPITAL MORTGAGE</div>
+  </div>
+  <div class="wrap page-hero-inner">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Text Message Sign-Up</div>
+    <h1>Text Message Sign-Up</h1>
+    <p class="lead">Get loan updates, rate alerts, and reminders by text from West Coast Capital Mortgage.</p>
+  </div>
+</section>
+<section><div class="wrap" style="max-width:860px">
+
+  <div class="optin-card">
+    <form name="sms-optin" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/sms-optin.html?ok=1" id="optinForm">
+      <input type="hidden" name="form-name" value="sms-optin">
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <h2>Sign up for text messages</h2>
+      <p style="margin:0;color:#6b7480;font-size:.95rem">Enter your mobile number and check the box to opt in.</p>
+
+      <div class="optin-field">
+        <label for="optin-name">Name</label>
+        <input type="text" id="optin-name" name="name" placeholder="First and last name" autocomplete="name">
+      </div>
+
+      <div class="optin-field">
+        <label for="optin-phone">Mobile Phone Number<span style="color:#c0392b">*</span></label>
+        <input type="tel" id="optin-phone" name="phone" placeholder="(310) 000-0000" pattern="[0-9\s\-\+\(\)]{7,20}" required autocomplete="tel">
+      </div>
+
+      <p style="font-weight:600;margin:18px 0 4px;font-size:.95rem">What you'll receive</p>
+      <p style="margin:0;font-size:.9rem;color:#3a4250">Account and informational messages (loan application and status updates, document requests, appointment reminders) and, if you opt in, promotional messages (mortgage rate alerts, loan programs, and special offers).</p>
+      <p class="optin-sample"><strong>Sample message:</strong> "West Coast Capital Mortgage: Hi John, your loan documents are ready for review. Reply STOP to opt out, HELP for help."</p>
+
+      <div class="optin-consent">
+        <input type="checkbox" id="optin-consent" name="sms_consent" value="yes" required>
+        <label for="optin-consent">I agree to receive recurring automated marketing and informational text messages from <strong>West Coast Capital Mortgage Inc.</strong> at the mobile number provided. Consent is not a condition of purchasing any property, goods, or services. Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> to cancel, <strong>HELP</strong> for help.</label>
+      </div>
+
+      <p class="optin-fine">By checking the box and submitting, you agree to our <a href="sms-terms.html">SMS Terms &amp; Conditions</a>, <a href="terms.html">Terms &amp; Conditions</a>, and <a href="privacy-policy.html">Privacy Policy</a>. We will not sell or share your mobile opt-in information with third parties or affiliates for their marketing purposes.</p>
+
+      <div class="optin-submit">
+        <button type="submit">Yes, sign me up!</button>
+      </div>
+    </form>
+
+    <div class="optin-ok" id="optinOk">
+      <h2 style="margin-top:0">You're signed up! &#10003;</h2>
+      <p style="margin:0;color:#3a4250">Thanks &mdash; you'll start receiving text messages from West Coast Capital Mortgage. Reply <strong>STOP</strong> at any time to opt out, or <strong>HELP</strong> for help.</p>
+    </div>
+  </div>
+
+</div></section>
+
+<section><div class="wrap"><div class="cta-band">
+  <h2>Prefer to talk?</h2><p>Reach our team directly and we'll help you understand your options.</p>
+  <div class="btn-row"><a class="btn btn-lg btn-blue" href="apply.html">Start Short Application</a><a class="btn btn-lg btn-outline-light" href="loan-officer.html">Contact a Loan Officer</a></div>
+</div></div></section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE INC.</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="https://wcci.online" target="_blank" rel="noopener noreferrer">WCCI.Online AI Mortgage Review</a><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="https://2817729.myagentloans.com/register" target="_blank" rel="noopener noreferrer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
+    <div class="footer-bottom">
+      <div class="row">
+        <nav aria-label="Legal">
+          <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
+        </nav>
+        <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
+      </div>
+      <p>West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Opportunity. Information is provided for
+      educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
+      and underwriting approval.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script>
+  // Show confirmation after Netlify form submission redirect (?ok=1)
+  if (location.search.indexOf('ok=1') !== -1) {
+    var f = document.getElementById('optinForm'), ok = document.getElementById('optinOk');
+    if (f && ok) { f.style.display = 'none'; ok.style.display = 'block'; }
+  }
+</script>
+<script src="i18n.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
