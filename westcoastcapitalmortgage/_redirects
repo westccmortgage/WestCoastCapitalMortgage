@@ -1,0 +1,5 @@
+# Serve the sitemap and robots for this alias domain directly (not redirected)…
+/sitemap.xml   /sitemap.xml   200
+/robots.txt    /robots.txt    200
+# …then send every other path to the primary site.
+/*  https://westccmortgage.com/:splat  301!

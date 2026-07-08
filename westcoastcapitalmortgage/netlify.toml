@@ -1,0 +1,3 @@
+# westcoastcapitalmortgage.com — alias site (redirects to westccmortgage.com). No build step.
+[build]
+  publish = "."
