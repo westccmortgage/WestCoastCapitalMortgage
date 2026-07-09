@@ -76,12 +76,23 @@
       // basic required validation
       var ok = true;
       contactForm.querySelectorAll("[required]").forEach(function (el) {
+        if (el.type === "radio" || el.type === "checkbox") return; // groups handled below
         var bad = !String(el.value || "").trim();
         var f = el.closest(".field");
         var err = f && f.querySelector(".field-error");
         if (err) err.textContent = bad ? "This field is required." : "";
         if (bad) ok = false;
       });
+      // Preferred contact method (radio group — the inputs are visually hidden,
+      // so validate here rather than relying on native required on a hidden field).
+      var cmRow = contactForm.querySelector(".radio-row");
+      if (cmRow) {
+        var cmChecked = contactForm.querySelector('input[name="contactMethod"]:checked');
+        var cmField = cmRow.closest(".field");
+        var cmErr = cmField && cmField.querySelector(".field-error");
+        if (cmErr) cmErr.textContent = cmChecked ? "" : "Please choose a contact method.";
+        if (!cmChecked) ok = false;
+      }
       if (!ok) return;
 
       /* Persistence is delegated to the lead layer (src/app.js -> CMLeads):
@@ -97,6 +108,18 @@
       }
     });
   }
+  /* ---- Contact-method pills: reflect the selected radio visually ---- */
+  document.querySelectorAll(".radio-row").forEach(function (row) {
+    function sync() {
+      row.querySelectorAll(".radio-pill").forEach(function (p) {
+        var input = p.querySelector('input[type="radio"]');
+        p.classList.toggle("checked", !!(input && input.checked));
+      });
+    }
+    row.addEventListener("change", sync);
+    sync();
+  });
+
   function showContactSuccess() {
     var card = document.getElementById("contactCard") || (contactForm && contactForm.parentNode);
     if (!card) return;
