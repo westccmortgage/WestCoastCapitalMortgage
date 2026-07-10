@@ -48,7 +48,7 @@
     loanAmt: 1200000, rent: 7500,
     paymentMode: "pi", creditScore: 760, docType: "w2", annualIncome: 180000, buydownPoints: 1,
     coBorrower: false, coIncome: 0, coDocType: "w2",
-    bdRate: "", bdDiff: ""
+    rateOverride: "", bdDiff: ""
   };
 
   var E = {
@@ -66,7 +66,7 @@
     score: $("#hs-score"), doc: $("#hs-doc"), income: $("#hs-income"),
     coAdd: $("#hs-coadd"), coDoc: $("#hs-doc2"), coIncome: $("#hs-income2"),
     coDocWrap: $("#hs-co-doc-wrap"), coIncomeWrap: $("#hs-co-income-wrap"),
-    bdrate: $("#hs-bdrate"), bddiff: $("#hs-bddiff")
+    rateOverride: $("#hs-rateoverride"), bddiff: $("#hs-bddiff")
   };
   function set(sel, t) { var e = $(sel); if (e) e.textContent = t; }
   function show(el, on) { if (el) el.hidden = !on; }
@@ -206,7 +206,7 @@
     if (E.coAdd) S.coBorrower = !!E.coAdd.checked;
     if (E.coDoc) S.coDocType = E.coDoc.value;
     if (E.coIncome) S.coIncome = num(E.coIncome.value);
-    if (E.bdrate) S.bdRate = E.bdrate.value;
+    if (E.rateOverride) S.rateOverride = E.rateOverride.value.trim();
     if (E.bddiff) S.bdDiff = E.bddiff.value;
   }
 
@@ -252,7 +252,7 @@
     if (coOn && KW.docTypeAdjust && KW.docTypeAdjust(S.coDocType) > KW.docTypeAdjust(S.docType)) effDocType = S.coDocType;
     var nonqm = (effDocType === "bank_statement" || effDocType === "ten99");
     var sc = { loan: loan, scenario_type: S.scenarioType, occupancy: occLabel, payment_mode: io ? "interest-only" : "pi",
-      creditScore: S.creditScore, docType: effDocType };
+      creditScore: S.creditScore, docType: effDocType, rateOverride: S.rateOverride };
 
     // Mortgage insurance (PMI) when LTV > 80% (less than 20% down).
     var ltvPct = (ltv != null && isFinite(ltv)) ? ltv * 100 : null;
@@ -290,13 +290,8 @@
 
     // Buydown illustrations — borrower chooses the points to pay.
     var scBd = Object.assign({ bdPoints: S.buydownPoints }, sc);
-    // Manual overrides: interest rate (note rate) and buydown rate difference.
-    var hasBdRate = (S.bdRate !== "" && S.bdRate != null);
-    if (hasBdRate) scBd.bdCurrentRate = num(S.bdRate);
-    if (S.bdDiff !== "" && S.bdDiff != null) {
-      var bdBase = hasBdRate ? num(S.bdRate) : ra.rate;
-      scBd.bdBuydownRate = Math.max(0, bdBase - num(S.bdDiff));
-    }
+    // Buydown starts from the (possibly overridden) scenario rate; optional manual reduction.
+    if (S.bdDiff !== "" && S.bdDiff != null) scBd.bdBuydownRate = Math.max(0, ra.rate - num(S.bdDiff));
     var pb = KW.permanentBuydown ? KW.permanentBuydown(scBd) : null;
     var tb = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "2-1" }, sc)) : null;
     var tb10 = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "1-0" }, sc)) : null;
@@ -366,7 +361,8 @@
       set("[data-ho-docnote]", o.nonqm
         ? ((o.ra.docLabel || "Non-QM") + " — Non-QM, rate is higher (+" + (o.ra.docAdj || 0) + "%)")
         : ((o.ra.docLabel || "W-2") + " — full documentation, baseline pricing"));
-      set('[data-ho="raterow"]', o.ra.rate + "% assumption");
+      if (E.rateOverride && document.activeElement !== E.rateOverride) E.rateOverride.placeholder = String(o.ra.autoRate != null ? o.ra.autoRate : o.ra.rate);
+      set("[data-ho-ratemanual]", o.ra.manual ? "manual rate" : "assumption");
     }
 
     // Income-based qualifying loan + comparison to the estimated loan.
@@ -688,7 +684,7 @@
       updateContinue();
       if (E.q) { E.q.value = ""; E.q.focus(); }
     });
-    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.bdrate, E.bddiff].forEach(function (el) {
+    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.rateOverride, E.bddiff].forEach(function (el) {
       if (el) el.addEventListener("input", function () { syncReadouts(); compute(); });
     });
     [E.units, E.costs, E.doc, E.coDoc].forEach(function (el) { if (el) el.addEventListener("change", compute); });
@@ -728,7 +724,7 @@
     if (E.coIncome) E.coIncome.value = String(S.coIncome);
     if (E.coAdd) E.coAdd.checked = S.coBorrower;
     show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower);
-    if (E.bdrate) E.bdrate.value = S.bdRate;
+    if (E.rateOverride) E.rateOverride.value = S.rateOverride;
     if (E.bddiff) E.bddiff.value = S.bdDiff;
     setPurpose(S.scenarioType);
 

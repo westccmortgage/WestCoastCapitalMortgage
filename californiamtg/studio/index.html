@@ -17,8 +17,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="/config.js"></script>
 <script>try{if(window.top===window.self)document.documentElement.classList.add("cm-standalone");}catch(e){document.documentElement.classList.add("cm-standalone");}</script>
-<link rel="stylesheet" href="css/studio.css?v=20260708">
-<link rel="stylesheet" href="css/home.css?v=20260708">
+<link rel="stylesheet" href="css/studio.css?v=20260709">
+<link rel="stylesheet" href="css/home.css?v=20260709">
 <link rel="stylesheet" href="/assets/css/tutorial.css">
 <style>/* Embedded inside California Mortgage — show only the Strategy Console */
 .skip-link,.site-header,.mobile-menu,.site-footer,.cookie,.cockpit--head,.compliance-strip{display:none!important}
@@ -297,7 +297,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                 <div class="so" data-ho-ltv-row><dt>Loan-to-value (LTV)</dt><dd data-ho="ltv">—</dd></div>
                 <div class="so" data-ho-mi-row hidden><dt>Mortgage insurance (PMI) est.</dt><dd data-ho="mi">—</dd></div>
                 <div class="so"><dt>County limit reference</dt><dd data-ho="limit">—</dd></div>
-                <div class="so"><dt>Assumed rate (score + income type)</dt><dd data-ho="raterow">—</dd></div>
+                <div class="so"><dt>Assumed rate (score + income type) &middot; tap to edit</dt><dd data-ho="raterow"><input id="hs-rateoverride" type="number" min="0" max="20" step="0.125" inputmode="decimal" placeholder="rate" style="width:5em;text-align:right;font:inherit;color:inherit;border:1px solid var(--line);border-radius:6px;padding:.15rem .4rem;background:#fffdf9">% <span data-ho-ratemanual style="opacity:.6;font-size:.85em"></span></dd></div>
                 <div class="so" data-ho-dscr-row hidden><dt>DSCR preview</dt><dd data-ho="dscr">—</dd></div>
                 <div class="so"><dt>Estimated P&amp;I preview</dt><dd data-ho="pi">—</dd></div>
                 <div class="so" data-tutorial="interest-only"><dt>Estimated interest-only preview</dt><dd data-ho="io">—</dd></div>
@@ -338,13 +338,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
               <span class="bd-points__k">How much do you want to pay for the permanent buydown?</span>
               <button type="button" class="chip" data-bd-points="0.5">0.5 pts</button>
               <button type="button" class="chip is-sel" data-bd-points="1">1 pt</button>
-              <button type="button" class="chip" data-bd-points="1.5">1.5 pts</button>
-            </div>
-            <div class="bd-adjust" style="display:flex;flex-wrap:wrap;gap:14px;margin:12px 0 2px">
-              <label style="flex:1;min-width:170px;font-size:.9rem;font-weight:600">Interest rate (%)
-                <input id="hs-bdrate" type="number" min="0" max="20" step="0.125" placeholder="assumed rate" style="display:block;width:100%;padding:.5rem .6rem;margin-top:.3rem;border:1px solid var(--line);border-radius:8px;font-weight:400"></label>
-              <label style="flex:1;min-width:170px;font-size:.9rem;font-weight:600">Buydown lowers rate by (%)
-                <input id="hs-bddiff" type="number" min="0" max="5" step="0.125" placeholder="auto (pts &times; 0.25)" style="display:block;width:100%;padding:.5rem .6rem;margin-top:.3rem;border:1px solid var(--line);border-radius:8px;font-weight:400"></label>
+              <button type="button" class="chip" data-bd-points="1.5">1.5 pts</button> <label style="margin-left:12px;font-size:.9rem;white-space:nowrap;font-weight:400">buydown lowers rate by <input id="hs-bddiff" type="number" min="0" max="5" step="0.125" placeholder="auto" style="width:4.5em;font:inherit;border:1px solid var(--line);border-radius:6px;padding:.2rem .4rem">%</label>
             </div>
             <div class="console__grid console__grid--bd">
               <dl class="scanner__out">
@@ -416,12 +410,12 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
   <div class="cookie-actions"><button class="btn btn--primary btn--sm" data-consent-accept>Accept</button><button class="btn btn--ghost btn--sm" data-consent-decline>Decline</button></div>
 </div>
 
-<script src="js/rate-config.js?v=20260708" defer></script>
-<script src="js/loan-limits.js?v=20260708" defer></script>
-<script src="js/engine.js?v=20260708" defer></script>
-<script src="js/site.js?v=20260708" defer></script>
-<script src="js/compliance.js?v=20260708" defer></script>
-<script src="js/home.js?v=20260708" defer></script>
+<script src="js/rate-config.js?v=20260709" defer></script>
+<script src="js/loan-limits.js?v=20260709" defer></script>
+<script src="js/engine.js?v=20260709" defer></script>
+<script src="js/site.js?v=20260709" defer></script>
+<script src="js/compliance.js?v=20260709" defer></script>
+<script src="js/home.js?v=20260709" defer></script>
 <script src="/assets/js/tutorial.js" defer></script>
 <script>(function(){function ph(){try{parent.postMessage({cmStudioHeight:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}window.addEventListener("load",ph);try{new ResizeObserver(ph).observe(document.body);}catch(e){}document.addEventListener("click",function(){setTimeout(ph,90);},true);document.addEventListener("input",function(){setTimeout(ph,90);},true);document.addEventListener("change",function(){setTimeout(ph,90);},true);})();</script>
 </body>
