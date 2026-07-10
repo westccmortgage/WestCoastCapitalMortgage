@@ -48,7 +48,8 @@
     loanAmt: 1200000, rent: 7500,
     paymentMode: "pi", creditScore: 740, docType: "w2", annualIncome: 180000, buydownPoints: 1,
     coBorrower: false, coIncome: 0, coDocType: "w2",
-    rateOverride: "", bdDiff: ""
+    rateOverride: "", bdDiff: "",
+    debt1: 0, debt2: 0
   };
 
   var E = {
@@ -66,7 +67,8 @@
     score: $("#hs-score"), doc: $("#hs-doc"), income: $("#hs-income"),
     coAdd: $("#hs-coadd"), coDoc: $("#hs-doc2"), coIncome: $("#hs-income2"),
     coDocWrap: $("#hs-co-doc-wrap"), coIncomeWrap: $("#hs-co-income-wrap"),
-    rateOverride: $("#hs-rateoverride"), bddiff: $("#hs-bddiff")
+    rateOverride: $("#hs-rateoverride"), bddiff: $("#hs-bddiff"),
+    debt1: $("#hs-debt1"), debt2: $("#hs-debt2"), debt2Wrap: $("#hs-debt2-wrap")
   };
   function set(sel, t) { var e = $(sel); if (e) e.textContent = t; }
   function show(el, on) { if (el) el.hidden = !on; }
@@ -208,6 +210,8 @@
     if (E.coIncome) S.coIncome = num(E.coIncome.value);
     if (E.rateOverride) S.rateOverride = E.rateOverride.value.trim();
     if (E.bddiff) S.bdDiff = E.bddiff.value;
+    if (E.debt1) S.debt1 = num(E.debt1.value);
+    if (E.debt2) S.debt2 = num(E.debt2.value);
   }
 
   function loanAndLtv() {
@@ -248,6 +252,7 @@
     // Co-borrower: combine income; price on the higher-cost income type (Non-QM dominates).
     var coOn = S.coBorrower && S.coIncome > 0;
     var combinedIncome = S.annualIncome + (coOn ? S.coIncome : 0);
+    var totalDebts = S.debt1 + (coOn ? S.debt2 : 0);
     var effDocType = S.docType;
     if (coOn && KW.docTypeAdjust && KW.docTypeAdjust(S.coDocType) > KW.docTypeAdjust(S.docType)) effDocType = S.coDocType;
     var nonqm = (effDocType === "bank_statement" || effDocType === "ten99");
@@ -283,7 +288,12 @@
     var dscr = (S.scenarioType === "investment" && S.rent > 0 && dscrBasis > 0) ? (S.rent / dscrBasis) : null;
 
     // Income-based qualifying loan (uses the assumed rate, so score + Non-QM flow in).
-    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: combinedIncome, ratePct: ra.rate, termYears: 30, pathKey: ra.key }) : null;
+    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: combinedIncome, ratePct: ra.rate, termYears: 30, pathKey: ra.key, monthlyDebts: totalDebts }) : null;
+    // Real DTI = (estimated housing PITI + monthly debts) / gross monthly income.
+    var tiShareCfg = (window.BJLRates && window.BJLRates.affordability && window.BJLRates.affordability.ti_share);
+    var realTiShare = (tiShareCfg != null) ? tiShareCfg : 0.18;
+    var grossMonthly = combinedIncome / 12;
+    var realDti = (grossMonthly > 0 && pp && pp.pi > 0) ? (((pp.pi / (1 - realTiShare)) + totalDebts) / grossMonthly) : null;
 
     // Income-tax estimate (very rough, educational) for the confirmed state — household (combined).
     var tax = KW.estimateIncomeTax ? KW.estimateIncomeTax({ annualIncome: combinedIncome, state: S.state }) : null;
@@ -304,6 +314,7 @@
       rate: { rate: pp.rate, label: pp.rateLabel, key: pp.rateKey },
       ra: ra, mi: mi, nonqm: nonqm, qual: qual, tax: tax,
       coOn: coOn, combinedIncome: combinedIncome, effDocType: effDocType,
+      realDti: realDti, totalDebts: totalDebts,
       dscr: dscr, datasetType: loc && loc.datasetType, tier: loc && loc.tier,
       pb: pb, tb: tb, tb10: tb10
     });
@@ -311,8 +322,8 @@
   }
 
   function render(o) {
-    // Co-borrower fields visibility.
-    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower);
+    // Co-borrower + co-borrower-debt fields visibility.
+    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
     // HERO — dominant county-line result.
     var heroV = $("[data-hero]"), heroK = $("[data-hero-k]"), heroSub = $("[data-hero-sub]");
     if (heroK) heroK.textContent = "Vs. " + S.county + ", " + S.state + " county line";
@@ -371,7 +382,7 @@
       var maxDtiPct = Math.round(o.qual.dti * 100);
       // Implied DTI for the estimated loan (other debts are 0 in this tool, so
       // payment scales linearly with loan: impliedDTI = maxDTI * loan / maxLoan).
-      var impliedDti = (o.qual.maxLoan > 0) ? (o.qual.dti * (o.loan / o.qual.maxLoan)) : null;
+      var impliedDti = (o.realDti != null) ? o.realDti : ((o.qual.maxLoan > 0) ? (o.qual.dti * (o.loan / o.qual.maxLoan)) : null);
       var impliedPct = (impliedDti != null) ? Math.round(impliedDti * 100) : null;
       if (qEl) {
         qEl.textContent = (impliedPct != null)
@@ -389,6 +400,7 @@
       } else {
         qn = "Enter an approximate annual income to estimate your DTI (debt-to-income).";
       }
+      if (o.totalDebts > 0 && o.realDti != null) qn += " Includes " + fmt(o.totalDebts) + "/mo of other debts.";
       if (o.coOn) {
         qn = "Combined income " + fmt(o.combinedIncome) + " (2 borrowers). " + qn;
         if (o.effDocType !== S.docType) qn += " Rate reflects the higher-cost income type between the two borrowers (Non-QM pricing).";
@@ -656,6 +668,8 @@
     set("#hs-score-out", String(E.score ? (parseInt(E.score.value, 10) || S.creditScore) : S.creditScore));
     set("#hs-income-out", fmt(E.income ? num(E.income.value) : S.annualIncome));
     set("#hs-income2-out", fmt(E.coIncome ? num(E.coIncome.value) : S.coIncome));
+    set("#hs-debt1-out", fmt(E.debt1 ? num(E.debt1.value) : S.debt1));
+    set("#hs-debt2-out", fmt(E.debt2 ? num(E.debt2.value) : S.debt2));
     set("#hs-rent-out", fmt(E.rent ? num(E.rent.value) : S.rent));
   }
 
@@ -693,13 +707,13 @@
       updateContinue();
       if (E.q) { E.q.value = ""; E.q.focus(); }
     });
-    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.rateOverride, E.bddiff].forEach(function (el) {
+    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.rateOverride, E.bddiff, E.debt1, E.debt2].forEach(function (el) {
       if (el) el.addEventListener("input", function () { syncReadouts(); compute(); });
     });
     [E.units, E.costs, E.doc, E.coDoc].forEach(function (el) { if (el) el.addEventListener("change", compute); });
     if (E.coAdd) E.coAdd.addEventListener("change", function () {
       S.coBorrower = !!E.coAdd.checked;
-      show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower);
+      show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
       syncReadouts(); compute();
     });
     $$("[data-lever-action]").forEach(function (btn) {
@@ -732,7 +746,9 @@
     if (E.coDoc) E.coDoc.value = S.coDocType;
     if (E.coIncome) E.coIncome.value = String(S.coIncome);
     if (E.coAdd) E.coAdd.checked = S.coBorrower;
-    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower);
+    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
+    if (E.debt1) E.debt1.value = String(S.debt1);
+    if (E.debt2) E.debt2.value = String(S.debt2);
     if (E.rateOverride) E.rateOverride.value = S.rateOverride;
     if (E.bddiff) E.bddiff.value = S.bdDiff;
     setPurpose(S.scenarioType);

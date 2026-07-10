@@ -17,8 +17,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="/config.js"></script>
 <script>try{if(window.top===window.self)document.documentElement.classList.add("cm-standalone");}catch(e){document.documentElement.classList.add("cm-standalone");}</script>
-<link rel="stylesheet" href="css/studio.css?v=20260713">
-<link rel="stylesheet" href="css/home.css?v=20260713">
+<link rel="stylesheet" href="css/studio.css?v=20260714">
+<link rel="stylesheet" href="css/home.css?v=20260714">
 <link rel="stylesheet" href="/assets/css/tutorial.css">
 <style>/* Embedded inside California Mortgage — show only the Strategy Console */
 .skip-link,.site-header,.mobile-menu,.site-footer,.cookie,.cockpit--head,.compliance-strip{display:none!important}
@@ -230,6 +230,9 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                 <div class="ig ig--full" data-show="purchase second_home" data-tutorial="down-payment">
                   <label for="hs-down">Down payment <b id="hs-down-out">20%</b></label>
                   <input id="hs-down" type="range" min="0" max="60" step="1" value="20"></div>
+                <div class="ig ig--full" style="margin-top:6px"><label style="font-weight:600">Monthly debts &mdash; for your real DTI</label><p class="ig__hint">Add each borrower's approximate monthly payments (car, credit cards, student loans, etc.). This turns the income estimate into a real debt-to-income (DTI) number.</p></div>
+                <div class="ig ig--full"><label for="hs-debt1">Borrower 1 monthly debts <b id="hs-debt1-out">$0</b></label><input id="hs-debt1" type="range" min="0" max="15000" step="100" value="0"></div>
+                <div class="ig ig--full" id="hs-debt2-wrap" hidden><label for="hs-debt2">Co-borrower monthly debts <b id="hs-debt2-out">$0</b></label><input id="hs-debt2" type="range" min="0" max="15000" step="100" value="0"></div>
 
                 <div class="ig ig--full" data-show="rate_term cash_out">
                   <label for="hs-payoff">Current loan payoff / balance <b id="hs-payoff-out">$0</b></label>
@@ -410,12 +413,12 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
   <div class="cookie-actions"><button class="btn btn--primary btn--sm" data-consent-accept>Accept</button><button class="btn btn--ghost btn--sm" data-consent-decline>Decline</button></div>
 </div>
 
-<script src="js/rate-config.js?v=20260713" defer></script>
-<script src="js/loan-limits.js?v=20260713" defer></script>
-<script src="js/engine.js?v=20260713" defer></script>
-<script src="js/site.js?v=20260713" defer></script>
-<script src="js/compliance.js?v=20260713" defer></script>
-<script src="js/home.js?v=20260713" defer></script>
+<script src="js/rate-config.js?v=20260714" defer></script>
+<script src="js/loan-limits.js?v=20260714" defer></script>
+<script src="js/engine.js?v=20260714" defer></script>
+<script src="js/site.js?v=20260714" defer></script>
+<script src="js/compliance.js?v=20260714" defer></script>
+<script src="js/home.js?v=20260714" defer></script>
 <script src="/assets/js/tutorial.js" defer></script>
 <script>(function(){function ph(){try{parent.postMessage({cmStudioHeight:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}window.addEventListener("load",ph);try{new ResizeObserver(ph).observe(document.body);}catch(e){}document.addEventListener("click",function(){setTimeout(ph,90);},true);document.addEventListener("input",function(){setTimeout(ph,90);},true);document.addEventListener("change",function(){setTimeout(ph,90);},true);})();</script>
 </body>
