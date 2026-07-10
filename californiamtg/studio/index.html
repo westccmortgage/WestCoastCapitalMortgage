@@ -200,6 +200,22 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                   <p class="ig__hint" data-ho-qualnote></p>
                   <p class="ig__hint" data-ho-taxnote></p>
                 </div>
+                <div class="ig ig--full">
+                  <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:600"><input type="checkbox" id="hs-coadd" style="width:auto;margin:0"> Add a co-borrower (combine income)</label>
+                </div>
+                <div class="ig ig--full" id="hs-co-doc-wrap" hidden>
+                  <label for="hs-doc2">Co-borrower income type</label>
+                  <select id="hs-doc2">
+                    <option value="w2">W-2 (full documentation)</option>
+                    <option value="self_employed">Self-employed (tax returns)</option>
+                    <option value="ten99">1099 (Non-QM)</option>
+                    <option value="bank_statement">Bank statements (Non-QM)</option>
+                  </select>
+                </div>
+                <div class="ig ig--full ig--score" id="hs-co-income-wrap" hidden>
+                  <label for="hs-income2">Co-borrower income (per year) <b id="hs-income2-out">$0</b></label>
+                  <input id="hs-income2" type="range" min="0" max="1000000" step="5000" value="0">
+                </div>
 
                 <div class="ig ig--full ig--score" data-tutorial="fico">
                   <label for="hs-score">Credit score (FICO) — drives your rate <b id="hs-score-out">760</b></label>
