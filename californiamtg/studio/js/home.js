@@ -47,7 +47,8 @@
     payoff: 900000, newLoan: 900000, cashOut: 150000, includeCosts: false,
     loanAmt: 1200000, rent: 7500,
     paymentMode: "pi", creditScore: 760, docType: "w2", annualIncome: 180000, buydownPoints: 1,
-    coBorrower: false, coIncome: 0, coDocType: "w2"
+    coBorrower: false, coIncome: 0, coDocType: "w2",
+    bdRate: "", bdDiff: ""
   };
 
   var E = {
@@ -64,7 +65,8 @@
     costs: $("#hs-costs"), loanamt: $("#hs-loanamt"), rent: $("#hs-rent"),
     score: $("#hs-score"), doc: $("#hs-doc"), income: $("#hs-income"),
     coAdd: $("#hs-coadd"), coDoc: $("#hs-doc2"), coIncome: $("#hs-income2"),
-    coDocWrap: $("#hs-co-doc-wrap"), coIncomeWrap: $("#hs-co-income-wrap")
+    coDocWrap: $("#hs-co-doc-wrap"), coIncomeWrap: $("#hs-co-income-wrap"),
+    bdrate: $("#hs-bdrate"), bddiff: $("#hs-bddiff")
   };
   function set(sel, t) { var e = $(sel); if (e) e.textContent = t; }
   function show(el, on) { if (el) el.hidden = !on; }
@@ -204,6 +206,8 @@
     if (E.coAdd) S.coBorrower = !!E.coAdd.checked;
     if (E.coDoc) S.coDocType = E.coDoc.value;
     if (E.coIncome) S.coIncome = num(E.coIncome.value);
+    if (E.bdrate) S.bdRate = E.bdrate.value;
+    if (E.bddiff) S.bdDiff = E.bddiff.value;
   }
 
   function loanAndLtv() {
@@ -286,6 +290,13 @@
 
     // Buydown illustrations — borrower chooses the points to pay.
     var scBd = Object.assign({ bdPoints: S.buydownPoints }, sc);
+    // Manual overrides: interest rate (note rate) and buydown rate difference.
+    var hasBdRate = (S.bdRate !== "" && S.bdRate != null);
+    if (hasBdRate) scBd.bdCurrentRate = num(S.bdRate);
+    if (S.bdDiff !== "" && S.bdDiff != null) {
+      var bdBase = hasBdRate ? num(S.bdRate) : ra.rate;
+      scBd.bdBuydownRate = Math.max(0, bdBase - num(S.bdDiff));
+    }
     var pb = KW.permanentBuydown ? KW.permanentBuydown(scBd) : null;
     var tb = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "2-1" }, sc)) : null;
     var tb10 = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "1-0" }, sc)) : null;
@@ -677,7 +688,7 @@
       updateContinue();
       if (E.q) { E.q.value = ""; E.q.focus(); }
     });
-    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome].forEach(function (el) {
+    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.bdrate, E.bddiff].forEach(function (el) {
       if (el) el.addEventListener("input", function () { syncReadouts(); compute(); });
     });
     [E.units, E.costs, E.doc, E.coDoc].forEach(function (el) { if (el) el.addEventListener("change", compute); });
@@ -717,6 +728,8 @@
     if (E.coIncome) E.coIncome.value = String(S.coIncome);
     if (E.coAdd) E.coAdd.checked = S.coBorrower;
     show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower);
+    if (E.bdrate) E.bdrate.value = S.bdRate;
+    if (E.bddiff) E.bddiff.value = S.bdDiff;
     setPurpose(S.scenarioType);
 
     // Page-load EXAMPLE — clearly labeled, not the user's property.
