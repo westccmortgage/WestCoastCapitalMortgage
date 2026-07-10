@@ -368,17 +368,26 @@
     // Income-based qualifying loan + comparison to the estimated loan.
     if (o.qual) {
       var qEl = $('[data-ho="qual"]');
+      var maxDtiPct = Math.round(o.qual.dti * 100);
+      // Implied DTI for the estimated loan (other debts are 0 in this tool, so
+      // payment scales linearly with loan: impliedDTI = maxDTI * loan / maxLoan).
+      var impliedDti = (o.qual.maxLoan > 0) ? (o.qual.dti * (o.loan / o.qual.maxLoan)) : null;
+      var impliedPct = (impliedDti != null) ? Math.round(impliedDti * 100) : null;
       if (qEl) {
-        qEl.textContent = o.qual.maxLoan > 0 ? (fmt(o.qual.maxLoan) + " · at " + Math.round(o.qual.dti * 100) + "% DTI") : "Add an annual income";
-        qEl.setAttribute("data-short", (o.qual.maxLoan > 0 && o.loan > o.qual.maxLoan) ? "yes" : "no");
+        qEl.textContent = (impliedPct != null)
+          ? ("≈ " + impliedPct + "% DTI  ·  standard ≤ " + maxDtiPct + "%")
+          : "Add an annual income";
+        qEl.setAttribute("data-short", (impliedPct != null && impliedDti > o.qual.dti) ? "yes" : "no");
       }
       var qn = "";
       if (o.qual.maxLoan > 0) {
-        qn = (o.loan > o.qual.maxLoan)
-          ? "Estimated loan " + fmt(o.loan) + " is above the income-based estimate — a higher income, lower loan, or more reserves may be needed (licensed review required)."
-          : "Estimated loan " + fmt(o.loan) + " is within the income-based estimate. Educational only — not a pre-qualification or approval.";
+        qn = "DTI (debt-to-income) is the share of your gross monthly income that would go to this mortgage. Lenders generally allow up to about " + maxDtiPct + "%. "
+          + (o.loan > o.qual.maxLoan
+              ? ("This scenario is about " + impliedPct + "% — above the " + maxDtiPct + "% guideline. To reach " + maxDtiPct + "%, raise the down payment, lower the price, or add income. Your income supports about " + fmt(o.qual.maxLoan) + " at " + maxDtiPct + "%.")
+              : ("This scenario is about " + impliedPct + "% — within the " + maxDtiPct + "% guideline. Your income supports up to about " + fmt(o.qual.maxLoan) + " at " + maxDtiPct + "%."))
+          + " Educational only — not a pre-qualification or approval.";
       } else {
-        qn = "Enter an approximate annual income to estimate the loan it could support.";
+        qn = "Enter an approximate annual income to estimate your DTI (debt-to-income).";
       }
       if (o.coOn) {
         qn = "Combined income " + fmt(o.combinedIncome) + " (2 borrowers). " + qn;

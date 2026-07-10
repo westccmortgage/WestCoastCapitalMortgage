@@ -17,8 +17,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <script src="/config.js"></script>
 <script>try{if(window.top===window.self)document.documentElement.classList.add("cm-standalone");}catch(e){document.documentElement.classList.add("cm-standalone");}</script>
-<link rel="stylesheet" href="css/studio.css?v=20260711">
-<link rel="stylesheet" href="css/home.css?v=20260711">
+<link rel="stylesheet" href="css/studio.css?v=20260712">
+<link rel="stylesheet" href="css/home.css?v=20260712">
 <link rel="stylesheet" href="/assets/css/tutorial.css">
 <style>/* Embedded inside California Mortgage — show only the Strategy Console */
 .skip-link,.site-header,.mobile-menu,.site-footer,.cookie,.cockpit--head,.compliance-strip{display:none!important}
@@ -195,7 +195,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
                 </div>
 
                 <div class="ig ig--full ig--score" data-tutorial="income">
-                  <label for="hs-income">Approximate income (per year) — estimates the loan you could support <b id="hs-income-out">$180,000</b></label>
+                  <label for="hs-income">Approximate income (per year) — estimates your DTI (debt-to-income) <b id="hs-income-out">$180,000</b></label>
                   <input id="hs-income" type="range" min="0" max="1000000" step="5000" value="180000">
                   <p class="ig__hint" data-ho-qualnote></p>
                   <p class="ig__hint" data-ho-taxnote></p>
@@ -291,7 +291,7 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
 
               <dl class="scanner__out">
                 <div class="so"><dt>Current review path</dt><dd data-ho="path">—</dd></div>
-                <div class="so so--qual"><dt>Loan you could support (income-based)</dt><dd data-ho="qual">—</dd></div>
+                <div class="so so--qual"><dt>Your DTI at this loan (debt-to-income)</dt><dd data-ho="qual">—</dd></div>
                 <div class="so"><dt>Est. income taxes (federal + state)</dt><dd data-ho="tax">—</dd></div>
                 <div class="so"><dt>Estimated loan amount</dt><dd data-ho="loan">—</dd></div>
                 <div class="so" data-ho-ltv-row><dt>Loan-to-value (LTV)</dt><dd data-ho="ltv">—</dd></div>
@@ -410,12 +410,12 @@ html.cm-standalone .cm-studio-bar{display:flex;align-items:center;justify-conten
   <div class="cookie-actions"><button class="btn btn--primary btn--sm" data-consent-accept>Accept</button><button class="btn btn--ghost btn--sm" data-consent-decline>Decline</button></div>
 </div>
 
-<script src="js/rate-config.js?v=20260711" defer></script>
-<script src="js/loan-limits.js?v=20260711" defer></script>
-<script src="js/engine.js?v=20260711" defer></script>
-<script src="js/site.js?v=20260711" defer></script>
-<script src="js/compliance.js?v=20260711" defer></script>
-<script src="js/home.js?v=20260711" defer></script>
+<script src="js/rate-config.js?v=20260712" defer></script>
+<script src="js/loan-limits.js?v=20260712" defer></script>
+<script src="js/engine.js?v=20260712" defer></script>
+<script src="js/site.js?v=20260712" defer></script>
+<script src="js/compliance.js?v=20260712" defer></script>
+<script src="js/home.js?v=20260712" defer></script>
 <script src="/assets/js/tutorial.js" defer></script>
 <script>(function(){function ph(){try{parent.postMessage({cmStudioHeight:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}window.addEventListener("load",ph);try{new ResizeObserver(ph).observe(document.body);}catch(e){}document.addEventListener("click",function(){setTimeout(ph,90);},true);document.addEventListener("input",function(){setTimeout(ph,90);},true);document.addEventListener("change",function(){setTimeout(ph,90);},true);})();</script>
 </body>
