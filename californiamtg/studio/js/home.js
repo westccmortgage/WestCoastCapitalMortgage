@@ -43,10 +43,10 @@
     state: "CA", county: "Los Angeles County", county_fips: "06037",
     confirmed: true, isExample: true,
     units: 1,
-    value: 1600000, downPct: 18,
+    value: 1400000, downPct: 20,
     payoff: 900000, newLoan: 900000, cashOut: 150000, includeCosts: false,
     loanAmt: 1200000, rent: 7500,
-    paymentMode: "pi", creditScore: 760, docType: "w2", annualIncome: 180000, buydownPoints: 1,
+    paymentMode: "pi", creditScore: 740, docType: "w2", annualIncome: 180000, buydownPoints: 1,
     coBorrower: false, coIncome: 0, coDocType: "w2",
     rateOverride: "", bdDiff: ""
   };
