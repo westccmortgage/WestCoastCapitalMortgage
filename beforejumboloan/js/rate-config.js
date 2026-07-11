@@ -15,7 +15,7 @@
     /* 30-year assumptions by review path (percent). */
     assumptions: {
       conforming: 5.75,
-      high_balance: 6.66,
+      high_balance: 6.50,
       jumbo: 6.84,
       dscr: 7.49,
       bank_statement: 7.65,

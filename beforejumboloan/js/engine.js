@@ -602,6 +602,12 @@
       if (di.nonqm) { r.key = "bank-statement"; r.label = di.label + " — Non-QM pricing"; }
     }
     r.rate = Math.round((r.baseRate + r.scoreAdj + r.docAdj) * 1000) / 1000;
+    r.autoRate = r.rate;
+    // Manual interest-rate override applies across the whole scenario.
+    if (s.rateOverride != null && s.rateOverride !== "") {
+      var ov = parseNum(s.rateOverride);
+      if (isFinite(ov) && ov > 0) { r.rate = ov; r.manual = true; }
+    }
     return r;
   }
 
