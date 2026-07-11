@@ -14,8 +14,8 @@
     disclaimer: "Educational assumptions only — not live rates, rate quotes, APRs, locked rates, or commitments to lend. Pricing varies by lender, loan purpose, occupancy, property type, borrower profile, and market.",
     /* 30-year assumptions by review path (percent). */
     assumptions: {
-      conforming: 6.58,
-      high_balance: 6.66,
+      conforming: 5.75,
+      high_balance: 6.50,
       jumbo: 6.84,
       dscr: 7.49,
       bank_statement: 7.65,

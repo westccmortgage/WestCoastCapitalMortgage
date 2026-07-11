@@ -198,6 +198,18 @@
   </div>
 </section>
 
+  <section class="wcci-helper" style="padding:0 0 6px">
+    <div class="wrap">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;background:#FBFAF7;border:1px solid #E3D9C6;border-radius:16px;padding:16px 20px;box-shadow:0 12px 34px -22px rgba(14,42,59,.28)">
+        <div style="min-width:220px;flex:1">
+          <div style="font-weight:700;color:#1C2B33;font-size:1.02rem">Prefer to just ask?</div>
+          <div style="color:#5C6A72;font-size:.92rem;margin-top:3px">Chat with our AI mortgage helper &mdash; describe your situation in plain words and get a strategy before running the numbers below.</div>
+        </div>
+        <a href="https://wcci.online" target="_blank" rel="noopener" style="flex:none;display:inline-block;background:#C8A86B;color:#1C2B33;font-weight:700;text-decoration:none;padding:.7rem 1.3rem;border-radius:999px;white-space:nowrap">Open the AI Mortgage Helper &rarr;</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ FULL-WIDTH STRATEGY CONSOLE ============ -->
   <section class="console">
     <div class="wrap">
@@ -261,20 +273,23 @@
                 <div class="ig ig--full" data-tutorial="income-type">
                   <label for="hs-doc">Income type — drives your rate</label>
                   <select id="hs-doc">
-                    <option value="w2">W-2 (full documentation)</option>
-                    <option value="self_employed">Self-employed (tax returns)</option>
-                    <option value="ten99">1099 (Non-QM)</option>
+                    <option value="w2">W-2</option>
+                    <option value="self_employed">Self-employed</option>
+                    <option value="ten99">1099</option>
                     <option value="bank_statement">Bank statements (Non-QM)</option>
                   </select>
                   <p class="ig__hint" data-ho-docnote></p>
                 </div>
 
                 <div class="ig ig--full" data-tutorial="income">
-                  <label for="hs-income">Approximate income (per year) — estimates the loan you could support</label>
+                  <label for="hs-income">Approximate income (per year) — estimates your DTI (debt-to-income)</label>
                   <input id="hs-income" type="number" inputmode="numeric" min="0" step="5000" value="180000" placeholder="$ per year">
                   <p class="ig__hint" data-ho-qualnote></p>
                   <p class="ig__hint" data-ho-taxnote></p>
                 </div>
+                <div class="ig ig--full"><label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:600"><input type="checkbox" id="hs-coadd" style="width:auto;margin:0"> Add a co-borrower (combine income)</label></div>
+                <div class="ig ig--full" id="hs-co-doc-wrap" hidden><label for="hs-doc2">Co-borrower income type</label><select id="hs-doc2"><option value="w2">W-2</option><option value="self_employed">Self-employed</option><option value="ten99">1099</option><option value="bank_statement">Bank statements (Non-QM)</option></select></div>
+                <div class="ig ig--full" id="hs-co-income-wrap" hidden><label for="hs-income2">Co-borrower income (per year)</label><input id="hs-income2" type="number" inputmode="numeric" min="0" step="5000" value="0" placeholder="$ per year"></div>
 
                 <div class="ig ig--full ig--score" data-tutorial="fico">
                   <label for="hs-score">Credit score (FICO) — drives your rate <b id="hs-score-out">760</b></label>
@@ -289,6 +304,9 @@
                 <div class="ig ig--full" data-show="purchase second_home" data-tutorial="down-payment">
                   <label for="hs-down">Down payment <b id="hs-down-out">20%</b></label>
                   <input id="hs-down" type="range" min="0" max="60" step="1" value="20"></div>
+                <div class="ig ig--full" style="margin-top:6px"><label style="font-weight:600">Monthly debts &mdash; for your real DTI</label><p class="ig__hint">Add each borrower's approximate monthly payments (car, credit cards, student loans, etc.). This turns the income estimate into a real debt-to-income (DTI) number.</p></div>
+                <div class="ig ig--full"><label for="hs-debt1">Borrower 1 monthly debts</label><input id="hs-debt1" type="number" inputmode="numeric" min="0" step="100" value="0" placeholder="$ per month"></div>
+                <div class="ig ig--full" id="hs-debt2-wrap" hidden><label for="hs-debt2">Co-borrower monthly debts</label><input id="hs-debt2" type="number" inputmode="numeric" min="0" step="100" value="0" placeholder="$ per month"></div>
 
                 <div class="ig ig--full" data-show="rate_term cash_out">
                   <label for="hs-payoff">Current loan payoff / balance <b id="hs-payoff-out">$0</b></label>
@@ -350,13 +368,13 @@
 
               <dl class="scanner__out">
                 <div class="so"><dt>Current review path</dt><dd data-ho="path">—</dd></div>
-                <div class="so so--qual"><dt>Loan you could support (income-based)</dt><dd data-ho="qual">—</dd></div>
+                <div class="so so--qual"><dt>Your DTI at this loan (debt-to-income)</dt><dd data-ho="qual">—</dd></div>
                 <div class="so"><dt>Est. income taxes (federal + state)</dt><dd data-ho="tax">—</dd></div>
                 <div class="so"><dt>Estimated loan amount</dt><dd data-ho="loan">—</dd></div>
                 <div class="so" data-ho-ltv-row><dt>Loan-to-value (LTV)</dt><dd data-ho="ltv">—</dd></div>
                 <div class="so" data-ho-mi-row hidden><dt>Mortgage insurance (PMI) est.</dt><dd data-ho="mi">—</dd></div>
                 <div class="so"><dt>County limit reference</dt><dd data-ho="limit">—</dd></div>
-                <div class="so"><dt>Assumed rate (score + income type)</dt><dd data-ho="raterow">—</dd></div>
+                <div class="so"><dt>Assumed rate (score + income type) &middot; tap to edit</dt><dd data-ho="raterow"><input id="hs-rateoverride" type="number" min="0" max="20" step="0.125" inputmode="decimal" placeholder="rate" style="width:5em;text-align:right;font:inherit;color:inherit;border:1px solid var(--line);border-radius:6px;padding:.15rem .4rem;background:#FBFAF7">% <span data-ho-ratemanual style="opacity:.6;font-size:.85em"></span></dd></div>
                 <div class="so" data-ho-dscr-row hidden><dt>DSCR preview</dt><dd data-ho="dscr">—</dd></div>
                 <div class="so"><dt>Estimated P&amp;I preview</dt><dd data-ho="pi">—</dd></div>
                 <div class="so" data-tutorial="interest-only"><dt>Estimated interest-only preview</dt><dd data-ho="io">—</dd></div>
@@ -397,7 +415,7 @@
               <span class="bd-points__k">How much do you want to pay for the permanent buydown?</span>
               <button type="button" class="chip" data-bd-points="0.5">0.5 pts</button>
               <button type="button" class="chip is-sel" data-bd-points="1">1 pt</button>
-              <button type="button" class="chip" data-bd-points="1.5">1.5 pts</button>
+              <button type="button" class="chip" data-bd-points="1.5">1.5 pts</button> <label style="margin-left:12px;font-size:.9rem;white-space:nowrap;font-weight:400">buydown lowers rate by <input id="hs-bddiff" type="number" min="0" max="5" step="0.125" placeholder="auto" style="width:4.5em;font:inherit;border:1px solid var(--line);border-radius:6px;padding:.2rem .4rem">%</label>
             </div>
             <div class="console__grid console__grid--bd">
               <dl class="scanner__out">
@@ -633,12 +651,12 @@
   </div>
 </div>
 
-<script src="js/rate-config.js?v=7" defer></script>
-<script src="js/loan-limits.js?v=7" defer></script>
-<script src="js/engine.js?v=7" defer></script>
-<script src="js/studio-compliance.js?v=7" defer></script>
-<script src="js/kwest.js?v=7" defer></script>
-<script src="js/studio-app.js?v=8" defer></script>
-<script src="js/tutorial.js?v=1" defer></script>
+<script src="js/rate-config.js?v=9" defer></script>
+<script src="js/loan-limits.js?v=9" defer></script>
+<script src="js/engine.js?v=9" defer></script>
+<script src="js/studio-compliance.js?v=9" defer></script>
+<script src="js/kwest.js?v=9" defer></script>
+<script src="js/studio-app.js?v=9" defer></script>
+<script src="js/tutorial.js?v=9" defer></script>
 </body>
 </html>

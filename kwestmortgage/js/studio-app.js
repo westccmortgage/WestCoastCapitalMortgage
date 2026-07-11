@@ -46,7 +46,10 @@
     value: 1150000, downPct: 20,
     payoff: 900000, newLoan: 900000, cashOut: 150000, includeCosts: false,
     loanAmt: 1200000, rent: 7500,
-    paymentMode: "pi", creditScore: 760, docType: "w2", annualIncome: 180000, buydownPoints: 1
+    paymentMode: "pi", creditScore: 760, docType: "w2", annualIncome: 180000, buydownPoints: 1,
+    coBorrower: false, coIncome: 0, coDocType: "w2",
+    rateOverride: "", bdDiff: "",
+    debt1: 0, debt2: 0
   };
 
   var E = {
@@ -61,7 +64,11 @@
     units: $("#hs-units"), value: $("#hs-value"), down: $("#hs-down"),
     payoff: $("#hs-payoff"), newloan: $("#hs-newloan"), cashout: $("#hs-cashout"),
     costs: $("#hs-costs"), loanamt: $("#hs-loanamt"), rent: $("#hs-rent"),
-    score: $("#hs-score"), doc: $("#hs-doc"), income: $("#hs-income")
+    score: $("#hs-score"), doc: $("#hs-doc"), income: $("#hs-income"),
+    coAdd: $("#hs-coadd"), coDoc: $("#hs-doc2"), coIncome: $("#hs-income2"),
+    coDocWrap: $("#hs-co-doc-wrap"), coIncomeWrap: $("#hs-co-income-wrap"),
+    rateOverride: $("#hs-rateoverride"), bddiff: $("#hs-bddiff"),
+    debt1: $("#hs-debt1"), debt2: $("#hs-debt2"), debt2Wrap: $("#hs-debt2-wrap")
   };
   function set(sel, t) { var e = $(sel); if (e) e.textContent = t; }
   function show(el, on) { if (el) el.hidden = !on; }
@@ -184,10 +191,44 @@
     confirmCounty({ state_abbr: st, county_name: /county$|parish$|borough$/i.test(cty) ? cty : cty + " County", county_fips: null });
   }
 
-  /* ---------- lead-form bridge: publish a readable scenario snapshot ----------
-     Fills any [data-studio-snapshot] field in the Key West lead form and
-     exposes window.KW_STUDIO so the broker receives the structured scenario
-     with the contact submission. Deterministic; no PII leaves the page. */
+  /* ---------- compute (deterministic, scenario-aware) ---------- */
+  function read() {
+    if (E.units) S.units = parseInt(E.units.value, 10) || 1;
+    if (E.value) S.value = num(E.value.value);
+    if (E.down) S.downPct = num(E.down.value);
+    if (E.payoff) S.payoff = num(E.payoff.value);
+    if (E.newloan) S.newLoan = num(E.newloan.value);
+    if (E.cashout) S.cashOut = num(E.cashout.value);
+    if (E.costs) S.includeCosts = !!E.costs.checked;
+    if (E.loanamt) S.loanAmt = num(E.loanamt.value);
+    if (E.rent) S.rent = num(E.rent.value);
+    if (E.score) S.creditScore = parseInt(E.score.value, 10) || 760;
+    if (E.doc) S.docType = E.doc.value;
+    if (E.income) S.annualIncome = num(E.income.value);
+    if (E.coAdd) S.coBorrower = !!E.coAdd.checked;
+    if (E.coDoc) S.coDocType = E.coDoc.value;
+    if (E.coIncome) S.coIncome = num(E.coIncome.value);
+    if (E.rateOverride) S.rateOverride = E.rateOverride.value.trim();
+    if (E.bddiff) S.bdDiff = E.bddiff.value;
+    if (E.debt1) S.debt1 = num(E.debt1.value);
+    if (E.debt2) S.debt2 = num(E.debt2.value);
+  }
+
+  function loanAndLtv() {
+    var t = S.scenarioType, value = S.value, loan = 0, down = 0;
+    if (t === "purchase" || t === "second_home") {
+      down = Math.min(value, Math.round(value * S.downPct / 100)); loan = Math.max(0, value - down);
+    } else if (t === "rate_term") {
+      loan = S.newLoan;
+    } else if (t === "cash_out") {
+      var base = S.payoff + S.cashOut; loan = S.includeCosts ? Math.round(base * 1.02) : base;
+    } else { // investment | unknown
+      loan = S.loanAmt;
+    }
+    var ltv = value > 0 ? loan / value : null;
+    return { loan: loan, down: down, ltv: ltv };
+  }
+
   function publishSnapshot(o) {
     var pathLabels = { conforming: "Conforming Review", "high-balance": "High-Balance Conforming Review",
       jumbo: "Jumbo Review", "interest-only-jumbo": "Interest-Only Jumbo Review", dscr: "DSCR / Investor Review",
@@ -210,37 +251,6 @@
     $$("[data-studio-snapshot]").forEach(function (el) { if ("value" in el) el.value = text; });
   }
 
-  /* ---------- compute (deterministic, scenario-aware) ---------- */
-  function read() {
-    if (E.units) S.units = parseInt(E.units.value, 10) || 1;
-    if (E.value) S.value = num(E.value.value);
-    if (E.down) S.downPct = num(E.down.value);
-    if (E.payoff) S.payoff = num(E.payoff.value);
-    if (E.newloan) S.newLoan = num(E.newloan.value);
-    if (E.cashout) S.cashOut = num(E.cashout.value);
-    if (E.costs) S.includeCosts = !!E.costs.checked;
-    if (E.loanamt) S.loanAmt = num(E.loanamt.value);
-    if (E.rent) S.rent = num(E.rent.value);
-    if (E.score) S.creditScore = parseInt(E.score.value, 10) || 760;
-    if (E.doc) S.docType = E.doc.value;
-    if (E.income) S.annualIncome = num(E.income.value);
-  }
-
-  function loanAndLtv() {
-    var t = S.scenarioType, value = S.value, loan = 0, down = 0;
-    if (t === "purchase" || t === "second_home") {
-      down = Math.min(value, Math.round(value * S.downPct / 100)); loan = Math.max(0, value - down);
-    } else if (t === "rate_term") {
-      loan = S.newLoan;
-    } else if (t === "cash_out") {
-      var base = S.payoff + S.cashOut; loan = S.includeCosts ? Math.round(base * 1.02) : base;
-    } else { // investment | unknown
-      loan = S.loanAmt;
-    }
-    var ltv = value > 0 ? loan / value : null;
-    return { loan: loan, down: down, ltv: ltv };
-  }
-
   function compute() {
     if (!S.confirmed) return;
     read();
@@ -261,9 +271,15 @@
     var occ = occFor(S.scenarioType);
     var io = S.paymentMode === "io";
     var occLabel = occ === "Investment" ? "Investment property" : (occ === "Second home" ? "Second home" : "Primary");
-    var nonqm = (S.docType === "bank_statement" || S.docType === "ten99");
+    // Co-borrower: combine income; price on the higher-cost income type (Non-QM dominates).
+    var coOn = S.coBorrower && S.coIncome > 0;
+    var combinedIncome = S.annualIncome + (coOn ? S.coIncome : 0);
+    var totalDebts = S.debt1 + (coOn ? S.debt2 : 0);
+    var effDocType = S.docType;
+    if (coOn && KW.docTypeAdjust && KW.docTypeAdjust(S.coDocType) > KW.docTypeAdjust(S.docType)) effDocType = S.coDocType;
+    var nonqm = (effDocType === "bank_statement" || effDocType === "ten99");
     var sc = { loan: loan, scenario_type: S.scenarioType, occupancy: occLabel, payment_mode: io ? "interest-only" : "pi",
-      creditScore: S.creditScore, docType: S.docType };
+      creditScore: S.creditScore, docType: effDocType, rateOverride: S.rateOverride };
 
     // Mortgage insurance (PMI) when LTV > 80% (less than 20% down).
     var ltvPct = (ltv != null && isFinite(ltv)) ? ltv * 100 : null;
@@ -294,17 +310,25 @@
     var dscr = (S.scenarioType === "investment" && S.rent > 0 && dscrBasis > 0) ? (S.rent / dscrBasis) : null;
 
     // Income-based qualifying loan (uses the assumed rate, so score + Non-QM flow in).
-    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: ra.rate, termYears: 30 }) : null;
+    var qual = KW.qualifyingLoan ? KW.qualifyingLoan({ annualIncome: combinedIncome, ratePct: ra.rate, termYears: 30, pathKey: ra.key, monthlyDebts: totalDebts }) : null;
+    // Real DTI = (estimated housing PITI + monthly debts) / gross monthly income.
+    var tiShareCfg = (window.BJLRates && window.BJLRates.affordability && window.BJLRates.affordability.ti_share);
+    var realTiShare = (tiShareCfg != null) ? tiShareCfg : 0.18;
+    var grossMonthly = combinedIncome / 12;
+    var realDti = (grossMonthly > 0 && pp && pp.pi > 0) ? (((pp.pi / (1 - realTiShare)) + totalDebts) / grossMonthly) : null;
 
-    // Income-tax estimate (very rough, educational) for the confirmed state.
-    var tax = KW.estimateIncomeTax ? KW.estimateIncomeTax({ annualIncome: S.annualIncome, state: S.state }) : null;
+    // Income-tax estimate (very rough, educational) for the confirmed state — household (combined).
+    var tax = KW.estimateIncomeTax ? KW.estimateIncomeTax({ annualIncome: combinedIncome, state: S.state }) : null;
 
     // Buydown illustrations — borrower chooses the points to pay.
     var scBd = Object.assign({ bdPoints: S.buydownPoints }, sc);
+    // Buydown starts from the (possibly overridden) scenario rate; optional manual reduction.
+    if (S.bdDiff !== "" && S.bdDiff != null) scBd.bdBuydownRate = Math.max(0, ra.rate - num(S.bdDiff));
     var pb = KW.permanentBuydown ? KW.permanentBuydown(scBd) : null;
     var tb = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "2-1" }, sc)) : null;
     var tb10 = KW.temporaryBuydown ? KW.temporaryBuydown(Object.assign({ bdTempType: "1-0" }, sc)) : null;
 
+    try { publishSnapshot({ loan: loan, sc: sc, ra: ra, qual: qual, mi: mi, dscr: dscr, countyLimit: countyLimit, baseline: baseline, node: node }); } catch (e) {}
     render({
       loan: loan, ltv: ltv, ltvPct: ltvPct, baseline: baseline, countyLimit: countyLimit, hasData: hasData,
       delta: delta, addlDown: addlDown, zone: zone, node: node, occ: occ,
@@ -312,14 +336,17 @@
       pi: pp.pi, io: pp.interestOnly, iodiff: pp.difference, paymentMode: S.paymentMode,
       rate: { rate: pp.rate, label: pp.rateLabel, key: pp.rateKey },
       ra: ra, mi: mi, nonqm: nonqm, qual: qual, tax: tax,
+      coOn: coOn, combinedIncome: combinedIncome, effDocType: effDocType,
+      realDti: realDti, totalDebts: totalDebts,
       dscr: dscr, datasetType: loc && loc.datasetType, tier: loc && loc.tier,
       pb: pb, tb: tb, tb10: tb10
     });
-    try { publishSnapshot({ loan: loan, sc: sc, ra: ra, qual: qual, mi: mi, dscr: dscr, countyLimit: countyLimit, baseline: baseline, node: node }); } catch (e) {}
     updateContinue();
   }
 
   function render(o) {
+    // Co-borrower + co-borrower-debt fields visibility.
+    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
     // HERO — dominant county-line result.
     var heroV = $("[data-hero]"), heroK = $("[data-hero-k]"), heroSub = $("[data-hero-sub]");
     if (heroK) heroK.textContent = "Vs. " + S.county + ", " + S.state + " county line";
@@ -368,23 +395,38 @@
       set("[data-ho-docnote]", o.nonqm
         ? ((o.ra.docLabel || "Non-QM") + " — Non-QM, rate is higher (+" + (o.ra.docAdj || 0) + "%)")
         : ((o.ra.docLabel || "W-2") + " — full documentation, baseline pricing"));
-      set('[data-ho="raterow"]', o.ra.rate + "% assumption");
+      if (E.rateOverride && document.activeElement !== E.rateOverride) E.rateOverride.placeholder = String(o.ra.autoRate != null ? o.ra.autoRate : o.ra.rate);
+      set("[data-ho-ratemanual]", o.ra.manual ? "manual rate" : "assumption");
     }
 
     // Income-based qualifying loan + comparison to the estimated loan.
     if (o.qual) {
       var qEl = $('[data-ho="qual"]');
+      var maxDtiPct = Math.round(o.qual.dti * 100);
+      // Implied DTI for the estimated loan (other debts are 0 in this tool, so
+      // payment scales linearly with loan: impliedDTI = maxDTI * loan / maxLoan).
+      var impliedDti = (o.realDti != null) ? o.realDti : ((o.qual.maxLoan > 0) ? (o.qual.dti * (o.loan / o.qual.maxLoan)) : null);
+      var impliedPct = (impliedDti != null) ? Math.round(impliedDti * 100) : null;
       if (qEl) {
-        qEl.textContent = o.qual.maxLoan > 0 ? (fmt(o.qual.maxLoan) + " · at " + Math.round(o.qual.dti * 100) + "% DTI") : "Add an annual income";
-        qEl.setAttribute("data-short", (o.qual.maxLoan > 0 && o.loan > o.qual.maxLoan) ? "yes" : "no");
+        qEl.textContent = (impliedPct != null)
+          ? ("≈ " + impliedPct + "% DTI  ·  standard ≤ " + maxDtiPct + "%")
+          : "Add an annual income";
+        qEl.setAttribute("data-short", (impliedPct != null && impliedDti > o.qual.dti) ? "yes" : "no");
       }
       var qn = "";
       if (o.qual.maxLoan > 0) {
-        qn = (o.loan > o.qual.maxLoan)
-          ? "Estimated loan " + fmt(o.loan) + " is above the income-based estimate — a higher income, lower loan, or more reserves may be needed (licensed review required)."
-          : "Estimated loan " + fmt(o.loan) + " is within the income-based estimate. Educational only — not a pre-qualification or approval.";
+        qn = "DTI (debt-to-income) is the share of your gross monthly income that would go to this mortgage. Lenders generally allow up to about " + maxDtiPct + "%. "
+          + (o.loan > o.qual.maxLoan
+              ? ("This scenario is about " + impliedPct + "% — above the " + maxDtiPct + "% guideline. To reach " + maxDtiPct + "%, raise the down payment, lower the price, or add income. Your income supports about " + fmt(o.qual.maxLoan) + " at " + maxDtiPct + "%.")
+              : ("This scenario is about " + impliedPct + "% — within the " + maxDtiPct + "% guideline. Your income supports up to about " + fmt(o.qual.maxLoan) + " at " + maxDtiPct + "%."))
+          + " Educational only — not a pre-qualification or approval.";
       } else {
-        qn = "Enter an approximate annual income to estimate the loan it could support.";
+        qn = "Enter an approximate annual income to estimate your DTI (debt-to-income).";
+      }
+      if (o.totalDebts > 0 && o.realDti != null) qn += " Includes " + fmt(o.totalDebts) + "/mo of other debts.";
+      if (o.coOn) {
+        qn = "Combined income " + fmt(o.combinedIncome) + " (2 borrowers). " + qn;
+        if (o.effDocType !== S.docType) qn += " Rate reflects the higher-cost income type between the two borrowers (Non-QM pricing).";
       }
       set("[data-ho-qualnote]", qn);
     }
@@ -574,9 +616,13 @@
     q.set("payment_mode", S.paymentMode === "io" ? "interest_only" : "pi");
     q.set("credit_score", String(S.creditScore));
     q.set("income_doc_type", S.docType);
-    if (S.annualIncome > 0) {
+    q.set("co_borrower", S.coBorrower ? "yes" : "no");
+    if (S.coBorrower) { q.set("co_income", String(S.coIncome)); q.set("co_income_doc_type", S.coDocType); }
+    var combinedLeadIncome = S.annualIncome + (S.coBorrower && S.coIncome > 0 ? S.coIncome : 0);
+    if (combinedLeadIncome > 0) {
       q.set("annual_income", String(S.annualIncome));
-      if (KW.qualifyingLoan && pp) q.set("qualifying_loan_estimate", String(KW.qualifyingLoan({ annualIncome: S.annualIncome, ratePct: pp.rate, termYears: 30 }).maxLoan));
+      if (S.coBorrower) q.set("combined_income", String(combinedLeadIncome));
+      if (KW.qualifyingLoan && pp) q.set("qualifying_loan_estimate", String(KW.qualifyingLoan({ annualIncome: combinedLeadIncome, ratePct: pp.rate, termYears: 30, pathKey: pp.rateKey }).maxLoan));
     }
     if (ll.ltv != null && isFinite(ll.ltv) && KW.monthlyMI) q.set("mortgage_insurance_monthly", String(Math.round(KW.monthlyMI(ll.loan, ll.ltv * 100, S.creditScore))));
     if (pp) {
@@ -621,7 +667,7 @@
     if (supported) {
       if (appCta) {
         appCta.setAttribute("href", (comp.applicationUrl && comp.applicationUrl()) || (comp.config && comp.config.application_portal_url) || "#");
-        appCta.textContent = "Review My Key West Scenario →";
+        appCta.textContent = "Continue to Secure Lender Application →";
       }
       show(appCta, true); show(helper, true);
     } else if (confirmedReal) {
@@ -643,6 +689,11 @@
     set("#hs-cashout-out", fmt(E.cashout ? num(E.cashout.value) : S.cashOut));
     set("#hs-loanamt-out", fmt(E.loanamt ? num(E.loanamt.value) : S.loanAmt));
     set("#hs-score-out", String(E.score ? (parseInt(E.score.value, 10) || S.creditScore) : S.creditScore));
+    set("#hs-income-out", fmt(E.income ? num(E.income.value) : S.annualIncome));
+    set("#hs-income2-out", fmt(E.coIncome ? num(E.coIncome.value) : S.coIncome));
+    set("#hs-debt1-out", fmt(E.debt1 ? num(E.debt1.value) : S.debt1));
+    set("#hs-debt2-out", fmt(E.debt2 ? num(E.debt2.value) : S.debt2));
+    set("#hs-rent-out", fmt(E.rent ? num(E.rent.value) : S.rent));
   }
 
   function bind() {
@@ -679,10 +730,15 @@
       updateContinue();
       if (E.q) { E.q.value = ""; E.q.focus(); }
     });
-    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income].forEach(function (el) {
+    [E.value, E.down, E.payoff, E.newloan, E.cashout, E.loanamt, E.rent, E.score, E.income, E.coIncome, E.rateOverride, E.bddiff, E.debt1, E.debt2].forEach(function (el) {
       if (el) el.addEventListener("input", function () { syncReadouts(); compute(); });
     });
-    [E.units, E.costs, E.doc].forEach(function (el) { if (el) el.addEventListener("change", compute); });
+    [E.units, E.costs, E.doc, E.coDoc].forEach(function (el) { if (el) el.addEventListener("change", compute); });
+    if (E.coAdd) E.coAdd.addEventListener("change", function () {
+      S.coBorrower = !!E.coAdd.checked;
+      show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
+      syncReadouts(); compute();
+    });
     $$("[data-lever-action]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var a = btn.getAttribute("data-lever-action");
@@ -710,37 +766,22 @@
     if (E.score) E.score.value = String(S.creditScore);
     if (E.doc) E.doc.value = S.docType;
     if (E.income) E.income.value = String(S.annualIncome);
+    if (E.coDoc) E.coDoc.value = S.coDocType;
+    if (E.coIncome) E.coIncome.value = String(S.coIncome);
+    if (E.coAdd) E.coAdd.checked = S.coBorrower;
+    show(E.coDocWrap, S.coBorrower); show(E.coIncomeWrap, S.coBorrower); show(E.debt2Wrap, S.coBorrower);
+    if (E.debt1) E.debt1.value = String(S.debt1);
+    if (E.debt2) E.debt2.value = String(S.debt2);
+    if (E.rateOverride) E.rateOverride.value = S.rateOverride;
+    if (E.bddiff) E.bddiff.value = S.bdDiff;
     setPurpose(S.scenarioType);
 
-    // Florida-only: populate the county picker and confirm the selected county
-    // (defaults to Monroe County / Key West). No state selection, no guessing.
-    if (fillCounties()) confirmSelectedCounty();
-    else { S.confirmed = true; show(E.scenario, true); compute(); }
-  }
-
-  /* ---------- Florida county picker (hard choice; no state selection) ---------- */
-  var _countyBound = false;
-  function fillCounties() {
-    var sel = $("#hs-county");
-    if (!sel) return false;
-    var cs = (BJL && BJL.getCounties) ? BJL.getCounties("FL") : [];
-    if (!cs || !cs.length) return false;
-    var cur = sel.value;
-    sel.innerHTML = cs.map(function (c) {
-      return '<option value="' + c.fips + '" data-name="' + c.name + '"' + (c.fips === "12087" ? " selected" : "") + ">" + c.name + "</option>";
-    }).join("");
-    if (cur) sel.value = cur;
-    if (!_countyBound) {
-      sel.addEventListener("change", confirmSelectedCounty);
-      _countyBound = true;
-    }
-    return true;
-  }
-  function confirmSelectedCounty() {
-    var sel = $("#hs-county");
-    if (!sel || !sel.value) return;
-    var o = sel.options[sel.selectedIndex];
-    confirmCounty({ state_abbr: "FL", county_name: o.getAttribute("data-name"), county_fips: sel.value, matched_by: "county-select" }, false);
+    // Page-load EXAMPLE — clearly labeled, not the user's property.
+    S.isExample = true; S.confirmed = true;
+    show(E.resolve, false); show(E.needcty, false);
+    show(E.confirmed, true); show(E.scenario, true); show(E.exampleBanner, true);
+    if (E.confirmedCounty) E.confirmedCounty.textContent = "Example · " + S.county + ", " + S.state;
+    compute();
   }
 
   bind();
