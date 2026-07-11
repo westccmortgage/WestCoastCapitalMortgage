@@ -755,7 +755,7 @@ textarea.field-input{resize:vertical;min-height:84px}
   .main-nav.open{transform:translateX(0)}
   .main-nav a{font-size:1.1rem;color:var(--ink)}
   .nav-toggle{display:flex;z-index:60}
-  .header-cta .btn-charcoal{display:none}  /* hide Start Application on mobile; keep Get Pre-Approved */
+  .header-cta .btn{display:none}  /* hide Get Pre-Approved + Start Application on mobile (kept: hamburger + bottom bar) */
   .header-cta .btn{padding:.55rem .85rem;font-size:.82rem}
 
   .section{padding:70px 0}
