@@ -185,7 +185,7 @@ p  { margin: 0 0 1.1em; color: var(--ink); }
 }
 
 /* ---------- Page hero (interior pages) ---------- */
-.page-hero { position: relative; color:#fff; padding: clamp(90px,14vh,150px) 0 clamp(60px,8vh,90px); overflow:hidden; }
+.page-hero { position: relative; color:#fff; padding: clamp(52px,7vh,84px) 0 clamp(34px,4vh,50px); overflow:hidden; }
 .page-hero .coastal-bg__grad { animation-duration: 34s; }
 .page-hero__inner { position:relative; z-index:2; max-width: 820px; }
 .page-hero h1 { color:#fff; }
