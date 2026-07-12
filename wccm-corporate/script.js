@@ -31,7 +31,8 @@
       var data=new FormData(f);
       if(btn)btn.disabled=true;
       fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
-        .then(function(){
+        .then(function(r){
+          if(!r.ok)throw new Error('Submission was not accepted ('+r.status+')');
           if(ok)ok.hidden=false;
           f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});
           if(ok)ok.scrollIntoView({behavior:'smooth',block:'center'});
