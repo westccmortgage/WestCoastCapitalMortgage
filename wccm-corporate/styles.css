@@ -247,7 +247,7 @@ section{padding:88px 0}
   .footer-grid{grid-template-columns:1fr 1fr}
 }
 
-/* ---------- WCCI AI assistant ---------- */
+/* ---------- WWCCM.ai AI assistant ---------- */
 .wcci-band{background:linear-gradient(180deg,#f3f8ff,#ffffff)}
 .wcci-tag{display:inline-block;font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:#eaf2fe;border:1px solid #cfe0fb;border-radius:999px;padding:3px 9px;margin-right:8px}
 .wcci-note{font-size:.82rem;color:var(--gray);line-height:1.6;margin-top:22px;max-width:92ch}
