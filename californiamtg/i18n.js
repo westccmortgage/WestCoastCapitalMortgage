@@ -5,6 +5,7 @@
 (function () {
   "use strict";
   var LANGS = ["en", "es", "ru", "zh"], STORE = "cmLang";
+  var LABELS = { en: "EN", es: "ES", ru: "RU", zh: "中文" };
 
   var DICT = {
     /* ===== Navigation ===== */
@@ -107,6 +108,9 @@
       b.classList.toggle("is-active", b.getAttribute("data-lang") === lang);
       b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
     });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-lang-current]"), function (el) {
+      el.textContent = LABELS[lang] || "EN";
+    });
     document.documentElement.setAttribute("lang", lang);
   }
 
@@ -115,7 +119,23 @@
 
   function init() {
     Array.prototype.forEach.call(document.querySelectorAll(".lang-switch button"), function (b) {
-      b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+      b.addEventListener("click", function () {
+        setLang(b.getAttribute("data-lang"));
+        var dd = b.closest(".lang-dd"); if (dd) { dd.classList.remove("open"); var t = dd.querySelector(".lang-dd__trigger"); if (t) t.setAttribute("aria-expanded", "false"); }
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".lang-dd__trigger"), function (t) {
+      t.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var dd = t.closest(".lang-dd"); if (!dd) return;
+        var open = dd.classList.toggle("open");
+        t.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+    document.addEventListener("click", function (e) {
+      Array.prototype.forEach.call(document.querySelectorAll(".lang-dd.open"), function (dd) {
+        if (!dd.contains(e.target)) { dd.classList.remove("open"); var t = dd.querySelector(".lang-dd__trigger"); if (t) t.setAttribute("aria-expanded", "false"); }
+      });
     });
     apply(window.CMI18N.lang);
   }

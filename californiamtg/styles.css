@@ -825,10 +825,28 @@ textarea.field-input{resize:vertical;min-height:84px}
   *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
 }
 
-/* ===== Language switcher (EN/ES/RU/ZH) — slim, borderless ===== */
-.lang-switch{display:inline-flex;align-items:center;margin-right:14px}
-.lang-switch button{border:0;background:transparent;color:#9a9184;font:600 .74rem/1 Inter,system-ui,sans-serif;padding:2px 9px;cursor:pointer;letter-spacing:.04em;transition:color .2s}
-.lang-switch button:not(:last-child){border-right:1px solid #e2dccf}
-.lang-switch button:hover{color:#2c2722}
-.lang-switch button.is-active{color:#b08a4c}
-@media(max-width:900px){.lang-switch{margin-right:8px}.lang-switch button{padding:2px 7px;font-size:.7rem}}
+/* ===== Redesigned header (solid bar) ===== */
+.site-header{background:#F7F4EE;padding:0;border-bottom:1px solid rgba(130,110,75,.18)}
+.site-header .header-inner{min-height:90px}
+.site-header.scrolled{background:#F7F4EE;backdrop-filter:none;box-shadow:0 4px 16px rgba(60,50,38,.07);border-bottom:1px solid rgba(130,110,75,.18)}
+
+/* ===== Language dropdown (EN ▾) ===== */
+.lang-dd{position:relative;display:inline-flex}
+.lang-dd__trigger{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(130,110,75,.28);background:#fffdf9;color:#2c2722;font:600 .82rem/1 Inter,system-ui,sans-serif;padding:8px 12px;border-radius:999px;cursor:pointer;letter-spacing:.03em}
+.lang-dd__trigger:hover{border-color:rgba(130,110,75,.5)}
+.lang-dd__caret{font-size:.7em;color:#b08a4c;transition:transform .2s ease}
+.lang-dd.open .lang-dd__caret{transform:rotate(180deg)}
+.lang-switch{position:absolute;top:calc(100% + 8px);right:0;display:none;flex-direction:column;align-items:stretch;background:#fffdf9;border:1px solid #ece7de;border-radius:12px;box-shadow:0 16px 40px -14px rgba(60,50,38,.28);padding:5px;min-width:118px;z-index:70}
+.lang-dd.open .lang-switch{display:flex}
+.lang-switch button{border:0;background:transparent;color:#6b6357;font:600 .82rem/1 Inter,system-ui,sans-serif;padding:9px 12px;border-radius:8px;text-align:left;cursor:pointer}
+.lang-switch button:hover{background:#f3ece0;color:#2c2722}
+.lang-switch button.is-active{color:#b08a4c;background:#f7f0e4}
+
+/* ===== Header phone icon ===== */
+.header-phone{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(130,110,75,.28);color:#2c2722;background:#fffdf9;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.header-phone:hover{background:#b08a4c;color:#fff;border-color:#b08a4c}
+@media(max-width:900px){
+  .site-header .header-inner{min-height:74px}
+  .lang-dd__trigger{padding:6px 10px;font-size:.78rem}
+  .header-phone{width:38px;height:38px}
+}
