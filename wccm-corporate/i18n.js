@@ -3,7 +3,48 @@
    wherever it appears across all pages. Language persists in localStorage. */
 (function () {
   "use strict";
-  var LANGS = ["en", "es", "ru"], STORE = "wccmLang";
+  var LANGS = ["en", "es", "ru", "zh"], STORE = "wccmLang";
+
+  /* Chinese overlay (Simplified). Strings not listed here fall back to English
+     under the ZH setting, so coverage can grow over time without risk. */
+  var ZH = {
+    /* Navigation */
+    "Buy a Home": "购房", "Home Search": "房源搜索", "Refinance": "再融资",
+    "Today's Rates": "今日利率", "Loans": "贷款", "Resources": "资源中心",
+    "About Us": "关于我们", "Find a Loan Officer": "寻找贷款专员",
+    /* Buttons / CTAs */
+    "Apply Now": "立即申请", "Get Preapproved": "获取预批", "Make a Payment": "在线还款",
+    "View Mortgage Tools": "查看房贷工具", "AI Strategy Advisor": "AI 策略顾问",
+    "Learn more": "了解更多", "Get started": "开始", "Explore": "浏览", "Open": "打开", "See more": "查看更多",
+    "Start Short Application": "开始简短申请", "Contact a Loan Officer": "联系贷款专员",
+    "Talk to us": "联系我们", "See Programs": "查看项目", "Try our tools": "试用工具",
+    /* Hero (homepage) */
+    "West Coast Capital Mortgage Inc.": "West Coast Capital Mortgage Inc.",
+    "Start Your Financing Journey": "开启您的融资之旅",
+    "Clear mortgage guidance, smart loan solutions, and modern tools to help you move forward with confidence.": "清晰的房贷指导、智能的贷款方案和现代化工具，助您自信前行。",
+    "You will be redirected to our secure mortgage application portal.": "您将被引导至我们的安全房贷申请门户。",
+    /* Why choose us */
+    "Why borrowers choose us": "借款人为何选择我们",
+    "Mortgage solutions": "房贷解决方案",
+    "Conventional, FHA, VA, jumbo, Non-QM, DSCR, and more.": "常规、FHA、VA、大额、Non-QM、DSCR 等多种贷款。",
+    "Modern tools": "现代化工具",
+    "Calculators and a short application to move quickly.": "计算器和简短申请，助您快速推进。",
+    "Human guidance": "真人指导",
+    "Licensed advisors who explain every step.": "持牌顾问为您讲解每一步。",
+    "Ready to take the next step?": "准备好迈出下一步了吗？",
+    "Start with a short mortgage intake and we will help you understand your options.": "从简短的房贷信息登记开始，我们将帮助您了解可选方案。",
+    /* Loan programs */
+    "Conventional Loans": "常规贷款", "FHA Loans": "FHA 贷款", "VA Loans": "VA 贷款",
+    "Jumbo Loans": "大额贷款", "Non-QM Loans": "Non-QM 贷款", "Bank Statement Loans": "银行流水贷款",
+    "DSCR Loans": "DSCR 贷款", "Investment Property Loans": "投资房产贷款", "HELOC": "房屋净值信贷额度",
+    /* Footer common */
+    "Equal Housing Opportunity": "平等住房机会",
+    "Homebuying Guide": "购房指南", "Refinancing Guide": "再融资指南",
+    "First-Time Homebuyers": "首次购房者", "Mortgage Calculators": "房贷计算器",
+    "Mortgage Articles": "房贷文章", "Mortgage Glossary": "房贷术语表", "Mortgage FAQ": "房贷常见问题",
+    "Contact Us": "联系我们", "Privacy Policy": "隐私政策", "Terms of Use": "使用条款"
+  };
+  var NKZH = null;
 
   var DICT = {
     /* ===== Top bar + navigation ===== */
@@ -1045,7 +1086,13 @@
       if (el.hasAttribute("aria-label")) attrNodes.push({ el: el, attr: "aria-label", en: el.getAttribute("aria-label") });
     });
   }
-  function look(en, lang) { if (lang === "en") return null; if (!NK) buildNK(); var e = NK[norm(en)]; if (!e) return null; return lang === "es" ? e[0] : e[1]; }
+  function buildNKZH() { NKZH = {}; for (var k in ZH) NKZH[norm(k)] = ZH[k]; }
+  function look(en, lang) {
+    if (lang === "en") return null;
+    if (lang === "zh") { if (!NKZH) buildNKZH(); return NKZH[norm(en)] || null; }
+    if (!NK) buildNK(); var e = NK[norm(en)]; if (!e) return null;
+    return lang === "es" ? e[0] : e[1];
+  }
   function apply(lang) {
     collect();
     document.documentElement.lang = lang;
