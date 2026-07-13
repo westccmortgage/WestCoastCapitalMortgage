@@ -815,8 +815,9 @@ input[type="range"]:focus-visible{ box-shadow:0 0 0 3px rgba(46,127,166,.3); }
 .snap__limitval[data-verify="yes"] { color: #b5651d; }
 
 /* ===== Language switcher (EN/ES/RU/ZH) ===== */
-.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-right:10px;border:1px solid #E3D9C6;border-radius:999px;padding:3px;background:#FBFAF7}
-.lang-switch button{border:0;background:transparent;color:#5C6A72;font:600 .78rem/1 Inter,system-ui,sans-serif;padding:5px 9px;border-radius:999px;cursor:pointer;letter-spacing:.02em}
+.lang-switch{display:inline-flex;align-items:center;margin-right:14px}
+.lang-switch button{border:0;background:transparent;color:#8b97a0;font:600 .74rem/1 Inter,system-ui,sans-serif;padding:2px 9px;cursor:pointer;letter-spacing:.04em;transition:color .2s}
+.lang-switch button:not(:last-child){border-right:1px solid #E3D9C6}
 .lang-switch button:hover{color:#1C2B33}
-.lang-switch button.is-active{background:#C8A86B;color:#1C2B33}
-@media(max-width:900px){.lang-switch{margin-right:6px;padding:2px}.lang-switch button{padding:4px 7px;font-size:.72rem}}
+.lang-switch button.is-active{color:#C8A86B}
+@media(max-width:900px){.lang-switch{margin-right:8px}.lang-switch button{padding:2px 7px;font-size:.7rem}}
