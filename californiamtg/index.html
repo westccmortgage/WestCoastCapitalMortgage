@@ -53,6 +53,13 @@
   "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" }
 }
 </script>
+<style>
+  .lang-switch{display:inline-flex;align-items:center;gap:2px;margin-right:10px;border:1px solid #ece7de;border-radius:999px;padding:3px;background:#fffdf9}
+  .lang-switch button{border:0;background:transparent;color:#6b6357;font:600 .78rem/1 Inter,system-ui,sans-serif;padding:5px 9px;border-radius:999px;cursor:pointer;letter-spacing:.02em}
+  .lang-switch button:hover{color:#2c2722}
+  .lang-switch button.is-active{background:#b08a4c;color:#fff}
+  @media(max-width:900px){.lang-switch{margin-right:6px;padding:2px}.lang-switch button{padding:4px 7px;font-size:.72rem}}
+</style>
 </head>
 <body>
 
@@ -83,7 +90,13 @@
     </nav>
 
     <div class="header-cta">
-      <a class="btn btn-primary" href="/get-preapproved.html">Get Pre-Approved</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true" class="is-active">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+        <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+      </div>
+      <a class="btn btn-primary" href="tel:+13106865053"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:7px" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Talk to a Mortgage Professional</a>
       <a class="btn btn-charcoal" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
         <span></span><span></span><span></span>
@@ -135,7 +148,7 @@
 
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="https://wcci.online" target="_blank" rel="noopener">Start My Scenario</a>
-          <a class="btn btn-outline-dark btn-lg" href="tel:+13106865053">Talk to a Mortgage Professional</a>
+          <a class="btn btn-outline-dark btn-lg" href="/get-preapproved.html">Get Free Pre-Approval</a>
         </div>
         <p class="hero-note">You don't need to know the loan program. Start with the situation.</p>
       </div>
@@ -427,7 +440,7 @@
     <div class="footer-col">
       <h4>Concierge</h4>
       <ul>
-        <li><a href="/get-preapproved.html">Get Pre-Approved</a></li>
+        <li><a href="/get-preapproved.html">Get Free Pre-Approval</a></li>
         <li><a href="#builder">Strategy Studio</a></li>
         <li><a href="/about-human-review.html">Human Review</a></li>
         <li><a href="https://westccmortgage.com">Main Website</a></li>
@@ -481,6 +494,7 @@
 </div>
 
 <script src="/config.js"></script>
+<script src="/i18n.js" defer></script>
 <script src="/script.js" defer></script>
 <script src="/scenario-builder.js" defer></script>
 <script src="/assets/js/tutorial-host.js" defer></script>
