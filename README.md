@@ -1,4 +1,4 @@
-# West Coast Capital Mortgage Inc. — website
+# West Coast Capital Mortgage — website
 
 Static corporate mortgage site (West Coast, trilingual EN/ES/RU) plus a Florida‑facing
 **sister brand, Suncoast Capital Mortgage**, generated from the same source. No build
@@ -10,7 +10,7 @@ step, no dependencies.
   - `rate-tools.html` — internal, unlinked tool: converts the lender rate sheet (`.xlsx`) to `assets/rates.json` in the browser.
   - `assets/rates.json` — the small file that powers the public "Today's Rates" board.
 - **`suncoast-corporate/`** — the deployable **Suncoast Capital Mortgage** static site (Florida‑facing brand,
-  operated through West Coast Capital Mortgage Inc.). Same page structure, navy + gold palette, Suncoast
+  operated through West Coast Capital Mortgage). Same page structure, navy + gold palette, Suncoast
   homepage/About. Deploy as its own Netlify site (publish directory `suncoast-corporate`).
 - **`tools/build_site.py`** — one‑time generator that produces everything in `wccm-corporate/`.
   Run: `python3 tools/build_site.py`. It does **not** touch `assets/rates.json` or `rate-tools.html`.
@@ -29,4 +29,4 @@ step, no dependencies.
 2. Upload it to `wccm-corporate/assets/rates.json` (replace) and commit to `main`.
 3. Netlify auto‑deploys; `/rates` and the homepage snapshot update.
 
-West Coast Capital Mortgage Inc. · NMLS #2817729 · Equal Housing Opportunity.
+West Coast Capital Mortgage · NMLS #2817729 · Equal Housing Opportunity.

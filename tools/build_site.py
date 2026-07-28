@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""One-time generator for the West Coast Capital Mortgage Inc. corporate site.
+"""One-time generator for the West Coast Capital Mortgage corporate site.
 Emits pure static HTML/CSS/JS into ./wccm-corporate (Netlify drag-and-drop ready).
 Running this is a convenience only — the OUTPUT has no build step or dependencies."""
 
@@ -28,7 +28,7 @@ def contact_block(office_label="Office / Loan Officer Questions"):
 # ----------------------------------------------------------------------------
 # Stylesheet
 # ----------------------------------------------------------------------------
-CSS = r"""/* West Coast Capital Mortgage Inc. — corporate mortgage lender stylesheet */
+CSS = r"""/* West Coast Capital Mortgage — corporate mortgage lender stylesheet */
 :root{
   --black:#1f1f1f;
   --charcoal:#111111;
@@ -92,6 +92,7 @@ section{padding:88px 0}
 .topbar-inner{display:flex;align-items:center;justify-content:space-between;height:40px}
 .topbar a{color:#cfd4da;padding:4px 0;margin-right:22px;letter-spacing:.04em;font-weight:500}
 .topbar a:hover{color:#fff}
+.topbar a.active-service{color:#fff}
 .topbar-left,.topbar-right{display:flex;align-items:center}
 .topbar-right a{margin-right:0;margin-left:22px}
 .topbar .ico{font-size:.95rem}
@@ -132,6 +133,33 @@ section{padding:88px 0}
 .hero h1{margin-bottom:.35em}
 .hero .lead{margin-bottom:1.8em}
 .hero-supporting{margin-top:30px;font-size:.82rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+
+/* ---------- Compact homepage funnel ---------- */
+.mortgage-compact-hero{position:relative;overflow:hidden;background:#fafafa;padding:68px 0 54px}
+.mortgage-compact-watermark{position:absolute;left:-4%;top:50%;transform:translateY(-50%);white-space:nowrap;
+  color:#eceef0;font-size:clamp(82px,13vw,190px);font-weight:800;letter-spacing:-.07em;line-height:.8;pointer-events:none}
+.mortgage-compact-hero-inner{position:relative;z-index:1;padding-left:min(32vw,330px)}
+.mortgage-compact-hero h1{font-size:clamp(2.6rem,5.2vw,4.7rem);letter-spacing:-.055em;line-height:.98;margin:0;max-width:700px}
+.mortgage-compact-hero p{color:var(--gray);font-size:1.08rem;line-height:1.55;margin:22px 0 0;max-width:650px}
+.mortgage-funnel{padding:32px 0 46px}
+.mortgage-funnel-label{color:var(--blue);font-size:.68rem;font-weight:800;letter-spacing:.18em;margin:0 0 14px;text-transform:uppercase}
+.mortgage-funnel-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.mortgage-funnel-card{display:flex;flex-direction:column;min-height:250px;padding:27px 28px;background:#fff;transition:background .18s,color .18s}
+.mortgage-funnel-card + .mortgage-funnel-card{border-left:1px solid var(--border)}
+.mortgage-funnel-card:hover{background:var(--charcoal);color:#fff}
+.mortgage-funnel-card:hover h2,.mortgage-funnel-card:hover p{color:#fff}
+.mortgage-funnel-meta{display:flex;justify-content:space-between;color:var(--blue);font-size:.66rem;letter-spacing:.15em}
+.mortgage-funnel-card h2{font-size:1.62rem;letter-spacing:-.035em;margin:34px 0 11px}
+.mortgage-funnel-card p{color:var(--gray);font-size:.91rem;line-height:1.55;margin:0}
+.mortgage-funnel-action{color:var(--blue);font-size:.7rem;font-weight:800;letter-spacing:.08em;margin-top:auto;padding-top:24px}
+.mortgage-ai-link{text-align:center;font-size:.78rem;font-weight:700;margin:20px 0 0}
+.mortgage-ai-link a:hover{color:var(--blue)}
+body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel){display:none}
+body:has(.mortgage-compact-hero) .site-footer{padding:30px 0 22px}
+body:has(.mortgage-compact-hero) .site-footer .footer-grid,
+body:has(.mortgage-compact-hero) .site-footer .wccm-legal{display:none}
+body:has(.mortgage-compact-hero) .site-footer .footer-bottom{border-top:0;margin-top:0;padding-top:0}
+body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:10px}
 /* interior page hero */
 .page-hero{position:relative;overflow:hidden;background:var(--light);border-bottom:1px solid var(--border);padding:78px 0}
 .page-hero .wallpaper-line{color:rgba(12,28,51,.035)}
@@ -269,7 +297,15 @@ section{padding:88px 0}
   .grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
   .cta-band{padding:40px 24px}
-  .topbar-left a:last-child{display:none}
+  .topbar-left a:last-child{display:inline}
+  .mortgage-compact-hero{padding:50px 0 42px}
+  .mortgage-compact-watermark{font-size:80px;left:-10%;top:42%}
+  .mortgage-compact-hero-inner{padding-left:24px}
+  .mortgage-compact-hero h1{font-size:2.65rem}
+  .mortgage-funnel{padding:22px 0 34px}
+  .mortgage-funnel-grid{grid-template-columns:1fr}
+  .mortgage-funnel-card{min-height:205px;padding:24px}
+  .mortgage-funnel-card + .mortgage-funnel-card{border-left:0;border-top:1px solid var(--border)}
 }
 @media(max-width:560px){
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
@@ -356,7 +392,7 @@ section{padding:88px 0}
 # ----------------------------------------------------------------------------
 # JavaScript
 # ----------------------------------------------------------------------------
-JS = r"""/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) */
+JS = r"""/* West Coast Capital Mortgage — site scripts (no dependencies) */
 (function(){
   "use strict";
 
@@ -469,7 +505,7 @@ def head(title, desc):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} | West Coast Capital Mortgage Inc.</title>
+<title>{title} | West Coast Capital Mortgage</title>
 <meta name="description" content="{desc}">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -479,41 +515,51 @@ def head(title, desc):
 </head>
 <body>"""
 
-def header(active):
+def header(active, compact=False):
     def navlink(href, label, key):
         if href.startswith("http"):
             return f'<a href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>'
         cls = ' class="active"' if key == active else ''
         return f'<a href="{href}"{cls}>{label}</a>'
-    links = "".join(navlink(h, l, k) for h, l, k in NAV_ITEMS)
+    if compact:
+        links = "".join([
+            navlink("buy.html", "Buy a Home", "buy"),
+            navlink("refinance.html", "Refinance", "refi"),
+            navlink("loans.html", "Loan Options", "loans"),
+        ])
+    else:
+        links = "".join(navlink(h, l, k) for h, l, k in NAV_ITEMS)
+    header_cta = "" if compact else f"""
+      <div class="header-cta">
+        <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Now</a>
+      </div>"""
     return f"""
 <div class="topbar">
   <div class="wrap topbar-inner">
     <nav class="topbar-left" aria-label="Utility">
-      <a href="loans.html">Mortgage</a>
-      <a href="buy.html">Home Search</a>
+      <a class="active-service" href="/">Mortgage</a>
+      <a href="https://westccrealty.com">Realty</a>
     </nav>
     <div class="topbar-right">
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="en">EN</button>
         <button type="button" data-lang="es">ES</button>
         <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="zh">中文</button>
       </div>
     </div>
   </div>
 </div>
 <header class="site-header">
   <div class="wrap header-inner">
-    <!-- Replace with <img src="assets/logo.png" alt="West Coast Capital Mortgage Inc."> when ready -->
-    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage Inc. home">
+    <!-- Replace with <img src="assets/logo.png" alt="West Coast Capital Mortgage"> when ready -->
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home">
       <span class="l1">WEST COAST CAPITAL</span>
-      <span class="l2">MORTGAGE INC.</span>
+      <span class="l2">MORTGAGE</span>
     </a>
     <div class="nav-collapse" id="navc">
       <nav class="mainnav" aria-label="Primary">{links}</nav>
-      <div class="header-cta">
-        <a class="btn btn-blue" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Now</a>
-      </div>
+      {header_cta}
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
       <span></span><span></span><span></span>
@@ -530,7 +576,7 @@ def footer():
         links = "".join(fl(t, h) for t, h in items)
         return f'<div><h4>{title}</h4>{links}</div>'
     cols = "".join([
-        f'<div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE INC.</div>'
+        f'<div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div>'
         f'<p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p>'
         f'<p class="footer-contact">{contact_block()}</p></div>',
         col("Buy A Home", [("Homebuying Guide","homebuying-guide.html"),("Mortgage Pre-Approval","apply.html"),
@@ -560,10 +606,10 @@ def footer():
         </nav>
         <span class="eho">&#8962; Equal Housing Opportunity</span>
       </div>
-      <p>West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Opportunity. Information is provided for
+      <p>West Coast Capital Mortgage. NMLS #{NMLS}. Equal Housing Opportunity. Information is provided for
       educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
       and underwriting approval.</p>
-      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc. All rights reserved.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -572,8 +618,8 @@ def footer():
 </body>
 </html>"""
 
-def page(title, desc, active, body):
-    return head(title, desc) + header(active) + body + footer()
+def page(title, desc, active, body, compact=False):
+    return head(title, desc) + header(active, compact=compact) + body + footer()
 
 # ---- content builders ----
 def page_hero(title, sub, crumb=None):
@@ -713,7 +759,7 @@ def _home():
     <div class="wallpaper-line w3" style="top:74%">WEST COAST CAPITAL MORTGAGE</div>
   </div>
   <div class="wrap hero-inner">
-    <span class="eyebrow">West Coast Capital Mortgage Inc.</span>
+    <span class="eyebrow">West Coast Capital Mortgage</span>
     <h1>Start Your Financing Journey</h1>
     <p class="lead">Clear mortgage guidance, smart loan solutions, and modern tools to help you move forward with confidence.</p>
     <div class="btn-row">
@@ -775,7 +821,7 @@ def _home():
 
 <section><div class="wrap">
   <div class="founder-grid founder-preview">
-    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc." loading="lazy"></div>
+    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" loading="lazy"></div>
     <div>
       <span class="eyebrow" style="color:var(--blue)">Our founder</span>
       <h2>Mortgage guidance with real estate experience.</h2>
@@ -793,9 +839,49 @@ def _home():
 
 {cta_band()}
 """
+
+def _home_compact():
+    return f"""
+<section class="mortgage-compact-hero">
+  <div class="mortgage-compact-watermark" aria-hidden="true">WEST COAST CAPITAL</div>
+  <div class="wrap mortgage-compact-hero-inner">
+    <span class="eyebrow">MORTGAGE, MADE CLEAR</span>
+    <h1>Choose your financing path.</h1>
+    <p>Buy a home, refinance, or find the loan program that fits your situation.</p>
+  </div>
+</section>
+
+<section class="mortgage-funnel" aria-label="Choose your next step">
+  <div class="wrap">
+    <p class="mortgage-funnel-label">CHOOSE YOUR NEXT STEP</p>
+    <div class="mortgage-funnel-grid">
+      <a class="mortgage-funnel-card" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">
+        <span class="mortgage-funnel-meta"><b>01</b><b>PURCHASE</b></span>
+        <h2>Buy a home</h2>
+        <p>Prepare your financing and get preapproved.</p>
+        <span class="mortgage-funnel-action">GET PREAPPROVED <span aria-hidden="true">&rarr;</span></span>
+      </a>
+      <a class="mortgage-funnel-card" href="refinance.html">
+        <span class="mortgage-funnel-meta"><b>02</b><b>REFINANCE</b></span>
+        <h2>Refinance</h2>
+        <p>Review refinance, cash-out, and equity options.</p>
+        <span class="mortgage-funnel-action">REVIEW OPTIONS <span aria-hidden="true">&rarr;</span></span>
+      </a>
+      <a class="mortgage-funnel-card" href="loans.html">
+        <span class="mortgage-funnel-meta"><b>03</b><b>LOAN OPTIONS</b></span>
+        <h2>Find a loan</h2>
+        <p>Explore Conventional, Jumbo, FHA, VA, Non-QM, and DSCR.</p>
+        <span class="mortgage-funnel-action">EXPLORE LOANS <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+    <p class="mortgage-ai-link"><a href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Not sure where to start? Ask the AI Strategy Advisor &rarr;</a></p>
+  </div>
+</section>
+"""
+
 PAGES["index.html"] = dict(title="Home Loans, Refinance & Mortgage Tools",
-    desc="West Coast Capital Mortgage Inc. — clear mortgage guidance, smart loan solutions, and modern tools for buying, refinancing, and building equity.",
-    nav="", body=_home())
+    desc="West Coast Capital Mortgage — clear mortgage guidance, smart loan solutions, and modern tools for buying, refinancing, and building equity.",
+    nav="", body=_home_compact(), compact=True)
 
 # ---------------- Buy a Home ----------------
 def _buy():
@@ -1386,7 +1472,7 @@ def _about():
   <div>
     <span class="eyebrow">Who we are</span>
     <h2>Company overview</h2>
-    <p class="lead">West Coast Capital Mortgage Inc. is a modern mortgage company focused on helping people buy homes, refinance, and build equity with confidence. We pair efficient technology with experienced, licensed guidance.</p>
+    <p class="lead">West Coast Capital Mortgage is a modern mortgage company focused on helping people buy homes, refinance, and build equity with confidence. We pair efficient technology with experienced, licensed guidance.</p>
     <p class="muted">Our mission is simple: make financing clear, honest, and built around your goals.</p>
   </div>
   <ul class="feature-list">
@@ -1399,9 +1485,9 @@ def _about():
 <section id="anatoliy"><div class="wrap">
   <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Founder &amp; Mortgage Professional</span><h2>Meet Anatoliy Kanevsky</h2></div>
   <div class="founder-grid">
-    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc." loading="lazy"></div>
+    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" loading="lazy"></div>
     <div>
-      <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage Inc. and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.</p>
+      <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.</p>
       <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows West Coast Capital Mortgage to approach every client scenario with both lending discipline and practical real estate experience.</p>
       <p>Whether a client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, Anatoliy&rsquo;s focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client&rsquo;s actual situation.</p>
       <ul class="founder-cred">
@@ -1409,7 +1495,7 @@ def _about():
         <li>Mortgage professional since 2001</li>
         <li>Luxury real estate and development experience</li>
         <li>Purchase, refinance, jumbo, Non-QM, DSCR, and self-employed borrower strategy</li>
-        <li>Founder, West Coast Capital Mortgage Inc.</li>
+        <li>Founder, West Coast Capital Mortgage</li>
       </ul>
       <p class="founder-contact"><b>Anatoliy Direct:</b> <a href="tel:{DIRECT_TEL}">{DIRECT_PHONE}</a><br><b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a></p>
       <div class="btn-row" style="margin-top:18px"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Application</a></div>
@@ -1423,11 +1509,11 @@ def _about():
     {card("","Modern tools","Calculators and a short application to move quickly.","Try our tools","calculators.html")}
     {card("","Human guidance","Licensed advisors who explain every step.","Talk to us","loan-officer.html")}
   </div>
-  <p class="form-note center" style="margin-top:30px">West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Opportunity. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
+  <p class="form-note center" style="margin-top:30px">West Coast Capital Mortgage. NMLS #{NMLS}. Equal Housing Opportunity. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
 </div></section>
 {cta_band()}
 """
-PAGES["about.html"] = dict(title="About West Coast Capital Mortgage", desc="West Coast Capital Mortgage Inc. is a modern mortgage company built on clear guidance, smart loan solutions, and a borrower-first experience.", nav="about", body=_about())
+PAGES["about.html"] = dict(title="About West Coast Capital Mortgage", desc="West Coast Capital Mortgage is a modern mortgage company built on clear guidance, smart loan solutions, and a borrower-first experience.", nav="about", body=_about())
 
 # ---------------- Contact ----------------
 def _contact():
@@ -1456,7 +1542,7 @@ def _contact():
   {form}
 </div></section>
 """
-PAGES["contact.html"] = dict(title="Contact Us", desc="Contact West Coast Capital Mortgage Inc. with questions about rates, loan programs, or your application.", nav="", body=_contact())
+PAGES["contact.html"] = dict(title="Contact Us", desc="Contact West Coast Capital Mortgage with questions about rates, loan programs, or your application.", nav="", body=_contact())
 
 # ---------------- Make a payment ----------------
 def _payment():
@@ -1525,14 +1611,14 @@ def main():
     # placeholder logo (SVG stand-in for assets/logo.png)
     logo = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64">'
             '<text x="0" y="26" font-family="Inter,Arial" font-size="20" font-weight="800" fill="#0c1c33">WEST COAST CAPITAL</text>'
-            '<text x="0" y="50" font-family="Inter,Arial" font-size="12" font-weight="700" letter-spacing="6" fill="#0073e6">MORTGAGE INC.</text></svg>')
+            '<text x="0" y="50" font-family="Inter,Arial" font-size="12" font-weight="700" letter-spacing="6" fill="#0073e6">MORTGAGE</text></svg>')
     with open(os.path.join(OUT, "assets", "logo.svg"), "w", encoding="utf-8") as f: f.write(logo)
     with open(os.path.join(OUT, "assets", "README.txt"), "w", encoding="utf-8") as f:
         f.write("Replace logo.svg with your own logo.png and update the <a class=\"logo\"> markup in each page header.\n")
 
     count = 0
     for name, p in PAGES.items():
-        html = page(p["title"], p["desc"], p.get("nav",""), p["body"])
+        html = page(p["title"], p["desc"], p.get("nav",""), p["body"], compact=p.get("compact", False))
         with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
             f.write(html)
         count += 1

@@ -1,4 +1,4 @@
-/* West Coast Capital Mortgage Inc. — EN / ES / RU multi-language support.
+/* West Coast Capital Mortgage — EN / ES / RU multi-language support.
    Text-node translation engine: any English source string in DICT is translated
    wherever it appears across all pages. Language persists in localStorage. */
 (function () {
@@ -9,7 +9,7 @@
      under the ZH setting, so coverage can grow over time without risk. */
   var ZH = {
     /* Navigation */
-    "Buy a Home": "购房", "Home Search": "房源搜索", "Refinance": "再融资",
+    "Buy a Home": "购房", "Home Search": "房源搜索", "Realty": "房地产", "Refinance": "再融资",
     "Today's Rates": "今日利率", "Loans": "贷款", "Resources": "资源中心",
     "About Us": "关于我们", "Find a Loan Officer": "寻找贷款专员",
     /* Buttons / CTAs */
@@ -19,10 +19,23 @@
     "Start Short Application": "开始简短申请", "Contact a Loan Officer": "联系贷款专员",
     "Talk to us": "联系我们", "See Programs": "查看项目", "Try our tools": "试用工具",
     /* Hero (homepage) */
-    "West Coast Capital Mortgage Inc.": "West Coast Capital Mortgage Inc.",
+    "West Coast Capital Mortgage": "West Coast Capital Mortgage",
     "Start Your Financing Journey": "开启您的融资之旅",
     "Clear mortgage guidance, smart loan solutions, and modern tools to help you move forward with confidence.": "清晰的房贷指导、智能的贷款方案和现代化工具，助您自信前行。",
     "You will be redirected to our secure mortgage application portal.": "您将被引导至我们的安全房贷申请门户。",
+    "MORTGAGE, MADE CLEAR": "清晰简单的房贷服务",
+    "Choose your financing path.": "选择您的融资方向。",
+    "Buy a home, refinance, or find the loan program that fits your situation.": "购房、再融资，或寻找适合您情况的贷款方案。",
+    "CHOOSE YOUR NEXT STEP": "选择您的下一步",
+    "PURCHASE": "购房",
+    "LOAN OPTIONS": "贷款方案",
+    "Prepare your financing and get preapproved.": "准备融资并获得预批。",
+    "Review refinance, cash-out, and equity options.": "查看再融资、套现和房屋净值方案。",
+    "Find a loan": "寻找贷款",
+    "Explore Conventional, Jumbo, FHA, VA, Non-QM, and DSCR.": "了解常规、大额、FHA、VA、Non-QM 和 DSCR 贷款。",
+    "REVIEW OPTIONS": "查看方案",
+    "EXPLORE LOANS": "浏览贷款",
+    "Not sure where to start? Ask the AI Strategy Advisor →": "不确定从哪里开始？咨询 AI 策略顾问 →",
     /* Why choose us */
     "Why borrowers choose us": "借款人为何选择我们",
     "Mortgage solutions": "房贷解决方案",
@@ -49,6 +62,7 @@
   var DICT = {
     /* ===== Top bar + navigation ===== */
     "Mortgage": ["Hipotecas", "Ипотека"],
+    "Realty": ["Bienes Raíces", "Недвижимость"],
     "Home Search": ["Buscar Vivienda", "Поиск жилья"],
     "Buy a Home": ["Comprar una Casa", "Купить дом"],
     "Refinance": ["Refinanciar", "Рефинансирование"],
@@ -164,10 +178,10 @@
     "Licensing and Disclosures": ["Licencias y Divulgaciones", "Лицензии и раскрытия"],
     "NMLS Consumer Access": ["Acceso al Consumidor NMLS", "NMLS Consumer Access"],
     "Equal Housing Opportunity": ["Igualdad de Oportunidades de Vivienda", "Равные возможности в сфере жилья"],
-    "West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Opportunity. Information is provided for educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.": ["West Coast Capital Mortgage Inc. NMLS #2817729. Igualdad de Oportunidades de Vivienda. La información se proporciona únicamente con fines educativos y no constituye un compromiso de préstamo. Todos los préstamos están sujetos a la aprobación de crédito, ingresos, propiedad y suscripción.", "West Coast Capital Mortgage Inc. NMLS #2817729. Равные возможности в сфере жилья. Информация предоставлена исключительно в образовательных целях и не является обязательством о предоставлении кредита. Все кредиты подлежат одобрению по кредитоспособности, доходу, недвижимости и андеррайтингу."],
+    "West Coast Capital Mortgage. NMLS #2817729. Equal Housing Opportunity. Information is provided for educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.": ["West Coast Capital Mortgage. NMLS #2817729. Igualdad de Oportunidades de Vivienda. La información se proporciona únicamente con fines educativos y no constituye un compromiso de préstamo. Todos los préstamos están sujetos a la aprobación de crédito, ingresos, propiedad y suscripción.", "West Coast Capital Mortgage. NMLS #2817729. Равные возможности в сфере жилья. Информация предоставлена исключительно в образовательных целях и не является обязательством о предоставлении кредита. Все кредиты подлежат одобрению по кредитоспособности, доходу, недвижимости и андеррайтингу."],
 
     /* ===== Section eyebrows / shared headings ===== */
-    "West Coast Capital Mortgage Inc.": ["West Coast Capital Mortgage Inc.", "West Coast Capital Mortgage Inc."],
+    "West Coast Capital Mortgage": ["West Coast Capital Mortgage", "West Coast Capital Mortgage"],
     "Where to begin": ["Por dónde empezar", "С чего начать"],
     "Learn": ["Aprender", "Обучение"],
     "Programs": ["Programas", "Программы"],
@@ -192,6 +206,19 @@
     /* ===== Homepage ===== */
     "Start Your Financing Journey": ["Comience Su Camino de Financiamiento", "Начните свой путь к финансированию"],
     "Clear mortgage guidance, smart loan solutions, and modern tools to help you move forward with confidence.": ["Orientación hipotecaria clara, soluciones de préstamo inteligentes y herramientas modernas para ayudarle a avanzar con confianza.", "Понятные ипотечные консультации, умные кредитные решения и современные инструменты, чтобы уверенно двигаться вперёд."],
+    "MORTGAGE, MADE CLEAR": ["HIPOTECA, SIN COMPLICACIONES", "ИПОТЕКА — ПОНЯТНО"],
+    "Choose your financing path.": ["Elija su camino de financiamiento.", "Выберите путь финансирования."],
+    "Buy a home, refinance, or find the loan program that fits your situation.": ["Compre una casa, refinancie o encuentre el programa de préstamo adecuado para su situación.", "Купите дом, рефинансируйте ипотеку или найдите подходящую кредитную программу."],
+    "CHOOSE YOUR NEXT STEP": ["ELIJA SU PRÓXIMO PASO", "ВЫБЕРИТЕ СЛЕДУЮЩИЙ ШАГ"],
+    "PURCHASE": ["COMPRA", "ПОКУПКА"],
+    "LOAN OPTIONS": ["OPCIONES DE PRÉSTAMO", "КРЕДИТНЫЕ ПРОГРАММЫ"],
+    "Prepare your financing and get preapproved.": ["Prepare su financiamiento y obtenga la preaprobación.", "Подготовьте финансирование и получите предварительное одобрение."],
+    "Review refinance, cash-out, and equity options.": ["Revise opciones de refinanciamiento, retiro de efectivo y capital.", "Рассмотрите рефинансирование, cash-out и варианты использования капитала."],
+    "Find a loan": ["Encuentre un préstamo", "Найдите кредит"],
+    "Explore Conventional, Jumbo, FHA, VA, Non-QM, and DSCR.": ["Explore préstamos Convencionales, Jumbo, FHA, VA, Non-QM y DSCR.", "Изучите Conventional, Jumbo, FHA, VA, Non-QM и DSCR."],
+    "REVIEW OPTIONS": ["REVISAR OPCIONES", "ПОСМОТРЕТЬ ВАРИАНТЫ"],
+    "EXPLORE LOANS": ["VER PRÉSTAMOS", "ПОСМОТРЕТЬ КРЕДИТЫ"],
+    "Not sure where to start? Ask the AI Strategy Advisor →": ["¿No sabe por dónde empezar? Consulte al asesor de estrategia de IA →", "Не знаете, с чего начать? Спросите AI Strategy Advisor →"],
     "Purchase • Refinance • Jumbo • FHA • VA • Non-QM • DSCR": ["Compra • Refinanciamiento • Jumbo • FHA • VA • Non-QM • DSCR", "Покупка • Рефинансирование • Jumbo • FHA • VA • Non-QM • DSCR"],
     "Start your financing journey": ["Comience su camino de financiamiento", "Начните свой путь к финансированию"],
     "Tell us your goal and we’ll point you to the right path — whether you’re buying, refinancing, or tapping equity.": ["Cuéntenos su objetivo y le indicaremos el camino correcto, ya sea comprando, refinanciando o usando su capital.", "Расскажите о вашей цели, и мы укажем верный путь — покупка, рефинансирование или использование капитала."],
@@ -785,7 +812,7 @@
 
     /* ===== About page ===== */
     "Company overview": ["Resumen de la empresa", "О компании"],
-    "West Coast Capital Mortgage Inc. is a modern mortgage company focused on helping people buy homes, refinance, and build equity with confidence. We pair efficient technology with experienced, licensed guidance.": ["West Coast Capital Mortgage Inc. es una compañía hipotecaria moderna enfocada en ayudar a las personas a comprar viviendas, refinanciar y generar capital con confianza. Combinamos tecnología eficiente con orientación experimentada y con licencia.", "West Coast Capital Mortgage Inc. — современная ипотечная компания, помогающая людям уверенно покупать жильё, рефинансировать и наращивать капитал. Мы сочетаем эффективные технологии с опытным лицензированным сопровождением."],
+    "West Coast Capital Mortgage is a modern mortgage company focused on helping people buy homes, refinance, and build equity with confidence. We pair efficient technology with experienced, licensed guidance.": ["West Coast Capital Mortgage es una compañía hipotecaria moderna enfocada en ayudar a las personas a comprar viviendas, refinanciar y generar capital con confianza. Combinamos tecnología eficiente con orientación experimentada y con licencia.", "West Coast Capital Mortgage — современная ипотечная компания, помогающая людям уверенно покупать жильё, рефинансировать и наращивать капитал. Мы сочетаем эффективные технологии с опытным лицензированным сопровождением."],
     "Our mission is simple: make financing clear, honest, and built around your goals.": ["Nuestra misión es simple: hacer que el financiamiento sea claro, honesto y diseñado en torno a sus metas.", "Наша миссия проста: сделать финансирование понятным, честным и построенным вокруг ваших целей."],
     "Clear guidance": ["Orientación clara", "Понятные консультации"],
     "Straight answers and transparent options.": ["Respuestas directas y opciones transparentes.", "Прямые ответы и прозрачные варианты."],
@@ -802,7 +829,7 @@
     "Calculators and a short application to move quickly.": ["Calculadoras y una solicitud breve para avanzar rápido.", "Калькуляторы и короткая заявка, чтобы двигаться быстро."],
     "Human guidance": ["Orientación humana", "Человеческое сопровождение"],
     "Licensed advisors who explain every step.": ["Asesores con licencia que explican cada paso.", "Лицензированные консультанты, объясняющие каждый шаг."],
-    "West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Opportunity. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.": ["West Coast Capital Mortgage Inc. NMLS #2817729. Igualdad de Oportunidades de Vivienda. Esto no constituye un compromiso de préstamo. Todos los préstamos están sujetos a la aprobación de crédito, ingresos, propiedad y suscripción.", "West Coast Capital Mortgage Inc. NMLS #2817729. Равные возможности в сфере жилья. Это не обязательство о предоставлении кредита. Все кредиты подлежат одобрению по кредитоспособности, доходу, недвижимости и андеррайтингу."],
+    "West Coast Capital Mortgage. NMLS #2817729. Equal Housing Opportunity. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.": ["West Coast Capital Mortgage. NMLS #2817729. Igualdad de Oportunidades de Vivienda. Esto no constituye un compromiso de préstamo. Todos los préstamos están sujetos a la aprobación de crédito, ingresos, propiedad y suscripción.", "West Coast Capital Mortgage. NMLS #2817729. Равные возможности в сфере жилья. Это не обязательство о предоставлении кредита. Все кредиты подлежат одобрению по кредитоспособности, доходу, недвижимости и андеррайтингу."],
 
     /* ===== Payment page ===== */
     "Payment portal": ["Portal de pagos", "Портал оплаты"],
@@ -1008,14 +1035,14 @@
     /* Founder section */
     "Founder & Mortgage Professional": ["Fundador y Profesional Hipotecario", "Основатель и ипотечный специалист"],
     "Meet Anatoliy Kanevsky": ["Conozca a Anatoliy Kanevsky", "Познакомьтесь с Анатолием Каневским"],
-    "Anatoliy Kanevsky is the founder of West Coast Capital Mortgage Inc. and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.": ["Anatoliy Kanevsky es el fundador de West Coast Capital Mortgage Inc. y un profesional de bienes raíces e hipotecas de California con décadas de experiencia ayudando a prestatarios, inversionistas y clientes inmobiliarios a tomar decisiones de financiamiento complejas.", "Анатолий Каневский — основатель West Coast Capital Mortgage Inc., специалист по недвижимости и ипотеке из Калифорнии с десятилетиями опыта, помогающий заёмщикам, инвесторам и клиентам в сфере недвижимости принимать сложные финансовые решения."],
+    "Anatoliy Kanevsky is the founder of West Coast Capital Mortgage and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.": ["Anatoliy Kanevsky es el fundador de West Coast Capital Mortgage y un profesional de bienes raíces e hipotecas de California con décadas de experiencia ayudando a prestatarios, inversionistas y clientes inmobiliarios a tomar decisiones de financiamiento complejas.", "Анатолий Каневский — основатель West Coast Capital Mortgage, специалист по недвижимости и ипотеке из Калифорнии с десятилетиями опыта, помогающий заёмщикам, инвесторам и клиентам в сфере недвижимости принимать сложные финансовые решения."],
     "His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows West Coast Capital Mortgage to approach every client scenario with both lending discipline and practical real estate experience.": ["Su trayectoria combina préstamos hipotecarios, corretaje inmobiliario, desarrollo residencial de lujo y análisis de operaciones del mundo real. Esa perspectiva permite a West Coast Capital Mortgage abordar cada escenario del cliente con disciplina crediticia y experiencia inmobiliaria práctica.", "Его опыт сочетает ипотечное кредитование, брокерскую деятельность в сфере недвижимости, элитное жилищное строительство и практический анализ сделок. Это позволяет West Coast Capital Mortgage подходить к каждому сценарию клиента с кредитной дисциплиной и практическим опытом в недвижимости."],
     "Whether a client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, Anatoliy's focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client's actual situation.": ["Ya sea que un cliente esté comprando una residencia principal, refinanciando, adquiriendo una propiedad de lujo, financiando una propiedad de inversión o explorando opciones para trabajadores por cuenta propia, Non-QM, jumbo, FHA, VA o DSCR, el enfoque de Anatoliy es simple: orientación clara, una estructura inteligente y una estrategia hipotecaria que se ajusta a la situación real del cliente.", "Покупает ли клиент основное жильё, рефинансирует, приобретает элитную недвижимость, финансирует инвестиционный объект или рассматривает варианты для самозанятых, Non-QM, джамбо, FHA, VA или DSCR — подход Анатолия прост: понятные консультации, грамотная структура и ипотечная стратегия, соответствующая реальной ситуации клиента."],
     "California Real Estate Broker": ["Corredor de Bienes Raíces de California", "Брокер по недвижимости штата Калифорния"],
     "Mortgage professional since 2001": ["Profesional hipotecario desde 2001", "Ипотечный специалист с 2001 года"],
     "Luxury real estate and development experience": ["Experiencia en bienes raíces de lujo y desarrollo", "Опыт в элитной недвижимости и девелопменте"],
     "Purchase, refinance, jumbo, Non-QM, DSCR, and self-employed borrower strategy": ["Estrategia para compra, refinanciamiento, jumbo, Non-QM, DSCR y prestatarios por cuenta propia", "Стратегия для покупки, рефинансирования, джамбо, Non-QM, DSCR и самозанятых заёмщиков"],
-    "Founder, West Coast Capital Mortgage Inc.": ["Fundador, West Coast Capital Mortgage Inc.", "Основатель, West Coast Capital Mortgage Inc."],
+    "Founder, West Coast Capital Mortgage": ["Fundador, West Coast Capital Mortgage", "Основатель, West Coast Capital Mortgage"],
     "Contact Anatoliy": ["Contactar a Anatoliy", "Связаться с Анатолием"],
     "Our founder": ["Nuestro fundador", "Наш основатель"],
     "Mortgage guidance with real estate experience.": ["Orientación hipotecaria con experiencia inmobiliaria.", "Ипотечные консультации с опытом в недвижимости."],
@@ -1040,7 +1067,7 @@
     "The right loan program depends on your goals, property type, income structure, credit profile, and down payment. West Coast Capital Mortgage can help compare available options.": ["El programa de préstamo adecuado depende de sus metas, el tipo de propiedad, la estructura de ingresos, el perfil crediticio y el pago inicial. West Coast Capital Mortgage puede ayudar a comparar las opciones disponibles.", "Подходящая кредитная программа зависит от ваших целей, типа недвижимости, структуры дохода, кредитного профиля и первоначального взноса. West Coast Capital Mortgage поможет сравнить доступные варианты."],
     "Once you are ready, connect with your real estate agent, make an offer, complete underwriting, and prepare for closing. Our goal is to help make the financing process clear from start to finish.": ["Cuando esté listo, comuníquese con su agente de bienes raíces, haga una oferta, complete la suscripción y prepárese para el cierre. Nuestro objetivo es ayudar a que el proceso de financiamiento sea claro de principio a fin.", "Когда будете готовы, свяжитесь со своим риелтором, сделайте предложение, пройдите андеррайтинг и подготовьтесь к закрытию сделки. Наша цель — сделать процесс финансирования понятным от начала до конца."],
     "\"West Coast Capital Mortgage helped make the financing process clear, organized, and easier to understand from start to finish.\"": ["\u00abWest Coast Capital Mortgage ayud\u00f3 a que el proceso de financiamiento fuera claro, organizado y m\u00e1s f\u00e1cil de entender de principio a fin.\u00bb", "\u00abWest Coast Capital Mortgage \u043f\u043e\u043c\u043e\u0433\u043b\u0430 \u0441\u0434\u0435\u043b\u0430\u0442\u044c \u043f\u0440\u043e\u0446\u0435\u0441\u0441 \u0444\u0438\u043d\u0430\u043d\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u043f\u043e\u043d\u044f\u0442\u043d\u044b\u043c, \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u043e\u0432\u0430\u043d\u043d\u044b\u043c \u0438 \u0431\u043e\u043b\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u044b\u043c \u0434\u043b\u044f \u043f\u043e\u043d\u0438\u043c\u0430\u043d\u0438\u044f \u043e\u0442 \u043d\u0430\u0447\u0430\u043b\u0430 \u0434\u043e \u043a\u043e\u043d\u0446\u0430.\u00bb"],
-    "West Coast Capital Mortgage Inc. All rights reserved.": ["West Coast Capital Mortgage Inc. Todos los derechos reservados.", "West Coast Capital Mortgage Inc. \u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b."],
+    "West Coast Capital Mortgage. All rights reserved.": ["West Coast Capital Mortgage Todos los derechos reservados.", "West Coast Capital Mortgage \u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b."],
     "Today's Sample Rates": ["Tasas de Muestra de Hoy", "Примерные ставки на сегодня"],
     "Sample rates": ["Tasas de muestra", "Примерные ставки"],
     "Illustrative best-case rates for well-qualified borrowers. Your actual rate depends on your full profile.": ["Tasas ilustrativas en el mejor de los casos para prestatarios bien calificados. Su tasa real depende de su perfil completo.", "Иллюстративные ставки для наиболее благоприятного случая и хорошо квалифицированных заёмщиков. Ваша фактическая ставка зависит от полного профиля."],
