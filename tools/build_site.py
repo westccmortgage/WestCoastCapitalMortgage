@@ -548,7 +548,8 @@ def footer():
         col("Loans", [("Conventional Loans","conventional-loans.html"),("FHA Loans","fha-loans.html"),
             ("VA Loans","va-loans.html"),("Jumbo Loans","jumbo-loans.html"),("Non-QM Loans","non-qm-loans.html"),
             ("Bank Statement Loans","bank-statement-loans.html"),("DSCR Loans","dscr-loans.html"),
-            ("Investment Property Loans","investment-property-loans.html")]),
+            ("Investment Property Loans","investment-property-loans.html"),
+            ("Foreign National Loans","foreign-national-loans.html")]),
         col("Resources", [("WCCI.Online AI Mortgage Review",WCCI_URL),("Mortgage Calculators","calculators.html"),("Mortgage Articles","mortgage-articles.html"),
             ("Mortgage Glossary","glossary.html"),("Mortgage FAQ","faq.html"),("Mortgage Videos","resources.html"),
             ("Rate Watch","rates.html")]),
@@ -693,6 +694,7 @@ def _home():
         card("Self-Employed", "Bank Statement Loans", "Qualify using bank deposits instead of traditional tax-return income.", "Learn more", "bank-statement-loans.html"),
         card("Investors", "DSCR Loans", "Qualify investment properties on rental cash flow rather than personal income.", "Learn more", "dscr-loans.html"),
         card("Investors", "Investment Property Loans", "Financing built for rentals, second homes, and portfolio growth.", "Learn more", "investment-property-loans.html"),
+        card("International", "Foreign National Loans", "Home financing for international buyers in Florida and California — often with no U.S. credit required.", "Learn more", "foreign-national-loans.html"),
     ])
     tools = "".join([
         card("", "Mortgage Payment Calculator", "Estimate principal, interest, taxes, and insurance.", "Open", "calculators.html"),
@@ -913,6 +915,7 @@ def _loans():
         ("Equity","HELOC / Home Equity","Tap equity for flexible needs.","heloc.html"),
         ("Investors","Investment Property Loans","Financing for rentals and portfolios.","investment-property-loans.html"),
         ("Self-Employed","Self-Employed Programs","Options for business owners.","self-employed-borrowers.html"),
+        ("International","Foreign National Loans","Financing for international buyers.","foreign-national-loans.html"),
     ]
     grid = "".join(card(l, h, d, "Learn more", href) for l,h,d,href in items)
     return page_hero("Loan Programs", "A full range of mortgage solutions &mdash; from first-time buyers to seasoned investors. Find the program built around your situation.", "Loan Programs") + f"""
@@ -1063,6 +1066,20 @@ PAGES["self-employed-borrowers.html"] = dict(title="Self-Employed Borrowers", na
     ["Programs that reflect real business cash flow","No reliance on net taxable income for some options","Flexible documentation","Guidance from advisors who understand entrepreneurs"],
     [("What documents will I need?","It depends on the program &mdash; often bank statements, asset statements, or business documentation rather than just tax returns."),
      ("Can I qualify with a newer business?","Often yes, though guidelines vary. We&rsquo;ll review your time in business and income history.")]))
+
+PAGES["foreign-national-loans.html"] = dict(title="Foreign National Loans", nav="loans",
+  desc="Foreign national mortgage programs for international buyers purchasing property in Florida and California — often with no U.S. credit history required. Not a commitment to lend.",
+  body=loan_page("Foreign National Loans","Foreign National Loans",
+    "Home financing for international buyers purchasing property in Florida and California &mdash; often with no U.S. credit history required.",
+    "<p>A foreign national loan is a mortgage designed for buyers who are not U.S. citizens or permanent residents. Florida and California are consistently among the top U.S. destinations for international real estate buyers, and we help those buyers finance a primary home, second residence, or investment property.</p><p>These programs are built for borrowers who may not have a U.S. credit score or traditional U.S. income documentation. Instead, qualification focuses on your down payment, verifiable funds, and &mdash; for investment properties &mdash; the property&rsquo;s rental income.</p>",
+    [("No U.S. Credit","Qualify without a U.S. credit score"),("30%+","Typical down payment"),("FL &amp; CA","Financing where we are licensed"),("Passport","Foreign ID and documents accepted")],
+    ["A valid passport (and U.S. visa or entry documentation where applicable)","A down payment typically starting around 30%&ndash;40%","Proof of funds and asset statements, U.S. or foreign","Income documentation such as an employer letter, foreign tax returns, or bank statements","A U.S. bank account &mdash; we can help you open one before closing"],
+    ["Qualify without a U.S. credit history","Finance a primary home, second home, or investment property","Options for individuals and foreign-owned LLCs or entities","Investment properties can qualify on rental income (DSCR)","Guidance available in multiple languages"],
+    [("Can I get a mortgage in the U.S. as a foreign national?","Yes. Foreign national programs are designed for non-U.S. citizens and non-residents buying in states where we are licensed, including Florida and California."),
+     ("Do I need a U.S. credit score?","No. Many foreign national programs do not require a U.S. credit history. We can use alternative documentation to establish your profile."),
+     ("How much down payment will I need?","Down payments for foreign nationals typically start around 30%&ndash;40%, depending on the program, property type, and documentation."),
+     ("Can I buy an investment property?","Yes. Investment properties can often qualify based on the property&rsquo;s rental cash flow (DSCR), rather than your personal income."),
+     ("What documents do I need?","Generally a valid passport, proof of funds, asset statements, and income documentation such as an employer letter, foreign tax returns, or bank statements.")]))
 
 # ---------------- Calculators ----------------
 def _calc():
@@ -1527,7 +1544,8 @@ def _sitemap():
         ("VA Loans","va-loans.html"),("Jumbo Loans","jumbo-loans.html"),("Non-QM Loans","non-qm-loans.html"),
         ("Bank Statement Loans","bank-statement-loans.html"),("DSCR Loans","dscr-loans.html"),
         ("HELOC / Home Equity","heloc.html"),("Investment Property Loans","investment-property-loans.html"),
-        ("Self-Employed Borrowers","self-employed-borrowers.html")]
+        ("Self-Employed Borrowers","self-employed-borrowers.html"),
+        ("Foreign National Loans","foreign-national-loans.html")]
     resources = [("First-Time Homebuyer Hub","first-time-homebuyer.html"),("Homebuying Guide","homebuying-guide.html"),
         ("Refinancing Guide","refinancing-guide.html"),("Mortgage Articles","mortgage-articles.html"),
         ("Mortgage Glossary","glossary.html"),("FAQ","faq.html"),
@@ -1554,7 +1572,8 @@ SITEMAP_URLS = (
     + [(p, "0.8") for p in ("buy.html", "refinance.html", "loans.html")]
     + [(p, "0.7") for p in ("conventional-loans.html", "fha-loans.html", "va-loans.html",
         "jumbo-loans.html", "non-qm-loans.html", "bank-statement-loans.html", "dscr-loans.html",
-        "heloc.html", "investment-property-loans.html", "self-employed-borrowers.html")]
+        "heloc.html", "investment-property-loans.html", "self-employed-borrowers.html",
+        "foreign-national-loans.html")]
     + [(p, "0.8") for p in ("calculators.html", "rates.html", "resources.html")]
     + [(p, "0.7") for p in ("first-time-homebuyer.html", "homebuying-guide.html", "refinancing-guide.html",
         "mortgage-articles.html", "glossary.html", "faq.html")]

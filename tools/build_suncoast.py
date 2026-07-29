@@ -266,6 +266,7 @@ def _home():
         card("Bank Statement", "Bank Statement Loans", "Qualify using bank deposits instead of tax-return income.", "Learn more", "bank-statement-loans.html"),
         card("DSCR", "DSCR Investor Loans", "Qualify investment properties on rental cash flow.", "Learn more", "dscr-loans.html"),
         card("Investors", "Investment Property Loans", "Financing built for rentals, second homes, and portfolios.", "Learn more", "investment-property-loans.html"),
+        card("International", "Foreign National Loans", "Home financing for international buyers in Florida &mdash; often with no U.S. credit required.", "Learn more", "foreign-national-loans.html"),
     ])
     return f"""
 <section class="hero-sun">
