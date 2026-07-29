@@ -128,7 +128,7 @@ section{padding:88px 0}
 .wallpaper-line.w2{animation-duration:48s;animation-direction:reverse;color:rgba(0,115,230,.035)}
 .wallpaper-line.w3{animation-duration:60s}
 @keyframes drift{from{transform:translateX(-12%)}to{transform:translateX(12%)}}
-@media(prefers-reduced-motion:reduce){.wallpaper-line{animation:none}}
+@media(prefers-reduced-motion:reduce){.wallpaper-line,.mortgage-compact-watermark{animation:none}}
 .hero-inner{position:relative;z-index:1;max-width:780px}
 .hero h1{margin-bottom:.35em}
 .hero .lead{margin-bottom:1.8em}
@@ -137,7 +137,12 @@ section{padding:88px 0}
 /* ---------- Compact homepage funnel ---------- */
 .mortgage-compact-hero{position:relative;overflow:hidden;background:#fafafa;padding:68px 0 54px}
 .mortgage-compact-watermark{position:absolute;left:-4%;top:50%;transform:translateY(-50%);white-space:nowrap;
-  color:#eceef0;font-size:clamp(82px,13vw,190px);font-weight:800;letter-spacing:-.07em;line-height:.8;pointer-events:none}
+  color:#eceef0;font-size:clamp(82px,13vw,190px);font-weight:800;letter-spacing:-.07em;line-height:.8;pointer-events:none;
+  animation:mortgage-compact-drift 18s ease-in-out infinite alternate;will-change:transform}
+@keyframes mortgage-compact-drift{
+  from{transform:translate3d(-4%,-50%,0)}
+  to{transform:translate3d(4%,-50%,0)}
+}
 .mortgage-compact-hero-inner{position:relative;z-index:1;padding-left:min(32vw,330px)}
 .mortgage-compact-hero h1{font-size:clamp(2.6rem,5.2vw,4.7rem);letter-spacing:-.055em;line-height:.98;margin:0;max-width:700px}
 .mortgage-compact-hero p{color:var(--gray);font-size:1.08rem;line-height:1.55;margin:22px 0 0;max-width:650px}
@@ -154,7 +159,15 @@ section{padding:88px 0}
 .mortgage-funnel-action{color:var(--blue);font-size:.7rem;font-weight:800;letter-spacing:.08em;margin-top:auto;padding-top:24px}
 .mortgage-ai-link{text-align:center;font-size:.78rem;font-weight:700;margin:20px 0 0}
 .mortgage-ai-link a:hover{color:var(--blue)}
-body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel){display:none}
+.mortgage-compact-about{background:var(--light);border-top:1px solid var(--border);padding:52px 0}
+.mortgage-compact-about-inner{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
+.mortgage-compact-about .eyebrow{margin-bottom:12px}
+.mortgage-compact-about h2{font-size:38px;letter-spacing:-.05em;line-height:1;margin:0}
+.mortgage-compact-about-copy>p{color:var(--gray);font-size:15px;line-height:1.6;margin:0;max-width:610px}
+.mortgage-about-facts{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px}
+.mortgage-about-facts span{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.12em}
+.mortgage-about-link{display:inline-block;color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.08em;margin-top:20px}
+body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel):not(.mortgage-compact-about){display:none}
 body:has(.mortgage-compact-hero) .site-footer{padding:30px 0 22px}
 body:has(.mortgage-compact-hero) .site-footer .footer-grid,
 body:has(.mortgage-compact-hero) .site-footer .wccm-legal{display:none}
@@ -306,6 +319,10 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
   .mortgage-funnel-grid{grid-template-columns:1fr}
   .mortgage-funnel-card{min-height:205px;padding:24px}
   .mortgage-funnel-card + .mortgage-funnel-card{border-left:0;border-top:1px solid var(--border)}
+  .mortgage-compact-about{padding:38px 0}
+  .mortgage-compact-about-inner{grid-template-columns:1fr;gap:22px}
+  .mortgage-compact-about h2{font-size:34px}
+  .mortgage-about-facts{flex-direction:column;align-items:flex-start}
 }
 @media(max-width:560px){
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
@@ -526,6 +543,7 @@ def header(active, compact=False):
             navlink("buy.html", "Buy a Home", "buy"),
             navlink("refinance.html", "Refinance", "refi"),
             navlink("loans.html", "Loan Options", "loans"),
+            navlink("#about", "About Us", "about"),
         ])
     else:
         links = "".join(navlink(h, l, k) for h, l, k in NAV_ITEMS)
@@ -875,6 +893,24 @@ def _home_compact():
       </a>
     </div>
     <p class="mortgage-ai-link"><a href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Not sure where to start? Ask the AI Strategy Advisor &rarr;</a></p>
+  </div>
+</section>
+
+<section class="mortgage-compact-about" id="about">
+  <div class="wrap mortgage-compact-about-inner">
+    <div>
+      <span class="eyebrow">ABOUT US</span>
+      <h2>Experience behind every decision.</h2>
+    </div>
+    <div class="mortgage-compact-about-copy">
+      <p>West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional helping clients move forward since 2004.</p>
+      <div class="mortgage-about-facts" aria-label="Company experience">
+        <span>SINCE 2004</span>
+        <span>MORTGAGE &amp; REAL ESTATE</span>
+        <span>HUMAN GUIDANCE</span>
+      </div>
+      <a class="mortgage-about-link" href="about.html#anatoliy">MEET ANATOLIY <span aria-hidden="true">&rarr;</span></a>
+    </div>
   </div>
 </section>
 """
