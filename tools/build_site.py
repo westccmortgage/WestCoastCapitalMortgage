@@ -167,7 +167,7 @@ section{padding:88px 0}
 .mortgage-about-facts{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px}
 .mortgage-about-facts span{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.12em}
 .mortgage-about-link{display:inline-block;color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.08em;margin-top:20px}
-body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel):not(.mortgage-compact-about){display:none}
+body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel){display:none}
 body:has(.mortgage-compact-hero) .site-footer{padding:30px 0 22px}
 body:has(.mortgage-compact-hero) .site-footer .footer-grid,
 body:has(.mortgage-compact-hero) .site-footer .wccm-legal{display:none}
@@ -543,7 +543,7 @@ def header(active, compact=False):
             navlink("buy.html", "Buy a Home", "buy"),
             navlink("refinance.html", "Refinance", "refi"),
             navlink("loans.html", "Loan Options", "loans"),
-            navlink("#about", "About Us", "about"),
+            navlink("about.html", "About Us", "about"),
         ])
     else:
         links = "".join(navlink(h, l, k) for h, l, k in NAV_ITEMS)
@@ -844,7 +844,7 @@ def _home():
       <span class="eyebrow" style="color:var(--blue)">Our founder</span>
       <h2>Mortgage guidance with real estate experience.</h2>
       <p class="lead">West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
-      <a class="btn btn-blue" href="about.html#anatoliy">Meet Anatoliy</a>
+      <a class="btn btn-blue" href="about.html">About Our Company</a>
     </div>
   </div>
 </div></section>
@@ -909,7 +909,7 @@ def _home_compact():
         <span>MORTGAGE &amp; REAL ESTATE</span>
         <span>HUMAN GUIDANCE</span>
       </div>
-      <a class="mortgage-about-link" href="about.html#anatoliy">MEET ANATOLIY <span aria-hidden="true">&rarr;</span></a>
+      <a class="mortgage-about-link" href="about.html">ABOUT OUR COMPANY <span aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -1518,24 +1518,22 @@ def _about():
     <li><b>Borrower-first</b><span>No hype, no pressure &mdash; just a smooth process.</span></li>
   </ul>
 </div></section>
-<section id="anatoliy"><div class="wrap">
-  <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Founder &amp; Mortgage Professional</span><h2>Meet Anatoliy Kanevsky</h2></div>
-  <div class="founder-grid">
-    <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" loading="lazy"></div>
-    <div>
-      <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage and a California real estate and mortgage professional with decades of experience helping borrowers, investors, and real estate clients navigate complex financing decisions.</p>
-      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows West Coast Capital Mortgage to approach every client scenario with both lending discipline and practical real estate experience.</p>
-      <p>Whether a client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, Anatoliy&rsquo;s focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client&rsquo;s actual situation.</p>
-      <ul class="founder-cred">
-        <li>California Real Estate Broker</li>
-        <li>Mortgage professional since 2001</li>
-        <li>Luxury real estate and development experience</li>
-        <li>Purchase, refinance, jumbo, Non-QM, DSCR, and self-employed borrower strategy</li>
-        <li>Founder, West Coast Capital Mortgage</li>
-      </ul>
-      <p class="founder-contact"><b>Anatoliy Direct:</b> <a href="tel:{DIRECT_TEL}">{DIRECT_PHONE}</a><br><b>Email:</b> <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-      <div class="btn-row" style="margin-top:18px"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Start Application</a></div>
-    </div>
+<section id="experience"><div class="wrap split">
+  <div>
+    <span class="eyebrow" style="color:var(--blue)">Our experience</span>
+    <h2>Built on real-world mortgage and real estate experience</h2>
+    <p class="lead">West Coast Capital Mortgage brings more than two decades of practical experience to every financing conversation.</p>
+  </div>
+  <div>
+    <p>Our perspective extends beyond the loan itself. We understand how financing connects with the property, the purchase contract, appraisal, underwriting, timelines, and closing.</p>
+    <p>That broader experience helps us review each borrower&rsquo;s actual situation, explain the available paths clearly, and structure financing with the full transaction in mind.</p>
+    <ul class="founder-cred">
+      <li>Purchase and refinance financing</li>
+      <li>Conventional, FHA, VA, jumbo, Non-QM, and DSCR programs</li>
+      <li>Self-employed borrowers and complex income scenarios</li>
+      <li>Primary residences, second homes, and investment properties</li>
+      <li>Clear guidance from initial review through closing</li>
+    </ul>
   </div>
 </div></section>
 <section class="bg-light"><div class="wrap">
