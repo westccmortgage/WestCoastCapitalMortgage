@@ -379,3 +379,14 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .city-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:6px}
 .city-links a{color:var(--blue);font-size:.92rem;font-weight:600;line-height:1.5}
 .city-links a:hover{color:var(--blue-dark);text-decoration:underline}
+
+/* Human company story on the full About page */
+.founder-showcase{background:var(--light);padding:82px 0}
+.founder-showcase .section-head{margin-bottom:34px}
+.founder-showcase .founder-grid{max-width:1040px;margin:0 auto;gap:64px}
+.founder-showcase .founder-photo{background:#fff}
+.founder-showcase .founder-photo img{aspect-ratio:auto;object-fit:contain}
+.founder-showcase h2{font-size:clamp(2.4rem,4.2vw,3.8rem);letter-spacing:-.045em;line-height:1;margin:0}
+.founder-showcase .founder-role{color:var(--blue);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:14px 0 24px}
+.founder-showcase p{color:var(--gray);line-height:1.7}
+@media(max-width:760px){.founder-showcase{padding:54px 0}.founder-showcase .section-head{text-align:left}.founder-showcase .founder-grid{gap:32px}}
