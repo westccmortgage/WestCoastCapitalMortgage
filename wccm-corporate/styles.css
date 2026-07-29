@@ -137,7 +137,7 @@ section{padding:88px 0}
 .mortgage-about-facts{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px}
 .mortgage-about-facts span{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.12em}
 .mortgage-about-link{display:inline-block;color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.08em;margin-top:20px}
-body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel):not(.mortgage-compact-about){display:none}
+body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel){display:none}
 body:has(.mortgage-compact-hero) .site-footer{padding:30px 0 22px}
 body:has(.mortgage-compact-hero) .site-footer .footer-grid,
 body:has(.mortgage-compact-hero) .site-footer .wccm-legal{display:none}
