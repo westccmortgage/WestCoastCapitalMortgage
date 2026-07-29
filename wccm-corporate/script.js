@@ -1,4 +1,4 @@
-/* West Coast Capital Mortgage Inc. — site scripts (no dependencies) */
+/* West Coast Capital Mortgage — site scripts (no dependencies) */
 (function(){
   "use strict";
 
