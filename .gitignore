@@ -3,3 +3,6 @@
 
 # Python cache
 __pycache__/
+
+# graphify knowledge-graph output (local tooling, not site content)
+graphify-out/
