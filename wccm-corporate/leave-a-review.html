@@ -106,15 +106,9 @@
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@04f46c6a0708418cb7b96fc563eacae0fbf77674/qrcode.min.js"></script>
 <script>
 (function () {
-  /* ============================================================
-     PASTE YOUR 1-CLICK GOOGLE REVIEW LINK HERE.
-     Get it in Google Business Profile -> "Get more reviews" ->
-     copy the short link (looks like https://g.page/r/XXXX/review).
-     Both the button and the QR code below use this one value.
-     The fallback opens the Google Business Profile so the page
-     still works until the direct link is pasted.
-     ============================================================ */
-  var REVIEW_URL = "https://www.google.com/maps/search/West+Coast+Capital+Mortgage+Inc,+150+E+Olive+Ave,+Burbank,+CA+91502";
+  /* 1-click Google review link from GBP -> "Get more reviews".
+     Both the button and the QR code render from this one value. */
+  var REVIEW_URL = "https://g.page/r/CXUFd3B5e-n3EBM/review";
 
   var btn = document.getElementById("reviewBtn");
   if (btn) btn.href = REVIEW_URL;
