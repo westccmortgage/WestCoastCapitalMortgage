@@ -23,8 +23,14 @@ KEY = "6a526a773a4c41a5a4ded3a78dde63a9"          # served from wccm-corporate/<
 ENDPOINT = "https://api.indexnow.org/indexnow"
 
 
+UA = "Mozilla/5.0 (compatible; wccm-indexnow-ping/1.0; +https://%s)" % HOST
+
+
 def sitemap_urls():
-    with urllib.request.urlopen("https://%s/sitemap.xml" % HOST, timeout=30) as r:
+    # Cloudflare 403s the default Python-urllib User-Agent, so send a real one.
+    req = urllib.request.Request("https://%s/sitemap.xml" % HOST,
+                                 headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as r:
         xml = r.read().decode("utf-8")
     return re.findall(r"<loc>(https://[^<]+)</loc>", xml)
 
@@ -41,7 +47,8 @@ def main():
     }).encode("utf-8")
     req = urllib.request.Request(
         ENDPOINT, data=body,
-        headers={"Content-Type": "application/json; charset=utf-8"})
+        headers={"Content-Type": "application/json; charset=utf-8",
+                 "User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
         print("submitted %d URLs -> HTTP %d %s" % (len(urls), r.status, r.reason))
 
