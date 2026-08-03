@@ -3,6 +3,8 @@
 
 
 
+
+
 # --- geo consolidation 2026-07-30: city pages merged into county/metro pages ---
 /loans/jumbo/alameda    /loans/jumbo/alameda-county    301!
 /loans/dscr/alameda    /loans/dscr/bay-area    301!

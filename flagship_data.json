@@ -1,0 +1,2227 @@
+{
+ "zori": {
+  "Los Angeles": 2773,
+  "San Diego": 3038,
+  "San Jose": 3479,
+  "San Francisco": 4401,
+  "Long Beach": 2364,
+  "Irvine": 3390,
+  "Pasadena": 2939,
+  "Santa Monica": 3517,
+  "Newport Beach": 4285,
+  "Beverly Hills": 4314
+ },
+ "hoods": {
+  "Los Angeles": [
+   {
+    "name": "South Los Angeles",
+    "rank": 4,
+    "zhvi": 672975
+   },
+   {
+    "name": "Southeast Los Angeles",
+    "rank": 8,
+    "zhvi": 603451
+   },
+   {
+    "name": "Hollywood",
+    "rank": 21,
+    "zhvi": 889119
+   },
+   {
+    "name": "North Hollywood",
+    "rank": 41,
+    "zhvi": 861074
+   },
+   {
+    "name": "Van Nuys",
+    "rank": 61,
+    "zhvi": 805748
+   },
+   {
+    "name": "Mid City",
+    "rank": 65,
+    "zhvi": 1210438
+   },
+   {
+    "name": "Sylmar",
+    "rank": 66,
+    "zhvi": 792256
+   },
+   {
+    "name": "San Pedro",
+    "rank": 68,
+    "zhvi": 846082
+   },
+   {
+    "name": "Northridge",
+    "rank": 69,
+    "zhvi": 1072719
+   },
+   {
+    "name": "Woodland Hills",
+    "rank": 70,
+    "zhvi": 1207152
+   },
+   {
+    "name": "Boyle Heights",
+    "rank": 73,
+    "zhvi": 647735
+   },
+   {
+    "name": "Sherman Oaks",
+    "rank": 76,
+    "zhvi": 1348248
+   },
+   {
+    "name": "Pacoima",
+    "rank": 84,
+    "zhvi": 708337
+   },
+   {
+    "name": "Koreatown",
+    "rank": 85,
+    "zhvi": 763588
+   },
+   {
+    "name": "Westlake",
+    "rank": 94,
+    "zhvi": 717071
+   },
+   {
+    "name": "Reseda",
+    "rank": 96,
+    "zhvi": 787842
+   },
+   {
+    "name": "Panorama City",
+    "rank": 122,
+    "zhvi": 692455
+   },
+   {
+    "name": "Valley Glen",
+    "rank": 132,
+    "zhvi": 1001196
+   },
+   {
+    "name": "North Hills",
+    "rank": 136,
+    "zhvi": 868442
+   },
+   {
+    "name": "Central City",
+    "rank": 138,
+    "zhvi": 618926
+   },
+   {
+    "name": "Sun Valley",
+    "rank": 147,
+    "zhvi": 799495
+   },
+   {
+    "name": "Westwood",
+    "rank": 157,
+    "zhvi": 1350250
+   },
+   {
+    "name": "Wilmington",
+    "rank": 165,
+    "zhvi": 690138
+   },
+   {
+    "name": "Canoga Park",
+    "rank": 167,
+    "zhvi": 757472
+   },
+   {
+    "name": "Granada Hills",
+    "rank": 174,
+    "zhvi": 1003229
+   },
+   {
+    "name": "Winnetka",
+    "rank": 194,
+    "zhvi": 833602
+   },
+   {
+    "name": "Highland Park",
+    "rank": 204,
+    "zhvi": 1047566
+   },
+   {
+    "name": "Lake Balboa",
+    "rank": 215,
+    "zhvi": 851169
+   },
+   {
+    "name": "Downtown",
+    "rank": 220,
+    "zhvi": 565120
+   },
+   {
+    "name": "Mid City West",
+    "rank": 233,
+    "zhvi": 1709452
+   },
+   {
+    "name": "Encino",
+    "rank": 236,
+    "zhvi": 1438780
+   },
+   {
+    "name": "El Sereno",
+    "rank": 250,
+    "zhvi": 770949
+   },
+   {
+    "name": "West Hills",
+    "rank": 269,
+    "zhvi": 1022254
+   },
+   {
+    "name": "Palms",
+    "rank": 272,
+    "zhvi": 1187600
+   },
+   {
+    "name": "Chatsworth",
+    "rank": 277,
+    "zhvi": 949088
+   },
+   {
+    "name": "Mar Vista",
+    "rank": 281,
+    "zhvi": 1855319
+   },
+   {
+    "name": "Studio City",
+    "rank": 283,
+    "zhvi": 1584490
+   },
+   {
+    "name": "Watts",
+    "rank": 286,
+    "zhvi": 592654
+   },
+   {
+    "name": "Arleta",
+    "rank": 290,
+    "zhvi": 783156
+   },
+   {
+    "name": "Mid Wilshire",
+    "rank": 298,
+    "zhvi": 2191435
+   },
+   {
+    "name": "Westchester",
+    "rank": 305,
+    "zhvi": 1470289
+   },
+   {
+    "name": "Silver Lake",
+    "rank": 307,
+    "zhvi": 1463165
+   },
+   {
+    "name": "Tarzana",
+    "rank": 328,
+    "zhvi": 1180325
+   },
+   {
+    "name": "Park Mesa Heights",
+    "rank": 338,
+    "zhvi": 738122
+   },
+   {
+    "name": "Brentwood",
+    "rank": 377,
+    "zhvi": 2875577
+   },
+   {
+    "name": "Sawtelle",
+    "rank": 379,
+    "zhvi": 1022615
+   },
+   {
+    "name": "Del Rey",
+    "rank": 380,
+    "zhvi": 1277587
+   },
+   {
+    "name": "Hollywood Hills",
+    "rank": 383,
+    "zhvi": 1953972
+   },
+   {
+    "name": "Lincoln Heights",
+    "rank": 391,
+    "zhvi": 689697
+   },
+   {
+    "name": "Eagle Rock",
+    "rank": 407,
+    "zhvi": 1279514
+   },
+   {
+    "name": "Jefferson Park",
+    "rank": 414,
+    "zhvi": 855590
+   },
+   {
+    "name": "Venice",
+    "rank": 464,
+    "zhvi": 1823217
+   },
+   {
+    "name": "Harvard Heights",
+    "rank": 473,
+    "zhvi": 868234
+   },
+   {
+    "name": "Tujunga",
+    "rank": 479,
+    "zhvi": 908397
+   },
+   {
+    "name": "MacArthur Park",
+    "rank": 480,
+    "zhvi": 479918
+   },
+   {
+    "name": "Los Feliz",
+    "rank": 491,
+    "zhvi": 1919869
+   },
+   {
+    "name": "Valley Village",
+    "rank": 492,
+    "zhvi": 1254787
+   },
+   {
+    "name": "University Park",
+    "rank": 499,
+    "zhvi": 925296
+   },
+   {
+    "name": "Harbor City",
+    "rank": 505,
+    "zhvi": 781062
+   },
+   {
+    "name": "Rampart Village",
+    "rank": 547,
+    "zhvi": 583534
+   },
+   {
+    "name": "West Adams",
+    "rank": 552,
+    "zhvi": 933890
+   },
+   {
+    "name": "Central City East",
+    "rank": 571,
+    "zhvi": 739905
+   },
+   {
+    "name": "Porter Ranch",
+    "rank": 576,
+    "zhvi": 1278633
+   },
+   {
+    "name": "Echo Park",
+    "rank": 595,
+    "zhvi": 1114759
+   },
+   {
+    "name": "Glassell Park",
+    "rank": 605,
+    "zhvi": 1086257
+   },
+   {
+    "name": "Pacific Palisades",
+    "rank": 622,
+    "zhvi": 3014419
+   },
+   {
+    "name": "Mission Hills",
+    "rank": 694,
+    "zhvi": 821057
+   },
+   {
+    "name": "Pico-Robertson",
+    "rank": 702,
+    "zhvi": 1385671
+   },
+   {
+    "name": "Adams-Normandie",
+    "rank": 749,
+    "zhvi": 837047
+   },
+   {
+    "name": "Mount Washington",
+    "rank": 861,
+    "zhvi": 1182736
+   },
+   {
+    "name": "Sunland",
+    "rank": 921,
+    "zhvi": 864317
+   },
+   {
+    "name": "Pico-Union",
+    "rank": 968,
+    "zhvi": 677173
+   },
+   {
+    "name": "Playa Del Rey",
+    "rank": 970,
+    "zhvi": 1124653
+   },
+   {
+    "name": "Lakeview Terrace",
+    "rank": 1296,
+    "zhvi": 857270
+   },
+   {
+    "name": "Cheviot Hills",
+    "rank": 1372,
+    "zhvi": 2473936
+   },
+   {
+    "name": "Atwater Village",
+    "rank": 1499,
+    "zhvi": 1323877
+   },
+   {
+    "name": "Arlington Heights",
+    "rank": 1564,
+    "zhvi": 911889
+   },
+   {
+    "name": "Beverly Crest",
+    "rank": 1682,
+    "zhvi": 2787246
+   },
+   {
+    "name": "Leimert Park",
+    "rank": 1795,
+    "zhvi": 974746
+   },
+   {
+    "name": "Cypress Park",
+    "rank": 1815,
+    "zhvi": 844478
+   },
+   {
+    "name": "Crestview",
+    "rank": 2028,
+    "zhvi": 1415702
+   },
+   {
+    "name": "Chinatown",
+    "rank": 2224,
+    "zhvi": 825163
+   },
+   {
+    "name": "Playa Vista",
+    "rank": 2357,
+    "zhvi": 1359162
+   },
+   {
+    "name": "Montecito Heights",
+    "rank": 2739,
+    "zhvi": 875367
+   },
+   {
+    "name": "Beverlywood",
+    "rank": 2869,
+    "zhvi": 2291561
+   },
+   {
+    "name": "Toluca Lake",
+    "rank": 2981,
+    "zhvi": 1439010
+   },
+   {
+    "name": "Crenshaw",
+    "rank": 3162,
+    "zhvi": 678731
+   },
+   {
+    "name": "Bel Air",
+    "rank": 3445,
+    "zhvi": 4185029
+   },
+   {
+    "name": "Elysian Valley",
+    "rank": 3809,
+    "zhvi": 937798
+   },
+   {
+    "name": "Century City",
+    "rank": 4069,
+    "zhvi": 1483907
+   },
+   {
+    "name": "University Hills",
+    "rank": 4432,
+    "zhvi": 745102
+   },
+   {
+    "name": "Shadow Hills",
+    "rank": 4808,
+    "zhvi": 1255516
+   },
+   {
+    "name": "Hermon",
+    "rank": 6797,
+    "zhvi": 989569
+   },
+   {
+    "name": "South Carthay",
+    "rank": 7348,
+    "zhvi": 1845568
+   },
+   {
+    "name": "La Tuna Canyon",
+    "rank": 9602,
+    "zhvi": 1307117
+   },
+   {
+    "name": "Beverly Glen",
+    "rank": 15706,
+    "zhvi": 1497903
+   },
+   {
+    "name": "Elysian Park",
+    "rank": 16167,
+    "zhvi": 828517
+   }
+  ],
+  "San Diego": [
+   {
+    "name": "Mira Mesa",
+    "rank": 91,
+    "zhvi": 1004391
+   },
+   {
+    "name": "Rancho Penasquitos",
+    "rank": 189,
+    "zhvi": 1361459
+   },
+   {
+    "name": "Carmel Valley",
+    "rank": 206,
+    "zhvi": 1937219
+   },
+   {
+    "name": "University City",
+    "rank": 209,
+    "zhvi": 999038
+   },
+   {
+    "name": "Rancho Bernardo",
+    "rank": 255,
+    "zhvi": 989727
+   },
+   {
+    "name": "North Park",
+    "rank": 291,
+    "zhvi": 989862
+   },
+   {
+    "name": "Pacific Beach",
+    "rank": 303,
+    "zhvi": 1402649
+   },
+   {
+    "name": "La Jolla",
+    "rank": 334,
+    "zhvi": 2451993
+   },
+   {
+    "name": "Otay Mesa West",
+    "rank": 385,
+    "zhvi": 743504
+   },
+   {
+    "name": "Bay Terraces",
+    "rank": 419,
+    "zhvi": 751550
+   },
+   {
+    "name": "Tierrasanta",
+    "rank": 441,
+    "zhvi": 1077135
+   },
+   {
+    "name": "Serra Mesa",
+    "rank": 503,
+    "zhvi": 1002835
+   },
+   {
+    "name": "San Ysidro",
+    "rank": 509,
+    "zhvi": 720505
+   },
+   {
+    "name": "Clairemont Mesa East",
+    "rank": 511,
+    "zhvi": 983604
+   },
+   {
+    "name": "Linda Vista",
+    "rank": 521,
+    "zhvi": 823192
+   },
+   {
+    "name": "Point Loma Heights",
+    "rank": 670,
+    "zhvi": 1152107
+   },
+   {
+    "name": "Lake Murray",
+    "rank": 791,
+    "zhvi": 973850
+   },
+   {
+    "name": "Scripps Ranch",
+    "rank": 819,
+    "zhvi": 1398317
+   },
+   {
+    "name": "Paradise Hills",
+    "rank": 886,
+    "zhvi": 765863
+   },
+   {
+    "name": "Bay Park",
+    "rank": 900,
+    "zhvi": 1425917
+   },
+   {
+    "name": "Mountain View",
+    "rank": 958,
+    "zhvi": 635929
+   },
+   {
+    "name": "Encanto",
+    "rank": 963,
+    "zhvi": 745944
+   },
+   {
+    "name": "Oak Park",
+    "rank": 1001,
+    "zhvi": 698537
+   },
+   {
+    "name": "Hillcrest",
+    "rank": 1028,
+    "zhvi": 778390
+   },
+   {
+    "name": "Nestor",
+    "rank": 1037,
+    "zhvi": 734571
+   },
+   {
+    "name": "Logan Heights",
+    "rank": 1087,
+    "zhvi": 658855
+   },
+   {
+    "name": "Bay Ho",
+    "rank": 1192,
+    "zhvi": 1192631
+   },
+   {
+    "name": "North Clairemont",
+    "rank": 1205,
+    "zhvi": 1056250
+   },
+   {
+    "name": "Ocean Crest",
+    "rank": 1258,
+    "zhvi": 868999
+   },
+   {
+    "name": "Black Mountain Ranch",
+    "rank": 1324,
+    "zhvi": 2113322
+   },
+   {
+    "name": "College East",
+    "rank": 1334,
+    "zhvi": 975402
+   },
+   {
+    "name": "Miramar Ranch North",
+    "rank": 1377,
+    "zhvi": 1547775
+   },
+   {
+    "name": "San Carlos",
+    "rank": 1445,
+    "zhvi": 1091448
+   },
+   {
+    "name": "University Heights",
+    "rank": 1446,
+    "zhvi": 922585
+   },
+   {
+    "name": "East Village",
+    "rank": 1470,
+    "zhvi": 596527
+   },
+   {
+    "name": "Normal Heights",
+    "rank": 1489,
+    "zhvi": 740789
+   },
+   {
+    "name": "Valencia Park",
+    "rank": 1610,
+    "zhvi": 728588
+   },
+   {
+    "name": "Ocean Beach",
+    "rank": 1650,
+    "zhvi": 1299329
+   },
+   {
+    "name": "Allied Gardens",
+    "rank": 1654,
+    "zhvi": 960313
+   },
+   {
+    "name": "Carmel Mountain",
+    "rank": 1676,
+    "zhvi": 1235720
+   },
+   {
+    "name": "Mission Valley East",
+    "rank": 1686,
+    "zhvi": 658561
+   },
+   {
+    "name": "Barrio Logan",
+    "rank": 1693,
+    "zhvi": 659092
+   },
+   {
+    "name": "Jomacha-Lomita",
+    "rank": 1758,
+    "zhvi": 730132
+   },
+   {
+    "name": "Colina del Sol",
+    "rank": 1786,
+    "zhvi": 416208
+   },
+   {
+    "name": "Morena",
+    "rank": 1789,
+    "zhvi": 752337
+   },
+   {
+    "name": "Clairemont Mesa West",
+    "rank": 1832,
+    "zhvi": 1113726
+   },
+   {
+    "name": "Lincoln Park",
+    "rank": 1891,
+    "zhvi": 680498
+   },
+   {
+    "name": "Sabre Springs",
+    "rank": 1933,
+    "zhvi": 1031424
+   },
+   {
+    "name": "Grantville",
+    "rank": 1976,
+    "zhvi": 494126
+   },
+   {
+    "name": "Midway District",
+    "rank": 2020,
+    "zhvi": 1031561
+   },
+   {
+    "name": "College West",
+    "rank": 2068,
+    "zhvi": 1115092
+   },
+   {
+    "name": "Talmadge",
+    "rank": 2209,
+    "zhvi": 1003029
+   },
+   {
+    "name": "Egger Highlands",
+    "rank": 2236,
+    "zhvi": 768117
+   },
+   {
+    "name": "Castle",
+    "rank": 2301,
+    "zhvi": 647328
+   },
+   {
+    "name": "Core-Columbia",
+    "rank": 2351,
+    "zhvi": 1072943
+   },
+   {
+    "name": "Bankers Hill",
+    "rank": 2371,
+    "zhvi": 1089565
+   },
+   {
+    "name": "Skyline",
+    "rank": 2479,
+    "zhvi": 741992
+   },
+   {
+    "name": "North City",
+    "rank": 2558,
+    "zhvi": 2823585
+   },
+   {
+    "name": "Golden Hill",
+    "rank": 2616,
+    "zhvi": 774201
+   },
+   {
+    "name": "Corridor",
+    "rank": 2686,
+    "zhvi": 666464
+   },
+   {
+    "name": "Rolando",
+    "rank": 2915,
+    "zhvi": 868442
+   },
+   {
+    "name": "Del Cerro",
+    "rank": 3021,
+    "zhvi": 1359179
+   },
+   {
+    "name": "Teralta East",
+    "rank": 3158,
+    "zhvi": 488234
+   },
+   {
+    "name": "Del Mar Heights",
+    "rank": 3417,
+    "zhvi": 2514952
+   },
+   {
+    "name": "Southcrest",
+    "rank": 3531,
+    "zhvi": 654382
+   },
+   {
+    "name": "Loma Portal",
+    "rank": 3571,
+    "zhvi": 1650867
+   },
+   {
+    "name": "Ridgeview-Webster",
+    "rank": 3728,
+    "zhvi": 717097
+   },
+   {
+    "name": "Mission Hills",
+    "rank": 3901,
+    "zhvi": 1899622
+   },
+   {
+    "name": "Fairmount Village",
+    "rank": 3971,
+    "zhvi": 634194
+   },
+   {
+    "name": "Cherokee Point",
+    "rank": 4042,
+    "zhvi": 729906
+   },
+   {
+    "name": "El Cerrito",
+    "rank": 4096,
+    "zhvi": 732129
+   },
+   {
+    "name": "Mt. Hope",
+    "rank": 4169,
+    "zhvi": 694559
+   },
+   {
+    "name": "Kensington",
+    "rank": 4201,
+    "zhvi": 1546487
+   },
+   {
+    "name": "Palm City",
+    "rank": 4204,
+    "zhvi": 734463
+   },
+   {
+    "name": "South Park",
+    "rank": 4212,
+    "zhvi": 1212343
+   },
+   {
+    "name": "Teralta West",
+    "rank": 4221,
+    "zhvi": 611289
+   },
+   {
+    "name": "Sorrento Valley",
+    "rank": 4301,
+    "zhvi": 1327582
+   },
+   {
+    "name": "Chollas Creek",
+    "rank": 4333,
+    "zhvi": 704269
+   },
+   {
+    "name": "Marina",
+    "rank": 4473,
+    "zhvi": 909477
+   },
+   {
+    "name": "Kearny Mesa",
+    "rank": 4511,
+    "zhvi": 820562
+   },
+   {
+    "name": "Roseville - Fleet Ridge",
+    "rank": 4529,
+    "zhvi": 1942622
+   },
+   {
+    "name": "Otay Mesa",
+    "rank": 4595,
+    "zhvi": 664591
+   },
+   {
+    "name": "Swan Canyon",
+    "rank": 4687,
+    "zhvi": 658856
+   },
+   {
+    "name": "Bird Land",
+    "rank": 4870,
+    "zhvi": 929333
+   },
+   {
+    "name": "Emerald Hills",
+    "rank": 4921,
+    "zhvi": 740299
+   },
+   {
+    "name": "Chollas View",
+    "rank": 4951,
+    "zhvi": 672351
+   },
+   {
+    "name": "Grant Hill",
+    "rank": 5178,
+    "zhvi": 765319
+   },
+   {
+    "name": "Wooded Area",
+    "rank": 5412,
+    "zhvi": 2161316
+   },
+   {
+    "name": "Rolando Park",
+    "rank": 5507,
+    "zhvi": 771929
+   },
+   {
+    "name": "Midtown",
+    "rank": 5683,
+    "zhvi": 1334241
+   },
+   {
+    "name": "Redwood Village",
+    "rank": 5878,
+    "zhvi": 660031
+   },
+   {
+    "name": "Torrey Highlands",
+    "rank": 5911,
+    "zhvi": 1796209
+   },
+   {
+    "name": "Azalea-Hollywood Park",
+    "rank": 6242,
+    "zhvi": 715217
+   },
+   {
+    "name": "Fairmount Park",
+    "rank": 6531,
+    "zhvi": 763744
+   },
+   {
+    "name": "Adams North",
+    "rank": 6970,
+    "zhvi": 1183028
+   },
+   {
+    "name": "Mission Valley West",
+    "rank": 7265,
+    "zhvi": 525264
+   },
+   {
+    "name": "Stockton",
+    "rank": 7290,
+    "zhvi": 718753
+   },
+   {
+    "name": "Cortez Hill",
+    "rank": 7561,
+    "zhvi": 575757
+   },
+   {
+    "name": "Shelltown",
+    "rank": 7734,
+    "zhvi": 667995
+   },
+   {
+    "name": "Mission Beach",
+    "rank": 7819,
+    "zhvi": 1831880
+   },
+   {
+    "name": "Little Italy",
+    "rank": 8032,
+    "zhvi": 640829
+   },
+   {
+    "name": "Sherman Heights",
+    "rank": 8835,
+    "zhvi": 755631
+   },
+   {
+    "name": "Sunset Cliffs",
+    "rank": 9388,
+    "zhvi": 2544259
+   },
+   {
+    "name": "La Playa",
+    "rank": 9807,
+    "zhvi": 2233124
+   },
+   {
+    "name": "Alta Vista",
+    "rank": 10352,
+    "zhvi": 784436
+   },
+   {
+    "name": "Fox Canyon",
+    "rank": 10585,
+    "zhvi": 661113
+   },
+   {
+    "name": "Harborview",
+    "rank": 12106,
+    "zhvi": 896894
+   },
+   {
+    "name": "Rancho Encantado",
+    "rank": 12929,
+    "zhvi": 2375223
+   },
+   {
+    "name": "Islenair",
+    "rank": 13962,
+    "zhvi": 791881
+   },
+   {
+    "name": "Horton Plaza",
+    "rank": 14450,
+    "zhvi": 1769035
+   },
+   {
+    "name": "Old Town",
+    "rank": 15400,
+    "zhvi": 1040514
+   },
+   {
+    "name": "Burlingame",
+    "rank": 16476,
+    "zhvi": 1470941
+   },
+   {
+    "name": "Gaslamp Quarter",
+    "rank": 17574,
+    "zhvi": 451030
+   }
+  ],
+  "San Francisco": [
+   {
+    "name": "Outer Sunset",
+    "rank": 187,
+    "zhvi": 1580903
+   },
+   {
+    "name": "Mission",
+    "rank": 312,
+    "zhvi": 1159839
+   },
+   {
+    "name": "South of Market",
+    "rank": 405,
+    "zhvi": 793547
+   },
+   {
+    "name": "Outer Richmond",
+    "rank": 410,
+    "zhvi": 1682097
+   },
+   {
+    "name": "Parkside",
+    "rank": 559,
+    "zhvi": 1587875
+   },
+   {
+    "name": "Inner Richmond",
+    "rank": 567,
+    "zhvi": 1975404
+   },
+   {
+    "name": "Tenderloin",
+    "rank": 659,
+    "zhvi": 482398
+   },
+   {
+    "name": "Pacific Heights",
+    "rank": 687,
+    "zhvi": 2041295
+   },
+   {
+    "name": "Excelsior",
+    "rank": 699,
+    "zhvi": 1115231
+   },
+   {
+    "name": "Bernal Heights",
+    "rank": 997,
+    "zhvi": 1494839
+   },
+   {
+    "name": "Noe Valley",
+    "rank": 1015,
+    "zhvi": 2207175
+   },
+   {
+    "name": "Nob Hill",
+    "rank": 1152,
+    "zhvi": 1252781
+   },
+   {
+    "name": "Russian Hill",
+    "rank": 1179,
+    "zhvi": 1658879
+   },
+   {
+    "name": "Potrero Hill",
+    "rank": 1186,
+    "zhvi": 1333005
+   },
+   {
+    "name": "Crocker Amazon",
+    "rank": 1193,
+    "zhvi": 1091344
+   },
+   {
+    "name": "Lower Nob Hill",
+    "rank": 1265,
+    "zhvi": 582799
+   },
+   {
+    "name": "Western Addition",
+    "rank": 1268,
+    "zhvi": 1081008
+   },
+   {
+    "name": "Portola",
+    "rank": 1269,
+    "zhvi": 1146749
+   },
+   {
+    "name": "Visitacion Valley",
+    "rank": 1272,
+    "zhvi": 1001268
+   },
+   {
+    "name": "Bayview",
+    "rank": 1284,
+    "zhvi": 930140
+   },
+   {
+    "name": "Mission Dolores",
+    "rank": 1325,
+    "zhvi": 1243060
+   },
+   {
+    "name": "Inner Sunset",
+    "rank": 1417,
+    "zhvi": 1840059
+   },
+   {
+    "name": "Mission Bay",
+    "rank": 1573,
+    "zhvi": 1166147
+   },
+   {
+    "name": "Golden Gate Heights",
+    "rank": 1595,
+    "zhvi": 1846607
+   },
+   {
+    "name": "Marina District",
+    "rank": 1617,
+    "zhvi": 2226399
+   },
+   {
+    "name": "Ingleside",
+    "rank": 1839,
+    "zhvi": 1199598
+   },
+   {
+    "name": "Mission Terrace",
+    "rank": 1881,
+    "zhvi": 1168991
+   },
+   {
+    "name": "Silver Terrace",
+    "rank": 1940,
+    "zhvi": 969570
+   },
+   {
+    "name": "Oceanview",
+    "rank": 1965,
+    "zhvi": 1108005
+   },
+   {
+    "name": "Glen Park",
+    "rank": 1991,
+    "zhvi": 1862475
+   },
+   {
+    "name": "Parkmerced",
+    "rank": 2057,
+    "zhvi": 1126362
+   },
+   {
+    "name": "North Beach",
+    "rank": 2071,
+    "zhvi": 1192679
+   },
+   {
+    "name": "Dolores Heights",
+    "rank": 2301,
+    "zhvi": 2091478
+   },
+   {
+    "name": "Lone Mountain",
+    "rank": 2390,
+    "zhvi": 1833630
+   },
+   {
+    "name": "Rincon Hill",
+    "rank": 2593,
+    "zhvi": 1066934
+   },
+   {
+    "name": "Chinatown",
+    "rank": 2706,
+    "zhvi": 1211135
+   },
+   {
+    "name": "Civic Center",
+    "rank": 2768,
+    "zhvi": 707837
+   },
+   {
+    "name": "Cayuga",
+    "rank": 2826,
+    "zhvi": 1135209
+   },
+   {
+    "name": "Eureka Valley",
+    "rank": 2971,
+    "zhvi": 1966612
+   },
+   {
+    "name": "Outer Mission",
+    "rank": 2973,
+    "zhvi": 1070056
+   },
+   {
+    "name": "Buena Vista",
+    "rank": 2977,
+    "zhvi": 1872539
+   },
+   {
+    "name": "Panhandle",
+    "rank": 3078,
+    "zhvi": 1507524
+   },
+   {
+    "name": "Cathedral Hill",
+    "rank": 3238,
+    "zhvi": 691630
+   },
+   {
+    "name": "Lower Haight",
+    "rank": 3286,
+    "zhvi": 1380393
+   },
+   {
+    "name": "Sunnyside",
+    "rank": 3662,
+    "zhvi": 1387666
+   },
+   {
+    "name": "Ingleside Heights",
+    "rank": 3701,
+    "zhvi": 1059374
+   },
+   {
+    "name": "Union Street",
+    "rank": 4010,
+    "zhvi": 1649094
+   },
+   {
+    "name": "Polk Gulch",
+    "rank": 4020,
+    "zhvi": 1053993
+   },
+   {
+    "name": "Lower Pacific Heights",
+    "rank": 4023,
+    "zhvi": 1278854
+   },
+   {
+    "name": "Hayes Valley",
+    "rank": 4210,
+    "zhvi": 1126717
+   },
+   {
+    "name": "Haight",
+    "rank": 4366,
+    "zhvi": 1521213
+   },
+   {
+    "name": "Duboce Triangle",
+    "rank": 4595,
+    "zhvi": 1504428
+   },
+   {
+    "name": "Laurel Heights",
+    "rank": 4765,
+    "zhvi": 2650430
+   },
+   {
+    "name": "Bret Harte",
+    "rank": 4933,
+    "zhvi": 921456
+   },
+   {
+    "name": "Presidio Heights",
+    "rank": 5141,
+    "zhvi": 4743582
+   },
+   {
+    "name": "Parnassus Heights",
+    "rank": 5334,
+    "zhvi": 2032542
+   },
+   {
+    "name": "Upper Market",
+    "rank": 5423,
+    "zhvi": 1193722
+   },
+   {
+    "name": "Sunnydale",
+    "rank": 5458,
+    "zhvi": 966859
+   },
+   {
+    "name": "West Portal",
+    "rank": 5511,
+    "zhvi": 1987192
+   },
+   {
+    "name": "South Beach",
+    "rank": 5549,
+    "zhvi": 1191030
+   },
+   {
+    "name": "Lakeshore",
+    "rank": 5550,
+    "zhvi": 1718638
+   },
+   {
+    "name": "Holly Park",
+    "rank": 5614,
+    "zhvi": 1423081
+   },
+   {
+    "name": "Japantown",
+    "rank": 5620,
+    "zhvi": 1087770
+   },
+   {
+    "name": "Miraloma Park",
+    "rank": 5711,
+    "zhvi": 1645939
+   },
+   {
+    "name": "University Mound",
+    "rank": 5759,
+    "zhvi": 1264284
+   },
+   {
+    "name": "Cow Hollow",
+    "rank": 5776,
+    "zhvi": 3204338
+   },
+   {
+    "name": "St. Marys Park",
+    "rank": 5790,
+    "zhvi": 1465044
+   },
+   {
+    "name": "Alamo Square",
+    "rank": 6362,
+    "zhvi": 1281581
+   },
+   {
+    "name": "Lake Street",
+    "rank": 6453,
+    "zhvi": 2529531
+   },
+   {
+    "name": "Laguna Honda",
+    "rank": 6642,
+    "zhvi": 2111696
+   },
+   {
+    "name": "Lake",
+    "rank": 7053,
+    "zhvi": 2818531
+   },
+   {
+    "name": "Sutro Heights",
+    "rank": 7190,
+    "zhvi": 1774977
+   },
+   {
+    "name": "Ashbury Heights",
+    "rank": 7468,
+    "zhvi": 2492953
+   },
+   {
+    "name": "Hunters Point",
+    "rank": 7712,
+    "zhvi": 706118
+   },
+   {
+    "name": "Telegraph Hill",
+    "rank": 7721,
+    "zhvi": 1096767
+   },
+   {
+    "name": "Financial District",
+    "rank": 7879,
+    "zhvi": 1040234
+   },
+   {
+    "name": "North Waterfront",
+    "rank": 7945,
+    "zhvi": 1309782
+   },
+   {
+    "name": "Castro",
+    "rank": 8417,
+    "zhvi": 1713336
+   },
+   {
+    "name": "Westwood Park",
+    "rank": 8536,
+    "zhvi": 1745603
+   },
+   {
+    "name": "Corona Heights",
+    "rank": 8629,
+    "zhvi": 1748012
+   },
+   {
+    "name": "Mint Hill",
+    "rank": 8675,
+    "zhvi": 1066411
+   },
+   {
+    "name": "Midtown Terrace",
+    "rank": 8853,
+    "zhvi": 1637865
+   },
+   {
+    "name": "Diamond Heights",
+    "rank": 8867,
+    "zhvi": 1085713
+   },
+   {
+    "name": "Stonestown",
+    "rank": 9104,
+    "zhvi": 1835328
+   },
+   {
+    "name": "Clarendon Heights",
+    "rank": 9138,
+    "zhvi": 2029549
+   },
+   {
+    "name": "Central Waterfront",
+    "rank": 9209,
+    "zhvi": 1018536
+   },
+   {
+    "name": "Peralta Heights",
+    "rank": 9209,
+    "zhvi": 1646495
+   },
+   {
+    "name": "Anza Vista",
+    "rank": 9257,
+    "zhvi": 1336529
+   },
+   {
+    "name": "Sherwood Forest",
+    "rank": 9326,
+    "zhvi": 2003093
+   },
+   {
+    "name": "Cole Valley",
+    "rank": 9791,
+    "zhvi": 1818121
+   },
+   {
+    "name": "Ingleside Terrace",
+    "rank": 9941,
+    "zhvi": 2216131
+   },
+   {
+    "name": "Aquatic Park",
+    "rank": 10011,
+    "zhvi": 1144793
+   },
+   {
+    "name": "Downtown",
+    "rank": 10249,
+    "zhvi": 750363
+   },
+   {
+    "name": "Merced Manor",
+    "rank": 10285,
+    "zhvi": 2013975
+   },
+   {
+    "name": "Forest Hill",
+    "rank": 10365,
+    "zhvi": 2732547
+   },
+   {
+    "name": "Candlestick Point SRA",
+    "rank": 10454,
+    "zhvi": 766503
+   },
+   {
+    "name": "Little Hollywood",
+    "rank": 11730,
+    "zhvi": 1032064
+   },
+   {
+    "name": "Showplace Square",
+    "rank": 12519,
+    "zhvi": 537449
+   },
+   {
+    "name": "Forest Knolls",
+    "rank": 13147,
+    "zhvi": 1774038
+   },
+   {
+    "name": "Seacliff",
+    "rank": 13591,
+    "zhvi": 4722234
+   },
+   {
+    "name": "Mount Davidson Manor",
+    "rank": 13774,
+    "zhvi": 1816646
+   },
+   {
+    "name": "Dogpatch",
+    "rank": 14051,
+    "zhvi": 1059297
+   },
+   {
+    "name": "Balboa Terrace",
+    "rank": 15220,
+    "zhvi": 2426334
+   },
+   {
+    "name": "Fisherman's Wharf",
+    "rank": 15272,
+    "zhvi": 1533584
+   },
+   {
+    "name": "St. Francis Wood",
+    "rank": 15644,
+    "zhvi": 3900101
+   },
+   {
+    "name": "Monterey Heights",
+    "rank": 18193,
+    "zhvi": 2809988
+   },
+   {
+    "name": "Westwood Highlands",
+    "rank": 20132,
+    "zhvi": 2107712
+   }
+  ],
+  "San Jose": [
+   {
+    "name": "East San Jose",
+    "rank": 33,
+    "zhvi": 1042761
+   },
+   {
+    "name": "Blossom Valley",
+    "rank": 47,
+    "zhvi": 1388918
+   },
+   {
+    "name": "West San Jose",
+    "rank": 48,
+    "zhvi": 2121586
+   },
+   {
+    "name": "Willow Glen",
+    "rank": 52,
+    "zhvi": 1809986
+   },
+   {
+    "name": "Downtown",
+    "rank": 62,
+    "zhvi": 998492
+   },
+   {
+    "name": "North Valley",
+    "rank": 67,
+    "zhvi": 1173799
+   },
+   {
+    "name": "Evergreen",
+    "rank": 71,
+    "zhvi": 1664177
+   },
+   {
+    "name": "Fairgrounds",
+    "rank": 148,
+    "zhvi": 938889
+   },
+   {
+    "name": "Cambrian Park",
+    "rank": 182,
+    "zhvi": 1791090
+   },
+   {
+    "name": "Almaden Valley",
+    "rank": 221,
+    "zhvi": 2164726
+   },
+   {
+    "name": "Berryessa",
+    "rank": 313,
+    "zhvi": 1608522
+   },
+   {
+    "name": "Edenvale - Seven Trees",
+    "rank": 318,
+    "zhvi": 1094983
+   },
+   {
+    "name": "North San Jose",
+    "rank": 327,
+    "zhvi": 1090842
+   },
+   {
+    "name": "Santa Teresa",
+    "rank": 360,
+    "zhvi": 1330505
+   },
+   {
+    "name": "Alum Rock-East Foothills",
+    "rank": 427,
+    "zhvi": 1101635
+   },
+   {
+    "name": "Alum Rock",
+    "rank": 1197,
+    "zhvi": 979746
+   },
+   {
+    "name": "Rose Garden",
+    "rank": 1243,
+    "zhvi": 1596341
+   },
+   {
+    "name": "East Foothills",
+    "rank": 2460,
+    "zhvi": 1431618
+   },
+   {
+    "name": "Burbank",
+    "rank": 4635,
+    "zhvi": 1155960
+   },
+   {
+    "name": "Cambrian Park",
+    "rank": 6134,
+    "zhvi": 2421543
+   },
+   {
+    "name": "Seven Trees",
+    "rank": 10336,
+    "zhvi": 1083453
+   },
+   {
+    "name": "Fruitdale",
+    "rank": 11983,
+    "zhvi": 1542641
+   },
+   {
+    "name": "Buena Vista",
+    "rank": 13805,
+    "zhvi": 832248
+   },
+   {
+    "name": "Sunol-Midtown",
+    "rank": 18298,
+    "zhvi": 1075411
+   }
+  ],
+  "Beverly Hills": [
+   {
+    "name": "Southwest Doheny",
+    "rank": 3231,
+    "zhvi": 1925569
+   },
+   {
+    "name": "North Doheny",
+    "rank": 4002,
+    "zhvi": 1770406
+   },
+   {
+    "name": "Roxbury Park",
+    "rank": 4885,
+    "zhvi": 3132567
+   },
+   {
+    "name": "The Flats",
+    "rank": 5353,
+    "zhvi": 10540762
+   },
+   {
+    "name": "La Cienega Park",
+    "rank": 7649,
+    "zhvi": 1907375
+   },
+   {
+    "name": "Southeast Doheny",
+    "rank": 8232,
+    "zhvi": 2748081
+   },
+   {
+    "name": "Beverly Hills Gateway",
+    "rank": 8920,
+    "zhvi": 11469071
+   },
+   {
+    "name": "Trousdale Estates",
+    "rank": 11390,
+    "zhvi": 7835123
+   }
+  ],
+  "Santa Monica": [
+   {
+    "name": "Wilshire/Montana",
+    "rank": 887,
+    "zhvi": 1311724
+   },
+   {
+    "name": "Sunset Park",
+    "rank": 1127,
+    "zhvi": 2262164
+   },
+   {
+    "name": "Mid-City",
+    "rank": 1454,
+    "zhvi": 1014482
+   },
+   {
+    "name": "Pico District",
+    "rank": 1885,
+    "zhvi": 1181278
+   },
+   {
+    "name": "Ocean Park",
+    "rank": 1924,
+    "zhvi": 1309009
+   },
+   {
+    "name": "North of Montana",
+    "rank": 2238,
+    "zhvi": 4929908
+   },
+   {
+    "name": "Downtown/Third Street Promenade",
+    "rank": 3007,
+    "zhvi": 1084718
+   },
+   {
+    "name": "Northeast",
+    "rank": 4514,
+    "zhvi": 2841234
+   },
+   {
+    "name": "Santa Monica Pier Area/Ocean Avenue",
+    "rank": 5055,
+    "zhvi": 1920758
+   }
+  ],
+  "Irvine": [
+   {
+    "name": "Woodbridge",
+    "rank": 502,
+    "zhvi": 1251878
+   },
+   {
+    "name": "West Park",
+    "rank": 573,
+    "zhvi": 1461949
+   },
+   {
+    "name": "Northwood",
+    "rank": 601,
+    "zhvi": 1607281
+   },
+   {
+    "name": "Business District",
+    "rank": 838,
+    "zhvi": 963529
+   },
+   {
+    "name": "UC Irvine",
+    "rank": 868,
+    "zhvi": 838416
+   },
+   {
+    "name": "El Camino Real",
+    "rank": 941,
+    "zhvi": 1369467
+   },
+   {
+    "name": "Lower Peters Canyon",
+    "rank": 944,
+    "zhvi": 1636046
+   },
+   {
+    "name": "Woodbury",
+    "rank": 1385,
+    "zhvi": 1677005
+   },
+   {
+    "name": "Orange County Great Park",
+    "rank": 1501,
+    "zhvi": 1717046
+   },
+   {
+    "name": "Cypress Village",
+    "rank": 1764,
+    "zhvi": 1495679
+   },
+   {
+    "name": "Turtle Rock",
+    "rank": 1780,
+    "zhvi": 2406849
+   },
+   {
+    "name": "Oak Creek",
+    "rank": 1943,
+    "zhvi": 989937
+   },
+   {
+    "name": "Portola Springs",
+    "rank": 2006,
+    "zhvi": 1615552
+   },
+   {
+    "name": "Northwood Point",
+    "rank": 2303,
+    "zhvi": 2017720
+   },
+   {
+    "name": "Walnut Village",
+    "rank": 2506,
+    "zhvi": 1520316
+   },
+   {
+    "name": "University Park",
+    "rank": 2570,
+    "zhvi": 1469784
+   },
+   {
+    "name": "Quail Hill",
+    "rank": 3140,
+    "zhvi": 1481423
+   },
+   {
+    "name": "University Town Center",
+    "rank": 3304,
+    "zhvi": 1019274
+   },
+   {
+    "name": "West Irvine",
+    "rank": 3495,
+    "zhvi": 1542820
+   },
+   {
+    "name": "Stonegate",
+    "rank": 4347,
+    "zhvi": 1852272
+   },
+   {
+    "name": "Rancho San Joaquin",
+    "rank": 4770,
+    "zhvi": 1123306
+   },
+   {
+    "name": "Orchard Hills",
+    "rank": 5765,
+    "zhvi": 3017408
+   },
+   {
+    "name": "Laguna Altura",
+    "rank": 9320,
+    "zhvi": 2824518
+   },
+   {
+    "name": "Woodbury East",
+    "rank": 9780,
+    "zhvi": 1260441
+   },
+   {
+    "name": "Turtle Ridge",
+    "rank": 11281,
+    "zhvi": 2589897
+   },
+   {
+    "name": "Stonegate East",
+    "rank": 17690,
+    "zhvi": 1309079
+   },
+   {
+    "name": "Shady Canyon",
+    "rank": 20351,
+    "zhvi": 9348716
+   }
+  ],
+  "Newport Beach": [
+   {
+    "name": "Corona del Mar",
+    "rank": 1433,
+    "zhvi": 4238186
+   },
+   {
+    "name": "Newport Coast",
+    "rank": 1945,
+    "zhvi": 5605081
+   }
+  ],
+  "Pasadena": [
+   {
+    "name": "North Central",
+    "rank": 372,
+    "zhvi": 981211
+   },
+   {
+    "name": "South",
+    "rank": 617,
+    "zhvi": 864663
+   },
+   {
+    "name": "West Central",
+    "rank": 668,
+    "zhvi": 778935
+   },
+   {
+    "name": "East Central",
+    "rank": 729,
+    "zhvi": 1306607
+   },
+   {
+    "name": "South Arroyo",
+    "rank": 1782,
+    "zhvi": 1778838
+   },
+   {
+    "name": "South East",
+    "rank": 2211,
+    "zhvi": 1309833
+   },
+   {
+    "name": "Mid Central",
+    "rank": 2580,
+    "zhvi": 989465
+   },
+   {
+    "name": "North Arroyo",
+    "rank": 2668,
+    "zhvi": 1750581
+   },
+   {
+    "name": "North East",
+    "rank": 3797,
+    "zhvi": 1471994
+   },
+   {
+    "name": "East Pasadena",
+    "rank": 4248,
+    "zhvi": 1368045
+   }
+  ],
+  "Long Beach": [
+   {
+    "name": "North Long Beach",
+    "rank": 49,
+    "zhvi": 717459
+   },
+   {
+    "name": "West Side",
+    "rank": 446,
+    "zhvi": 713295
+   },
+   {
+    "name": "Poly High District",
+    "rank": 453,
+    "zhvi": 645678
+   },
+   {
+    "name": "Wrigley",
+    "rank": 507,
+    "zhvi": 830472
+   },
+   {
+    "name": "Hellman",
+    "rank": 693,
+    "zhvi": 563137
+   },
+   {
+    "name": "The Plaza",
+    "rank": 732,
+    "zhvi": 1020796
+   },
+   {
+    "name": "Traffic Circle",
+    "rank": 956,
+    "zhvi": 852892
+   },
+   {
+    "name": "Bixby Area",
+    "rank": 1062,
+    "zhvi": 909615
+   },
+   {
+    "name": "East Side",
+    "rank": 1235,
+    "zhvi": 632323
+   },
+   {
+    "name": "Zaferia",
+    "rank": 1260,
+    "zhvi": 547524
+   },
+   {
+    "name": "City College Area",
+    "rank": 1293,
+    "zhvi": 1012953
+   },
+   {
+    "name": "Willmore City",
+    "rank": 1338,
+    "zhvi": 539247
+   },
+   {
+    "name": "Alamitos Beach",
+    "rank": 1368,
+    "zhvi": 544414
+   },
+   {
+    "name": "Belmont Heights",
+    "rank": 1474,
+    "zhvi": 1180678
+   },
+   {
+    "name": "Downtown",
+    "rank": 1536,
+    "zhvi": 475862
+   },
+   {
+    "name": "East Village",
+    "rank": 1929,
+    "zhvi": 412120
+   },
+   {
+    "name": "Los Altos",
+    "rank": 1946,
+    "zhvi": 1083089
+   },
+   {
+    "name": "Rose Park",
+    "rank": 2223,
+    "zhvi": 864425
+   },
+   {
+    "name": "Washington School",
+    "rank": 2410,
+    "zhvi": 485799
+   },
+   {
+    "name": "Lakewood Village",
+    "rank": 2674,
+    "zhvi": 1094197
+   },
+   {
+    "name": "California Heights",
+    "rank": 3104,
+    "zhvi": 958979
+   },
+   {
+    "name": "Belmont Shore",
+    "rank": 3132,
+    "zhvi": 1363559
+   },
+   {
+    "name": "State College Area",
+    "rank": 4088,
+    "zhvi": 1141145
+   },
+   {
+    "name": "Los Cerritos Area",
+    "rank": 4474,
+    "zhvi": 1266864
+   },
+   {
+    "name": "Bluff Heights",
+    "rank": 4597,
+    "zhvi": 827287
+   },
+   {
+    "name": "Bixby Knolls",
+    "rank": 5439,
+    "zhvi": 1301205
+   },
+   {
+    "name": "Marina Area",
+    "rank": 5969,
+    "zhvi": 1172896
+   },
+   {
+    "name": "El Dorado Park Estates",
+    "rank": 5973,
+    "zhvi": 1259839
+   },
+   {
+    "name": "Alamitos Heights",
+    "rank": 7027,
+    "zhvi": 1183612
+   },
+   {
+    "name": "Park Estates",
+    "rank": 7442,
+    "zhvi": 1259026
+   },
+   {
+    "name": "Naples",
+    "rank": 8035,
+    "zhvi": 2049820
+   },
+   {
+    "name": "Saint Mary's",
+    "rank": 8767,
+    "zhvi": 655845
+   },
+   {
+    "name": "Bluff Park",
+    "rank": 9418,
+    "zhvi": 798644
+   },
+   {
+    "name": "University Park Estates",
+    "rank": 9694,
+    "zhvi": 1236000
+   },
+   {
+    "name": "Rancho Estates",
+    "rank": 12022,
+    "zhvi": 1316291
+   },
+   {
+    "name": "El Dorado South",
+    "rank": 12581,
+    "zhvi": 1082669
+   },
+   {
+    "name": "Imperial Estates",
+    "rank": 12608,
+    "zhvi": 922650
+   },
+   {
+    "name": "Bixby Hill",
+    "rank": 14960,
+    "zhvi": 1449233
+   },
+   {
+    "name": "Belmont Park",
+    "rank": 15797,
+    "zhvi": 1608956
+   },
+   {
+    "name": "Peninsula",
+    "rank": 17785,
+    "zhvi": 2342136
+   },
+   {
+    "name": "Carroll Park",
+    "rank": 18040,
+    "zhvi": 757829
+   }
+  ]
+ },
+ "asof": "2026-06-30"
+}

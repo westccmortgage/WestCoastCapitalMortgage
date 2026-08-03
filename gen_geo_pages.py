@@ -27,9 +27,11 @@ from gen_city_pages import (
     CITY_DATA, COUNTY_LIMITS, BASELINE_LIMIT, HIGH_COST_CEILING,
     NMLS, PHONE, is_high_cost,
 )
+import flagship_detail as fd
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wccm-corporate")
 LASTMOD = "2026-07-30"
+FLAGSHIP_LASTMOD = "2026-08-03"   # flagship pages deepened with verified local data
 BASE = "https://westccmortgage.com"
 
 # Cities kept as standalone pages: real standalone search demand.
@@ -668,6 +670,7 @@ def render_flagship(prog, c):
         related = ('<p>See the full picture for <a href="%s">jumbo loans across %s</a>, learn more about our '
                    '<a href="/jumbo-loans">Jumbo Loans</a> program, or explore '
                    '<a href="%s">DSCR investment loans in this region</a>.</p>' % (county_url, county, metro_url))
+        faqs += fd.DETAIL.get(slug, {}).get("faqs_jumbo", [])
     else:
         title = "DSCR Loans in %s, CA | West Coast Capital Mortgage" % city
         desc = ("DSCR investment property loans in %s, %s. Qualify on rental income, not personal income. "
@@ -720,6 +723,11 @@ def render_flagship(prog, c):
         related = ('<p>See <a href="%s">DSCR loans across this region</a>, learn more about our '
                    '<a href="/dscr-loans">DSCR Loans</a> program, or explore '
                    '<a href="%s">jumbo loans in %s</a>.</p>' % (metro_url, county_url, county))
+        # the generic can-I-do-STR answer is wrong in cities that ban it —
+        # swap it for the city's verified ordinance answer when we have one
+        fd_faqs = fd.DETAIL.get(slug, {}).get("faqs_dscr", [])
+        if fd_faqs:
+            faqs = faqs[:3] + fd_faqs
 
     if high:
         limit_para = ("Across %s, the 2026 one-unit conforming loan limit is %s (per FHFA/HUD 2026 loan limits), "
@@ -756,16 +764,53 @@ def render_flagship(prog, c):
   June 2026, rounded. ZHVI reflects the typical value for homes in the 35th to 65th percentile range. Provided as
   a market reference for general education only; it is not an appraisal or valuation of any specific property.</p>
 </div></section>
+@@EXTRA@@
 @@FAQ@@
 <section style="padding-top:0"><div class="wrap">
   <h3>Related links</h3>
   @@RELATED@@
-</div></section>"""
+</div></section>
+@@SOURCES@@"""
+    # verified local sections (neighborhood tables, tax stack, STR rules)
+    detail = fd.DETAIL.get(slug, {})
+    extra_parts = []
+    if prog == "jumbo":
+        hood = fd.hood_table_html(slug, limit, "jumbo")
+        if hood:
+            extra_parts.append(
+                '<section style="padding-top:0"><div class="wrap">\n'
+                '  <span class="eyebrow">Neighborhood by neighborhood</span>\n'
+                '  <h2>Where the jumbo line falls across %s</h2>\n%s\n</div></section>' % (city, hood))
+        if detail.get("transfer_html"):
+            extra_parts.append(
+                '<section style="padding-top:0"><div class="wrap">\n'
+                '  <span class="eyebrow">Beyond the mortgage</span>\n'
+                '  <h2>Transfer taxes and property taxes in %s</h2>\n%s\n</div></section>'
+                % (city, detail["transfer_html"]))
+    else:
+        rent = fd.rent_reality_html(slug, city, median)
+        hood = fd.hood_table_html(slug, limit, "dscr")
+        if rent or hood:
+            extra_parts.append(
+                '<section style="padding-top:0"><div class="wrap">\n'
+                '  <span class="eyebrow">Rent reality</span>\n'
+                '  <h2>What %s rents actually support</h2>\n%s\n%s\n</div></section>'
+                % (city, rent, hood))
+        if detail.get("str_html"):
+            extra_parts.append(
+                '<section style="padding-top:0"><div class="wrap">\n'
+                '  <span class="eyebrow">Short-term rental rules</span>\n'
+                '  <h2>Short-term rental rules in %s (as of August 2026)</h2>\n%s\n</div></section>'
+                % (city, detail["str_html"]))
+    sources = fd.sources_html(slug, prog) if detail else ""
+
     body = (body.replace("@@CARDS@@", cards).replace("@@OVH@@", overview_h)
             .replace("@@OVP2@@", overview_p2).replace("@@OVP@@", overview_p)
             .replace("@@REQ@@", req).replace("@@BEN@@", ben)
             .replace("@@MEDIAN@@", median).replace("@@MARKET@@", market)
             .replace("@@LIMITPARA@@", limit_para).replace("@@RELATED@@", related)
+            .replace("@@EXTRA@@", "\n".join(extra_parts))
+            .replace("@@SOURCES@@", sources)
             .replace("@@HUB@@", PROGRAMS[prog]["hub"]).replace("@@PN@@", pn)
             .replace("@@CITY@@", city)
             .replace("@@FAQ@@", faq_section("%s in %s &mdash; common questions" % (pn, city), faqs)))
@@ -822,12 +867,12 @@ def write_redirects():
 def all_geo_urls():
     urls = []
     for county in CITIES_BY_COUNTY:
-        urls.append(("/loans/jumbo/%s" % county_slug(county), "0.8"))
+        urls.append(("/loans/jumbo/%s" % county_slug(county), "0.8", LASTMOD))
     for slug, _n, _c in METROS:
-        urls.append(("/loans/dscr/%s" % slug, "0.8"))
+        urls.append(("/loans/dscr/%s" % slug, "0.8", LASTMOD))
     for s in FLAGSHIP:
-        urls.append(("/loans/jumbo/%s" % s, "0.7"))
-        urls.append(("/loans/dscr/%s" % s, "0.7"))
+        urls.append(("/loans/jumbo/%s" % s, "0.7", FLAGSHIP_LASTMOD))
+        urls.append(("/loans/dscr/%s" % s, "0.7", FLAGSHIP_LASTMOD))
     return urls
 
 
@@ -837,10 +882,10 @@ def update_sitemap():
         xml = f.read()
     start, end = "  <!-- city-pages:start -->", "  <!-- city-pages:end -->"
     entries = [start]
-    for loc, pri in all_geo_urls():
+    for loc, pri, lastmod in all_geo_urls():
         entries.append("  <url>\n    <loc>%s%s</loc>\n    <lastmod>%s</lastmod>\n"
                        "    <changefreq>monthly</changefreq>\n    <priority>%s</priority>\n  </url>"
-                       % (BASE, loc, LASTMOD, pri))
+                       % (BASE, loc, lastmod, pri))
     entries.append(end)
     block = "\n".join(entries)
     # Drop every previously generated block first. The markers are matched
