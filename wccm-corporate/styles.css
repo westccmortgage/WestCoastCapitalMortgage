@@ -118,9 +118,11 @@ section{padding:88px 0}
 .mortgage-compact-hero p{color:var(--gray);font-size:1.08rem;line-height:1.55;margin:22px 0 0;max-width:650px}
 .mortgage-funnel{padding:32px 0 46px}
 .mortgage-funnel-label{color:var(--blue);font-size:.68rem;font-weight:800;letter-spacing:.18em;margin:0 0 14px;text-transform:uppercase}
-.mortgage-funnel-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.mortgage-funnel-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden}
 .mortgage-funnel-card{display:flex;flex-direction:column;min-height:250px;padding:27px 28px;background:#fff;position:relative;transition:background .18s,color .18s}
 .mortgage-funnel-card + .mortgage-funnel-card{border-left:1px solid var(--border)}
+.mortgage-funnel-card:nth-child(n+4){border-top:1px solid var(--border)}
+.mortgage-funnel-card:nth-child(3n+1){border-left:0}
 .mortgage-funnel-card:hover{background:var(--charcoal);color:#fff}
 .mortgage-funnel-card:hover h2,.mortgage-funnel-card:hover p{color:#fff}
 .mortgage-funnel-meta{display:flex;justify-content:space-between;color:var(--blue);font-size:.66rem;letter-spacing:.15em}
@@ -129,6 +131,10 @@ section{padding:88px 0}
 .mortgage-funnel-action{color:var(--blue);font-size:.7rem;font-weight:800;letter-spacing:.08em;margin-top:auto;padding-top:24px}
 .mortgage-fin-badge{align-items:center;background:linear-gradient(145deg,#28a7d9 0%,#0875e8 48%,#6f56e8 100%);border-radius:10px;color:#fff;display:flex;font-size:1.35rem;font-weight:800;height:46px;justify-content:center;letter-spacing:-.07em;position:absolute;right:24px;text-transform:lowercase;top:25px;width:46px}
 .california-mtg-card .mortgage-funnel-meta{padding-right:58px}
+.mortgage-feature-badge{align-items:center;border-radius:10px;color:#fff;display:flex;font-size:.92rem;font-weight:800;height:46px;justify-content:center;letter-spacing:.02em;position:absolute;right:24px;top:25px;width:46px}
+.mortgage-ai-badge{background:linear-gradient(145deg,#111827 0%,#0878ef 65%,#50b9ff 100%)}
+.mortgage-home-badge{background:linear-gradient(145deg,#0878ef 0%,#1548a8 100%);font-size:.62rem;letter-spacing:.08em}
+.wallet-ai-card .mortgage-funnel-meta,.first-time-card .mortgage-funnel-meta{padding-right:58px}
 .mortgage-ai-link{text-align:center;font-size:.78rem;font-weight:700;margin:20px 0 0}
 .mortgage-ai-link a:hover{color:var(--blue)}
 .mortgage-compact-about{background:var(--light);border-top:1px solid var(--border);padding:52px 0}
