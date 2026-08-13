@@ -1,14 +1,14 @@
 /* West Coast Capital Mortgage — corporate mortgage lender stylesheet */
 :root{
-  --black:#1f1f1f;
-  --charcoal:#111111;
+  --black:#0b2345;
+  --charcoal:#0b2345;
   --white:#ffffff;
   --light:#f5f6f7;
   --gray:#666666;
   --border:#dddddd;
   --blue:#0073e6;
   --blue-dark:#005db8;
-  --navy:#0c1c33;
+  --navy:#0b2345;
   --max:1180px;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -49,7 +49,7 @@ section{padding:88px 0}
 .btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
 .btn-blue:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
 .btn-black{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
-.btn-black:hover{background:#000}
+.btn-black:hover{background:#071a33}
 .btn-outline{background:transparent;color:var(--charcoal);border-color:var(--charcoal)}
 .btn-outline:hover{background:var(--charcoal);color:#fff}
 .btn-outline-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
@@ -132,7 +132,7 @@ section{padding:88px 0}
 .mortgage-fin-badge{align-items:center;background:linear-gradient(145deg,#28a7d9 0%,#0875e8 48%,#6f56e8 100%);border-radius:10px;color:#fff;display:flex;font-size:1.35rem;font-weight:800;height:46px;justify-content:center;letter-spacing:-.07em;position:absolute;right:24px;text-transform:lowercase;top:25px;width:46px}
 .california-mtg-card .mortgage-funnel-meta{padding-right:58px}
 .mortgage-feature-badge{align-items:center;border-radius:10px;color:#fff;display:flex;font-size:.92rem;font-weight:800;height:46px;justify-content:center;letter-spacing:.02em;position:absolute;right:24px;top:25px;width:46px}
-.mortgage-ai-badge{background:linear-gradient(145deg,#111827 0%,#0878ef 65%,#50b9ff 100%)}
+.mortgage-ai-badge{background:linear-gradient(145deg,#0b2345 0%,#0878ef 65%,#50b9ff 100%)}
 .mortgage-home-badge{background:linear-gradient(145deg,#0878ef 0%,#1548a8 100%);font-size:.62rem;letter-spacing:.08em}
 .wallet-ai-card .mortgage-funnel-meta,.first-time-card .mortgage-funnel-meta{padding-right:58px}
 .mortgage-ai-link{text-align:center;font-size:.78rem;font-weight:700;margin:20px 0 0}
@@ -402,7 +402,7 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 
 /* Shared family home hero — Mortgage + Realty visual system */
 .mortgage-compact-hero{
-  background:#07101c;
+  background:#0b2345;
   isolation:isolate;
   min-height:390px;
   padding:76px 0 64px;
@@ -417,7 +417,7 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
   z-index:-2;
 }
 .mortgage-compact-hero::after{
-  background:linear-gradient(90deg,rgba(7,16,28,1) 0%,rgba(7,16,28,.98) 34%,rgba(7,16,28,.76) 58%,rgba(7,16,28,.12) 100%);
+  background:linear-gradient(90deg,rgba(11,35,69,1) 0%,rgba(11,35,69,.98) 34%,rgba(11,35,69,.76) 58%,rgba(11,35,69,.12) 100%);
   content:"";
   inset:0;
   pointer-events:none;
@@ -443,7 +443,7 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
     width:100%;
   }
   .mortgage-compact-hero::after{
-    background:linear-gradient(180deg,rgba(7,16,28,.02) 0%,rgba(7,16,28,.08) 42%,#07101c 58%,#07101c 100%);
+    background:linear-gradient(180deg,rgba(11,35,69,.02) 0%,rgba(11,35,69,.08) 42%,#0b2345 58%,#0b2345 100%);
   }
   .mortgage-compact-hero-inner{
     padding-left:24px;
