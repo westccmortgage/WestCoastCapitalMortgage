@@ -398,3 +398,55 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .founder-showcase .founder-role{color:var(--blue);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:14px 0 24px}
 .founder-showcase p{color:var(--gray);line-height:1.7}
 @media(max-width:760px){.founder-showcase{padding:54px 0}.founder-showcase .section-head{text-align:left}.founder-showcase .founder-grid{gap:32px}}
+
+
+/* Shared family home hero — Mortgage + Realty visual system */
+.mortgage-compact-hero{
+  background:#07101c;
+  isolation:isolate;
+  min-height:390px;
+  padding:76px 0 64px;
+}
+.mortgage-compact-hero::before{
+  background:url("assets/family-home-hero.webp") right center/auto 100% no-repeat;
+  content:"";
+  inset:0 0 0 auto;
+  pointer-events:none;
+  position:absolute;
+  width:min(74vw,1040px);
+  z-index:-2;
+}
+.mortgage-compact-hero::after{
+  background:linear-gradient(90deg,rgba(7,16,28,1) 0%,rgba(7,16,28,.98) 34%,rgba(7,16,28,.76) 58%,rgba(7,16,28,.12) 100%);
+  content:"";
+  inset:0;
+  pointer-events:none;
+  position:absolute;
+  z-index:-1;
+}
+.mortgage-compact-watermark{display:none}
+.mortgage-compact-hero-inner{padding-left:24px}
+.mortgage-compact-hero .eyebrow{color:#5aa9ff}
+.mortgage-compact-hero h1{color:#fff}
+.mortgage-compact-hero p{color:rgba(255,255,255,.82)}
+@media(max-width:760px){
+  .mortgage-compact-hero{
+    display:block;
+    min-height:0;
+    padding:258px 0 42px;
+  }
+  .mortgage-compact-hero::before{
+    background-position:center 34%;
+    background-size:cover;
+    height:260px;
+    inset:0 0 auto;
+    width:100%;
+  }
+  .mortgage-compact-hero::after{
+    background:linear-gradient(180deg,rgba(7,16,28,.02) 0%,rgba(7,16,28,.08) 42%,#07101c 58%,#07101c 100%);
+  }
+  .mortgage-compact-hero-inner{
+    padding-left:24px;
+    padding-top:24px;
+  }
+}
