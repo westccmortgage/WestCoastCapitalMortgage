@@ -1,5 +1,5 @@
 {
-  "effective": "Aug 10, 2026 · 6:40 AM PT",
+  "effective": "Aug 17, 2026 · 6:41 AM PT",
   "source": "Lender wholesale base pricing; best-case borrower profile.",
   "comp_points": 0,
   "products": [
@@ -25,7 +25,7 @@
     },
     {
       "name": "Jumbo 30-Year Fixed",
-      "rate": 6.25
+      "rate": 6.125
     },
     {
       "name": "Non-QM (A+) 30-Year Fixed",
@@ -33,7 +33,7 @@
     },
     {
       "name": "DSCR Investor 30-Year Fixed",
-      "rate": 6.375
+      "rate": 6.25
     }
   ]
 }
