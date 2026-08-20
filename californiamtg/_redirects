@@ -2,6 +2,7 @@
 # under a plain static server; these are a convenience for typed/clean URLs.
 /get-preapproved      /get-preapproved.html      200
 /contact              /contact.html              200
+/second-look          /second-look.html          200
 /about                /about.html                200
 /about-human-review   /about-human-review.html   200
 /rates-payments       /rates-payments.html       200
