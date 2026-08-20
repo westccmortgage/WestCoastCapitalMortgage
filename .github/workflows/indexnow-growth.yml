@@ -1,0 +1,30 @@
+name: IndexNow growth URLs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wccm-corporate/**'
+      - 'californiamtg/**'
+      - 'beforejumboloan/**'
+      - 'tools/ping_growth_indexnow.py'
+      - '.github/workflows/indexnow-growth.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit-indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Wait briefly for the public sites to deploy
+        run: sleep 180
+
+      - name: Submit live growth URLs to IndexNow
+        run: python3 tools/ping_growth_indexnow.py
