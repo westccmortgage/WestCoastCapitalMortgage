@@ -111,6 +111,35 @@ function leadRowFromContactForm(form) {
   const f = new FormData(form);
   const utm = getUTM();
   const get = function (k) { return (f.get(k) || "").toString().trim(); };
+
+  // Preserve specialty-intake details in the JSON answers column. This keeps
+  // the standard contact/pre-approval forms backward compatible while allowing
+  // high-intent pages (second look, investor review, specialty programs) to
+  // capture the information needed for a useful first call.
+  const specialtyAnswers = {
+    iAmA: get("iAmA"),
+    helpWith: get("helpWith"),
+    via: form.getAttribute("data-intake-type") || "contact_form",
+    propertyCity: get("propertyCity"),
+    propertyAddress: get("propertyAddress"),
+    propertyType: get("propertyType"),
+    occupancy: get("occupancy"),
+    purchasePrice: get("purchasePrice"),
+    propertyValue: get("propertyValue"),
+    loanAmount: get("loanAmount"),
+    downPayment: get("downPayment"),
+    creditRange: get("creditRange"),
+    incomeType: get("incomeType"),
+    denialReason: get("denialReason"),
+    currentLender: get("currentLender"),
+    closingDeadline: get("closingDeadline"),
+    monthlyRent: get("monthlyRent"),
+    monthlyHousingExpense: get("monthlyHousingExpense")
+  };
+  Object.keys(specialtyAnswers).forEach(function (key) {
+    if (!specialtyAnswers[key]) delete specialtyAnswers[key];
+  });
+
   return {
     visitor_id: getVisitorId(),
     lead_source: form.getAttribute("data-lead-source") || "californiamtg.com",
@@ -121,12 +150,12 @@ function leadRowFromContactForm(form) {
     email: get("email"),
     preferred_contact_method: get("contactMethod"),
     user_type: get("iAmA"),
-    scenario_type: get("helpWith"),
-    property_state: "",
-    timeline: "",
-    estimated_price_or_value: "",
+    scenario_type: get("denialReason") || get("helpWith"),
+    property_state: get("propertyState") || "",
+    timeline: get("closingDeadline") || get("timeline") || "",
+    estimated_price_or_value: get("purchasePrice") || get("propertyValue") || "",
     message: get("message"),
-    answers: { iAmA: get("iAmA"), helpWith: get("helpWith"), via: "contact_form" },
+    answers: specialtyAnswers,
     landing_page: getLandingPage(),
     utm_source: utm.utm_source || "",
     utm_medium: utm.utm_medium || "",
