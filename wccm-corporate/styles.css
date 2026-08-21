@@ -508,3 +508,24 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
     padding-top:24px;
   }
 }
+
+/* ---------- Compact homepage Google rating ---------- */
+.homepage-rating-strip{padding:34px 0;background:#f5f7fa;border-top:1px solid #e1e6ec}
+.homepage-rating-card{
+  min-height:86px;background:#fff;border:1px solid #dce3eb;border-radius:12px;
+  box-shadow:0 16px 38px -30px rgba(11,35,69,.55);
+  display:flex;align-items:center;gap:20px;padding:18px 24px;
+  transition:transform .18s,box-shadow .18s,border-color .18s
+}
+.homepage-rating-card:hover{transform:translateY(-2px);border-color:#b7d8fa;box-shadow:0 20px 42px -28px rgba(11,35,69,.58)}
+.homepage-rating-label{color:var(--blue);font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.homepage-rating-score{color:var(--navy);font-size:2.35rem;line-height:1;letter-spacing:-.055em}
+.homepage-rating-stars{color:#f4b400;font-size:1.12rem;letter-spacing:2px;white-space:nowrap}
+.homepage-rating-count{color:#657181;font-size:.9rem}
+.homepage-rating-link{margin-left:auto;color:var(--blue);font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+@media(max-width:720px){
+  .homepage-rating-card{flex-wrap:wrap;gap:10px 14px;padding:18px 20px}
+  .homepage-rating-label{width:100%}
+  .homepage-rating-count{width:100%}
+  .homepage-rating-link{margin-left:0}
+}
