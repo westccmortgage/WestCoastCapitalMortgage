@@ -199,6 +199,27 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
   line-height:1.32;letter-spacing:-.01em;color:#fff}
 .testimonial .who{margin-top:30px;font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9aa3ad}
 
+
+/* ---------- Google Reviews ---------- */
+.google-reviews{background:var(--navy);color:#fff;padding:88px 0}
+.google-reviews-grid{align-items:stretch;display:grid;gap:54px;grid-template-columns:.88fr 1.12fr}
+.google-reviews-copy{align-self:center}
+.google-reviews .eyebrow{color:#67b3ff}
+.google-reviews h2{color:#fff;font-size:clamp(2.35rem,4.5vw,3.8rem);letter-spacing:-.05em;line-height:1;margin:22px 0 18px}
+.google-reviews .lead{color:#c8d4e3;max-width:560px}
+.google-review-score{align-items:center;display:flex;gap:18px;margin-top:22px}
+.google-review-score>strong{color:#fff;font-size:3.4rem;letter-spacing:-.055em;line-height:1}
+.google-review-stars{color:#fbbc04;font-size:1.25rem;letter-spacing:.16em;line-height:1}
+.google-review-score p{color:#c8d4e3;font-size:.82rem;font-weight:650;margin:8px 0 0}
+.google-review-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.google-reviews .btn-outline{border-color:rgba(255,255,255,.62);color:#fff}
+.google-reviews .btn-outline:hover{background:#fff;border-color:#fff;color:var(--navy)}
+.google-review-note{color:#8fa2b9;font-size:.72rem;margin:16px 0 0}
+.google-reviews-map{background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:14px;box-shadow:0 24px 64px rgba(0,0,0,.22);min-height:370px;overflow:hidden}
+.google-reviews-map iframe{border:0;display:block;height:100%;min-height:370px;width:100%}
+@media(max-width:860px){.google-reviews-grid{gap:30px;grid-template-columns:1fr}.google-reviews-map,.google-reviews-map iframe{min-height:330px}}
+@media(max-width:560px){.google-reviews{padding:64px 0}.google-review-score>strong{font-size:3rem}.google-review-actions .btn{width:100%}}
+
 /* ---------- Article cards ---------- */
 .article-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:background-color .2s,border-color .2s,box-shadow .2s,color .2s,transform .2s}
 .article-card:hover,.article-card:focus-visible{background:var(--navy);border-color:var(--navy);box-shadow:0 18px 42px rgba(11,35,69,.2);color:#fff;outline:none;transform:translateY(-4px)}
