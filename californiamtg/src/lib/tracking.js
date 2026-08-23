@@ -45,6 +45,8 @@ export function initAutoTracking() {
       track("education_card_clicked", { href: href, label: (a.querySelector("h3") || {}).textContent || "" });
     } else if (href.indexOf("my1003app.com") !== -1) {
       track("full_application_clicked", { href: href, label: label });
+    } else if (href.indexOf("/buy-before-you-sell-california") !== -1) {
+      track("buy_before_sell_clicked", { href: href, label: label });
     } else if (href.indexOf("/condo-project-prescreen") !== -1) {
       track("condo_prescreen_clicked", { href: href, label: label });
     } else if (href.indexOf("/second-look") !== -1) {
