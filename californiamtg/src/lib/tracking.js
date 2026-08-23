@@ -39,14 +39,26 @@ export function initAutoTracking() {
     const a = e.target.closest && e.target.closest("a");
     if (!a) return;
     const href = a.getAttribute("href") || "";
+    const label = (a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120);
+
     if (a.classList.contains("audience-card")) {
       track("education_card_clicked", { href: href, label: (a.querySelector("h3") || {}).textContent || "" });
+    } else if (href.indexOf("my1003app.com") !== -1) {
+      track("full_application_clicked", { href: href, label: label });
+    } else if (href.indexOf("/condo-project-prescreen") !== -1) {
+      track("condo_prescreen_clicked", { href: href, label: label });
+    } else if (href.indexOf("/second-look") !== -1) {
+      track("second_look_clicked", { href: href, label: label });
+    } else if (href.indexOf("/guides/pacific-palisades-rebuild-financing-2026") !== -1) {
+      track("palisades_rebuild_clicked", { href: href, label: label });
+    } else if (href.indexOf("/guides/") !== -1) {
+      track("guide_clicked", { href: href, label: label });
     } else if (href.indexOf("wcci.online") !== -1) {
-      track("ai_review_clicked", { href: href });
+      track("ai_review_clicked", { href: href, label: label });
     } else if (href.indexOf("tel:") === 0) {
-      track("phone_clicked", { href: href });
+      track("phone_clicked", { href: href, label: label });
     } else if (href.indexOf("mailto:") === 0) {
-      track("email_clicked", { href: href });
+      track("email_clicked", { href: href, label: label });
     }
   }, true);
 }
