@@ -134,7 +134,13 @@ function leadRowFromContactForm(form) {
     currentLender: get("currentLender"),
     closingDeadline: get("closingDeadline"),
     monthlyRent: get("monthlyRent"),
-    monthlyHousingExpense: get("monthlyHousingExpense")
+    monthlyHousingExpense: get("monthlyHousingExpense"),
+    currentHomeCity: get("currentHomeCity"),
+    currentMortgageBalance: get("currentMortgageBalance"),
+    listingStatus: get("listingStatus"),
+    nextPropertyCity: get("nextPropertyCity"),
+    nextPropertyStatus: get("nextPropertyStatus"),
+    availableCash: get("availableCash")
   };
   Object.keys(specialtyAnswers).forEach(function (key) {
     if (!specialtyAnswers[key]) delete specialtyAnswers[key];
