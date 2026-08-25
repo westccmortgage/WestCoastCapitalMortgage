@@ -140,7 +140,10 @@ function leadRowFromContactForm(form) {
     listingStatus: get("listingStatus"),
     nextPropertyCity: get("nextPropertyCity"),
     nextPropertyStatus: get("nextPropertyStatus"),
-    availableCash: get("availableCash")
+    availableCash: get("availableCash"),
+    currentInterestRate: get("currentInterestRate"),
+    useOfFunds: get("useOfFunds"),
+    preferredStructure: get("preferredStructure")
   };
   Object.keys(specialtyAnswers).forEach(function (key) {
     if (!specialtyAnswers[key]) delete specialtyAnswers[key];
