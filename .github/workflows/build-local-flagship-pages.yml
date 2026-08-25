@@ -1,0 +1,59 @@
+name: Build curated local mortgage pages
+
+on:
+  push:
+    branches:
+      - growth/local-flagship-markets-2026-08-25
+    paths:
+      - tools/build_local_flagship_pages.py
+      - .github/workflows/build-local-flagship-pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build local flagship pages
+        run: python tools/build_local_flagship_pages.py
+
+      - name: Validate generated pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('wccm-corporate')
+          pages = sorted((root / 'mortgage').glob('*.html'))
+          assert len(pages) == 18, f'expected 18 local pages, found {len(pages)}'
+          for p in pages:
+              text = p.read_text(encoding='utf-8')
+              assert '<link rel="canonical"' in text, p
+              assert 'Company NMLS #2817729' in text, p
+              assert 'CA DRE Corporation License #02440065' in text, p
+              assert 'Equal Housing Opportunity' in text, p
+              assert '<h1>Mortgage Financing in ' in text, p
+          sitemap = (root / 'sitemap.xml').read_text(encoding='utf-8')
+          growth = (root / 'growth-sitemap.xml').read_text(encoding='utf-8')
+          assert sitemap.count('/mortgage/') >= 18
+          assert growth.count('/mortgage/') >= 18
+          print('Validated', len(pages), 'local pages')
+          PY
+
+      - name: Commit generated output
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git config user.name "WCCM Growth Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add wccm-corporate/mortgage wccm-corporate/california-mortgage-locations.html wccm-corporate/sitemap.xml wccm-corporate/growth-sitemap.xml wccm-corporate/loans.html
+          git commit -m "Build curated California local mortgage flagship pages"
+          git push
