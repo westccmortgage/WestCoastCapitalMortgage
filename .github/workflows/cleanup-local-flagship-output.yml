@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - growth/local-flagship-markets-2026-08-25
+      - main
     paths:
       - tools/cleanup_local_flagship_output.py
       - .github/workflows/cleanup-local-flagship-output.yml
+      - wccm-corporate/mortgage/**
+      - wccm-corporate/california-mortgage-locations.html
+      - wccm-corporate/loans.html
   workflow_dispatch:
 
 permissions:
