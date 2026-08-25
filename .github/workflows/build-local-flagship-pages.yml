@@ -19,7 +19,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          sparse-checkout: |
+            wccm-corporate
+            tools
+          sparse-checkout-cone-mode: true
 
       - name: Build local flagship pages
         run: python tools/build_local_flagship_pages.py
@@ -28,7 +32,6 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re
           root = Path('wccm-corporate')
           pages = sorted((root / 'mortgage').glob('*.html'))
           assert len(pages) == 18, f'expected 18 local pages, found {len(pages)}'
