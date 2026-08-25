@@ -8,8 +8,21 @@
 import { getSupabase } from "./supabaseClient.js";
 import { getConsentStatus, getVisitorId } from "./consent.js";
 
+function pushDataLayer(eventName, data) {
+  // Google Tag Manager / Google Ads readiness: if a Google dataLayer is
+  // present, expose the same consent-gated first-party events there. This is
+  // intentionally a no-op until a Google tag is installed.
+  if (!window.dataLayer || typeof window.dataLayer.push !== "function") return;
+  try {
+    window.dataLayer.push(Object.assign({ event: "cm_" + eventName }, data || {}));
+  } catch (e) {
+    console.debug("[dataLayer] push failed:", e);
+  }
+}
+
 export async function track(eventName, data) {
   if (getConsentStatus() !== "accepted") return;        // gated by consent
+  pushDataLayer(eventName, data);
   const supabase = await getSupabase();
   if (!supabase) { console.debug("[track]", eventName, data || {}); return; }
   try {
