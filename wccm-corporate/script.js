@@ -14,6 +14,19 @@
   function param(name){
     try{return new URLSearchParams(window.location.search).get(name)||'';}catch(e){return '';}
   }
+  var attributionKeys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid'];
+  function storeAttribution(){
+    try{
+      attributionKeys.forEach(function(k){var v=param(k);if(v)sessionStorage.setItem('wccm_'+k,v);});
+      if(!sessionStorage.getItem('wccm_landing_page'))sessionStorage.setItem('wccm_landing_page',window.location.href);
+      if(!sessionStorage.getItem('wccm_referrer'))sessionStorage.setItem('wccm_referrer',document.referrer||'direct');
+    }catch(e){}
+  }
+  function attributionValue(name){
+    var direct=param(name);
+    if(direct)return direct;
+    try{return sessionStorage.getItem('wccm_'+name)||'';}catch(e){return '';}
+  }
   function ensureHidden(form,name,value){
     if(!value)return;
     var el=form.querySelector('input[name="'+name+'"]');
@@ -21,11 +34,15 @@
     el.value=value;
   }
   function addAttribution(form){
-    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid'].forEach(function(k){ensureHidden(form,k,param(k));});
-    ensureHidden(form,'landing_page',window.location.href);
+    attributionKeys.forEach(function(k){ensureHidden(form,k,attributionValue(k));});
+    var landing='';var ref='';
+    try{landing=sessionStorage.getItem('wccm_landing_page')||window.location.href;ref=sessionStorage.getItem('wccm_referrer')||document.referrer||'direct';}catch(e){landing=window.location.href;ref=document.referrer||'direct';}
+    ensureHidden(form,'landing_page',landing);
+    ensureHidden(form,'conversion_page',window.location.href);
     ensureHidden(form,'source_path',window.location.pathname);
-    ensureHidden(form,'referrer',document.referrer||'direct');
+    ensureHidden(form,'referrer',ref);
   }
+  storeAttribution();
 
   /* Mobile menu */
   var burger=document.getElementById('hamburger');
@@ -63,9 +80,9 @@
           pushEvent('wccm_lead_submit',{
             form_name:f.getAttribute('name')||'lead_form',
             page_path:window.location.pathname,
-            utm_source:param('utm_source'),
-            utm_campaign:param('utm_campaign'),
-            gclid:param('gclid')
+            utm_source:attributionValue('utm_source'),
+            utm_campaign:attributionValue('utm_campaign'),
+            gclid:attributionValue('gclid')
           });
           if(ok)ok.hidden=false;
           f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});
