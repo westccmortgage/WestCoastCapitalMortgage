@@ -2,6 +2,31 @@
 (function(){
   "use strict";
 
+  /* Lightweight attribution + conversion event layer.
+     This works before GTM/Google Ads is installed: Netlify form submissions still
+     retain attribution fields, and the dataLayer events are ready to consume later. */
+  window.dataLayer=window.dataLayer||[];
+  function pushEvent(name,detail){
+    var payload=detail||{};
+    payload.event=name;
+    window.dataLayer.push(payload);
+  }
+  function param(name){
+    try{return new URLSearchParams(window.location.search).get(name)||'';}catch(e){return '';}
+  }
+  function ensureHidden(form,name,value){
+    if(!value)return;
+    var el=form.querySelector('input[name="'+name+'"]');
+    if(!el){el=document.createElement('input');el.type='hidden';el.name=name;form.appendChild(el);}
+    el.value=value;
+  }
+  function addAttribution(form){
+    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid'].forEach(function(k){ensureHidden(form,k,param(k));});
+    ensureHidden(form,'landing_page',window.location.href);
+    ensureHidden(form,'source_path',window.location.pathname);
+    ensureHidden(form,'referrer',document.referrer||'direct');
+  }
+
   /* Mobile menu */
   var burger=document.getElementById('hamburger');
   if(burger){
@@ -22,10 +47,12 @@
     });
   });
 
-  /* Contact / apply forms — front-end acknowledgement (no backend) */
+  /* Contact / apply forms — Netlify submission + attribution */
   document.querySelectorAll('form[data-ack]').forEach(function(f){
+    addAttribution(f);
     f.addEventListener('submit',function(e){
       e.preventDefault();
+      addAttribution(f);
       var ok=f.querySelector('.form-ok');
       var btn=f.querySelector('button[type="submit"]');
       var data=new FormData(f);
@@ -33,6 +60,13 @@
       fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
         .then(function(r){
           if(!r.ok)throw new Error('Submission was not accepted ('+r.status+')');
+          pushEvent('wccm_lead_submit',{
+            form_name:f.getAttribute('name')||'lead_form',
+            page_path:window.location.pathname,
+            utm_source:param('utm_source'),
+            utm_campaign:param('utm_campaign'),
+            gclid:param('gclid')
+          });
           if(ok)ok.hidden=false;
           f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});
           if(ok)ok.scrollIntoView({behavior:'smooth',block:'center'});
@@ -42,6 +76,19 @@
           alert('Something went wrong. Please try again or call us at 310-654-1577.');
         });
     });
+  });
+
+  /* High-intent click events for future Google Ads / GTM conversion mapping. */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a');
+    if(!a)return;
+    var href=a.getAttribute('href')||'';
+    if(href.indexOf('tel:')===0){
+      pushEvent('wccm_phone_click',{page_path:window.location.pathname,phone_number:href.replace('tel:','')});
+    }
+    if(/my1003app\.com/i.test(href)){
+      pushEvent('wccm_application_start',{page_path:window.location.pathname,destination:href});
+    }
   });
 
   /* Mortgage payment calculator */
