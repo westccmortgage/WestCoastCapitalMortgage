@@ -1,0 +1,22 @@
+name: Domain live audit
+on:
+  push:
+    branches: [audit/domain-live-20260826]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --quiet requests
+      - run: python3 tools/domain_live_audit.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: domain-live-audit
+          path: |
+            domain_live_audit.csv
+            domain_live_audit.json
+          if-no-files-found: error
+          retention-days: 7
