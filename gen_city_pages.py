@@ -1645,7 +1645,7 @@ def financialproduct_jsonld(prog_cfg, url, city, prog_name):
         "provider": {
             "@type": "Organization",
             "name": "West Coast Capital Mortgage Inc.",
-            "url": "https://westccmortgage.com",
+            "url": "https://westcoastcapitalmortgage.com",
             "telephone": PHONE,
         },
     }
@@ -1656,9 +1656,9 @@ def breadcrumb_jsonld(prog_cfg, prog_name, city, url):
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://westccmortgage.com/"},
-            {"@type": "ListItem", "position": 2, "name": "Loans", "item": "https://westccmortgage.com/loans"},
-            {"@type": "ListItem", "position": 3, "name": prog_name, "item": "https://westccmortgage.com" + prog_cfg["hub"]},
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://westcoastcapitalmortgage.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Loans", "item": "https://westcoastcapitalmortgage.com/loans"},
+            {"@type": "ListItem", "position": 3, "name": prog_name, "item": "https://westcoastcapitalmortgage.com" + prog_cfg["hub"]},
             {"@type": "ListItem", "position": 4, "name": city, "item": url},
         ],
     }
@@ -1675,7 +1675,7 @@ def render_page(prog, prog_cfg, c):
     median = c["median"]
     county_limit = limit_for(c)
     prog_name = prog_cfg["name"]
-    url = "https://westccmortgage.com/loans/%s/%s" % (prog, slug)
+    url = "https://westcoastcapitalmortgage.com/loans/%s/%s" % (prog, slug)
 
     title = "%s in %s, CA | West Coast Capital Mortgage" % (prog_name, city)
     if prog == "jumbo":
@@ -1790,12 +1790,12 @@ def render_page(prog, prog_cfg, c):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="https://westccmortgage.com/assets/og-image.jpg">
+<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="https://westccmortgage.com/assets/og-image.jpg">
+<meta name="twitter:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
 <script type="application/ld+json">
 {fp}
 </script>
@@ -2026,7 +2026,7 @@ def update_sitemap():
     entries = [start_marker]
     for prog in ("jumbo", "dscr"):
         for c in CITY_DATA:
-            loc = "https://westccmortgage.com/loans/%s/%s" % (prog, c["slug"])
+            loc = "https://westcoastcapitalmortgage.com/loans/%s/%s" % (prog, c["slug"])
             entries.append(
                 "  <url>\n"
                 "    <loc>%s</loc>\n"
