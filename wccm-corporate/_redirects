@@ -4,6 +4,8 @@
 # Alternate hosts -> canonical host
 https://westccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://westccmtg.com/* https://westcoastcapitalmortgage.com/:splat 301!
+https://cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
+https://www.cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat 301!
 
 # Retired URLs -> current consolidated pages (first-match order preserved)
