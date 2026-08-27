@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url><loc>https://kwestmortgages.com/</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://kwestmortgages.com/monroe-county-mortgage</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url>
+    <loc>https://kwestmortgages.com/monroe-county-mortgage</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kwestmortgages.com/es/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://kwestmortgages.com/pt-br/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://kwestmortgages.com/es/monroe-county-mortgage</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kwestmortgages.com/es/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://kwestmortgages.com/pt-br/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://kwestmortgages.com/pt-br/monroe-county-mortgage</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kwestmortgages.com/es/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://kwestmortgages.com/pt-br/monroe-county-mortgage"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kwestmortgages.com/monroe-county-mortgage"/>
+    <lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
   <url><loc>https://kwestmortgages.com/scenario-studio</loc><lastmod>2026-06-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kwestmortgages.com/jumbo-vs-conforming</loc><lastmod>2026-06-15</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kwestmortgages.com/loan-options</loc><lastmod>2026-06-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
