@@ -16,11 +16,11 @@ import urllib.error
 import urllib.request
 
 ENDPOINT = "https://api.indexnow.org/indexnow"
-UA = "Mozilla/5.0 (compatible; wccm-growth-indexnow/1.0; +https://westcoastcapitalmortgage.com)"
+UA = "Mozilla/5.0 (compatible; wccm-growth-indexnow/1.0; +https://westccmortgage.com)"
 
 SITES = [
     {
-        "host": "westcoastcapitalmortgage.com",
+        "host": "westccmortgage.com",
         "key": "6a526a773a4c41a5a4ded3a78dde63a9",
         "sitemaps": ["/growth-sitemap.xml"],
     },

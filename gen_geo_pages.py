@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gen_geo_pages.py — geography pages for westcoastcapitalmortgage.com (wccm-corporate).
+gen_geo_pages.py — geography pages for westccmortgage.com (wccm-corporate).
 
 Replaces the 466 city x program pages (jumbo/dscr x 233 cities) with a
 consolidated set that passes the "is the answer actually different?" test:
@@ -32,7 +32,7 @@ import flagship_detail as fd
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wccm-corporate")
 LASTMOD = "2026-07-30"
 FLAGSHIP_LASTMOD = "2026-08-03"   # flagship pages deepened with verified local data
-BASE = "https://westcoastcapitalmortgage.com"
+BASE = "https://westccmortgage.com"
 
 # Cities kept as standalone pages: real standalone search demand.
 FLAGSHIP = [
@@ -165,12 +165,12 @@ SHELL = """<!DOCTYPE html>
 <meta property="og:title" content="@@TITLE@@">
 <meta property="og:description" content="@@DESC@@">
 <meta property="og:url" content="@@URL@@">
-<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta property="og:image" content="https://westccmortgage.com/assets/og-image.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="@@TITLE@@">
 <meta name="twitter:description" content="@@DESC@@">
-<meta name="twitter:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta name="twitter:image" content="https://westccmortgage.com/assets/og-image.jpg">
 @@JSONLD@@
 <!-- Microsoft Clarity -->
 <script type="text/javascript">

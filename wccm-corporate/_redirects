@@ -1,12 +1,12 @@
 # West Coast Capital Mortgage — Netlify redirects
-# Canonical host: https://westcoastcapitalmortgage.com
+# Canonical host: https://westccmortgage.com
 
 # Alternate hosts -> canonical host
-https://westccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
-https://westccmtg.com/* https://westcoastcapitalmortgage.com/:splat 301!
-https://cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
-https://www.cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
-https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat 301!
+https://westccmtg.com/* https://westccmortgage.com/:splat 301!
+https://www.westccmtg.com/* https://westccmortgage.com/:splat 301!
+https://cawccmortgage.com/* https://westccmortgage.com/:splat 301!
+https://www.cawccmortgage.com/* https://westccmortgage.com/:splat 301!
+https://westccmortgage.netlify.app/* https://westccmortgage.com/:splat 301!
 
 # Retired URLs -> current consolidated pages (first-match order preserved)
 /loans/jumbo/manhattan-beach /mortgage/manhattan-beach 301!

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-ping_indexnow.py — submit westcoastcapitalmortgage.com URLs to IndexNow.
+ping_indexnow.py — submit westccmortgage.com URLs to IndexNow.
 
 IndexNow pushes URLs into the discovery pipelines of Bing (which ChatGPT
 Search leans on), Yandex, Seznam and Naver within hours instead of waiting
 weeks for a recrawl. No account needed: ownership is proven by the key file
-served at https://westcoastcapitalmortgage.com/<KEY>.txt.
+served at https://westccmortgage.com/<KEY>.txt.
 
 Usage:
   python ping_indexnow.py            # submit every URL in the live sitemap
@@ -18,7 +18,7 @@ import re
 import sys
 import urllib.request
 
-HOST = "westcoastcapitalmortgage.com"
+HOST = "westccmortgage.com"
 KEY = "6a526a773a4c41a5a4ded3a78dde63a9"          # served from wccm-corporate/<KEY>.txt
 ENDPOINT = "https://api.indexnow.org/indexnow"
 

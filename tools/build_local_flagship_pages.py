@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1] / "wccm-corporate"
 OUT = ROOT / "mortgage"
-BASE = "https://westcoastcapitalmortgage.com"
+BASE = "https://westccmortgage.com"
 TODAY = "2026-08-25"
 COMPANY = "West Coast Capital Mortgage Inc."
 PHONE = "(310) 654-1577"
