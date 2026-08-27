@@ -1,0 +1,13 @@
+# K West Mortgage canonical host
+# Attach these domains to the same Netlify site before relying on host redirects.
+
+https://monroecountymortgage.com/* https://kwestmortgages.com/monroe-county-mortgage 301!
+https://www.monroecountymortgage.com/* https://kwestmortgages.com/monroe-county-mortgage 301!
+
+https://kwestloans.com/* https://kwestmortgages.com/:splat 301!
+https://www.kwestloans.com/* https://kwestmortgages.com/:splat 301!
+
+https://kwmtg.com/* https://kwestmortgages.com/:splat 301!
+https://www.kwmtg.com/* https://kwestmortgages.com/:splat 301!
+
+/monroe-county-mortgage /monroe-county-mortgage.html 200
