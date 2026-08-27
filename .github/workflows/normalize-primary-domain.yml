@@ -1,0 +1,45 @@
+name: Normalize WCCM primary domain
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/normalize_primary_domain.py'
+      - 'wccm-corporate/**'
+      - 'gen_city_pages.py'
+      - 'gen_geo_pages.py'
+      - 'flagship_detail.py'
+      - 'flagship_data.json'
+      - 'ping_indexnow.py'
+      - 'tools/*.py'
+      - '.github/workflows/*.yml'
+      - '.github/workflows/*.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Normalize canonical domain and redirects
+        run: python3 tools/normalize_primary_domain.py --source
+
+      - name: Commit normalized source
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No normalization changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools .github/workflows
+          git commit -m "Normalize WCCM primary domain"
+          git push origin HEAD:main

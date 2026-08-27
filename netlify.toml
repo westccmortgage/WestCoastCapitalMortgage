@@ -1,4 +1,7 @@
 # West Coast Capital Mortgage — static site
-# Deployable site lives in wccm-corporate/. No build step.
+# Deployable site lives in wccm-corporate/.
+# Normalize canonical-domain references at build time so generated pages cannot
+# re-introduce the retired short domain.
 [build]
+  command = "python3 tools/normalize_primary_domain.py --deploy"
   publish = "wccm-corporate"
