@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /rate-tools
-Sitemap: https://westccmortgage.com/sitemap.xml
-Sitemap: https://westccmortgage.com/growth-sitemap.xml
+Sitemap: https://westcoastcapitalmortgage.com/sitemap.xml
+Sitemap: https://westcoastcapitalmortgage.com/growth-sitemap.xml
