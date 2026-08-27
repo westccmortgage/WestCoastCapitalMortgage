@@ -14,9 +14,10 @@ OLD = "westcoastcapitalmortgage.com"
 NEW = "westccmortgage.com"
 CANONICAL = f"https://{NEW}"
 
+# Netlify handles redirects from domain aliases to the configured Primary domain.
+# Do not add OLD -> NEW here: keeping that switch in Netlify avoids a temporary
+# redirect loop while the Primary domain is changed from OLD to NEW.
 DOMAIN_RULES = [
-    f"https://{OLD}/* {CANONICAL}/:splat 301!",
-    f"https://www.{OLD}/* {CANONICAL}/:splat 301!",
     f"https://westccmtg.com/* {CANONICAL}/:splat 301!",
     f"https://www.westccmtg.com/* {CANONICAL}/:splat 301!",
     f"https://cawccmortgage.com/* {CANONICAL}/:splat 301!",
@@ -48,9 +49,13 @@ def clean_redirects(path: Path) -> tuple[int, int]:
     seen_sources: set[str] = set()
     duplicate_count = 0
 
+    # Strip any previous host-level rules for both the old and new primary hosts,
+    # plus known aliases. Netlify itself controls OLD/NEW primary-domain routing.
     alternate_hosts = {
         OLD,
         f"www.{OLD}",
+        NEW,
+        f"www.{NEW}",
         "westccmtg.com",
         "www.westccmtg.com",
         "cawccmortgage.com",
@@ -159,7 +164,7 @@ def main() -> int:
     rule_count, duplicate_count = clean_redirects(publish / "_redirects")
 
     # Hard guard: no retired long-form-domain SEO references may remain in the
-    # published site except the intentional source host in _redirects.
+    # published site except intentional host-routing comments/rules in _redirects.
     leftovers = []
     for p in text_files_under(publish):
         if p.name == "_redirects":
