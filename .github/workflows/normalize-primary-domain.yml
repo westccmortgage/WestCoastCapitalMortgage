@@ -19,6 +19,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: normalize-wccm-primary-domain
+  cancel-in-progress: true
+
 jobs:
   normalize:
     if: github.actor != 'github-actions[bot]'
@@ -34,12 +38,39 @@ jobs:
       - name: Commit normalized source
         shell: bash
         run: |
-          if git diff --quiet; then
-            echo "No normalization changes needed."
-            exit 0
-          fi
+          set -euo pipefail
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools .github/workflows
-          git commit -m "Normalize WCCM primary domain"
-          git push origin HEAD:main
+
+          commit_normalized() {
+            git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools .github/workflows
+            if git diff --cached --quiet; then
+              echo "No normalization changes needed."
+              return 1
+            fi
+            git commit -m "Normalize WCCM primary domain"
+          }
+
+          if ! commit_normalized; then
+            exit 0
+          fi
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+
+            echo "main advanced during normalization; refreshing and retrying (${attempt}/3)."
+            git fetch origin main
+            git reset --hard origin/main
+            python3 tools/normalize_primary_domain.py --source
+
+            if ! commit_normalized; then
+              echo "Latest main is already normalized."
+              exit 0
+            fi
+          done
+
+          echo "Unable to publish normalized source after 3 attempts."
+          exit 1
