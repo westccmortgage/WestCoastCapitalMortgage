@@ -17,6 +17,8 @@ CANONICAL = f"https://{NEW}"
 DOMAIN_RULES = [
     f"https://{OLD}/* {CANONICAL}/:splat 301!",
     f"https://westccmtg.com/* {CANONICAL}/:splat 301!",
+    f"https://cawccmortgage.com/* {CANONICAL}/:splat 301!",
+    f"https://www.cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://westccmortgage.netlify.app/* {CANONICAL}/:splat 301!",
 ]
 
@@ -49,6 +51,8 @@ def clean_redirects(path: Path) -> tuple[int, int]:
         f"www.{OLD}",
         "westccmtg.com",
         "www.westccmtg.com",
+        "cawccmortgage.com",
+        "www.cawccmortgage.com",
         "westccmortgage.netlify.app",
     }
 
