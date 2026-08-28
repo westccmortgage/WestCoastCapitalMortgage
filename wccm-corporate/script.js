@@ -64,6 +64,59 @@
     });
   });
 
+  /* Paid-search landing-page capture for the highest-priority California intent.
+     Reuse the already-registered Netlify "apply" form so no new backend setup is
+     required; program + page attribution distinguish these submissions. */
+  function injectBankStatementLeadForm(){
+    var path=(window.location.pathname||'').replace(/\.html$/,'').replace(/\/$/,'');
+    if(path!='/bank-statement-loans')return;
+    if(document.getElementById('bank-statement-review'))return;
+    var faq=document.querySelector('section.bg-light');
+    if(!faq)return;
+    var section=document.createElement('section');
+    section.id='bank-statement-review';
+    section.className='bg-light';
+    section.innerHTML='\
+      <div class="wrap" style="max-width:920px">\
+        <div class="section-head center">\
+          <span class="eyebrow">Bank Statement Review</span>\
+          <h2>See whether a bank-statement path fits your California scenario</h2>\
+          <p class="lead">Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.</p>\
+        </div>\
+        <form class="form" data-ack name="apply" novalidate>\
+          <input type="hidden" name="form-name" value="apply">\
+          <input type="hidden" name="program_interest" value="Bank Statement / Self-Employed">\
+          <div class="form-ok" hidden>Thank you. A licensed mortgage professional will review your bank-statement scenario and follow up.</div>\
+          <div class="form-grid">\
+            <div class="field"><label for="bs-goal">Loan goal</label><select id="bs-goal" name="goal"><option>Buy a Home</option><option>Refinance</option><option>Investment Property</option></select></div>\
+            <div class="field"><label for="bs-area">California city / county</label><input id="bs-area" name="property_area" autocomplete="address-level2" required></div>\
+            <div class="field"><label for="bs-loan">Estimated loan amount ($)</label><input id="bs-loan" type="number" min="0" step="1000" name="loan_amount"></div>\
+            <div class="field"><label for="bs-statements">Statements available</label><select id="bs-statements" name="statements_available"><option>12 months</option><option>24 months</option><option>Personal statements</option><option>Business statements</option><option>Personal + business</option><option>Not sure yet</option></select></div>\
+            <div class="field"><label for="bs-years">Years self-employed</label><select id="bs-years" name="self_employed_years"><option>Less than 1 year</option><option>1–2 years</option><option>2–5 years</option><option>5+ years</option></select></div>\
+            <div class="field"><label for="bs-name">Full name</label><input id="bs-name" name="full_name" autocomplete="name" required></div>\
+            <div class="field"><label for="bs-email">Email</label><input id="bs-email" type="email" name="email" autocomplete="email" required></div>\
+            <div class="field"><label for="bs-phone">Phone</label><input id="bs-phone" type="tel" name="phone" autocomplete="tel" required></div>\
+            <div class="field full"><label for="bs-notes">Anything important about the income or property?</label><textarea id="bs-notes" name="message" placeholder="For example: business type, approximate monthly deposits, purchase timing, or property type."></textarea></div>\
+          </div>\
+          <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit">Request Bank Statement Review</button></div>\
+          <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE Corporation License #02440065 · Equal Housing Opportunity.</p>\
+        </form>\
+      </div>';
+    faq.parentNode.insertBefore(section,faq);
+
+    /* Make the first high-intent CTA keep paid visitors on the relevant page. */
+    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"]');
+    if(firstCta){
+      firstCta.setAttribute('href','#bank-statement-review');
+      firstCta.textContent='Request Bank Statement Review';
+      firstCta.addEventListener('click',function(e){
+        e.preventDefault();
+        document.getElementById('bank-statement-review').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    }
+  }
+  injectBankStatementLeadForm();
+
   /* Contact / apply forms — Netlify submission + attribution */
   document.querySelectorAll('form[data-ack]').forEach(function(f){
     addAttribution(f);
@@ -80,6 +133,7 @@
           pushEvent('wccm_lead_submit',{
             form_name:f.getAttribute('name')||'lead_form',
             page_path:window.location.pathname,
+            program_interest:(f.querySelector('[name="program_interest"]')||{}).value||'',
             utm_source:attributionValue('utm_source'),
             utm_campaign:attributionValue('utm_campaign'),
             gclid:attributionValue('gclid')
@@ -115,7 +169,6 @@
     var price=val('c-price'),dpPct=val('c-down'),rate=val('c-rate'),term=val('c-term');
     var taxYr=val('c-tax'),insYr=val('c-ins'),hoa=val('c-hoa');
     var hint=document.getElementById('c-out-hint');
-    // Require home price, interest rate, and loan term before showing any dollar estimate.
     if(!(price>0&&rate>0&&term>0)){
       set('c-out-total','');
       if(hint)hint.style.display='';
