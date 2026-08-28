@@ -3,21 +3,32 @@
 
 Deploy mode updates the Netlify publish directory in-place.
 Source mode also updates WCCM generators/workflows so future rebuilds do not
-re-introduce the retired short domain.
+re-introduce the retired long-form domain.
 """
 from __future__ import annotations
 
 import argparse
 from pathlib import Path
 
-OLD = "westccmortgage.com"
-NEW = "westcoastcapitalmortgage.com"
+OLD = "westcoastcapitalmortgage.com"
+NEW = "westccmortgage.com"
 CANONICAL = f"https://{NEW}"
 
 DOMAIN_RULES = [
+    f"http://{OLD}/* {CANONICAL}/:splat 301!",
     f"https://{OLD}/* {CANONICAL}/:splat 301!",
+    f"http://www.{OLD}/* {CANONICAL}/:splat 301!",
+    f"https://www.{OLD}/* {CANONICAL}/:splat 301!",
+    f"http://www.{NEW}/* {CANONICAL}/:splat 301!",
+    f"https://www.{NEW}/* {CANONICAL}/:splat 301!",
+    f"http://{NEW}/* {CANONICAL}/:splat 301!",
+    f"http://westccmtg.com/* {CANONICAL}/:splat 301!",
     f"https://westccmtg.com/* {CANONICAL}/:splat 301!",
+    f"http://www.westccmtg.com/* {CANONICAL}/:splat 301!",
+    f"https://www.westccmtg.com/* {CANONICAL}/:splat 301!",
+    f"http://cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://cawccmortgage.com/* {CANONICAL}/:splat 301!",
+    f"http://www.cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://www.cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://westccmortgage.netlify.app/* {CANONICAL}/:splat 301!",
 ]
@@ -46,9 +57,13 @@ def clean_redirects(path: Path) -> tuple[int, int]:
     seen_sources: set[str] = set()
     duplicate_count = 0
 
+    # Strip all existing host-normalization rules for either the retired or
+    # preferred host, plus aliases, before rebuilding one authoritative block.
     alternate_hosts = {
         OLD,
         f"www.{OLD}",
+        NEW,
+        f"www.{NEW}",
         "westccmtg.com",
         "www.westccmtg.com",
         "cawccmortgage.com",
@@ -85,7 +100,7 @@ def clean_redirects(path: Path) -> tuple[int, int]:
         "# West Coast Capital Mortgage — Netlify redirects",
         f"# Canonical host: {CANONICAL}",
         "",
-        "# Alternate hosts -> canonical host",
+        "# Alternate and retired hosts -> canonical host",
         *DOMAIN_RULES,
         "",
         "# Retired URLs -> current consolidated pages (first-match order preserved)",
@@ -156,8 +171,8 @@ def main() -> int:
 
     rule_count, duplicate_count = clean_redirects(publish / "_redirects")
 
-    # Hard guard: no retired short-domain SEO references may remain in the
-    # published site except the intentional source host in _redirects.
+    # Hard guard: no retired long-domain SEO references may remain in the
+    # published site except the intentional source hosts in _redirects.
     leftovers = []
     for p in text_files_under(publish):
         if p.name == "_redirects":
