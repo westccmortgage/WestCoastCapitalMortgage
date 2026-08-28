@@ -80,7 +80,7 @@ FOOTER = '''<footer class="site-footer">
         <li><a href="/get-preapproved.html">Get Pre-Approved</a></li>
         <li><a href="/index.html#builder">Strategy Studio</a></li>
         <li><a href="/about-human-review.html">Human Review</a></li>
-        <li><a href="https://westccmortgage.com">Main Website</a></li>
+        <li><a href="https://westcoastcapitalmortgage.com">Main Website</a></li>
       </ul>
     </div>
     <div class="footer-col">
