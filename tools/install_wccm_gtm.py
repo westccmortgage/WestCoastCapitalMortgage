@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Install the WCCM Google Tag Manager container on every full HTML document.
+"""Install the WCCM Google Tag Manager container on production HTML documents.
 
-The WCCM publish tree also contains a few .html redirect/fragment stubs that are
-not complete HTML documents. Those are intentionally skipped. Every full HTML
-document must receive both GTM snippets, and critical paid-search pages are
-verified explicitly so tracking cannot silently disappear.
+The publish tree contains normal pages plus a few redirect/legacy .html stubs.
+Normal documents receive both GTM snippets. Nonstandard stubs are skipped, while
+critical lead and paid-search pages are explicitly required to contain GTM.
 """
 from __future__ import annotations
 
@@ -40,26 +39,24 @@ CRITICAL_PAGES = (
 )
 
 
-def is_full_html_document(text: str) -> bool:
-    lower = text.lower()
-    return "<html" in lower or "<!doctype html" in lower
-
-
-def inject(path: Path) -> tuple[bool, bool]:
+def inject(path: Path) -> tuple[bool, str | None]:
     text = path.read_text(encoding="utf-8")
-    if not is_full_html_document(text):
-        return False, True
+    lower = text.lower()
 
-    # Protect against accidentally running two different GTM containers on WCCM.
-    if "googletagmanager.com/gtm.js" in text or "googletagmanager.com/ns.html" in text:
-        ids = {m.upper() for m in GTM_ID_RE.findall(text)}
-        if ids and ids != {GTM_ID}:
-            raise SystemExit(f"Conflicting GTM container(s) in {path}: {sorted(ids)}")
+    # Some legacy .html files are redirect/fragment stubs rather than documents.
+    if "<html" not in lower and "<!doctype html" not in lower:
+        return False, "non-document"
 
     head = HEAD_TAG_RE.search(text)
     body = BODY_TAG_RE.search(text)
     if not head or not body:
-        raise SystemExit(f"Malformed full HTML document (missing head/body): {path}")
+        return False, "nonstandard-document"
+
+    # Never silently install alongside a different GTM container.
+    if "googletagmanager.com/gtm.js" in text or "googletagmanager.com/ns.html" in text:
+        ids = {m.upper() for m in GTM_ID_RE.findall(text)}
+        if ids and ids != {GTM_ID}:
+            raise SystemExit(f"Conflicting GTM container(s) in {path}: {sorted(ids)}")
 
     changed = False
     if "googletagmanager.com/gtm.js" not in text:
@@ -71,15 +68,16 @@ def inject(path: Path) -> tuple[bool, bool]:
         text = text[: body.end()] + "\n" + BODY_SNIPPET + text[body.end() :]
         changed = True
 
-    if GTM_ID not in text or "googletagmanager.com/gtm.js" not in text or "googletagmanager.com/ns.html" not in text:
+    required = (GTM_ID, "googletagmanager.com/gtm.js", "googletagmanager.com/ns.html")
+    if not all(token in text for token in required):
         raise SystemExit(f"GTM verification failed for {path}")
 
     if changed:
         path.write_text(text, encoding="utf-8")
-    return changed, False
+    return changed, None
 
 
-def verify_page(path: Path) -> None:
+def verify_critical(path: Path) -> None:
     if not path.is_file():
         raise SystemExit(f"Critical WCCM page missing: {path}")
     text = path.read_text(encoding="utf-8")
@@ -96,23 +94,28 @@ def main() -> int:
         raise SystemExit(f"No HTML pages found under {publish}")
 
     changed = 0
-    skipped_stubs = 0
-    full_docs = 0
+    installed_docs = 0
+    skipped_non_document = 0
+    skipped_nonstandard = 0
+
     for page in pages:
-        page_changed, skipped = inject(page)
-        if skipped:
-            skipped_stubs += 1
+        page_changed, skip_reason = inject(page)
+        if skip_reason == "non-document":
+            skipped_non_document += 1
             continue
-        full_docs += 1
-        if page_changed:
-            changed += 1
+        if skip_reason == "nonstandard-document":
+            skipped_nonstandard += 1
+            continue
+        installed_docs += 1
+        changed += int(page_changed)
 
     for rel in CRITICAL_PAGES:
-        verify_page(publish / rel)
+        verify_critical(publish / rel)
 
     print(
-        f"GTM {GTM_ID} verified on {full_docs} full WCCM HTML documents; "
-        f"changed={changed}; non-document stubs skipped={skipped_stubs}; "
+        f"GTM {GTM_ID}: verified={installed_docs}, changed={changed}, "
+        f"non_document_stubs={skipped_non_document}, "
+        f"nonstandard_stubs={skipped_nonstandard}, "
         f"critical_pages={len(CRITICAL_PAGES)}"
     )
     return 0
