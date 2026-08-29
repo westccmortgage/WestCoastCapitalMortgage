@@ -1,10 +1,11 @@
-name: Normalize WCCM primary domain
+name: Normalize WCCM production source
 
 on:
   push:
     branches: [main]
     paths:
       - 'tools/normalize_primary_domain.py'
+      - 'tools/install_wccm_gtm.py'
       - 'wccm-corporate/**'
       - 'gen_city_pages.py'
       - 'gen_geo_pages.py'
@@ -20,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: normalize-wccm-primary-domain
+  group: normalize-wccm-production-source
   cancel-in-progress: true
 
 jobs:
@@ -35,7 +36,10 @@ jobs:
       - name: Normalize canonical domain and redirects
         run: python3 tools/normalize_primary_domain.py --source
 
-      - name: Commit normalized source
+      - name: Install and verify GTM in WCCM HTML
+        run: python3 tools/install_wccm_gtm.py
+
+      - name: Commit normalized production source
         shell: bash
         run: |
           set -euo pipefail
@@ -46,10 +50,10 @@ jobs:
           commit_normalized() {
             git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools .github/workflows
             if git diff --cached --quiet; then
-              echo "No normalization changes needed."
+              echo "No production-source changes needed."
               return 1
             fi
-            git commit -m "Normalize WCCM primary domain"
+            git commit -m "Normalize WCCM production source"
           }
 
           if ! commit_normalized; then
@@ -65,12 +69,13 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python3 tools/normalize_primary_domain.py --source
+            python3 tools/install_wccm_gtm.py
 
             if ! commit_normalized; then
-              echo "Latest main is already normalized."
+              echo "Latest main is already normalized and GTM-persisted."
               exit 0
             fi
           done
 
-          echo "Unable to publish normalized source after 3 attempts."
+          echo "Unable to publish normalized production source after 3 attempts."
           exit 1
