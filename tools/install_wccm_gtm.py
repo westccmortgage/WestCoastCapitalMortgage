@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Install the WCCM Google Tag Manager container on production HTML documents.
+"""Install WCCM tracking on production HTML documents.
 
 The publish tree contains normal pages plus a few redirect/legacy .html stubs.
-Normal documents receive both GTM snippets. Nonstandard stubs are skipped, while
-critical lead and paid-search pages are explicitly required to contain GTM.
+Normal documents receive GTM plus the Google Ads base tag. Nonstandard stubs are
+skipped, while critical lead and paid-search pages are explicitly required to
+contain both tracking layers.
 """
 from __future__ import annotations
 
@@ -11,8 +12,9 @@ import re
 from pathlib import Path
 
 GTM_ID = "GTM-WDSXSS5Z"
+GOOGLE_ADS_ID = "AW-18417657219"
 
-HEAD_SNIPPET = f"""<!-- Google Tag Manager -->
+GTM_HEAD_SNIPPET = f"""<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
 new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -20,14 +22,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }})(window,document,'script','dataLayer','{GTM_ID}');</script>
 <!-- End Google Tag Manager -->"""
 
-BODY_SNIPPET = f"""<!-- Google Tag Manager (noscript) -->
+GTM_BODY_SNIPPET = f"""<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={GTM_ID}"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->"""
 
+GOOGLE_ADS_HEAD_SNIPPET = f"""<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE_ADS_ID}"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
+window.gtag('js',new Date());
+window.gtag('config','{GOOGLE_ADS_ID}');
+</script>
+<!-- End Google tag - Google Ads -->"""
+
 HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
 GTM_ID_RE = re.compile(r"GTM-[A-Z0-9]+", re.IGNORECASE)
+ADS_ID_RE = re.compile(r"AW-[0-9]+", re.IGNORECASE)
 
 CRITICAL_PAGES = (
     "index.html",
@@ -58,19 +71,45 @@ def inject(path: Path) -> tuple[bool, str | None]:
         if ids and ids != {GTM_ID}:
             raise SystemExit(f"Conflicting GTM container(s) in {path}: {sorted(ids)}")
 
+    # Never silently install alongside a different direct Google Ads tag.
+    direct_ads_tag_present = "googletagmanager.com/gtag/js" in text
+    if direct_ads_tag_present:
+        ads_ids = {m.upper() for m in ADS_ID_RE.findall(text)}
+        if ads_ids and GOOGLE_ADS_ID not in ads_ids:
+            raise SystemExit(f"Conflicting Google Ads tag(s) in {path}: {sorted(ads_ids)}")
+
     changed = False
     if "googletagmanager.com/gtm.js" not in text:
-        text = text[: head.end()] + "\n" + HEAD_SNIPPET + text[head.end() :]
+        head = HEAD_TAG_RE.search(text)
+        text = text[: head.end()] + "\n" + GTM_HEAD_SNIPPET + text[head.end() :]
+        changed = True
+
+    if f"gtag/js?id={GOOGLE_ADS_ID}" not in text:
+        # Put the Ads base tag directly after the GTM head snippet when possible.
+        marker = "<!-- End Google Tag Manager -->"
+        pos = text.find(marker)
+        if pos >= 0:
+            pos += len(marker)
+            text = text[:pos] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[pos:]
+        else:
+            head = HEAD_TAG_RE.search(text)
+            text = text[: head.end()] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[head.end() :]
         changed = True
 
     if "googletagmanager.com/ns.html" not in text:
         body = BODY_TAG_RE.search(text)
-        text = text[: body.end()] + "\n" + BODY_SNIPPET + text[body.end() :]
+        text = text[: body.end()] + "\n" + GTM_BODY_SNIPPET + text[body.end() :]
         changed = True
 
-    required = (GTM_ID, "googletagmanager.com/gtm.js", "googletagmanager.com/ns.html")
+    required = (
+        GTM_ID,
+        "googletagmanager.com/gtm.js",
+        "googletagmanager.com/ns.html",
+        GOOGLE_ADS_ID,
+        f"gtag/js?id={GOOGLE_ADS_ID}",
+    )
     if not all(token in text for token in required):
-        raise SystemExit(f"GTM verification failed for {path}")
+        raise SystemExit(f"Tracking verification failed for {path}")
 
     if changed:
         path.write_text(text, encoding="utf-8")
@@ -81,9 +120,15 @@ def verify_critical(path: Path) -> None:
     if not path.is_file():
         raise SystemExit(f"Critical WCCM page missing: {path}")
     text = path.read_text(encoding="utf-8")
-    required = (GTM_ID, "googletagmanager.com/gtm.js", "googletagmanager.com/ns.html")
+    required = (
+        GTM_ID,
+        "googletagmanager.com/gtm.js",
+        "googletagmanager.com/ns.html",
+        GOOGLE_ADS_ID,
+        f"gtag/js?id={GOOGLE_ADS_ID}",
+    )
     if not all(token in text for token in required):
-        raise SystemExit(f"Critical WCCM page is not GTM-instrumented: {path}")
+        raise SystemExit(f"Critical WCCM page is not fully instrumented: {path}")
 
 
 def main() -> int:
@@ -113,7 +158,8 @@ def main() -> int:
         verify_critical(publish / rel)
 
     print(
-        f"GTM {GTM_ID}: verified={installed_docs}, changed={changed}, "
+        f"WCCM tracking GTM={GTM_ID} Ads={GOOGLE_ADS_ID}: "
+        f"verified={installed_docs}, changed={changed}, "
         f"non_document_stubs={skipped_non_document}, "
         f"nonstandard_stubs={skipped_nonstandard}, "
         f"critical_pages={len(CRITICAL_PAGES)}"
