@@ -2,9 +2,11 @@
 """Install WCCM tracking on production HTML documents.
 
 The publish tree contains normal pages plus a few redirect/legacy .html stubs.
-Normal documents receive GTM plus the Google Ads base tag. Nonstandard stubs are
-skipped, while critical lead and paid-search pages are explicitly required to
-contain both tracking layers.
+Normal documents receive GTM plus the Google Ads base tag. The Ads tag also
+listens for the site's existing `wccm_lead_submit` dataLayer event and sends the
+Google Ads `WCCM - Mortgage Lead` conversion only after a form was accepted.
+Nonstandard stubs are skipped, while critical lead and paid-search pages are
+explicitly required to contain both tracking layers.
 """
 from __future__ import annotations
 
@@ -13,6 +15,9 @@ from pathlib import Path
 
 GTM_ID = "GTM-WDSXSS5Z"
 GOOGLE_ADS_ID = "AW-18417657219"
+GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
+ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
+ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
 GTM_HEAD_SNIPPET = f"""<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
@@ -27,15 +32,39 @@ GTM_BODY_SNIPPET = f"""<!-- Google Tag Manager (noscript) -->
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->"""
 
-GOOGLE_ADS_HEAD_SNIPPET = f"""<!-- Google tag (gtag.js) - Google Ads -->
+GOOGLE_ADS_HEAD_SNIPPET = f"""{ADS_BLOCK_START}
 <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE_ADS_ID}"></script>
 <script>
 window.dataLayer=window.dataLayer||[];
 window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){{
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  var dl=window.dataLayer;
+  var originalPush=dl.push.bind(dl);
+  dl.push=function(){{
+    for(var i=0;i<arguments.length;i++){{
+      var item=arguments[i];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){{
+        item.__wccmAdsLeadSent=true;
+        window.gtag('event','conversion',{{
+          'send_to':'{GOOGLE_ADS_LEAD_DESTINATION}',
+          'value':1.0,
+          'currency':'USD'
+        }});
+      }}
+    }}
+    return originalPush.apply(dl,arguments);
+  }};
+}})();
+
 window.gtag('js',new Date());
 window.gtag('config','{GOOGLE_ADS_ID}');
 </script>
-<!-- End Google tag - Google Ads -->"""
+{ADS_BLOCK_END}"""
 
 HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
@@ -50,6 +79,29 @@ CRITICAL_PAGES = (
     "dscr-loans.html",
     "loans/jumbo/los-angeles-county.html",
 )
+
+
+def replace_ads_block(text: str) -> tuple[str, bool]:
+    """Install or upgrade the authoritative direct Google Ads block."""
+    start = text.find(ADS_BLOCK_START)
+    end = text.find(ADS_BLOCK_END)
+    if start >= 0 and end >= start:
+        end += len(ADS_BLOCK_END)
+        existing = text[start:end]
+        if existing == GOOGLE_ADS_HEAD_SNIPPET:
+            return text, False
+        return text[:start] + GOOGLE_ADS_HEAD_SNIPPET + text[end:], True
+
+    marker = "<!-- End Google Tag Manager -->"
+    pos = text.find(marker)
+    if pos >= 0:
+        pos += len(marker)
+        return text[:pos] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[pos:], True
+
+    head = HEAD_TAG_RE.search(text)
+    if not head:
+        return text, False
+    return text[: head.end()] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[head.end() :], True
 
 
 def inject(path: Path) -> tuple[bool, str | None]:
@@ -72,8 +124,7 @@ def inject(path: Path) -> tuple[bool, str | None]:
             raise SystemExit(f"Conflicting GTM container(s) in {path}: {sorted(ids)}")
 
     # Never silently install alongside a different direct Google Ads tag.
-    direct_ads_tag_present = "googletagmanager.com/gtag/js" in text
-    if direct_ads_tag_present:
+    if "googletagmanager.com/gtag/js" in text:
         ads_ids = {m.upper() for m in ADS_ID_RE.findall(text)}
         if ads_ids and GOOGLE_ADS_ID not in ads_ids:
             raise SystemExit(f"Conflicting Google Ads tag(s) in {path}: {sorted(ads_ids)}")
@@ -84,17 +135,8 @@ def inject(path: Path) -> tuple[bool, str | None]:
         text = text[: head.end()] + "\n" + GTM_HEAD_SNIPPET + text[head.end() :]
         changed = True
 
-    if f"gtag/js?id={GOOGLE_ADS_ID}" not in text:
-        # Put the Ads base tag directly after the GTM head snippet when possible.
-        marker = "<!-- End Google Tag Manager -->"
-        pos = text.find(marker)
-        if pos >= 0:
-            pos += len(marker)
-            text = text[:pos] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[pos:]
-        else:
-            head = HEAD_TAG_RE.search(text)
-            text = text[: head.end()] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[head.end() :]
-        changed = True
+    text, ads_changed = replace_ads_block(text)
+    changed = changed or ads_changed
 
     if "googletagmanager.com/ns.html" not in text:
         body = BODY_TAG_RE.search(text)
@@ -107,6 +149,8 @@ def inject(path: Path) -> tuple[bool, str | None]:
         "googletagmanager.com/ns.html",
         GOOGLE_ADS_ID,
         f"gtag/js?id={GOOGLE_ADS_ID}",
+        GOOGLE_ADS_LEAD_DESTINATION,
+        "wccm_lead_submit",
     )
     if not all(token in text for token in required):
         raise SystemExit(f"Tracking verification failed for {path}")
@@ -126,6 +170,8 @@ def verify_critical(path: Path) -> None:
         "googletagmanager.com/ns.html",
         GOOGLE_ADS_ID,
         f"gtag/js?id={GOOGLE_ADS_ID}",
+        GOOGLE_ADS_LEAD_DESTINATION,
+        "wccm_lead_submit",
     )
     if not all(token in text for token in required):
         raise SystemExit(f"Critical WCCM page is not fully instrumented: {path}")
