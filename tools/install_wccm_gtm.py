@@ -43,11 +43,11 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
 (function(){{
   if(window.__wccmAdsLeadConversionHook)return;
   window.__wccmAdsLeadConversionHook=true;
-  var dl=window.dataLayer;
-  var originalPush=dl.push.bind(dl);
-  dl.push=function(){{
-    for(var i=0;i<arguments.length;i++){{
-      var item=arguments[i];
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadScanner=setInterval(function(){{
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){{
+      var item=dl[window.__wccmAdsLeadCursor++];
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){{
         item.__wccmAdsLeadSent=true;
         window.gtag('event','conversion',{{
@@ -57,8 +57,7 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
         }});
       }}
     }}
-    return originalPush.apply(dl,arguments);
-  }};
+  }},200);
 }})();
 
 window.gtag('js',new Date());
