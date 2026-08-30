@@ -3,20 +3,23 @@
 
 Deploy mode updates the Netlify publish directory in-place.
 Source mode also updates WCCM generators/workflows so future rebuilds do not
-re-introduce the retired short domain.
+re-introduce the legacy long domain.
 """
 from __future__ import annotations
 
 import argparse
 from pathlib import Path
 
-OLD = "westccmortgage.com"
-NEW = "westcoastcapitalmortgage.com"
+OLD = "westcoastcapitalmortgage.com"
+NEW = "westccmortgage.com"
 CANONICAL = f"https://{NEW}"
 
 DOMAIN_RULES = [
     f"https://{OLD}/* {CANONICAL}/:splat 301!",
+    f"https://www.{OLD}/* {CANONICAL}/:splat 301!",
+    f"https://www.{NEW}/* {CANONICAL}/:splat 301!",
     f"https://westccmtg.com/* {CANONICAL}/:splat 301!",
+    f"https://www.westccmtg.com/* {CANONICAL}/:splat 301!",
     f"https://cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://www.cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://westccmortgage.netlify.app/* {CANONICAL}/:splat 301!",
@@ -49,6 +52,7 @@ def clean_redirects(path: Path) -> tuple[int, int]:
     alternate_hosts = {
         OLD,
         f"www.{OLD}",
+        f"www.{NEW}",
         "westccmtg.com",
         "www.westccmtg.com",
         "cawccmortgage.com",
@@ -156,7 +160,7 @@ def main() -> int:
 
     rule_count, duplicate_count = clean_redirects(publish / "_redirects")
 
-    # Hard guard: no retired short-domain SEO references may remain in the
+    # Hard guard: no legacy long-domain SEO references may remain in the
     # published site except the intentional source host in _redirects.
     leftovers = []
     for p in text_files_under(publish):
