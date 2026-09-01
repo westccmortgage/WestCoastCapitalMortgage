@@ -263,6 +263,11 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
 .form textarea{min-height:120px;resize:vertical}
 .form-note{font-size:.86rem;color:var(--gray);margin-top:14px}
 .form-ok{background:#e9f6ee;border:1px solid #b7e0c6;color:#176b3a;border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.form-error-summary{background:#fff1f0;border:1px solid #f0b8b3;color:#9f251e;border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.form .field-error{color:#9f251e;font-size:.82rem;font-weight:600;line-height:1.4;margin:0}
+.form .field input[aria-invalid="true"],.form .field select[aria-invalid="true"],.form .field textarea[aria-invalid="true"]{
+  border-color:#c7392f;box-shadow:0 0 0 1px #c7392f}
+.form button[type="submit"]:disabled{cursor:not-allowed;opacity:.68;transform:none}
 .hp{position:absolute;left:-9999px}
 
 /* ---------- Accordion ---------- */
