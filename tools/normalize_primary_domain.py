@@ -19,6 +19,10 @@ DOMAIN_RULES = [
     f"https://westccmtg.com/* {CANONICAL}/:splat 301!",
     f"https://cawccmortgage.com/* {CANONICAL}/:splat 301!",
     f"https://www.cawccmortgage.com/* {CANONICAL}/:splat 301!",
+    f"https://cawccm.com/* {CANONICAL}/:splat 301!",
+    f"http://cawccm.com/* {CANONICAL}/:splat 301!",
+    f"https://www.cawccm.com/* {CANONICAL}/:splat 301!",
+    f"http://www.cawccm.com/* {CANONICAL}/:splat 301!",
     f"https://westccmortgage.netlify.app/* {CANONICAL}/:splat 301!",
 ]
 
@@ -53,6 +57,8 @@ def clean_redirects(path: Path) -> tuple[int, int]:
         "www.westccmtg.com",
         "cawccmortgage.com",
         "www.cawccmortgage.com",
+        "cawccm.com",
+        "www.cawccm.com",
         "westccmortgage.netlify.app",
     }
 
