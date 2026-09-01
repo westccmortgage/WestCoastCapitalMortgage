@@ -18,16 +18,21 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
   if(window.__wccmAdsLeadConversionHook)return;
   window.__wccmAdsLeadConversionHook=true;
   window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
   window.__wccmAdsLeadScanner=setInterval(function(){
     var dl=window.dataLayer||[];
     while(window.__wccmAdsLeadCursor<dl.length){
       var item=dl[window.__wccmAdsLeadCursor++];
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
         item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
         window.gtag('event','conversion',{
           'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
           'value':1.0,
-          'currency':'USD'
+          'currency':'USD',
+          'transaction_id':leadEventId
         });
       }
     }
