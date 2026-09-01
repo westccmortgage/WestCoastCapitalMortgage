@@ -16,6 +16,7 @@ from pathlib import Path
 GTM_ID = "GTM-WDSXSS5Z"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
+ASSET_VERSION = "20260831-lead-validation"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
@@ -74,6 +75,14 @@ HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
 GTM_ID_RE = re.compile(r"GTM-[A-Z0-9]+", re.IGNORECASE)
 ADS_ID_RE = re.compile(r"AW-[0-9]+", re.IGNORECASE)
+SCRIPT_ASSET_RE = re.compile(
+    r"(<script\b[^>]*\bsrc=[\"'][^\"']*script\.js)(?:\?[^\"']*)?([\"'])",
+    re.IGNORECASE,
+)
+STYLE_ASSET_RE = re.compile(
+    r"(<link\b[^>]*\bhref=[\"'][^\"']*styles\.css)(?:\?[^\"']*)?([\"'])",
+    re.IGNORECASE,
+)
 
 CRITICAL_PAGES = (
     "index.html",
@@ -141,6 +150,16 @@ def inject(path: Path) -> tuple[bool, str | None]:
 
     text, ads_changed = replace_ads_block(text)
     changed = changed or ads_changed
+
+    # Bust stale browser/CDN copies whenever the shared lead form or its styles
+    # change. The build applies this consistently to every deployable page.
+    text, script_versioned = SCRIPT_ASSET_RE.subn(
+        lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
+    )
+    text, style_versioned = STYLE_ASSET_RE.subn(
+        lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
+    )
+    changed = changed or bool(script_versioned) or bool(style_versioned)
 
     if "googletagmanager.com/ns.html" not in text:
         body = BODY_TAG_RE.search(text)
