@@ -6,6 +6,10 @@ https://westccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://westccmtg.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://www.cawccmortgage.com/* https://westcoastcapitalmortgage.com/:splat 301!
+https://cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
+http://cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
+https://www.cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
+http://www.cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat 301!
 
 # Retired URLs -> current consolidated pages (first-match order preserved)
