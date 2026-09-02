@@ -146,6 +146,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div><span class="eyebrow">REQUEST A PRIVATE CONVERSATION</span><h2>Let&rsquo;s see if there is a real fit.</h2><p>Share a little about your experience and what you want from your next mortgage platform. We will contact you directly—no automated recruiting sequence.</p><div class="partner-direct"><span>Prefer to speak now?</span><a href="tel:3106865053">310-686-5053</a></div></div>
       <form class="partner-form" name="mortgage-partner-inquiry" method="POST" data-netlify="true" data-ack>
         <input type="hidden" name="form-name" value="mortgage-partner-inquiry">
+        <!-- Attribution: script.js fills these at submit time, but Netlify only keeps
+             fields it parsed from this HTML at deploy time. Declared, or dropped. -->
+        <input type="hidden" name="utm_source">
+        <input type="hidden" name="utm_medium">
+        <input type="hidden" name="utm_campaign">
+        <input type="hidden" name="utm_term">
+        <input type="hidden" name="utm_content">
+        <input type="hidden" name="gclid">
+        <input type="hidden" name="gbraid">
+        <input type="hidden" name="wbraid">
+        <input type="hidden" name="landing_page">
+        <input type="hidden" name="conversion_page">
+        <input type="hidden" name="source_path">
         <div class="partner-form-grid">
           <label>Full name<input name="name" type="text" autocomplete="name" required></label>
           <label>Email<input name="email" type="email" autocomplete="email" required></label>

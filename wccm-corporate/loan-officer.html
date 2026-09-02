@@ -208,6 +208,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
 <form class="form" data-ack name="loan-officer" netlify netlify-honeypot="company" novalidate>
   <input type="hidden" name="form-name" value="loan-officer">
+  <!-- Attribution: script.js fills these at submit time, but Netlify only keeps
+       fields it parsed from this HTML at deploy time. Declared, or dropped. -->
+  <input type="hidden" name="utm_source">
+  <input type="hidden" name="utm_medium">
+  <input type="hidden" name="utm_campaign">
+  <input type="hidden" name="utm_term">
+  <input type="hidden" name="utm_content">
+  <input type="hidden" name="gclid">
+  <input type="hidden" name="gbraid">
+  <input type="hidden" name="wbraid">
+  <input type="hidden" name="landing_page">
+  <input type="hidden" name="conversion_page">
+  <input type="hidden" name="source_path">
   <div class="form-ok" hidden>Thanks! A loan advisor will reach out shortly.</div>
   <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">
   <div class="form-grid">
