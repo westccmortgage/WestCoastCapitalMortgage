@@ -201,7 +201,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </footer>
+<!-- Netlify only registers the fields it finds in the served HTML at deploy time.
+     The visible Bank Statement form is injected by script.js, so it is invisible to
+     that parser: this hidden twin declares the schema. Keep the two field lists in
+     sync — any name missing here is silently dropped from the submission. -->
+<form name="bank-statement-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="bank-statement-lead">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="goal">
+  <input name="property_area">
+  <input name="loan_amount">
+  <input name="statements_available">
+  <input name="self_employed_years">
+  <input name="full_name">
+  <input name="email">
+  <input name="phone">
+  <textarea name="message"></textarea>
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+</form>
 <script src="i18n.js"></script>
-<script src="script.js?v=20260831-lead-validation"></script>
+<script src="script.js?v=20260902-bank-statement-schema"></script>
 </body>
 </html>

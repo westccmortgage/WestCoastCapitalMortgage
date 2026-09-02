@@ -83,8 +83,9 @@
           <h2>See whether a bank-statement path fits your California scenario</h2>\
           <p class="lead">Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.</p>\
         </div>\
-        <form id="bank-statement-lead-form" class="form" data-ack data-validate name="apply" novalidate>\
-          <input type="hidden" name="form-name" value="apply">\
+        <form id="bank-statement-lead-form" class="form" data-ack data-validate name="bank-statement-lead" netlify netlify-honeypot="company" novalidate>\
+          <input type="hidden" name="form-name" value="bank-statement-lead">\
+          <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
           <input type="hidden" name="program_interest" value="Bank Statement / Self-Employed">\
           <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>\
           <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your bank-statement scenario and follow up.</div>\
@@ -159,7 +160,7 @@
   }
   function validateForm(form){
     var firstInvalid=null;
-    form.querySelectorAll('input:not([type="hidden"]),select,textarea').forEach(function(field){
+    form.querySelectorAll('input:not([type="hidden"]):not(.hp),select,textarea').forEach(function(field){
       if(!validateField(field)&&!firstInvalid)firstInvalid=field;
     });
     if(firstInvalid){
@@ -174,7 +175,7 @@
   document.querySelectorAll('form[data-ack]').forEach(function(f){
     addAttribution(f);
     if(f.hasAttribute('data-validate')){
-      f.querySelectorAll('input:not([type="hidden"]),select,textarea').forEach(function(field){
+      f.querySelectorAll('input:not([type="hidden"]):not(.hp),select,textarea').forEach(function(field){
         fieldErrorElement(field);
         field.addEventListener('blur',function(){validateField(field);});
         field.addEventListener('input',function(){if(field.getAttribute('aria-invalid')==='true')validateField(field);});
