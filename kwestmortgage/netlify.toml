@@ -5,7 +5,7 @@
 
 [build]
   publish = "."
-  # No build step required — static HTML/CSS/JS.
+  command = "node scripts/install-ads.mjs"
 
 [[headers]]
   for = "/*"
