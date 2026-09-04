@@ -86,7 +86,10 @@ function captureFirstVisit() {
     utm_medium: p.get("utm_medium") || "",
     utm_campaign: p.get("utm_campaign") || "",
     utm_content: p.get("utm_content") || "",
-    utm_term: p.get("utm_term") || ""
+    utm_term: p.get("utm_term") || "",
+    gclid: p.get("gclid") || "",
+    gbraid: p.get("gbraid") || "",
+    wbraid: p.get("wbraid") || ""
   }));
 }
 
