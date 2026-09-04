@@ -3,5 +3,5 @@
 # Normalize canonical-domain references and install production tracking at build
 # time so generated pages cannot re-introduce the retired short domain or lose GTM.
 [build]
-  command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/install_wccm_gtm.py"
+  command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/install_wccm_gtm.py && python3 tools/install_wccm_ads_readiness.py"
   publish = "wccm-corporate"

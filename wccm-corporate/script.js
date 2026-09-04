@@ -119,6 +119,228 @@
   }
   injectBankStatementLeadForm();
 
+  /* Paid search points at program pages that had no capture form at all, so the
+     only next step was an off-site application. Each entry below builds one
+     on-page form. Field names must match the hidden schema twins that
+     tools/install_wccm_ads_readiness.py writes into the static HTML, because
+     Netlify stores only the fields of a registered form. */
+  var CITY_FIELD={name:'property_area',label:'California city / county',required:'Enter a California city or county.',autocomplete:'address-level2'};
+  var AMOUNT_FIELD={name:'loan_amount',label:'Estimated loan amount ($)',type:'number',min:'0',step:'1000'};
+  var CONTACT_FIELDS=[
+    {name:'full_name',label:'Full name',required:'Enter your full name.',autocomplete:'name',minlength:'2'},
+    {name:'email',label:'Email',type:'email',required:'Enter your email address.',autocomplete:'email'},
+    {name:'phone',label:'Phone',type:'tel',required:'Enter your phone number.',autocomplete:'tel',inputmode:'tel'}
+  ];
+  function notesField(placeholder){
+    return {name:'message',label:'Anything else we should know?',textarea:true,full:true,placeholder:placeholder};
+  }
+
+  var PROGRAM_LEAD_FORMS={
+    '/':{
+      id:'mortgage-review',formName:'mortgage-lead',programInterest:'General mortgage inquiry',
+      eyebrow:'Mortgage Review',heading:'Talk with a licensed California mortgage broker',
+      lead:'Share the basics and a licensed mortgage professional will review your scenario before discussing any program, pricing, or qualification.',
+      button:'Request a Mortgage Review',
+      fields:[
+        {name:'goal',label:'What do you need?',options:['Buy a home','Refinance','Cash-out refinance','Investment property','Not sure yet']},
+        CITY_FIELD,AMOUNT_FIELD,
+        {name:'timeline',label:'Timeline',options:['As soon as possible','1-3 months','3-6 months','Just researching']}
+      ].concat(CONTACT_FIELDS,[notesField('For example: property type, employment, or what you are trying to solve.')])
+    },
+    '/jumbo-loans':{
+      id:'jumbo-review',formName:'jumbo-lead',programInterest:'Jumbo',
+      eyebrow:'Jumbo Review',heading:'See whether a jumbo loan fits your California purchase or refinance',
+      lead:'Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.',
+      button:'Request a Jumbo Review',
+      fields:[
+        {name:'goal',label:'Loan goal',options:['Buy a home','Refinance','Cash-out refinance','Second home','Investment property']},
+        CITY_FIELD,
+        {name:'purchase_price',label:'Purchase price or property value ($)',type:'number',min:'0',step:'10000'},
+        AMOUNT_FIELD,
+        {name:'income_documentation',label:'How is income documented?',options:['W-2 / salaried','Self-employed, tax returns','Bank statements','Asset depletion','Not sure yet']}
+      ].concat(CONTACT_FIELDS,[notesField('For example: property type, timing, or anything unusual about the income.')])
+    },
+    '/dscr-loans':{
+      id:'dscr-review',formName:'dscr-lead',programInterest:'DSCR / Investor',
+      eyebrow:'DSCR Review',heading:'See whether the rent supports a DSCR loan on your property',
+      lead:'Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.',
+      button:'Request a DSCR Review',
+      fields:[
+        {name:'goal',label:'Loan goal',options:['Purchase','Refinance','Cash-out refinance','Portfolio / multiple properties']},
+        CITY_FIELD,
+        {name:'property_type',label:'Property type',options:['Single-family','Condo','2-4 units','5+ units','Short-term rental']},
+        {name:'monthly_rent',label:'Actual or expected monthly rent ($)',type:'number',min:'0',step:'50'},
+        AMOUNT_FIELD,
+        {name:'vesting',label:'Title held in',options:['Personal name','LLC or entity','Not decided yet']}
+      ].concat(CONTACT_FIELDS,[notesField('For example: current occupancy, rehab plans, or how many properties you already own.')])
+    },
+    '/self-employed-borrowers':{
+      id:'self-employed-review',formName:'self-employed-lead',programInterest:'Self-employed',
+      eyebrow:'Self-Employed Review',heading:'See which self-employed path fits your California scenario',
+      lead:'Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.',
+      button:'Request a Self-Employed Review',
+      fields:[
+        {name:'goal',label:'Loan goal',options:['Buy a home','Refinance','Cash-out refinance','Investment property']},
+        CITY_FIELD,AMOUNT_FIELD,
+        {name:'income_documentation',label:'How would you document income?',options:['Bank statements','Profit and loss','1099s','Tax returns','Assets','Not sure yet']},
+        {name:'self_employed_years',label:'Years self-employed',options:['Less than 1 year','1-2 years','2-5 years','5+ years']}
+      ].concat(CONTACT_FIELDS,[notesField('For example: business type, approximate monthly deposits, or purchase timing.')])
+    }
+  };
+  PROGRAM_LEAD_FORMS['/loans/jumbo/los-angeles-county']=PROGRAM_LEAD_FORMS['/jumbo-loans'];
+  PROGRAM_LEAD_FORMS['/loans/dscr/los-angeles-metro']=PROGRAM_LEAD_FORMS['/dscr-loans'];
+
+  function buildLeadField(spec,idPrefix){
+    var wrap=document.createElement('div');
+    wrap.className=spec.full?'field full':'field';
+    var id=idPrefix+'-'+spec.name.replace(/_/g,'-');
+    var label=document.createElement('label');
+    label.setAttribute('for',id);
+    label.textContent=spec.label;
+    var control;
+    if(spec.options){
+      control=document.createElement('select');
+      spec.options.forEach(function(text){
+        var option=document.createElement('option');
+        option.textContent=text;
+        control.appendChild(option);
+      });
+    }else if(spec.textarea){
+      control=document.createElement('textarea');
+      if(spec.placeholder)control.setAttribute('placeholder',spec.placeholder);
+    }else{
+      control=document.createElement('input');
+      if(spec.type)control.setAttribute('type',spec.type);
+      ['min','step','minlength','autocomplete','inputmode'].forEach(function(attr){
+        if(spec[attr])control.setAttribute(attr,spec[attr]);
+      });
+    }
+    control.id=id;
+    control.setAttribute('name',spec.name);
+    if(spec.required){
+      control.setAttribute('required','');
+      control.setAttribute('data-error-required',spec.required);
+    }
+    wrap.appendChild(label);
+    wrap.appendChild(control);
+    return wrap;
+  }
+
+  /* Pages resolve as both /dscr-loans and /dscr-loans.html, and the homepage as
+     both / and /index.html, so normalise before matching a config. */
+  function leadFormPath(){
+    var path=(window.location.pathname||'/').replace(/\.html$/,'').replace(/\/index$/,'/');
+    path=path.replace(/(.)\/$/,'$1');
+    return path||'/';
+  }
+
+  function injectProgramLeadForm(){
+    var path=leadFormPath();
+    var config=PROGRAM_LEAD_FORMS[path];
+    if(!config)return;
+    if(document.getElementById(config.id))return;
+    var band=document.querySelector('.cta-band');
+    if(!band)return;
+
+    var section=document.createElement('section');
+    section.id=config.id;
+    section.className='bg-light';
+    var wrap=document.createElement('div');
+    wrap.className='wrap';
+    wrap.style.maxWidth='920px';
+    var head=document.createElement('div');
+    head.className='section-head center';
+    head.innerHTML='<span class="eyebrow"></span><h2></h2><p class="lead"></p>';
+    head.querySelector('.eyebrow').textContent=config.eyebrow;
+    head.querySelector('h2').textContent=config.heading;
+    head.querySelector('.lead').textContent=config.lead;
+
+    var form=document.createElement('form');
+    form.id=config.formName+'-form';
+    form.className='form';
+    form.setAttribute('data-ack','');
+    form.setAttribute('data-validate','');
+    form.setAttribute('name',config.formName);
+    form.setAttribute('netlify','');
+    form.setAttribute('netlify-honeypot','company');
+    form.setAttribute('novalidate','');
+    form.innerHTML='\
+      <input type="hidden" name="form-name">\
+      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
+      <input type="hidden" name="program_interest">\
+      <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>\
+      <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your scenario and follow up.</div>\
+      <div class="form-grid"></div>\
+      <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit"></button></div>\
+      <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage Inc. — NMLS #2817729 — CA DRE Corporation License #02440065 — Equal Housing Opportunity.</p>';
+    form.querySelector('[name="form-name"]').value=config.formName;
+    form.querySelector('[name="program_interest"]').value=config.programInterest;
+    form.querySelector('button[type="submit"]').textContent=config.button;
+    var grid=form.querySelector('.form-grid');
+    config.fields.forEach(function(spec){
+      grid.appendChild(buildLeadField(spec,config.id));
+    });
+
+    wrap.appendChild(head);
+    wrap.appendChild(form);
+    section.appendChild(wrap);
+    band.parentNode.insertBefore(section,band);
+
+    /* Keep the first high-intent CTA on the page the visitor paid to land on. */
+    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"],a.btn.btn-blue[href="/apply"],a.btn.btn-blue[href="../../apply.html"]');
+    if(firstCta){
+      firstCta.setAttribute('href','#'+config.id);
+      firstCta.textContent=config.button;
+      firstCta.addEventListener('click',function(e){
+        e.preventDefault();
+        section.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    }
+  }
+  injectProgramLeadForm();
+
+  /* On phones the sticky header hides the number and the CTA behind the
+     hamburger, so scrolling visitors lose both. Give them a persistent bar. */
+  function injectMobileActionBar(){
+    if(document.querySelector('.mobile-action-bar'))return;
+    var path=leadFormPath();
+    if(path==='/sms-optin'||path==='/sms-terms'||path==='/rate-tools'||path==='/preview')return;
+
+    var target=document.querySelector('form[data-ack]');
+    var section=target?target.closest('section'):null;
+    var bar=document.createElement('div');
+    bar.className='mobile-action-bar';
+
+    var call=document.createElement('a');
+    call.className='mab-call';
+    call.setAttribute('href','tel:3106541577');
+    call.setAttribute('data-mab','call');
+    call.textContent='Call 310-654-1577';
+
+    var cta=document.createElement('a');
+    cta.className='mab-cta';
+    if(section&&section.id){
+      cta.setAttribute('href','#'+section.id);
+      cta.textContent='Request a Review';
+      cta.addEventListener('click',function(e){
+        e.preventDefault();
+        section.scrollIntoView({behavior:'smooth',block:'start'});
+        var first=section.querySelector('input:not([type="hidden"]):not(.hp),select,textarea');
+        if(first)setTimeout(function(){try{first.focus({preventScroll:true});}catch(err){first.focus();}},450);
+      });
+    }else{
+      cta.setAttribute('href',document.querySelector('a[href$="apply.html"]')?
+        (document.querySelector('a[href$="apply.html"]').getAttribute('href')):'/apply');
+      cta.textContent='Get Started';
+    }
+
+    bar.appendChild(call);
+    bar.appendChild(cta);
+    document.body.appendChild(bar);
+    document.body.classList.add('has-mobile-action-bar');
+  }
+  injectMobileActionBar();
+
   function fieldErrorMessage(field){
     var value=(field.value||'').trim();
     if(field.required&&!value)return field.getAttribute('data-error-required')||'This field is required.';

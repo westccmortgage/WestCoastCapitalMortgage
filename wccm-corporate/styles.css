@@ -534,3 +534,26 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
   .homepage-rating-count{width:100%}
   .homepage-rating-link{margin-left:0}
 }
+
+/* Mobile action bar. The sticky header collapses the phone number and CTA
+   behind the hamburger on small screens, so paid visitors scrolling a program
+   page had no persistent way to call or start a request. */
+.mobile-action-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;
+  gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.97);border-top:1px solid var(--border);
+  box-shadow:0 -6px 18px rgba(11,35,69,.10);
+}
+.mobile-action-bar a{
+  flex:1 1 0;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:48px;padding:11px 12px;border-radius:10px;
+  font-weight:700;font-size:.95rem;line-height:1.15;text-align:center;text-decoration:none;
+}
+.mobile-action-bar .mab-call{background:#fff;color:var(--navy);border:1px solid var(--border)}
+.mobile-action-bar .mab-cta{background:var(--blue);color:#fff;border:1px solid var(--blue)}
+.mobile-action-bar .mab-cta:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+@media(max-width:860px){
+  .mobile-action-bar{display:flex}
+  body.has-mobile-action-bar{padding-bottom:76px}
+}
+@media print{.mobile-action-bar{display:none}}
