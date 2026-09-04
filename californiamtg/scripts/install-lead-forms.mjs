@@ -23,6 +23,12 @@ for (const file of htmlFiles(root)) {
   let changed = false
   let cursor = 0
 
+  // Always point structured data / links at the production WCCM canonical.
+  if (html.includes('https://westccmortgage.com')) {
+    html = html.replaceAll('https://westccmortgage.com', 'https://westcoastcapitalmortgage.com')
+    changed = true
+  }
+
   // Register attribution fields on existing CaliforniaMTG contact forms.
   while (true) {
     const start = html.indexOf('<form', cursor)
@@ -65,4 +71,4 @@ for (const file of htmlFiles(root)) {
   if (changed) fs.writeFileSync(file, html)
 }
 
-console.log('CaliforniaMTG Netlify fallback forms registered in build output.')
+console.log('CaliforniaMTG canonical links and fallback lead forms normalized in build output.')
