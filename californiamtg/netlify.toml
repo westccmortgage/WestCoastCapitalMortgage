@@ -1,10 +1,10 @@
-# California Mortgage (californiamtg.com) — static site, no build step.
+# California Mortgage (californiamtg.com) — static site.
 # Used when the Netlify site's "Base directory" is set to `californiamtg`.
 # With base = californiamtg, publish = "." means this folder is the site root,
 # so /_redirects and /assets/... resolve correctly.
 [build]
   publish = "."
-  command = ""
+  command = "node scripts/install-lead-forms.mjs"
 
 # ---- Caching -------------------------------------------------------------
 # Assets (HTML/CSS/JS) are NOT fingerprinted, so force browsers to revalidate
