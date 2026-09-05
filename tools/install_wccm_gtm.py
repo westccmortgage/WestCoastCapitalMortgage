@@ -16,7 +16,7 @@ from pathlib import Path
 GTM_ID = "GTM-WDSXSS5Z"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
-ASSET_VERSION = "20260904-program-lead-forms"
+ASSET_VERSION = "20260904-validation"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
