@@ -1,6 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WDSXSS5Z');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18417657219"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
+  window.__wccmAdsLeadScanner=setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){
+      var item=dl[window.__wccmAdsLeadCursor++];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
+        item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
+        window.gtag('event','conversion',{
+          'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
+          'value':1.0,
+          'currency':'USD',
+          'transaction_id':leadEventId
+        });
+      }
+    }
+  },200);
+})();
+
+window.gtag('js',new Date());
+window.gtag('config','AW-18417657219');
+</script>
+<!-- End Google tag - Google Ads -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Florida Condo Financing | Warrantable & Non-Warrantable Condo Loans | West Coast Capital Mortgage</title>
@@ -11,7 +55,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260905-condo">
+<link rel="stylesheet" href="styles.css?v=20260904-validation">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="West Coast Capital Mortgage">
 <meta property="og:title" content="Florida Condo Financing | West Coast Capital Mortgage">
@@ -43,6 +87,10 @@
 </script>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDSXSS5Z"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="topbar"><div class="wrap topbar-inner"><nav class="topbar-left" aria-label="Utility"><a href="/">Mortgage</a><a href="https://westccrealty.com">Realty</a><a href="florida.html" class="active-service">Florida</a></nav></div></div>
 <header class="site-header"><div class="wrap header-inner"><a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home"><span class="l1">WEST COAST CAPITAL</span><span class="l2">MORTGAGE</span></a><div class="nav-collapse" id="navc"><nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="loans.html">Loan Options</a><a href="about.html">About Us</a></nav><div class="header-cta"><a class="btn btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Apply Now</a></div></div></div></header>
 
@@ -75,6 +123,6 @@
 <section><div class="wrap"><div class="cta-band"><h2>Have a Florida condo address?</h2><p>Send the property and your basic borrower scenario before you assume the building will qualify for a standard loan.</p><div class="btn-row"><a class="btn btn-lg btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Start Your Application</a><a class="btn btn-lg btn-outline-light" href="contact.html">Contact Us</a></div></div></div></section>
 
 <footer class="site-footer"><div class="wrap"><div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Office:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Florida</h4><a href="florida.html">Florida Mortgage</a><a href="foreign-national-loans.html">Foreign National</a><a href="dscr-loans.html">DSCR</a><a href="bank-statement-loans.html">Bank Statement</a></div><div><h4>Company</h4><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="loans.html">Loan Programs</a></div></div><div class="footer-bottom"><p>West Coast Capital Mortgage Inc. &mdash; NMLS #2817729 &middot; CA DRE Corporation License #02440065 &middot; Equal Housing Opportunity.</p><p>Information is provided for educational purposes only and is not a commitment to lend. Loan availability, property eligibility, terms, rates and underwriting requirements vary by lender and program.</p></div></div></footer>
-<script src="script.js"></script>
+<script src="script.js?v=20260904-validation"></script>
 </body>
 </html>
