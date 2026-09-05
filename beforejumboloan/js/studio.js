@@ -706,13 +706,14 @@
       name: S.name, email: S.email, phone: S.phone,
       preferred_contact_method: S.preferred_contact_method, message: S.message
     };
+    if(window.BJLAds)Object.assign(data,window.BJLAds.attribution());
     var body = new URLSearchParams();
     Object.keys(data).forEach(function (k) { body.append(k, data[k] == null ? "" : data[k]); });
 
     sendBtn.disabled = true; sendBtn.textContent = "Sending…";
     if (sendNote) sendNote.textContent = "This is not a loan approval or commitment to lend.";
     fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() })
-      .then(function (res) { if (!res.ok) throw new Error(res.status); trackEvent("lead_form_submitted"); showThanks(); })
+      .then(function (res) { if (!res.ok) throw new Error(res.status); if(window.BJLAds)window.BJLAds.confirmed(data.lead_event_id); trackEvent("lead_form_submitted"); showThanks(); })
       .catch(function () {
         trackEvent("lead_form_error");
         sendBtn.disabled = false; sendBtn.textContent = "Send My Scenario for Licensed Review";

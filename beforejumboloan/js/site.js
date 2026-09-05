@@ -276,3 +276,76 @@
     });
   }
 })();
+
+/* Production lead tracking: only confirmed backend submissions, with cookie consent. */
+(function () {
+  "use strict";
+  var ID="AW-18417657219", DEST=ID+"/LiA7CPWd4eocEIPLnM5E";
+  var KEYS=["gclid","gbraid","wbraid","utm_source","utm_medium","utm_campaign","utm_term","utm_content"];
+  function get(k){try{return localStorage.getItem(k)||"";}catch(e){return "";}}
+  function set(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function consent(){return get("kw_consent")==="granted";}
+  function capture(){
+    if(!consent())return;
+    var p=new URLSearchParams(location.search);
+    KEYS.forEach(function(k){if(p.get(k))set("bjl_attr_"+k,p.get(k));});
+    if(!get("bjl_attr_landing_page"))set("bjl_attr_landing_page",location.href);
+  }
+  function init(){
+    if(!consent())return;
+    capture();
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+    if(!document.querySelector("script[data-bjl-ads]")){
+      window.gtag("js",new Date());window.gtag("config",ID);
+      var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+ID;
+      s.setAttribute("data-bjl-ads","");document.head.appendChild(s);
+    }
+  }
+  function attribution(){
+    capture();var a={};
+    KEYS.forEach(function(k){a[k]=consent()?get("bjl_attr_"+k):"";});
+    a.landing_page=consent()?get("bjl_attr_landing_page"):"";
+    a.submission_page=location.href;
+    a.lead_event_id="bjl_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,10);
+    return a;
+  }
+  var sent={};
+  function confirmed(id,done){
+    if(!consent()||sent[id]){if(done)done();return;}
+    sent[id]=true;init();
+    var finished=false;
+    function finish(){if(finished)return;finished=true;if(done)done();}
+    window.dataLayer.push({event:"bjl_lead_submit",lead_event_id:id,page_location:location.href});
+    window.gtag("event","conversion",{send_to:DEST,value:1,currency:"USD",transaction_id:id,event_callback:finish,event_timeout:1500});
+    if(done)setTimeout(finish,1800);
+  }
+  window.BJLAds={attribution:attribution,confirmed:confirmed};
+  function ready(){
+    init();
+    document.querySelectorAll("[data-consent-accept]").forEach(function(b){b.addEventListener("click",function(){setTimeout(init,0);});});
+    var form=document.querySelector('form[name="contact"]');
+    if(!form)return;
+    var sending=false;
+    form.addEventListener("submit",function(e){
+      e.preventDefault();e.stopImmediatePropagation();
+      if(sending||!form.reportValidity())return;
+      sending=true;
+      var a=attribution(),body=new URLSearchParams(new FormData(form));
+      Object.keys(a).forEach(function(k){body.set(k,a[k]);});
+      body.set("form-name","contact");
+      var b=form.querySelector('button[type="submit"]');if(b)b.disabled=true;
+      fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body.toString()})
+      .then(function(r){
+        if(!r.ok)throw new Error("Submission failed");
+        confirmed(a.lead_event_id,function(){location.assign(form.getAttribute("action")||"/thank-you.html");});
+      }).catch(function(){
+        sending=false;if(b)b.disabled=false;
+        var n=form.querySelector("[data-bjl-error]");
+        if(!n){n=document.createElement("p");n.setAttribute("data-bjl-error","");n.setAttribute("role","alert");form.appendChild(n);}
+        n.textContent="Your request could not be sent. Please try again.";
+      });
+    },true);
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ready);else ready();
+})();
