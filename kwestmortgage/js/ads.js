@@ -67,7 +67,7 @@
   }
 
   function isLeadForm(form) {
-    if (!form || !form.matches || !form.matches('form[data-netlify]')) return false;
+    if (!form || !form.matches || !form.matches('form')) return false;
     var name = form.getAttribute("name") || "";
     return /(?:key-west|kwest|monroe).*(?:scenario|review|lead|contact|mortgage)|(?:scenario|review).*(?:key-west|kwest|monroe)/i.test(name);
   }
@@ -111,9 +111,31 @@
   }
 
   /* Capture phase runs before the site's existing submit listener builds FormData. */
-  document.addEventListener("submit", function (event) {
+  document.addEventListener("submit", async function (event) {
     var form = event.target;
-    if (isLeadForm(form)) markPending(form);
+    if (!isLeadForm(form)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (form.dataset.kwestSending === "true") return;
+    form.dataset.kwestSending = "true";
+    syncAttribution(form);
+    sessionRemove(PENDING_KEY);
+    var button = form.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    try {
+      var body = new URLSearchParams(new FormData(form));
+      if (!body.has("form-name")) body.set("form-name", form.getAttribute("name"));
+      var response = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
+      if (!response.ok) throw new Error("Submission failed");
+      markPending(form);
+      window.location.assign(form.getAttribute("action") || "/thank-you.html");
+    } catch (_) {
+      form.dataset.kwestSending = "false";
+      if (button) button.disabled = false;
+      var notice = form.querySelector("[data-kwest-submit-error]");
+      if (!notice) { notice = document.createElement("p"); notice.setAttribute("data-kwest-submit-error", ""); notice.setAttribute("role", "alert"); form.appendChild(notice); }
+      notice.textContent = "Your request could not be sent. Please try again.";
+    }
   }, true);
 
   document.addEventListener("click", function (event) {
