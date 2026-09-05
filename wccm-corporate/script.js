@@ -396,6 +396,8 @@
   /* Contact / apply forms — Netlify submission + attribution */
   document.querySelectorAll('form[data-ack]').forEach(function(f){
     addAttribution(f);
+    // Every handled form must validate, including legacy forms with novalidate.
+    f.setAttribute('data-validate','');
     if(f.hasAttribute('data-validate')){
       f.querySelectorAll('input:not([type="hidden"]):not(.hp),select,textarea').forEach(function(field){
         fieldErrorElement(field);

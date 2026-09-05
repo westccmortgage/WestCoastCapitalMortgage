@@ -157,6 +157,14 @@ def main() -> None:
     if not PUBLISH_DIR.is_dir():
         raise SystemExit(f"Publish directory not found: {PUBLISH_DIR}")
 
+    # Bust previously cached handlers on every page, including nested pages.
+    for page in PUBLISH_DIR.rglob("*.html"):
+        html = page.read_text(encoding="utf-8")
+        updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
+                         r'\1?v=20260904-validation\2', html)
+        if updated != html:
+            page.write_text(updated, encoding="utf-8")
+
     legal_changed = 0
     legal_seen = 0
     for path in sorted(PUBLISH_DIR.rglob("*.html")):
