@@ -13,6 +13,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script>
 window.dataLayer=window.dataLayer||[];
 window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
 (function(){
   if(window.__wccmAdsLeadConversionHook)return;
   window.__wccmAdsLeadConversionHook=true;
@@ -37,6 +40,7 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
     }
   },200);
 })();
+
 window.gtag('js',new Date());
 window.gtag('config','AW-18417657219');
 </script>
