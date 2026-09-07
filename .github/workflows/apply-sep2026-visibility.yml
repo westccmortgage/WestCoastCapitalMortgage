@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Repair validator and run migration
+      - name: Apply migration and repair existing SunCoast canonicals
         shell: bash
         run: |
           python3 - <<'PY'
@@ -32,20 +32,55 @@ jobs:
                   fixed.append(line)
           p.write_text('\n'.join(fixed)+'\n')
           PY
+
+          # First pass may expose pre-existing SEO defects while applying the approved content edits.
           set +e
-          python3 scripts/apply_sep2026_visibility_update.py > migration_run.log 2>&1
-          status=$?
+          python3 scripts/apply_sep2026_visibility_update.py > first_pass.log 2>&1
+          first_status=$?
           set -e
+          cat first_pass.log
+
+          # Five production SunCoast pages pre-dated this update without canonical tags.
+          python3 - <<'PY'
+          from pathlib import Path
+          canonicals={
+            'suncoast-corporate/index.html':'https://suncoastcapitalmortgage.com/',
+            'suncoast-corporate/investment-property-loans.html':'https://suncoastcapitalmortgage.com/investment-property-loans',
+            'suncoast-corporate/dscr-loans.html':'https://suncoastcapitalmortgage.com/dscr-loans',
+            'suncoast-corporate/self-employed-borrowers.html':'https://suncoastcapitalmortgage.com/self-employed-borrowers',
+            'suncoast-corporate/jumbo-loans.html':'https://suncoastcapitalmortgage.com/jumbo-loans',
+          }
+          for name,url in canonicals.items():
+              p=Path(name); s=p.read_text()
+              if '<link rel="canonical"' not in s:
+                  tag=f'<link rel="canonical" href="{url}">\n'
+                  if '<meta name="robots"' in s:
+                      s=s.replace('<meta name="robots"',tag+'<meta name="robots"',1)
+                  else:
+                      s=s.replace('</head>',tag+'</head>',1)
+                  p.write_text(s)
+          PY
+
+          # Re-run idempotently after canonical repair. This must pass.
+          python3 scripts/apply_sep2026_visibility_update.py > migration_run.log 2>&1
           cat migration_run.log
-          if [ "$status" -ne 0 ]; then
-            cp migration_run.log sep2026_visibility_implementation_report.txt
-            git config user.name "WCCM Visibility Automation"
-            git config user.email "actions@users.noreply.github.com"
-            git add sep2026_visibility_implementation_report.txt
-            git commit -m "Record September 2026 visibility migration diagnostic" || true
-            git push origin main || true
-            exit "$status"
-          fi
+
+          # Explicitly validate all five repaired canonicals.
+          python3 - <<'PY'
+          from pathlib import Path
+          expected={
+            'suncoast-corporate/index.html':'https://suncoastcapitalmortgage.com/',
+            'suncoast-corporate/investment-property-loans.html':'https://suncoastcapitalmortgage.com/investment-property-loans',
+            'suncoast-corporate/dscr-loans.html':'https://suncoastcapitalmortgage.com/dscr-loans',
+            'suncoast-corporate/self-employed-borrowers.html':'https://suncoastcapitalmortgage.com/self-employed-borrowers',
+            'suncoast-corporate/jumbo-loans.html':'https://suncoastcapitalmortgage.com/jumbo-loans',
+          }
+          for name,url in expected.items():
+              s=Path(name).read_text()
+              assert s.count('<link rel="canonical"')==1, name
+              assert f'href="{url}"' in s, name
+          print('SunCoast canonical validation: PASS')
+          PY
       - name: Commit production changes
         run: |
           git config user.name "WCCM Visibility Automation"
