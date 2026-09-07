@@ -1,0 +1,32 @@
+name: Apply September 2026 visibility update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-sep2026-visibility.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply targeted SEO AEO conversion updates
+        run: python3 scripts/apply_sep2026_visibility_update.py
+      - name: Commit production changes
+        run: |
+          git config user.name "WCCM Visibility Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add wccm-corporate suncoast-corporate sep2026_visibility_implementation_report.txt
+          if git diff --cached --quiet; then
+            echo "No production changes required"
+            exit 0
+          fi
+          git commit -m "Implement September 2026 mortgage SEO AEO updates"
+          git push origin main
