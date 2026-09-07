@@ -1,0 +1,29 @@
+name: Apply Washington and New York state hubs
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-state-hubs-20260907.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build and validate state hubs
+        run: python3 scripts/add_wa_ny_state_pages.py
+      - name: Commit production changes
+        run: |
+          git config user.name "WCCM State Hub Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add wccm-corporate
+          if git diff --cached --quiet; then
+            echo "No changes required"
+            exit 0
+          fi
+          git commit -m "Add Washington and New York mortgage state hubs"
+          git push origin main
