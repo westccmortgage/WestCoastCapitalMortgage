@@ -17,8 +17,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Apply targeted SEO AEO conversion updates
-        run: python3 scripts/apply_sep2026_visibility_update.py
+      - name: Repair migration syntax and apply targeted SEO AEO conversion updates
+        run: |
+          sed -i "/canonical count/c\\        if txt.count('<link rel=\"canonical\"') != 1: errors.append(f'{f}: canonical count ' + str(txt.count('<link rel=\"canonical\"')))" scripts/apply_sep2026_visibility_update.py
+          python3 scripts/apply_sep2026_visibility_update.py
       - name: Commit production changes
         run: |
           git config user.name "WCCM Visibility Automation"
