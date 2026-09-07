@@ -1,0 +1,40 @@
+SEP 2026 VISIBILITY UPDATE
+
+CHANGED FILES
+suncoast-corporate/dscr-loans.html
+suncoast-corporate/index.html
+suncoast-corporate/investment-property-loans.html
+suncoast-corporate/jumbo-loans.html
+suncoast-corporate/self-employed-borrowers.html
+wccm-corporate/bank-statement-loans.html
+wccm-corporate/buy.html
+wccm-corporate/dscr-loans.html
+wccm-corporate/investment-property-loans.html
+wccm-corporate/jumbo-loans.html
+wccm-corporate/loans/jumbo/alameda-county.html
+wccm-corporate/loans/jumbo/contra-costa-county.html
+wccm-corporate/loans/jumbo/los-angeles-county.html
+wccm-corporate/loans/jumbo/marin-county.html
+wccm-corporate/loans/jumbo/orange-county.html
+wccm-corporate/loans/jumbo/san-diego-county.html
+wccm-corporate/loans/jumbo/san-mateo-county.html
+wccm-corporate/loans/jumbo/santa-clara-county.html
+wccm-corporate/non-qm-loans.html
+wccm-corporate/self-employed-borrowers.html
+wccm-corporate/september-2026-mortgage-update-investors-self-employed-jumbo.html
+wccm-corporate/sitemap.xml
+
+RESOLUTION NOTES
+Washington candidates: NONE
+New York/Long Island candidates: NONE
+Washington implementation skipped: no suitable existing production page found; no duplicate/thin page created.
+New York/Long Island implementation skipped: no suitable existing production page found; no duplicate/thin page created.
+
+TESTS
+FAIL
+suncoast-corporate/dscr-loans.html: canonical count 0
+suncoast-corporate/index.html: canonical count 0
+suncoast-corporate/investment-property-loans.html: canonical count 0
+suncoast-corporate/jumbo-loans.html: canonical count 0
+suncoast-corporate/self-employed-borrowers.html: canonical count 0
+
