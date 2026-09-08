@@ -1,0 +1,65 @@
+name: Fix AI visibility entity facts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ai-visibility-20260908.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct WCCM entity facts and Realty link
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('wccm-corporate/index.html')
+          s = p.read_text()
+
+          old_desc = 'West Coast Capital Mortgage — FHA, VA, Conventional & Non-QM loans in California. NMLS #2817729. Get preapproved online. Call 310-654-1577.'
+          new_desc = 'West Coast Capital Mortgage — mortgage financing in California, Florida and Texas, including Conventional, Jumbo, Non-QM, DSCR and bank-statement options. NMLS #2817729.'
+          s = s.replace(old_desc, new_desc)
+
+          s = s.replace('"name": "West Coast Capital Mortgage",\n  "alternateName": "WWCCM.ai",',
+                        '"name": "West Coast Capital Mortgage",\n  "legalName": "West Coast Capital Mortgage Inc.",\n  "alternateName": "WWCCM.ai",')
+
+          for state in ['Washington', 'Oregon', 'Nevada', 'Arizona', 'Colorado']:
+              s = s.replace(f'    {{ "@type": "State", "name": "{state}" }},\n', '')
+
+          s = s.replace('href="https://westccrealty.com">Realty</a>',
+                        'href="https://westcoastcapitalrealty.com">Realty</a>')
+
+          p.write_text(s)
+
+          # Validation: only currently active lending states remain in homepage state-level areaServed.
+          head = s.split('</script>', 2)[1] if '</script>' in s else s
+          assert '"name": "Washington"' not in s
+          assert '"name": "Oregon"' not in s
+          assert '"name": "Nevada"' not in s
+          assert '"name": "Arizona"' not in s
+          assert '"name": "Colorado"' not in s
+          for state in ['California', 'Florida', 'Texas']:
+              assert f'"name": "{state}"' in s
+          assert 'https://westcoastcapitalrealty.com' in s
+          assert 'https://westccrealty.com' not in s
+          assert 'legalName": "West Coast Capital Mortgage Inc.' in s
+          PY
+      - name: Commit changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No changes needed.'
+            exit 0
+          fi
+          git config user.name 'AI Visibility Automation'
+          git config user.email 'actions@users.noreply.github.com'
+          git add wccm-corporate/index.html
+          git commit -m 'Correct WCCM licensed-state schema and Realty link'
+          git push
