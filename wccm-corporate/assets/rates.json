@@ -1,5 +1,5 @@
 {
-  "effective": "Aug 31, 2026 · 6:51 AM PT",
+  "effective": "Sep 8, 2026 · 7:01 AM PT",
   "source": "Lender wholesale base pricing; best-case borrower profile.",
   "comp_points": 0,
   "products": [
@@ -29,7 +29,7 @@
     },
     {
       "name": "Non-QM (A+) 30-Year Fixed",
-      "rate": 6.625
+      "rate": 6.5
     },
     {
       "name": "DSCR Investor 30-Year Fixed",
