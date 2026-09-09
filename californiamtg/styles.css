@@ -588,11 +588,6 @@ textarea.field-input{resize:vertical;min-height:84px}
 /* Two-up card grid */
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1.4rem 0}
 
-/* Featured education card with image (spans full grid width) */
-.edu-feature{grid-column:1 / -1}
-.edu-feature__media{display:block;margin:-2rem -1.7rem 1.2rem;border-radius:var(--radius-lg) var(--radius-lg) 0 0;overflow:hidden}
-.edu-feature__media img{display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:cover}
-
 /* Check list (bronze diamonds) */
 .check-list{list-style:none;display:grid;gap:.65rem;margin:1rem 0 1.3rem}
 .check-list li{position:relative;padding-left:1.7rem;color:var(--muted)}
