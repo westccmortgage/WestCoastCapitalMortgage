@@ -47,7 +47,24 @@
     /* ===== Section eyebrows / common headings ===== */
     "Financial Navigator": ["Navegador Financiero", "Финансовый навигатор", "财务导航"],
     "Your Financial Navigator": ["Su Navegador Financiero", "Ваш финансовый навигатор", "您的财务导航"],
-    "Real People Behind the Guidance": ["Personas Reales Detrás de la Orientación", "Реальные люди за консультацией", "指导背后的真实团队"]
+    "Real People Behind the Guidance": ["Personas Reales Detrás de la Orientación", "Реальные люди за консультацией", "指导背后的真实团队"],
+
+    /* ===== First-time Home Buyer Strategy program card ===== */
+    "Program · American Dream": ["Programa · Sueño Americano", "Программа · Американская мечта", "项目 · 美国梦"],
+    "First-time Home Buyer Strategy": ["Estrategia para Compradores de Primera Vivienda", "Стратегия для покупателей первого жилья", "首次购房者策略"],
+    "A step-by-step first-time buyer program — understand your path, your down payment, and the numbers before you make an offer.": [
+      "Un programa paso a paso para compradores de primera vivienda: comprenda su camino, su pago inicial y los números antes de hacer una oferta.",
+      "Пошаговая программа для покупателей первого жилья — разберитесь в своём пути, первоначальном взносе и цифрах, прежде чем делать предложение.",
+      "一套面向首次购房者的分步计划——在出价之前，先了解您的路径、首付以及相关数字。"
+    ],
+    "Explore the program": ["Explorar el programa", "Изучить программу", "了解该项目"],
+    "First-Time Buyers": ["Compradores de Primera Vivienda", "Покупатели первого жилья", "首次购房者"],
+    "Start With a Clear Strategy": ["Comience con una Estrategia Clara", "Начните с чёткой стратегии", "从清晰的策略开始"],
+    "A simple, step-by-step path for first-time buyers — before you make an offer.": [
+      "Un camino simple y paso a paso para compradores de primera vivienda, antes de hacer una oferta.",
+      "Простой пошаговый путь для покупателей первого жилья — прежде чем сделать предложение.",
+      "为首次购房者提供简单的分步路径——在您出价之前。"
+    ]
   };
 
   function tt(s) { return s.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, "-"); }
