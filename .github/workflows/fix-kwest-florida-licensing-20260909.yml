@@ -1,0 +1,54 @@
+name: Correct K West Florida licensing disclosure
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-kwest-florida-licensing-20260909.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace stale pre-launch Florida licensing placeholder
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          old = 'Sun Coast Capital Mortgage / Florida mortgage licensing details to be added before launch.'
+          new = ('West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. '
+                 'Company NMLS #2817729. Consumers may verify licensing through NMLS Consumer Access. '
+                 'See https://westcoastcapitalmortgage.com/florida for current Florida mortgage information.')
+
+          changed=[]
+          for p in Path('kwestmortgage').rglob('*'):
+              if not p.is_file() or p.suffix.lower() not in {'.html','.js','.json','.md','.txt','.xml'}:
+                  continue
+              try:
+                  s=p.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              if old in s:
+                  p.write_text(s.replace(old,new),encoding='utf-8')
+                  changed.append(str(p))
+
+          if not changed:
+              raise SystemExit('Expected stale Florida licensing placeholder was not found')
+          print('Changed files:')
+          print('\n'.join(changed))
+          PY
+      - name: Validate disclosure repair
+        run: |
+          ! grep -R -F 'Florida mortgage licensing details to be added before launch' kwestmortgage
+          grep -R -F 'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida.' kwestmortgage
+          grep -R -F 'https://westcoastcapitalmortgage.com/florida' kwestmortgage
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add kwestmortgage
+          git commit -m "Replace K West pre-launch Florida licensing placeholder"
+          git push origin HEAD:main
