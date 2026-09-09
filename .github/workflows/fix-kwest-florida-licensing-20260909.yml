@@ -13,15 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Replace stale pre-launch Florida licensing placeholder
+      - name: Remove remaining pre-launch Florida licensing placeholders
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          old = 'Sun Coast Capital Mortgage / Florida mortgage licensing details to be added before launch.'
-          new = ('West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. '
-                 'Company NMLS #2817729. Consumers may verify licensing through NMLS Consumer Access. '
-                 'See https://westcoastcapitalmortgage.com/florida for current Florida mortgage information.')
+          replacements = {
+              'Sun Coast Capital Mortgage / Florida mortgage licensing details to be added before launch.':
+                  ('West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. '
+                   'Company NMLS #2817729. Consumers may verify licensing through NMLS Consumer Access. '
+                   'See https://westcoastcapitalmortgage.com/florida for current Florida mortgage information.'),
+              'Florida / Sun Coast licensing details to be added before launch.':
+                  'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. Company NMLS #2817729.',
+          }
 
           changed=[]
           for p in Path('kwestmortgage').rglob('*'):
@@ -31,18 +35,21 @@ jobs:
                   s=p.read_text(encoding='utf-8')
               except UnicodeDecodeError:
                   continue
-              if old in s:
-                  p.write_text(s.replace(old,new),encoding='utf-8')
+              old_s=s
+              for old,new in replacements.items():
+                  s=s.replace(old,new)
+              if s != old_s:
+                  p.write_text(s,encoding='utf-8')
                   changed.append(str(p))
 
           if not changed:
-              raise SystemExit('Expected stale Florida licensing placeholder was not found')
+              raise SystemExit('Expected remaining pre-launch licensing metadata was not found')
           print('Changed files:')
           print('\n'.join(changed))
           PY
       - name: Validate disclosure repair
         run: |
-          ! grep -R -F 'Florida mortgage licensing details to be added before launch' kwestmortgage
+          ! grep -R -i -F 'to be added before launch' kwestmortgage
           grep -R -F 'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida.' kwestmortgage
           grep -R -F 'https://westcoastcapitalmortgage.com/florida' kwestmortgage
       - name: Commit repair
@@ -50,5 +57,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add kwestmortgage
-          git commit -m "Replace K West pre-launch Florida licensing placeholder"
+          git commit -m "Remove remaining K West pre-launch licensing metadata"
           git push origin HEAD:main
