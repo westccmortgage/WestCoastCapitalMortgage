@@ -45,6 +45,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://westcoastcapitalmortgage.com/mortgage-second-opinion</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 <!-- local-market-pages:start -->
   <url><loc>https://westcoastcapitalmortgage.com/california-mortgage-locations</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://westcoastcapitalmortgage.com/mortgage/manhattan-beach</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
