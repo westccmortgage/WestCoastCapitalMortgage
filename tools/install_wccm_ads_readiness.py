@@ -59,6 +59,8 @@ PAGE_FORMS = {
     "jumbo-loans.html": "jumbo-lead",
     "dscr-loans.html": "dscr-lead",
     "self-employed-borrowers.html": "self-employed-lead",
+    "florida-condo-financing.html": "mortgage-lead",
+    "foreign-national-loans.html": "mortgage-lead",
     "loans/jumbo/los-angeles-county.html": "jumbo-lead",
     "loans/dscr/los-angeles-metro.html": "dscr-lead",
 }

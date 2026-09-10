@@ -190,6 +190,33 @@
   PROGRAM_LEAD_FORMS['/loans/jumbo/los-angeles-county']=PROGRAM_LEAD_FORMS['/jumbo-loans'];
   PROGRAM_LEAD_FORMS['/loans/dscr/los-angeles-metro']=PROGRAM_LEAD_FORMS['/dscr-loans'];
 
+  /* Explicit Florida landing URLs keep the existing California paths intact. */
+  var FLORIDA_LANDINGS={
+    '/bank-statement-loans':'Florida Bank Statement Loans',
+    '/self-employed-borrowers':'Florida Self-Employed Mortgages',
+    '/dscr-loans':'Florida DSCR Loans',
+    '/jumbo-loans':'Florida Jumbo Loans',
+    '/florida-condo-financing':'Florida Condo Financing',
+    '/foreign-national-loans':'Florida Foreign National Loans'
+  };
+  var floridaLanding=!!FLORIDA_LANDINGS[leadFormPath()] &&
+    (param('state').toUpperCase()==='FL'||leadFormPath()==='/florida-condo-financing');
+  if(floridaLanding){
+    ['/florida-condo-financing','/foreign-national-loans'].forEach(function(path){
+      var condo=path==='/florida-condo-financing';
+      PROGRAM_LEAD_FORMS[path]=Object.assign({},PROGRAM_LEAD_FORMS['/'],{
+        id:condo?'florida-condo-review':'foreign-national-review',
+        programInterest:condo?'Florida / Condo':'Florida / Foreign National',
+        eyebrow:condo?'Florida Condo Review':'Florida Foreign National Review',
+        heading:condo?'Review the borrower and the Florida condo project':'Review your Florida property and international-buyer scenario',
+        button:condo?'Request a Condo Review':'Request a Foreign National Review',
+        fields:PROGRAM_LEAD_FORMS['/'].fields.slice(0,-1).concat([
+          notesField(condo?'Property address, intended use, and any known HOA or project questions.':'Intended property use, country of residence, and available income documentation. Do not enter passport or account numbers.')
+        ])
+      });
+    });
+  }
+
   function buildLeadField(spec,idPrefix){
     var wrap=document.createElement('div');
     wrap.className=spec.full?'field full':'field';
@@ -298,6 +325,53 @@
     }
   }
   injectProgramLeadForm();
+
+  function adaptFloridaLeadPage(){
+    if(!floridaLanding)return;
+    var h1=document.querySelector('h1');
+    if(h1)h1.textContent=FLORIDA_LANDINGS[leadFormPath()];
+    document.title=FLORIDA_LANDINGS[leadFormPath()]+' | West Coast Capital Mortgage';
+    document.querySelectorAll('.compare-wrap').forEach(function(wrap){wrap.style.overflowX='auto';});
+    document.querySelectorAll('section .btn').forEach(function(button){
+      button.style.whiteSpace='normal';
+      button.style.maxWidth='100%';
+    });
+    var form=document.querySelector('form[data-ack]');
+    var section=form&&form.closest('section');
+    if(!section)return;
+    var submit=form.querySelector('button[type="submit"]');
+    submit.style.whiteSpace='normal';
+    submit.style.maxWidth='100%';
+    var heading=section.querySelector('h2');
+    if(heading)heading.textContent=heading.textContent.replace(/California/g,'Florida');
+    var area=form.querySelector('[name="property_area"]');
+    if(area){
+      var label=form.querySelector('label[for="'+area.id+'"]');
+      if(label)label.textContent='Florida property city / county';
+      area.setAttribute('data-error-required','Enter the Florida property city or county.');
+    }
+    var program=form.querySelector('[name="program_interest"]');
+    if(program&&!/^Florida \/ /.test(program.value))program.value='Florida / '+program.value;
+    document.querySelectorAll('h2').forEach(function(title){
+      if(/by California|by California county|Same Financing Strategy in Washington and New York/.test(title.textContent)){
+        var unrelated=title.closest('section');
+        if(unrelated)unrelated.hidden=true;
+      }
+    });
+    var hero=h1&&h1.closest('section');
+    if(hero&&!hero.querySelector('a[href="#'+section.id+'"]')){
+      var cta=document.createElement('a');
+      cta.className='btn btn-blue btn-lg';
+      cta.href='#'+section.id;
+      cta.textContent=form.querySelector('button[type="submit"]').textContent;
+      cta.style.marginTop='20px';
+      cta.style.whiteSpace='normal';
+      cta.style.maxWidth='100%';
+      cta.addEventListener('click',function(e){e.preventDefault();section.scrollIntoView({behavior:'smooth',block:'start'});});
+      h1.parentNode.appendChild(cta);
+    }
+  }
+  adaptFloridaLeadPage();
 
   /* On phones the sticky header hides the number and the CTA behind the
      hamburger, so scrolling visitors lose both. Give them a persistent bar. */
