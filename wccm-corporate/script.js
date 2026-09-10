@@ -424,7 +424,8 @@
           if(f.dataset.submitted==='true')return;
           f.dataset.submitted='true';
           f.dataset.submitting='false';
-          if(f.dataset.conversionFired!=='true'){
+          // Partner/recruitment inquiries are not consumer mortgage leads.
+          if(f.dataset.conversionFired!=='true' && f.getAttribute('name')!=='mortgage-partner-inquiry'){
             f.dataset.conversionFired='true';
             var eventId='wccm-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
             f.dataset.leadEventId=eventId;
