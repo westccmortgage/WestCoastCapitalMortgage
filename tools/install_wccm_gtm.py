@@ -153,8 +153,12 @@ def inject(path: Path) -> tuple[bool, str | None]:
 
     # Bust stale browser/CDN copies whenever the shared lead form or its styles
     # change. The build applies this consistently to every deployable page.
+    script_version = "20260910-florida" if path.name in {
+        "bank-statement-loans.html", "self-employed-borrowers.html", "dscr-loans.html",
+        "jumbo-loans.html", "florida-condo-financing.html", "foreign-national-loans.html",
+    } else ASSET_VERSION
     text, script_versioned = SCRIPT_ASSET_RE.subn(
-        lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
+        lambda match: f"{match.group(1)}?v={script_version}{match.group(2)}", text
     )
     text, style_versioned = STYLE_ASSET_RE.subn(
         lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
