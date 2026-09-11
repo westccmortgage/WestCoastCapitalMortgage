@@ -38,8 +38,10 @@ s, n = pattern.subn(replacement, s, count=1)
 if n != 1:
     raise SystemExit(f"jumbo_likelihood: expected one replacement, got {n}")
 
-# FHFA publishes the conforming loan limits. Remove the misleading HUD attribution.
+# FHFA publishes the conforming loan limits. Remove the misleading HUD attribution,
+# including source strings that are split across adjacent Python literals.
 s = s.replace("per FHFA/HUD 2026 loan limits", "per FHFA 2026 conforming loan limits")
+s = s.replace("per FHFA/HUD 2026 loan ", "per FHFA 2026 conforming loan ")
 
 replace_once(
     '''    desc = ("Jumbo loans in %s. The 2026 one-unit conforming limit is %s, so any one-unit loan above that "
