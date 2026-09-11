@@ -204,16 +204,38 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+<!-- local-market-pages:start -->
+  <url><loc>https://westcoastcapitalmortgage.com/california-mortgage-locations</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/manhattan-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/palos-verdes-estates</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/rancho-palos-verdes</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/rolling-hills</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/calabasas</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/encino</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/sherman-oaks</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/pacific-palisades</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/westlake-village</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/marina-del-rey</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/torrance</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/hermosa-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/redondo-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/culver-city</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/studio-city</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/woodland-hills</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/brentwood</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://westcoastcapitalmortgage.com/mortgage/west-los-angeles</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<!-- local-market-pages:end -->
+  <url><loc>https://westcoastcapitalmortgage.com/september-2026-mortgage-update-investors-self-employed-jumbo</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- city-pages:start -->
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/los-angeles-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/orange-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -249,7 +271,7 @@
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/san-diego-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -267,31 +289,31 @@
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/san-mateo-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/santa-clara-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/alameda-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/contra-costa-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loans/jumbo/marin-county</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -542,26 +564,4 @@
     <priority>0.7</priority>
   </url>
   <!-- city-pages:end -->
-<!-- local-market-pages:start -->
-  <url><loc>https://westcoastcapitalmortgage.com/california-mortgage-locations</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/manhattan-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/palos-verdes-estates</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/rancho-palos-verdes</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/rolling-hills</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/calabasas</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/encino</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/sherman-oaks</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/pacific-palisades</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/westlake-village</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/marina-del-rey</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/torrance</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/hermosa-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/redondo-beach</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/culver-city</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/studio-city</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/woodland-hills</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/brentwood</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://westcoastcapitalmortgage.com/mortgage/west-los-angeles</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-<!-- local-market-pages:end -->
-  <url><loc>https://westcoastcapitalmortgage.com/september-2026-mortgage-update-investors-self-employed-jumbo</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

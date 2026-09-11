@@ -90,20 +90,20 @@ def money_to_float(s):
 
 
 def jumbo_likelihood(median_str, limit_str):
-    """How often a purchase in this city actually crosses the conforming line."""
+    """Home-price context only; jumbo status is determined by the loan amount."""
     med, lim = money_to_float(median_str), money_to_float(limit_str)
     if not med or not lim:
-        return "Depends on the home"
+        return "Price context unavailable"
     r = med / lim
     if r >= 2.0:
-        return "Almost always"
+        return "Typical value far above limit"
     if r >= 1.15:
-        return "Usually"
+        return "Typical value above limit"
     if r >= 0.90:
-        return "Often &mdash; depends on the home"
+        return "Typical value near the limit"
     if r >= 0.60:
-        return "Higher-end homes only"
-    return "Rarely"
+        return "Typical value below limit"
+    return "Typical value well below limit"
 
 
 def median_short(median_str):
@@ -336,19 +336,19 @@ def render_county_jumbo(county):
 
     title = "Jumbo Loans in %s, CA &mdash; 2026 Limit %s | West Coast Capital Mortgage" % (county, limit)
     title = title.replace("&mdash;", "—")
-    desc = ("Jumbo loans in %s. The 2026 one-unit conforming limit is %s, so any one-unit loan above that "
-            "is a jumbo loan. Typical values for %d %s cities inside. NMLS #%s."
+    desc = ("Jumbo loans in %s. The 2026 one-unit conforming limit is %s. Conventional loan amounts above "
+            "the county limit are generally jumbo financing; local home-value context for %d %s cities inside. NMLS #%s."
             % (county, limit, len(cities), short, NMLS))
 
     if high:
         limit_para = ("%s is a designated high-cost area, so its 2026 one-unit conforming loan limit is %s "
-                      "(per FHFA/HUD 2026 loan limits) rather than the %s national baseline. Any one-unit "
-                      "loan above %s in %s is a jumbo loan."
+                      "(per FHFA 2026 conforming loan limits) rather than the %s national baseline. A conventional "
+                      "one-unit loan amount above %s in %s is generally considered jumbo financing."
                       % (county, limit, BASELINE_LIMIT, limit, county))
     else:
         limit_para = ("%s is not designated a high-cost area, so the 2026 one-unit conforming loan limit is "
-                      "the national baseline of %s (per FHFA/HUD 2026 loan limits). Any one-unit loan above "
-                      "%s in %s is a jumbo loan." % (county, BASELINE_LIMIT, limit, county))
+                      "the national baseline of %s (per FHFA 2026 conforming loan limits). A conventional one-unit "
+                      "loan amount above %s in %s is generally considered jumbo financing." % (county, BASELINE_LIMIT, limit, county))
 
     # the city table — the actual data asset
     rows = []
@@ -360,7 +360,7 @@ def render_county_jumbo(county):
         '<div style="overflow-x:auto">\n'
         '<table class="rate-table" style="width:100%%;min-width:520px">\n'
         '<thead><tr><th>City</th><th>Typical home value<br><span style="font-weight:400;font-size:.85em">approx., mid-2026</span></th>'
-        '<th>Is a jumbo loan usually needed?</th></tr></thead>\n<tbody>\n%s\n</tbody></table>\n</div>'
+        '<th>Home-price context vs. conforming limit</th></tr></thead>\n<tbody>\n%s\n</tbody></table>\n</div>'
         % "\n".join(rows))
 
     # every city-specific market note is preserved here
@@ -371,28 +371,30 @@ def render_county_jumbo(county):
     priced = [c for c in cities if money_to_float(c["median"]) is not None]
     cheapest = min(priced, key=lambda c: money_to_float(c["median"]))
     priciest = max(priced, key=lambda c: money_to_float(c["median"]))
-    spread = ("Values across the county run from roughly %s in %s to about %s in %s, so whether a purchase "
-              "needs jumbo financing varies widely by city &mdash; the table below shows where each one sits "
-              "against the %s limit."
+    spread = ("Values across the county run from roughly %s in %s to about %s in %s. Home price alone does "
+              "not determine whether financing is jumbo: compare the planned conventional one-unit loan amount "
+              "after the down payment with the %s county conforming limit. The table below is price context only."
               % (median_short(cheapest["median"]), cheapest["city"],
                  median_short(priciest["median"]), priciest["city"], limit))
 
-    lead = ("The 2026 one-unit conforming limit in %s is %s. Any one-unit loan above that is a jumbo loan. "
-            "Below: how that line falls across %d %s cities." % (county, limit, len(cities), short))
+    lead = ("The 2026 one-unit conforming limit in %s is %s. Jumbo status depends on the requested conventional "
+            "loan amount after the down payment, not on the home's purchase price by itself. Below: local price context "
+            "across %d %s cities." % (county, limit, len(cities), short))
 
     faqs = [
-        {"q": "What is the 2026 jumbo loan limit in %s?" % county,
-         "a": "In %s the 2026 one-unit conforming limit is %s (per FHFA/HUD 2026 loan limits). A jumbo loan "
-              "is any one-unit loan amount above %s. %s"
+        {"q": "What is the 2026 conforming loan limit in %s?" % county,
+         "a": "In %s the 2026 one-unit conforming limit is %s (per FHFA 2026 conforming loan limits). A conventional "
+              "one-unit loan amount above %s is generally considered jumbo financing. %s"
               % (county, limit, limit,
                  "The county carries the high-cost limit rather than the %s national baseline." % BASELINE_LIMIT
                  if high else "This is the national baseline limit; %s is not a designated high-cost area." % county)},
-        {"q": "Which %s cities usually require a jumbo loan?" % short,
-         "a": "It varies by city. In %s, where typical values run around %s, jumbo financing applies to most "
-              "standard purchases. In %s, closer to %s, it comes into play mainly on higher-end homes. The "
-              "table on this page marks where each of the %d cities we cover falls against the %s limit."
-              % (priciest["city"], median_short(priciest["median"]),
-                 cheapest["city"], median_short(cheapest["median"]), len(cities), limit)},
+        {"q": "How do home prices relate to jumbo financing in %s?" % short,
+         "a": "Home price is context, but it does not determine jumbo status by itself. A higher-priced home can "
+              "still use conforming financing if the requested conventional one-unit loan amount after the down "
+              "payment is at or below the %s county limit. Typical values range from about %s in %s to about %s in %s; "
+              "compare the planned loan amount with the county limit rather than the purchase price alone."
+              % (limit, median_short(cheapest["median"]), cheapest["city"],
+                 median_short(priciest["median"]), priciest["city"])},
         {"q": "How much down payment do jumbo borrowers need in %s?" % short,
          "a": "Jumbo programs commonly look for 10 to 20 percent or more, along with a credit score generally "
               "at or above 700 and meaningful cash reserves. The exact figure depends on the loan amount, the "
@@ -627,7 +629,7 @@ def render_flagship(prog, c):
         area_clause = ("a high-cost area with a 2026 one-unit conforming limit of %s" % limit if high
                        else "where the 2026 one-unit conforming limit is the national baseline of %s" % limit)
         overview_p = ("A jumbo loan exceeds the conforming limit set by the Federal Housing Finance Agency. "
-                      "Because %s is in %s — %s (per FHFA/HUD 2026 loan limits) — a jumbo loan in %s is any "
+                      "Because %s is in %s — %s (per FHFA 2026 conforming loan limits) — a jumbo loan in %s is any "
                       "one-unit loan above %s." % (city, county, area_clause, city, limit))
         overview_p2 = ("For strong borrowers, jumbo pricing is often very competitive with conforming loans, and "
                        "in some cases prices close to a comparable conforming loan. What moves the rate is "
@@ -651,7 +653,7 @@ def render_flagship(prog, c):
         # FAQ no longer repeats the market sentence either
         faqs = [
             {"q": "What counts as a jumbo loan in %s?" % city,
-             "a": "%s is in %s, %s, where the 2026 one-unit conforming limit is %s (per FHFA/HUD 2026 loan "
+             "a": "%s is in %s, %s, where the 2026 one-unit conforming limit is %s (per FHFA 2026 conforming loan "
                   "limits). A jumbo loan in %s is any one-unit loan amount above %s."
                   % (city, county, "a high-cost area" if high else "where the national baseline applies",
                      limit, city, limit)},
@@ -683,7 +685,7 @@ def render_flagship(prog, c):
                       "your personal income. A DSCR of 1.0 means rent equals the payment; higher ratios "
                       "indicate stronger cash flow." % city)
         overview_p2 = ("DSCR loans are non-conforming investor loans, so they are not capped by the conforming "
-                       "limit. Still, the 2026 one-unit conforming limit in %s is %s (per FHFA/HUD 2026 loan "
+                       "limit. Still, the 2026 one-unit conforming limit in %s is %s (per FHFA 2026 conforming loan "
                        "limits), and the typical %s home value is %s — useful benchmarks when you size a "
                        "purchase." % (county, limit, city, median))
         cards = ('<div class="grid grid-4"><div class="card center"><h3 style="color:var(--blue)">DSCR</h3>'
@@ -708,7 +710,7 @@ def render_flagship(prog, c):
                   "payment, rather than on your personal income documentation. A DSCR of 1.0 means rent equals "
                   "the payment." % city},
             {"q": "How does the 2026 loan limit affect a DSCR loan in %s?" % city,
-             "a": "%s is in %s, where the 2026 one-unit conforming limit is %s (per FHFA/HUD 2026 loan limits). "
+             "a": "%s is in %s, where the 2026 one-unit conforming limit is %s (per FHFA 2026 conforming loan limits). "
                   "DSCR loans are non-conforming investor loans, so they are not capped by that limit — but it "
                   "is a useful local benchmark, since the typical %s home value is %s."
                   % (city, county, limit, city, median)},
@@ -730,7 +732,7 @@ def render_flagship(prog, c):
             faqs = faqs[:3] + fd_faqs
 
     if high:
-        limit_para = ("Across %s, the 2026 one-unit conforming loan limit is %s (per FHFA/HUD 2026 loan limits), "
+        limit_para = ("Across %s, the 2026 one-unit conforming loan limit is %s (per FHFA 2026 conforming loan limits), "
                       "set above the %s national baseline because %s is a designated high-cost area."
                       % (county, limit, BASELINE_LIMIT, county))
     else:
@@ -906,7 +908,7 @@ def hub_links_section(prog):
             % (county_slug(c), c, COUNTY_LIMITS[c]) for c in CITIES_BY_COUNTY)
         head = ("<h2>Jumbo loan limits by California county</h2>"
                 "<p>The 2026 one-unit conforming limit is set per county. Pick a county to see its limit and "
-                "how it falls across local home values.</p>")
+                "local home-value context; jumbo status depends on the requested loan amount.</p>")
     else:
         items = "".join('<a href="/loans/dscr/%s">%s</a>' % (slug, name.replace("the ", ""))
                         for slug, name, _ in METROS)
