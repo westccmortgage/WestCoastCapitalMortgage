@@ -75,6 +75,7 @@ HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
 GTM_ID_RE = re.compile(r"GTM-[A-Z0-9]+", re.IGNORECASE)
 ADS_ID_RE = re.compile(r"AW-[0-9]+", re.IGNORECASE)
+INLINE_SCRIPT_RE = re.compile(r"<script\b[^>]*>(.*?)</script\s*>", re.I | re.S)
 SCRIPT_ASSET_RE = re.compile(
     r"(<script\b[^>]*\bsrc=[\"'][^\"']*script\.js)(?:\?[^\"']*)?([\"'])",
     re.IGNORECASE,
@@ -92,6 +93,15 @@ CRITICAL_PAGES = (
     "dscr-loans.html",
     "loans/jumbo/los-angeles-county.html",
 )
+
+
+def verify_gtm_bootstrap(text: str, path: Path) -> None:
+    """Reject damaged or duplicate loaders instead of checking only the ID."""
+    blocks = [code for code in INLINE_SCRIPT_RE.findall(text)
+              if "googletagmanager.com/gtm.js" in code]
+    expected = INLINE_SCRIPT_RE.search(GTM_HEAD_SNIPPET).group(1)
+    if len(blocks) != 1 or re.sub(r"\s+", "", blocks[0]) != re.sub(r"\s+", "", expected):
+        raise SystemExit(f"GTM bootstrap missing, duplicated or modified: {path}")
 
 
 def replace_ads_block(text: str) -> tuple[str, bool]:
@@ -181,6 +191,8 @@ def inject(path: Path) -> tuple[bool, str | None]:
     )
     if not all(token in text for token in required):
         raise SystemExit(f"Tracking verification failed for {path}")
+
+    verify_gtm_bootstrap(text, path)
 
     if changed:
         path.write_text(text, encoding="utf-8")
