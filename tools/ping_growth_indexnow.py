@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Submit WCCM ecosystem growth URLs to IndexNow.
+"""Submit WCCM ecosystem URLs to IndexNow.
 
 This is discovery acceleration for IndexNow-participating search engines. It does
 not guarantee indexing or ranking. Each host has its own verification key file
@@ -22,7 +22,7 @@ SITES = [
     {
         "host": "westcoastcapitalmortgage.com",
         "key": "6a526a773a4c41a5a4ded3a78dde63a9",
-        "sitemaps": ["/growth-sitemap.xml"],
+        "sitemaps": ["/growth-sitemap.xml", "/sitemap.xml"],
     },
     {
         "host": "californiamtg.com",
