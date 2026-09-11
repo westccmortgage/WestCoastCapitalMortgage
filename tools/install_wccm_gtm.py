@@ -13,7 +13,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-GTM_ID = "GTM-WDSXSS5Z"
+GTM_ID = "GTM-K2X3X454"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 ASSET_VERSION = "20260904-validation"
