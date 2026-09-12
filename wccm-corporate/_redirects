@@ -12,6 +12,9 @@ https://www.cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
 http://www.cawccm.com/* https://westcoastcapitalmortgage.com/:splat 301!
 https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat 301!
 
+# Canonical path redirects
+/florida-dscr-loans.html /florida-dscr-loans 301!
+
 # Retired URLs -> current consolidated pages (first-match order preserved)
 /loans/jumbo/manhattan-beach /mortgage/manhattan-beach 301!
 /loans/dscr/manhattan-beach /mortgage/manhattan-beach 301!
