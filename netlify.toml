@@ -5,3 +5,10 @@
 [build]
   command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/install_wccm_gtm.py && python3 tools/install_wccm_ads_readiness.py && python3 tools/verify_wccm_clarity.py"
   publish = "wccm-corporate"
+
+# Keep the existing Florida hub link working while the canonical page uses the clean URL.
+[[redirects]]
+  from = "/florida-dscr-loans.html"
+  to = "/florida-dscr-loans"
+  status = 301
+  force = true
