@@ -26,6 +26,13 @@ DOMAIN_RULES = [
     f"https://westccmortgage.netlify.app/* {CANONICAL}/:splat 301!",
 ]
 
+# Canonical clean-URL redirects that must be evaluated before the site's final
+# 404 catch-all. Keep these here so build-time redirect normalization cannot
+# accidentally place them after the catch-all or remove them as duplicates.
+CANONICAL_PATH_RULES = [
+    "/florida-dscr-loans.html /florida-dscr-loans 301!",
+]
+
 
 def replace_domain(path: Path) -> int:
     if not path.is_file() or path.name == "_redirects":
@@ -47,7 +54,7 @@ def clean_redirects(path: Path) -> tuple[int, int]:
 
     original = path.read_text(encoding="utf-8").splitlines()
     unique_rules: list[str] = []
-    seen_sources: set[str] = set()
+    seen_sources: set[str] = {rule.split()[0] for rule in CANONICAL_PATH_RULES}
     duplicate_count = 0
 
     alternate_hosts = {
@@ -93,6 +100,9 @@ def clean_redirects(path: Path) -> tuple[int, int]:
         "",
         "# Alternate hosts -> canonical host",
         *DOMAIN_RULES,
+        "",
+        "# Canonical path redirects",
+        *CANONICAL_PATH_RULES,
         "",
         "# Retired URLs -> current consolidated pages (first-match order preserved)",
         *unique_rules,
