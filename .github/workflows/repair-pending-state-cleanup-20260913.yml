@@ -1,0 +1,68 @@
+name: Repair WCCM product pages after pending-state cleanup
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-pending-state-cleanup-20260913.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore six product pages from last known-good source
+        run: |
+          git checkout 5947cd999e1982cbe313a4643b12e9500a0c6d3c -- \
+            wccm-corporate/jumbo-loans.html \
+            wccm-corporate/self-employed-borrowers.html \
+            wccm-corporate/bank-statement-loans.html \
+            wccm-corporate/non-qm-loans.html \
+            wccm-corporate/dscr-loans.html \
+            wccm-corporate/investment-property-loans.html
+      - name: Remove stale pending-state blocks safely
+        run: python3 scripts/disable_pending_state_pages_20260907.py
+      - name: Verify tracking JavaScript is intact
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          files = [
+              'jumbo-loans.html','self-employed-borrowers.html','bank-statement-loans.html',
+              'non-qm-loans.html','dscr-loans.html','investment-property-loans.html'
+          ]
+          root = Path('wccm-corporate')
+          required = [
+              'window.dataLayer=window.dataLayer||[];',
+              'window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};',
+              'window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};',
+              "var dl=window.dataLayer||[];",
+              "var leadEventId=item.lead_event_id||'';",
+          ]
+          errors=[]
+          for name in files:
+              text=(root/name).read_text(encoding='utf-8')
+              for needle in required:
+                  if needle not in text:
+                      errors.append(f'{name}: missing {needle}')
+              if 'STATE-HUBS-20260907' in text:
+                  errors.append(f'{name}: stale state-hub marker remains')
+              if 'Compare the Same Financing Strategy in Washington and New York' in text:
+                  errors.append(f'{name}: stale state-hub text remains')
+          if errors:
+              raise SystemExit('\n'.join(errors))
+          print('PASS: product pages restored, stale state blocks removed, tracking JS intact')
+          PY
+      - name: Commit repaired production source
+        run: |
+          git config user.name "WCCM Visibility Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add wccm-corporate
+          if git diff --cached --quiet; then
+            echo "No repair changes required"
+            exit 0
+          fi
+          git commit -m "Repair WCCM product pages after state cleanup"
+          git push origin main
