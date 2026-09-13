@@ -5,7 +5,7 @@
 
 [build]
   publish = "."
-  command = "node scripts/install-ads.mjs"
+  command = "node scripts/install-ads.mjs && node scripts/install-early-845k.mjs"
 
 [[headers]]
   for = "/*"
