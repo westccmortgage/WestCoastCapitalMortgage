@@ -1,4 +1,5 @@
 name: Disable pending Washington and New York pages
+# 2026-09-13: re-run after hardening stale state-hub block cleanup.
 on:
   push:
     branches: [main]
