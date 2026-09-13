@@ -46,7 +46,9 @@ for name in PRODUCTS:
     for href in ['washington-mortgage-loans.html','new-york-long-island-mortgage-loans.html','/washington-mortgage-loans','/new-york-long-island-mortgage-loans']:
         s=re.sub(r'<a\b[^>]*href="'+re.escape(href)+r'"[^>]*>.*?</a>','',s,flags=re.S|re.I)
 
-    s=s.replace(' ·  · ',' · ').replace('||','')
+    # Only normalize leftover visual separators. Never replace the JavaScript
+    # logical-OR operator (||), which appears in analytics and lead-tracking code.
+    s=s.replace(' ·  · ',' · ')
     p.write_text(s,encoding='utf-8')
 
 # Validation
@@ -61,6 +63,9 @@ for name in PRODUCTS:
     s=(ROOT/name).read_text(encoding='utf-8')
     if 'STATE-HUBS-20260907' in s: errors.append(name+': stale state hub marker remains')
     if 'washington-mortgage-loans' in s or 'new-york-long-island-mortgage-loans' in s: errors.append(name+': state link remains')
+    # Protect critical JS used by GTM/Ads/Clarity from accidental text cleanup.
+    if 'window.dataLayer=window.dataLayer||[];' not in s: errors.append(name+': dataLayer JS damaged')
+    if 'window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};' not in s: errors.append(name+': gtag JS damaged')
 try: ET.parse(sp)
 except Exception as e: errors.append('sitemap XML invalid: '+str(e))
 for name in PAGES:
@@ -70,4 +75,4 @@ for name in PAGES:
         except Exception as e: errors.append(name+': JSON-LD invalid '+str(e))
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print('PASS: pending WA/NY pages remain disabled and all stale state-hub content is removed from product pages')
+print('PASS: pending WA/NY pages remain disabled; stale state-hub content is removed; product-page tracking JS remains intact')
