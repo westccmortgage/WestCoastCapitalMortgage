@@ -29,7 +29,8 @@ for name in PRODUCTS:
     p=ROOT/name
     s=p.read_text(encoding='utf-8')
 
-    # Remove the complete injected state-hub section whenever the marker exists.
+    # Remove the complete injected state-hub section whenever the marker is
+    # immediately followed by a section.
     s=re.sub(
         r'\s*<!--\s*STATE-HUBS-20260907\s*-->\s*<section\b.*?</section>\s*',
         '\n',
@@ -37,7 +38,11 @@ for name in PRODUCTS:
         flags=re.S|re.I,
     )
 
-    # Defensive cleanup for any state links that may exist outside the marked block.
+    # Some pages had already lost the section in an earlier cleanup but retained
+    # the marker itself. Remove any orphan marker so validation is idempotent.
+    s=re.sub(r'\s*<!--\s*STATE-HUBS-20260907\s*-->\s*', '\n', s, flags=re.I)
+
+    # Defensive cleanup for state links that may exist outside the marked block.
     for href in ['washington-mortgage-loans.html','new-york-long-island-mortgage-loans.html','/washington-mortgage-loans','/new-york-long-island-mortgage-loans']:
         s=re.sub(r'<a\b[^>]*href="'+re.escape(href)+r'"[^>]*>.*?</a>','',s,flags=re.S|re.I)
 
@@ -54,7 +59,7 @@ for u in URLS:
     if u in sp.read_text(encoding='utf-8'): errors.append('sitemap still contains '+u)
 for name in PRODUCTS:
     s=(ROOT/name).read_text(encoding='utf-8')
-    if 'STATE-HUBS-20260907' in s: errors.append(name+': stale state hub block remains')
+    if 'STATE-HUBS-20260907' in s: errors.append(name+': stale state hub marker remains')
     if 'washington-mortgage-loans' in s or 'new-york-long-island-mortgage-loans' in s: errors.append(name+': state link remains')
 try: ET.parse(sp)
 except Exception as e: errors.append('sitemap XML invalid: '+str(e))
@@ -65,4 +70,4 @@ for name in PAGES:
         except Exception as e: errors.append(name+': JSON-LD invalid '+str(e))
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print('PASS: pending WA/NY pages remain disabled and all stale state-hub blocks are removed from product pages')
+print('PASS: pending WA/NY pages remain disabled and all stale state-hub content is removed from product pages')
