@@ -4,7 +4,7 @@
 # so /_redirects and /assets/... resolve correctly.
 [build]
   publish = "."
-  command = "node scripts/install-lead-forms.mjs"
+  command = "node scripts/install-lead-forms.mjs && node scripts/install-early-845k.mjs"
 
 # ---- Caching -------------------------------------------------------------
 # Assets (HTML/CSS/JS) are NOT fingerprinted, so force browsers to revalidate
