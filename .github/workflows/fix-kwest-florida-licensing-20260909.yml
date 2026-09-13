@@ -1,4 +1,4 @@
-name: Correct K West Florida licensing disclosure
+name: Normalize K West entity consistency
 
 on:
   push:
@@ -13,19 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Remove remaining pre-launch Florida licensing placeholders
+      - name: Normalize Florida licensing, founder experience, and corporate URL
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          replacements = {
-              'Sun Coast Capital Mortgage / Florida mortgage licensing details to be added before launch.':
-                  ('West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. '
-                   'Company NMLS #2817729. Consumers may verify licensing through NMLS Consumer Access. '
-                   'See https://westcoastcapitalmortgage.com/florida for current Florida mortgage information.'),
-              'Florida / Sun Coast licensing details to be added before launch.':
-                  'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. Company NMLS #2817729.',
-          }
+          replacements = [
+              ('Sun Coast Capital Mortgage / Florida mortgage licensing details to be added before launch.',
+               'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. Company NMLS #2817729. Consumers may verify licensing through NMLS Consumer Access. See https://westcoastcapitalmortgage.com/florida for current Florida mortgage information.'),
+              ('Florida / Sun Coast licensing details to be added before launch.',
+               'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. Company NMLS #2817729.'),
+              ('Florida mortgage licensing details to be added before launch.',
+               'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida. Company NMLS #2817729.'),
+              ('Mortgage professional since 2001', 'Mortgage and real estate professional since 2004'),
+              ('Mortgage professional since 2004', 'Mortgage and real estate professional since 2004'),
+              ('mortgage professional since 2001', 'mortgage and real estate professional since 2004'),
+              ('mortgage professional since 2004', 'mortgage and real estate professional since 2004'),
+              ('https://westccmortgage.com', 'https://westcoastcapitalmortgage.com'),
+          ]
 
           changed=[]
           for p in Path('kwestmortgage').rglob('*'):
@@ -36,26 +41,31 @@ jobs:
               except UnicodeDecodeError:
                   continue
               old_s=s
-              for old,new in replacements.items():
+              for old,new in replacements:
                   s=s.replace(old,new)
               if s != old_s:
                   p.write_text(s,encoding='utf-8')
                   changed.append(str(p))
 
-          if not changed:
-              raise SystemExit('Expected remaining pre-launch licensing metadata was not found')
           print('Changed files:')
-          print('\n'.join(changed))
+          print('\n'.join(changed) if changed else '(none)')
           PY
-      - name: Validate disclosure repair
+      - name: Validate normalization
         run: |
           ! grep -R -i -F 'to be added before launch' kwestmortgage
+          ! grep -R -F 'Mortgage professional since 2001' kwestmortgage
+          ! grep -R -F 'Mortgage professional since 2004' kwestmortgage
           grep -R -F 'West Coast Capital Mortgage Inc. is licensed to conduct mortgage activity in Florida.' kwestmortgage
-          grep -R -F 'https://westcoastcapitalmortgage.com/florida' kwestmortgage
-      - name: Commit repair
+          grep -F 'Mortgage and real estate professional since 2004' kwestmortgage/about.html
+          grep -F 'https://westcoastcapitalmortgage.com' kwestmortgage/index.html
+      - name: Commit normalization
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add kwestmortgage
-          git commit -m "Remove remaining K West pre-launch licensing metadata"
-          git push origin HEAD:main
+          if git diff --cached --quiet; then
+            echo "No source changes needed"
+          else
+            git commit -m "Normalize K West licensing and founder entity signals"
+            git push origin HEAD:main
+          fi
