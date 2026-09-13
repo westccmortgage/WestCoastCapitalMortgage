@@ -1,7 +1,7 @@
 # Before Jumbo Loan — multi-market Strategy Studio
 # One engine (js/engine.js, MARKETS registry) served per route.
 [build]
-  command = "node scripts/version-tracking.mjs"
+  command = "node scripts/version-tracking.mjs && node scripts/install-early-845k.mjs"
   publish = "."
   functions = "netlify/functions"
 
