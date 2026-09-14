@@ -420,6 +420,7 @@ def render_county_jumbo(county):
     <span class="eyebrow">Overview</span>
     <h2>What counts as a jumbo loan in @@COUNTY@@</h2>
     <p>@@LIMITPARA@@</p>
+    <p class="muted" style="font-size:.9rem">Official source: <a href="https://www.fhfa.gov/data/conforming-loan-limit" target="_blank" rel="noopener noreferrer">FHFA 2026 Conforming Loan Limit Values</a>. Always verify the applicable county limit against current FHFA data.</p>
     <p>@@SPREAD@@</p>
     <div class="btn-row"><a class="btn btn-blue" href="/apply.html">Get Preapproved</a><a class="btn btn-outline" href="/jumbo-loans">All about Jumbo Loans</a></div>
   </div>
@@ -737,7 +738,7 @@ def render_flagship(prog, c):
                       % (county, limit, BASELINE_LIMIT, county))
     else:
         limit_para = ("Across %s, the 2026 one-unit conforming loan limit is the %s national baseline (per "
-                      "FHFA/HUD 2026 loan limits); %s is not designated a high-cost area, so the standard "
+                      "FHFA 2026 conforming loan limits); %s is not designated a high-cost area, so the standard "
                       "conforming ceiling applies." % (county, BASELINE_LIMIT, county))
 
     body = """<section><div class="wrap">
