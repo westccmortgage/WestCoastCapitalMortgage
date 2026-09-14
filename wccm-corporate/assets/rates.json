@@ -1,39 +1,39 @@
 {
-  "effective": "Sep 8, 2026 · 7:01 AM PT",
+  "effective": "Sep 14, 2026 · 6:44 AM PT",
   "source": "Lender wholesale base pricing; best-case borrower profile.",
   "comp_points": 0,
   "products": [
     {
       "name": "Conventional 30-Year Fixed",
-      "rate": 6.25
+      "rate": 6.624
     },
     {
       "name": "Conventional 15-Year Fixed",
-      "rate": 5.75
+      "rate": 6.125
     },
     {
       "name": "FHA 30-Year Fixed",
-      "rate": 5.875
+      "rate": 6.25
     },
     {
       "name": "VA 30-Year Fixed",
-      "rate": 5.875
+      "rate": 6.25
     },
     {
       "name": "USDA 30-Year Fixed",
-      "rate": 6
+      "rate": 6.25
     },
     {
       "name": "Jumbo 30-Year Fixed",
-      "rate": 6.375
+      "rate": 6.75
     },
     {
       "name": "Non-QM (A+) 30-Year Fixed",
-      "rate": 6.5
+      "rate": 6.75
     },
     {
       "name": "DSCR Investor 30-Year Fixed",
-      "rate": 6.375
+      "rate": 6.625
     }
   ]
 }
