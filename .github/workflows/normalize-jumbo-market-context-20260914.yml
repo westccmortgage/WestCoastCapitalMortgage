@@ -1,0 +1,135 @@
+name: Normalize jumbo market context to loan-amount logic
+
+on:
+  push:
+    paths:
+      - '.github/workflows/normalize-jumbo-market-context-20260914.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace price-implies-jumbo language with loan-amount logic
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import importlib.util
+          import re
+
+          root = Path('.')
+          data_path = root / 'gen_city_pages.py'
+          spec = importlib.util.spec_from_file_location('gcp', data_path)
+          gcp = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(gcp)
+
+          def dollars(s):
+              m = re.search(r'\$([\d,.]+)\s*([MK])?', s)
+              if not m:
+                  return None
+              v = float(m.group(1).replace(',', ''))
+              if m.group(2) == 'M': v *= 1_000_000
+              elif m.group(2) == 'K': v *= 1_000
+              return v
+
+          def safe_note(c):
+              city = c['city']
+              county = c['county']
+              limit = gcp.COUNTY_LIMITS[county]
+              med = dollars(c['median'])
+              lim = dollars(limit)
+              if med is None:
+                  return (f"{city} does not have a separately tracked Zillow home-value figure in this dataset. "
+                          f"For a one-unit conventional loan, jumbo status should be determined by comparing the requested loan amount after the down payment with the {limit} 2026 {county} conforming limit—not by home price alone.")
+              ratio = med / lim if lim else 0
+              if ratio >= 2:
+                  context = 'far above'
+              elif ratio >= 1.15:
+                  context = 'above'
+              elif ratio >= 0.90:
+                  context = 'near'
+              else:
+                  context = 'below'
+              return (f"{city}'s typical home value is {context} the 2026 {county} conforming limit. "
+                      f"That is market-price context only: for a one-unit conventional loan, jumbo status depends on the requested loan amount after the down payment compared with the {limit} county limit. "
+                      f"A higher purchase price does not by itself make the loan jumbo.")
+
+          # Capture current strings before editing so current generated HTML can be corrected in place.
+          replacements = []
+          for c in gcp.CITY_DATA:
+              old = c['jumbo_market']
+              new = safe_note(c)
+              if old != new:
+                  replacements.append((c['city'], old, new))
+
+          src = data_path.read_text(encoding='utf-8')
+          changed_data = 0
+          for city, old, new in replacements:
+              old_literal = '"jumbo_market": ' + repr(old).replace("'", '"')
+              # repr-based replacement is fragile around apostrophes; use a city-scoped regex instead.
+              pattern = re.compile(
+                  r'("city"\s*:\s*' + re.escape('"' + city + '"') + r'.*?"jumbo_market"\s*:\s*)"(?:[^"\\]|\\.)*"',
+                  re.S,
+              )
+              escaped = new.replace('\\', '\\\\').replace('"', '\\"')
+              src2, n = pattern.subn(lambda m: m.group(1) + '"' + escaped + '"', src, count=1)
+              if n != 1:
+                  raise SystemExit(f'Could not rewrite jumbo_market for {city}: matches={n}')
+              src = src2
+              changed_data += 1
+          data_path.write_text(src, encoding='utf-8')
+
+          html_changed = []
+          html_root = root / 'wccm-corporate' / 'loans' / 'jumbo'
+          for p in html_root.rglob('*.html'):
+              s = p.read_text(encoding='utf-8')
+              old_s = s
+              for city, old, new in replacements:
+                  s = s.replace(old, new)
+              if s != old_s:
+                  p.write_text(s, encoding='utf-8')
+                  html_changed.append(str(p))
+
+          print(f'Updated CITY_DATA notes: {changed_data}')
+          print(f'Updated generated jumbo pages: {len(html_changed)}')
+          if not html_changed:
+              raise SystemExit('Expected generated jumbo pages to change')
+          PY
+      - name: Validate loan-amount-first wording
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+
+          spec = importlib.util.spec_from_file_location('gcp', 'gen_city_pages.py')
+          gcp = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(gcp)
+
+          banned = [
+              'virtually every standard', 'nearly every standard', 'majority of single-family',
+              'most single-family', 'are financed as jumbo', 'financed with jumbo loans',
+              'require jumbo financing', 'require jumbo loans', 'overwhelming majority'
+          ]
+          for c in gcp.CITY_DATA:
+              note = c['jumbo_market'].lower()
+              assert 'loan amount after the down payment' in note, c['city']
+              assert 'home price' in note or 'purchase price' in note, c['city']
+              for phrase in banned:
+                  assert phrase not in note, (c['city'], phrase)
+
+          oc = Path('wccm-corporate/loans/jumbo/orange-county.html').read_text(encoding='utf-8').lower()
+          for phrase in banned:
+              assert phrase not in oc, phrase
+          assert 'jumbo status depends on the requested conventional loan amount after the down payment' in oc
+          print('Jumbo market-context validation passed')
+          PY
+      - name: Commit normalized jumbo context
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gen_city_pages.py wccm-corporate/loans/jumbo
+          git commit -m "Correct city jumbo context to loan-amount logic"
+          git push origin HEAD:main
