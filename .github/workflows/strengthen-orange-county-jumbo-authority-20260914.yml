@@ -1,0 +1,71 @@
+name: Strengthen Orange County jumbo authority
+
+on:
+  push:
+    paths:
+      - '.github/workflows/strengthen-orange-county-jumbo-authority-20260914.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add FHFA authority signal and clean attribution
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          fhfa_url = 'https://www.fhfa.gov/data/conforming-loan-limit'
+          source_html = ('    <p class="muted" style="font-size:.9rem">Official source: '
+                         '<a href="https://www.fhfa.gov/data/conforming-loan-limit" target="_blank" rel="noopener noreferrer">'
+                         'FHFA 2026 Conforming Loan Limit Values</a>. Always verify the applicable county limit against current FHFA data.</p>')
+
+          # Persist the attribution fix in the geography generator.
+          gen = Path('gen_geo_pages.py')
+          s = gen.read_text(encoding='utf-8')
+          s = s.replace('FHFA/HUD 2026 loan limits', 'FHFA 2026 conforming loan limits')
+          marker = '    <p>@@LIMITPARA@@</p>\n    <p>@@SPREAD@@</p>'
+          replacement = '    <p>@@LIMITPARA@@</p>\n' + source_html + '\n    <p>@@SPREAD@@</p>'
+          if fhfa_url not in s:
+              if marker not in s:
+                  raise SystemExit('County jumbo template marker not found')
+              s = s.replace(marker, replacement, 1)
+          gen.write_text(s, encoding='utf-8')
+
+          # Strengthen the already-indexed Orange County page without regenerating
+          # the full geo set (which could overwrite independent tracking injections).
+          page = Path('wccm-corporate/loans/jumbo/orange-county.html')
+          p = page.read_text(encoding='utf-8')
+          p = p.replace('FHFA/HUD 2026 loan limits', 'FHFA 2026 conforming loan limits')
+          if fhfa_url not in p:
+              anchor = '<h2>What counts as a jumbo loan in Orange County</h2>'
+              pos = p.find(anchor)
+              if pos < 0:
+                  raise SystemExit('Orange County overview heading not found')
+              para_end = p.find('</p>', pos)
+              if para_end < 0:
+                  raise SystemExit('Orange County limit paragraph not found')
+              para_end += len('</p>')
+              p = p[:para_end] + '\n' + source_html + p[para_end:]
+          page.write_text(p, encoding='utf-8')
+          PY
+      - name: Validate authority improvement
+        run: |
+          grep -F 'FHFA 2026 Conforming Loan Limit Values' wccm-corporate/loans/jumbo/orange-county.html
+          grep -F 'https://www.fhfa.gov/data/conforming-loan-limit' gen_geo_pages.py
+          grep -F '$1,249,125' wccm-corporate/loans/jumbo/orange-county.html
+          ! grep -F 'FHFA/HUD 2026 loan limits' gen_geo_pages.py
+      - name: Commit improvement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gen_geo_pages.py wccm-corporate/loans/jumbo/orange-county.html
+          if git diff --cached --quiet; then
+            echo "No source changes needed"
+          else
+            git commit -m "Strengthen Orange County jumbo FHFA authority"
+            git push origin HEAD:main
+          fi
