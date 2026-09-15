@@ -1,0 +1,62 @@
+name: Strengthen Florida AI discovery links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/strengthen-florida-ai-links-20260915.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  strengthen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Strengthen Florida specialty discovery
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('wccm-corporate/florida.html')
+          s = p.read_text(encoding='utf-8')
+          old = s
+
+          marker = '<!-- AI-VISIBILITY-SOUTH-FLORIDA-MARKETS-20260911 -->\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"South Florida mortgage guides","itemListElement":[{"@type":"ListItem","position":1,"name":"Miami DSCR and Foreign National Mortgage Guide","url":"https://westcoastcapitalmortgage.com/miami-dscr-foreign-national-loans"},{"@type":"ListItem","position":2,"name":"Boca Raton Mortgage Loans","url":"https://westcoastcapitalmortgage.com/boca-raton-mortgage-loans"}]}</script>'
+          specialty = marker + '\n<!-- AI-VISIBILITY-FL-SPECIALTY-GUIDES-20260915 -->\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Florida specialty mortgage guides","itemListElement":[{"@type":"ListItem","position":1,"name":"Florida DSCR Loans","url":"https://westcoastcapitalmortgage.com/florida-dscr-loans"},{"@type":"ListItem","position":2,"name":"Florida Bank Statement Loans","url":"https://westcoastcapitalmortgage.com/florida-bank-statement-loans"},{"@type":"ListItem","position":3,"name":"Florida Condo Financing","url":"https://westcoastcapitalmortgage.com/florida-condo-financing"},{"@type":"ListItem","position":4,"name":"Foreign National Loans for Florida Buyers","url":"https://westcoastcapitalmortgage.com/foreign-national-loans"}]}</script>'
+          if 'AI-VISIBILITY-FL-SPECIALTY-GUIDES-20260915' not in s:
+              if marker not in s:
+                  raise SystemExit('Expected South Florida ItemList marker not found')
+              s = s.replace(marker, specialty, 1)
+
+          old_dscr_card = '<a class="card" href="dscr-loans.html"><span class="label">Real estate investors</span><h3>DSCR Loans</h3><p>Qualify an investment property primarily through its rental cash flow rather than personal income.</p><span class="more">Learn more &rarr;</span></a>'
+          new_dscr_card = '<a class="card" href="florida-dscr-loans.html"><span class="label">Real estate investors</span><h3>Florida DSCR Loans</h3><p>State-specific DSCR guidance for eligible Florida rental and investment-property scenarios.</p><span class="more">Florida DSCR guide &rarr;</span></a>'
+          if old_dscr_card in s:
+              s = s.replace(old_dscr_card, new_dscr_card, 1)
+          elif new_dscr_card not in s:
+              raise SystemExit('Expected Florida DSCR loan-option card not found')
+
+          old_footer = '<a href="non-qm-loans.html">Non-QM</a><a href="dscr-loans.html">DSCR</a>'
+          new_footer = '<a href="non-qm-loans.html">Non-QM</a><a href="florida-bank-statement-loans.html">Bank Statement</a><a href="florida-dscr-loans.html">DSCR</a>'
+          if old_footer in s:
+              s = s.replace(old_footer, new_footer, 1)
+          elif new_footer not in s:
+              raise SystemExit('Expected Florida footer loan links not found')
+
+          if s == old:
+              raise SystemExit('No Florida discovery changes were needed')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validate Florida specialty discovery
+        run: |
+          grep -F 'AI-VISIBILITY-FL-SPECIALTY-GUIDES-20260915' wccm-corporate/florida.html
+          grep -F 'https://westcoastcapitalmortgage.com/florida-bank-statement-loans' wccm-corporate/florida.html
+          grep -F 'href="florida-dscr-loans.html"' wccm-corporate/florida.html
+          grep -F 'href="florida-bank-statement-loans.html">Bank Statement</a>' wccm-corporate/florida.html
+      - name: Commit Florida discovery improvement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wccm-corporate/florida.html
+          git commit -m "Strengthen Florida specialty mortgage discovery"
+          git push origin HEAD:main
