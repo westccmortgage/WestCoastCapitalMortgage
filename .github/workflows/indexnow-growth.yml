@@ -28,3 +28,5 @@ jobs:
 
       - name: Submit live growth URLs to IndexNow
         run: python3 tools/ping_growth_indexnow.py
+
+# Refresh marker: Florida bank statement visibility 2026-09-15
