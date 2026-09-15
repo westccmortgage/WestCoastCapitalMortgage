@@ -39,6 +39,13 @@ if 'name="gclid"' not in text:
         raise SystemExit("Could not locate early-limit form marker")
     text = text.replace(MARKER, MARKER + ATTRIBUTION, 1)
 
+# Reliable-delivery id (see wccm-corporate/script.js). Gated independently of
+# the attribution block above so it still lands even after gclid is present.
+if 'name="submission_id"' not in text:
+    if MARKER not in text:
+        raise SystemExit("Could not locate early-limit form marker")
+    text = text.replace(MARKER, MARKER + '\n<input type="hidden" name="submission_id" value="">', 1)
+
 PAGE.write_text(text, encoding="utf-8")
 
 if SITEMAP.exists():

@@ -145,7 +145,7 @@ section{padding:88px 0}
 .mortgage-about-facts{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px}
 .mortgage-about-facts span{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.12em}
 .mortgage-about-link{display:inline-block;color:var(--blue);font-size:10px;font-weight:800;letter-spacing:.08em;margin-top:20px}
-body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel):not(.homepage-rating-strip){display:none}
+body:has(.mortgage-compact-hero) > section:not(.mortgage-compact-hero):not(.mortgage-funnel):not(.homepage-rating-strip):not(#mortgage-review){display:none}
 body:has(.mortgage-compact-hero) .site-footer{padding:30px 0 22px}
 body:has(.mortgage-compact-hero) .site-footer .footer-grid,
 body:has(.mortgage-compact-hero) .site-footer .wccm-legal{display:none}
@@ -257,14 +257,21 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .form .field label{color:var(--black)}
 .form .field input,.form .field select,.form .field textarea{
-  padding:13px 14px;border:1px solid var(--border);border-radius:8px;font:inherit;font-size:.96rem;background:#fff;color:var(--black)}
+  padding:13px 14px;border:1px solid var(--border);border-radius:8px;font:inherit;font-size:16px;background:#fff;color:var(--black)}
 .form .field input:focus,.form .field select:focus,.form .field textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
 .form .full{grid-column:1/-1}
 .form textarea{min-height:120px;resize:vertical}
 .form-note{font-size:.86rem;color:var(--gray);margin-top:14px}
+.form-status{font-size:.9rem;color:var(--gray);margin-bottom:14px}
 .form-ok{background:#e9f6ee;border:1px solid #b7e0c6;color:#176b3a;border-radius:10px;padding:14px 16px;margin-bottom:18px}
 .form-error-summary{background:#fff1f0;border:1px solid #f0b8b3;color:#9f251e;border-radius:10px;padding:14px 16px;margin-bottom:18px}
 .form .field-error{color:#9f251e;font-size:.82rem;font-weight:600;line-height:1.4;margin:0}
+/* Submit feedback pulse (card taps, mobile-bar CTA, in-page CTAs) */
+.form.wccm-pulse{animation:wccmPulse 1.2s ease}
+@keyframes wccmPulse{0%{box-shadow:0 0 0 0 rgba(0,115,230,.35)}70%{box-shadow:0 0 0 14px rgba(0,115,230,0)}100%{box-shadow:0 0 0 0 rgba(0,115,230,0)}}
+@media(prefers-reduced-motion:reduce){.form.wccm-pulse{animation:none}}
+/* Clickable benefit/comparison cards (no link/button/input/details inside) */
+.grid .card[data-lead-link]:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .form .field input[aria-invalid="true"],.form .field select[aria-invalid="true"],.form .field textarea[aria-invalid="true"]{
   border-color:#c7392f;box-shadow:0 0 0 1px #c7392f}
 .form button[type="submit"]:disabled{cursor:not-allowed;opacity:.68;transform:none}
@@ -543,6 +550,7 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
   gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
   background:rgba(255,255,255,.97);border-top:1px solid var(--border);
   box-shadow:0 -6px 18px rgba(11,35,69,.10);
+  transition:transform .15s ease;
 }
 .mobile-action-bar a{
   flex:1 1 0;display:inline-flex;align-items:center;justify-content:center;gap:7px;
@@ -552,8 +560,12 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .mobile-action-bar .mab-call{background:#fff;color:var(--navy);border:1px solid var(--border)}
 .mobile-action-bar .mab-cta{background:var(--blue);color:#fff;border:1px solid var(--blue)}
 .mobile-action-bar .mab-cta:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+.mobile-action-bar .mab-cta.mab-done{background:#8a939e;border-color:#8a939e;pointer-events:none}
 @media(max-width:860px){
   .mobile-action-bar{display:flex}
   body.has-mobile-action-bar{padding-bottom:76px}
 }
+/* iOS keyboard overlaps a fixed bottom bar; hide it while a lead-form field has focus. */
+.mobile-action-bar.mab-hide{transform:translateY(120%)}
+@media(prefers-reduced-motion:reduce){.mobile-action-bar{transition:none}}
 @media print{.mobile-action-bar{display:none}}

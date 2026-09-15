@@ -16,7 +16,7 @@ from pathlib import Path
 GTM_ID = "GTM-K2X3X454"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
-ASSET_VERSION = "20260904-validation"
+ASSET_VERSION = "20260915-leads"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
@@ -163,7 +163,11 @@ def inject(path: Path) -> tuple[bool, str | None]:
 
     # Bust stale browser/CDN copies whenever the shared lead form or its styles
     # change. The build applies this consistently to every deployable page.
-    script_version = "20260910-florida" if path.name in {
+    # tools/install_wccm_ads_readiness.py runs after this script and stamps
+    # every page's script.js with its own literal version, so that value is
+    # what actually ships — keep both in step on every reliable-delivery /
+    # lead-form change instead of relying on this per-page distinction.
+    script_version = "20260915-leads" if path.name in {
         "bank-statement-loans.html", "self-employed-borrowers.html", "dscr-loans.html",
         "jumbo-loans.html", "florida-condo-financing.html", "foreign-national-loans.html",
     } else ASSET_VERSION

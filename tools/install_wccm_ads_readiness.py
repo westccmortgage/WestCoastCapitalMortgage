@@ -30,6 +30,23 @@ ATTRIBUTION_FIELDS = (
     "referrer",
 )
 
+# Reliable-delivery id (see wccm-corporate/script.js). Declared for every lead
+# form the same way ATTRIBUTION_FIELDS is, so Netlify does not drop it.
+SUBMISSION_ID_FIELDS = ("submission_id",)
+
+# Partial-lead capture (abandoned-form recovery). A visitor who typed a
+# plausible email or phone and then left the page without submitting gets
+# recorded here by script.js via sendBeacon/fetch. Never used for SMS.
+PARTIAL_LEAD_CONTENT_FIELDS = (
+    "source_form", "page_path", "state_context", "name", "first_name", "last_name",
+    "email", "phone", "program_interest", "details", "submission_id", "partial_reason",
+    "status", "sms_consent",
+)
+PARTIAL_LEAD_ATTRIBUTION_FIELDS = (
+    "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+    "gclid", "gbraid", "wbraid", "landing_page", "referrer",
+)
+
 FORM_SCHEMAS = {
     "bank-statement-lead": (
         "goal", "property_area", "loan_amount", "statements_available", "self_employed_years",
@@ -81,6 +98,25 @@ def build_schema_twin(form_name: str) -> str:
             lines.append(f'  <input name="{field}">')
     for field in ATTRIBUTION_FIELDS:
         lines.append(f'  <input name="{field}">')
+    for field in SUBMISSION_ID_FIELDS:
+        lines.append(f'  <input name="{field}">')
+    lines.append("</form>")
+    return "\n".join(lines)
+
+
+def build_partial_lead_twin() -> str:
+    lines = [
+        '<form name="partial-lead" netlify netlify-honeypot="company" hidden>',
+        '  <input type="hidden" name="form-name" value="partial-lead">',
+        '  <input type="text" name="company">',
+    ]
+    for field in PARTIAL_LEAD_CONTENT_FIELDS:
+        if field == "details":
+            lines.append(f'  <textarea name="{field}"></textarea>')
+        else:
+            lines.append(f'  <input name="{field}">')
+    for field in PARTIAL_LEAD_ATTRIBUTION_FIELDS:
+        lines.append(f'  <input name="{field}">')
     lines.append("</form>")
     return "\n".join(lines)
 
@@ -125,7 +161,7 @@ def upgrade_schema_twin(path: Path, form_name: str) -> bool:
     if not match:
         return False
     body = match.group(2)
-    wanted = list(FORM_SCHEMAS[form_name]) + list(ATTRIBUTION_FIELDS)
+    wanted = list(FORM_SCHEMAS[form_name]) + list(ATTRIBUTION_FIELDS) + list(SUBMISSION_ID_FIELDS)
     missing = [f for f in wanted if f'name="{f}"' not in body]
     if not missing:
         return False
@@ -155,15 +191,64 @@ def install_schema_twin(path: Path, form_name: str) -> bool:
     return True
 
 
+def upgrade_partial_lead_twin(path: Path) -> bool:
+    text = path.read_text(encoding="utf-8")
+    match = re.search(
+        TWIN_RE_TEMPLATE.format(name=re.escape("partial-lead")), text, re.IGNORECASE | re.DOTALL
+    )
+    if not match:
+        return False
+    body = match.group(2)
+    wanted = list(PARTIAL_LEAD_CONTENT_FIELDS) + list(PARTIAL_LEAD_ATTRIBUTION_FIELDS)
+    missing = [f for f in wanted if f'name="{f}"' not in body]
+    if not missing:
+        return False
+    additions = "".join(
+        f'  <textarea name="{f}"></textarea>\n' if f == "details" else f'  <input name="{f}">\n'
+        for f in missing
+    )
+    updated = text[: match.start(3)] + additions + text[match.start(3):]
+    path.write_text(updated, encoding="utf-8")
+    return True
+
+
+def install_partial_lead_twin(path: Path) -> bool:
+    """Register the partial-lead (abandoned-form) Netlify form.
+
+    Netlify unions a form's schema across every page that declares it, so one
+    static hidden twin per paid-search landing page is enough for the whole
+    site to submit to "partial-lead" from any page — but every lead-form page
+    carries its own twin here for redundancy rather than relying on a single
+    page.
+    """
+    text = path.read_text(encoding="utf-8")
+    if 'name="partial-lead"' in text:
+        return upgrade_partial_lead_twin(path)
+    twin = build_partial_lead_twin()
+    for anchor in (SCRIPT_ANCHOR, SCRIPT_ANCHOR_ROOTED):
+        pos = text.find(anchor)
+        if pos >= 0:
+            path.write_text(text[:pos] + twin + "\n" + text[pos:], encoding="utf-8")
+            return True
+    pos = text.lower().rfind("</body>")
+    if pos < 0:
+        return False
+    path.write_text(text[:pos] + twin + "\n" + text[pos:], encoding="utf-8")
+    return True
+
+
 def main() -> None:
     if not PUBLISH_DIR.is_dir():
         raise SystemExit(f"Publish directory not found: {PUBLISH_DIR}")
 
     # Bust previously cached handlers on every page, including nested pages.
+    # This runs after tools/install_wccm_gtm.py in the build command and
+    # touches every page unconditionally, so this literal is the version that
+    # actually ships — keep it in step with ASSET_VERSION in that script.
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20260904-validation\2', html)
+                         r'\1?v=20260915-leads\2', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
@@ -177,14 +262,17 @@ def main() -> None:
             legal_changed += 1
 
     twins_changed = 0
+    partial_twins_changed = 0
     for relative, form_name in PAGE_FORMS.items():
         page = PUBLISH_DIR / relative
         if not page.is_file():
             raise SystemExit(f"Paid-search landing page is missing: {relative}")
         if install_schema_twin(page, form_name):
             twins_changed += 1
+        if install_partial_lead_twin(page):
+            partial_twins_changed += 1
 
-    missing = [name for name in FORM_SCHEMAS if not any(
+    missing = [name for name in list(FORM_SCHEMAS) + ["partial-lead"] if not any(
         f'name="{name}"' in (PUBLISH_DIR / rel).read_text(encoding="utf-8")
         for rel in PAGE_FORMS
     )]
@@ -193,7 +281,8 @@ def main() -> None:
 
     print(
         f"Ads readiness: legal links {legal_changed} added of {legal_seen} footers; "
-        f"lead form schemas {twins_changed} written or upgraded of {len(PAGE_FORMS)} pages."
+        f"lead form schemas {twins_changed} written or upgraded of {len(PAGE_FORMS)} pages; "
+        f"partial-lead schemas {partial_twins_changed} written or upgraded of {len(PAGE_FORMS)} pages."
     )
 
 

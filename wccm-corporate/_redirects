@@ -14,9 +14,9 @@ https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat
 
 # Canonical path redirects
 /florida-dscr-loans.html /florida-dscr-loans 301!
-/florida-bank-statement-loans.html /florida-bank-statement-loans 301!
 
 # Retired URLs -> current consolidated pages (first-match order preserved)
+/florida-bank-statement-loans.html /florida-bank-statement-loans 301!
 /loans/jumbo/manhattan-beach /mortgage/manhattan-beach 301!
 /loans/dscr/manhattan-beach /mortgage/manhattan-beach 301!
 /loans/jumbo/palos-verdes-estates /mortgage/palos-verdes-estates 301!
