@@ -275,6 +275,14 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
 .form .field input[aria-invalid="true"],.form .field select[aria-invalid="true"],.form .field textarea[aria-invalid="true"]{
   border-color:#c7392f;box-shadow:0 0 0 1px #c7392f}
 .form button[type="submit"]:disabled{cursor:not-allowed;opacity:.68;transform:none}
+/* Long submit labels ("Request a Mortgage Review") must wrap on narrow phones. */
+.form button[type="submit"]{max-width:100%;white-space:normal;text-align:center}
+/* Let grid cells shrink below a select's longest option so small phones don't scroll sideways. */
+.form-grid>*{min-width:0}
+.form input,.form select,.form textarea{max-width:100%}
+@media(max-width:400px){.form{padding:24px 18px}}
+.footer-grid>*{min-width:0}
+@media(max-width:360px){.footer-grid{grid-template-columns:1fr}}
 .hp{position:absolute;left:-9999px}
 
 /* ---------- Accordion ---------- */
@@ -328,6 +336,15 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
   .footer-grid{grid-template-columns:repeat(2,1fr)}
   .cta-band{padding:40px 24px}
   .topbar-left a:last-child{display:inline}
+  /* Phones: the utility links + language switch are wider than the screen
+     (home has 5 links), so let the links scroll sideways inside the bar
+     instead of widening the whole page. */
+  .topbar-inner{gap:12px}
+  .topbar-left{flex:1 1 auto;min-width:0;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .topbar-left::-webkit-scrollbar{display:none}
+  .topbar-left a{margin-right:16px}
+  .topbar-right{flex:0 0 auto}
+  .lang-switch{margin-left:0}
   .mortgage-compact-hero{padding:50px 0 42px}
   .mortgage-compact-watermark{font-size:80px;left:-10%;top:42%}
   .mortgage-compact-hero-inner{padding-left:24px}
