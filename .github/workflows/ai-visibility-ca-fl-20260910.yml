@@ -18,6 +18,8 @@ jobs:
           fetch-depth: 0
       - name: Apply AEO and entity improvements
         run: python3 .github/scripts/ai_visibility_ca_fl_20260910.py
+      - name: Apply Florida bank statement lead visibility patch
+        run: python3 .github/scripts/florida_bank_statement_visibility_20260915.py
       - name: Commit production changes
         run: |
           if git diff --quiet -- wccm-corporate; then
