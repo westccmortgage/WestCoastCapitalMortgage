@@ -586,3 +586,61 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .mobile-action-bar.mab-hide{transform:translateY(120%)}
 @media(prefers-reduced-motion:reduce){.mobile-action-bar{transition:none}}
 @media print{.mobile-action-bar{display:none}}
+
+/* ---------- Quick lead: two-step form in the hero of paid-search landings ---------- */
+.page-hero.has-quick-lead{padding:56px 0 64px}
+.page-hero.has-quick-lead .page-hero-inner{max-width:var(--max);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,450px);gap:56px;align-items:center}
+.ql-points{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:12px}
+.ql-points li{position:relative;padding-left:30px;font-weight:600;color:var(--navy);line-height:1.45}
+.ql-points li::before{content:"";position:absolute;left:2px;top:.34em;width:14px;height:8px;border-left:2.5px solid var(--blue);border-bottom:2.5px solid var(--blue);transform:rotate(-45deg)}
+.quick-lead{scroll-margin-top:100px}
+.quick-lead .form{padding:28px;border-color:#e2e6eb;box-shadow:0 22px 60px rgba(11,35,69,.13)}
+.quick-lead .form-grid{gap:14px}
+.ql-kicker{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 6px}
+.ql-title{font-size:1.45rem;margin:0 0 18px}
+.ql-group{border:0;margin:0 0 16px;padding:0;min-width:0}
+.ql-group legend{font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--black);margin:0 0 8px;padding:0}
+.ql-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ql-chip{position:relative;display:inline-flex}
+.ql-chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.ql-chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid #cfd6de;border-radius:999px;background:#fff;color:var(--navy);font-size:.92rem;font-weight:600;line-height:1.2;transition:background .15s,border-color .15s,color .15s}
+.ql-chip input:hover+span{border-color:var(--navy)}
+.ql-chip input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.ql-chip input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.ql-submit{width:100%;margin-top:18px}
+.ql-note{font-size:.84rem;color:var(--gray);margin:12px 0 0;line-height:1.5;text-align:center}
+.ql-talk{margin-top:6px}
+.ql-talk a{color:var(--blue);font-weight:700}
+.ql-legal{font-size:.7rem;color:#8a9097;margin:8px 0 0;line-height:1.45;text-align:center}
+.ql-sent{display:flex;gap:10px;align-items:flex-start;background:#e9f6ee;border:1px solid #b7e0c6;color:#176b3a;border-radius:10px;padding:12px 14px;margin:0 0 18px;font-size:.92rem;font-weight:600;line-height:1.45}
+.ql-sent-icon{flex:none;font-weight:800}
+.ql-optional{display:inline-block;margin:0 0 8px;padding:3px 9px;border:1px solid var(--border);border-radius:999px;background:var(--light);color:var(--gray);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.ql-actions{display:flex;align-items:center;gap:14px;margin-top:18px}
+.ql-actions .ql-submit{width:auto;flex:1;margin:0}
+.ql-skip{background:none;border:0;padding:12px 10px;font:inherit;font-size:.92rem;font-weight:600;color:var(--gray);text-decoration:underline;cursor:pointer}
+.ql-done{text-align:center;padding:40px 28px}
+.ql-check{width:58px;height:58px;margin:0 auto 14px;border-radius:50%;background:#e9f6ee;color:#176b3a;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800}
+.ql-done-text{color:var(--gray)}
+.ql-done .ql-note{margin-bottom:10px}
+.ql-call{white-space:normal}
+.mobile-action-bar.mab-away{transform:translateY(120%)}
+@media(max-width:860px){
+  .page-hero.has-quick-lead{padding:20px 0 32px}
+  .page-hero.has-quick-lead .page-hero-inner{grid-template-columns:1fr;gap:16px}
+  /* Phones: the form sits right under the heading, so hero extras step aside. */
+  .has-quick-lead .crumbs,.has-quick-lead .ql-points,.has-quick-lead .ql-copy .eyebrow,.has-quick-lead .ql-copy .btn-row,
+  .has-quick-lead .ql-copy .hero-actions,.has-quick-lead .ql-copy .lang-badges,.has-quick-lead .ql-copy .trust-line{display:none}
+  .page-hero.has-quick-lead h1{font-size:1.6rem;margin-bottom:.25em}
+  .page-hero.has-quick-lead .lead{font-size:.98rem;margin:0}
+  .quick-lead .form{padding:20px 18px}
+  .ql-title{font-size:1.15rem;margin-bottom:12px}
+  .ql-kicker{display:none}
+}
+@media(max-width:560px){
+  .page-hero.has-quick-lead .lead{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+}
+/* Phones: name + phone side by side keeps the submit button above Safari's fold. */
+@media(min-width:360px) and (max-width:560px){
+  .ql-step1 .form-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .ql-step1 .field input{padding:12px 11px}
+}

@@ -68,6 +68,15 @@ FORM_SCHEMAS = {
         "goal", "property_area", "loan_amount", "income_documentation", "self_employed_years",
         "full_name", "email", "phone", "message",
     ),
+    # Optional step 2 of the hero quick form (QUICK_LEAD_FORMS in script.js):
+    # one shared form for every landing page, linked to the step-1 lead by
+    # lead_submission_id. Union of every page's step-2 fields.
+    "lead-details": (
+        "lead_submission_id", "source_form", "full_name", "phone", "goal",
+        "property_type", "income_documentation", "statements_available", "occupancy",
+        "property_area", "purchase_price", "loan_amount", "monthly_rent",
+        "self_employed_years", "country_of_residence", "email",
+    ),
 }
 
 PAGE_FORMS = {
@@ -81,6 +90,16 @@ PAGE_FORMS = {
     "loans/jumbo/los-angeles-county.html": "jumbo-lead",
     "loans/dscr/los-angeles-metro.html": "dscr-lead",
 }
+
+# Pages whose hero quick form posts step 2 as "lead-details".
+QUICK_FORM_PAGES = (
+    "bank-statement-loans.html",
+    "jumbo-loans.html",
+    "dscr-loans.html",
+    "self-employed-borrowers.html",
+    "florida-condo-financing.html",
+    "foreign-national-loans.html",
+)
 
 
 def build_schema_twin(form_name: str) -> str:
@@ -248,7 +267,7 @@ def main() -> None:
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20260915-leads\2', html)
+                         r'\1?v=20260916-quicklead\2', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
@@ -271,6 +290,9 @@ def main() -> None:
             twins_changed += 1
         if install_partial_lead_twin(page):
             partial_twins_changed += 1
+    for relative in QUICK_FORM_PAGES:
+        if install_schema_twin(PUBLISH_DIR / relative, "lead-details"):
+            twins_changed += 1
 
     missing = [name for name in list(FORM_SCHEMAS) + ["partial-lead"] if not any(
         f'name="{name}"' in (PUBLISH_DIR / rel).read_text(encoding="utf-8")

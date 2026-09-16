@@ -62,7 +62,7 @@
   var INFLIGHT_BEACON_MS=3000;
   var activeSubmits={};
   var partialCapableEntries=[];
-  var EXCLUDE_PARTIAL_NAMES={'mortgage-partner-inquiry':1,'sms-optin':1};
+  var EXCLUDE_PARTIAL_NAMES={'mortgage-partner-inquiry':1,'sms-optin':1,'lead-details':1};
 
   function makeId(){
     return 'wccm-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);
@@ -166,7 +166,8 @@
   }
   function fireConversionOnce(form,record,isResend){
     if(!record||!record.id)return;
-    if(record.formName==='mortgage-partner-inquiry')return;
+    // lead-details is optional step-2 data for a lead whose conversion already fired.
+    if(record.formName==='mortgage-partner-inquiry'||record.formName==='lead-details')return;
     if(hasFiredConversion(record.id))return;
     markConversionFired(record.id);
     if(form&&form.dataset)form.dataset.conversionFired='true';
@@ -286,6 +287,7 @@
       var el=visible[i];
       if(excluded.indexOf(el)>=0)continue;
       if(el.name&&skipNames[el.name])continue;
+      if((el.type==='radio'||el.type==='checkbox')&&!el.checked)continue;
       var v=(el.value||'').toString().trim();
       if(!v)continue;
       detailParts.push((labelTextFor(form,el)||el.name||el.id||'field')+': '+v);
@@ -406,6 +408,7 @@
   function injectBankStatementLeadForm(){
     var path=(window.location.pathname||'').replace(/\.html$/,'').replace(/\/$/,'');
     if(path!='/bank-statement-loans')return;
+    if(QUICK_LEAD_FORMS[leadFormPath()])return;
     if(document.getElementById('bank-statement-review'))return;
     var faq=document.querySelector('section.bg-light');
     if(!faq)return;
@@ -453,7 +456,6 @@
       });
     }
   }
-  injectBankStatementLeadForm();
 
   /* Paid search points at program pages that had no capture form at all, so the
      only next step was an off-site application. Each entry below builds one
@@ -553,6 +555,69 @@
     });
   }
 
+  /* Paid-search landing pages get a two-step form in the hero instead of the
+     long form above. Step 1 (goal chips + name + phone) is the lead and fires
+     the conversion; step 2 is optional detail posted as its own "lead-details"
+     record linked by lead_submission_id, so closing the page after step 1
+     never loses the lead. Every field here must be declared in the schema twins
+     written by tools/install_wccm_ads_readiness.py. */
+  var QUICK_CITY={name:'property_area',label:'City or county',autocomplete:'address-level2'};
+  var QUICK_AMOUNT={name:'loan_amount',label:'Loan amount ($)',type:'number',inputmode:'numeric',min:'0',step:'1000'};
+  var QUICK_YEARS={name:'self_employed_years',label:'Years self-employed',options:['Less than 1 year','1-2 years','2-5 years','5+ years']};
+  var QUICK_EMAIL={name:'email',label:'Email',type:'email',autocomplete:'email'};
+  var QUICK_LEAD_FORMS={
+    '/dscr-loans':{
+      id:'dscr-review',formName:'dscr-lead',programInterest:'DSCR / Investor',
+      kicker:'DSCR review',title:'Get a call from a DSCR specialist',
+      goals:['Purchase','Refinance','Cash-out','Several properties'],
+      points:['Qualify on the property’s rent, not your W-2','Close in your personal name or an LLC','Licensed California broker, many DSCR lenders'],
+      chips:{name:'property_type',label:'Property type',options:['Single-family','Condo','2-4 units','5+ units','Short-term rental']},
+      fields:[QUICK_CITY,QUICK_AMOUNT,{name:'monthly_rent',label:'Monthly rent ($)',type:'number',inputmode:'numeric',min:'0',step:'50'},QUICK_EMAIL]
+    },
+    '/jumbo-loans':{
+      id:'jumbo-review',formName:'jumbo-lead',programInterest:'Jumbo',
+      kicker:'Jumbo review',title:'Get a call from a jumbo loan specialist',
+      goals:['Purchase','Refinance','Cash-out','Second home'],
+      points:['Financing above conforming loan limits','Purchase, refinance, or cash-out','Licensed California broker, many jumbo lenders'],
+      chips:{name:'income_documentation',label:'How is income documented?',options:['W-2 / salaried','Self-employed','Bank statements','Assets','Not sure yet']},
+      fields:[QUICK_CITY,{name:'purchase_price',label:'Price or value ($)',type:'number',inputmode:'numeric',min:'0',step:'10000'},QUICK_AMOUNT,QUICK_EMAIL]
+    },
+    '/bank-statement-loans':{
+      id:'bank-statement-review',formName:'bank-statement-lead',programInterest:'Bank Statement / Self-Employed',
+      kicker:'Bank statement review',title:'Get a call about bank statement loans',
+      goals:['Purchase','Refinance','Cash-out','Investment property'],
+      points:['Qualify using bank deposits, not tax returns','Personal or business statements','Licensed California broker, many non-QM lenders'],
+      chips:{name:'statements_available',label:'Which statements do you have?',options:['Personal','Business','Both','Not sure yet']},
+      fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_YEARS,QUICK_EMAIL]
+    },
+    '/self-employed-borrowers':{
+      id:'self-employed-review',formName:'self-employed-lead',programInterest:'Self-employed',
+      kicker:'Self-employed review',title:'Get a call about self-employed mortgages',
+      goals:['Purchase','Refinance','Cash-out','Investment property'],
+      points:['Options beyond tax returns','Bank statements, P&L, or 1099s may work','Licensed California broker, many lenders'],
+      chips:{name:'income_documentation',label:'How would you show income?',options:['Bank statements','Profit and loss','1099s','Tax returns','Not sure yet']},
+      fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_YEARS,QUICK_EMAIL]
+    }
+  };
+  if(floridaLanding){
+    QUICK_LEAD_FORMS['/florida-condo-financing']={
+      id:'florida-condo-review',formName:'mortgage-lead',programInterest:'Condo',
+      kicker:'Condo review',title:'Get a call about Florida condo financing',
+      goals:['Purchase','Refinance','Cash-out','Not sure yet'],
+      points:['We review the borrower and the condo project','Primary, second-home, and investment condos'],
+      chips:{name:'occupancy',label:'How will the condo be used?',options:['Primary home','Second home','Investment']},
+      fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_EMAIL]
+    };
+    QUICK_LEAD_FORMS['/foreign-national-loans']={
+      id:'foreign-national-review',formName:'mortgage-lead',programInterest:'Foreign National',
+      kicker:'Foreign national review',title:'Get a call about foreign national loans',
+      goals:['Purchase','Refinance','Cash-out','Not sure yet'],
+      points:['For buyers who live outside the U.S.','Second homes and investment property'],
+      chips:{name:'occupancy',label:'How will the property be used?',options:['Second home','Investment']},
+      fields:[QUICK_CITY,QUICK_AMOUNT,{name:'country_of_residence',label:'Country of residence',autocomplete:'country-name'},QUICK_EMAIL]
+    };
+  }
+
   function buildLeadField(spec,idPrefix){
     var wrap=document.createElement('div');
     wrap.className=spec.full?'field full':'field';
@@ -597,8 +662,235 @@
     return path||'/';
   }
 
+  function quickText(tag,className,text){
+    var el=document.createElement(tag);
+    if(className)el.className=className;
+    el.textContent=text;
+    return el;
+  }
+  function quickChipGroup(spec,idPrefix){
+    var group=document.createElement('fieldset');
+    group.className='ql-group';
+    group.appendChild(quickText('legend','',spec.label));
+    var chips=document.createElement('div');
+    chips.className='ql-chips';
+    spec.options.forEach(function(text,i){
+      var chip=document.createElement('label');
+      chip.className='ql-chip';
+      var input=document.createElement('input');
+      input.type='radio';
+      input.name=spec.name;
+      input.value=text;
+      input.id=idPrefix+'-'+spec.name.replace(/_/g,'-')+'-'+i;
+      chip.appendChild(input);
+      chip.appendChild(quickText('span','',text));
+      chips.appendChild(chip);
+    });
+    group.appendChild(chips);
+    return group;
+  }
+  /* Optional selects start blank so an untouched field is not sent as an answer. */
+  function quickField(spec,idPrefix){
+    var wrap=buildLeadField(spec,idPrefix);
+    var select=wrap.querySelector('select');
+    if(select){
+      var blank=document.createElement('option');
+      blank.value='';
+      blank.textContent='Choose one';
+      select.insertBefore(blank,select.firstChild);
+      select.selectedIndex=0;
+    }
+    return wrap;
+  }
+  function quickFormShell(name,className,programInterest,extraHidden){
+    var form=document.createElement('form');
+    form.className='form '+className;
+    form.setAttribute('name',name);
+    form.setAttribute('data-ack','');
+    form.setAttribute('data-validate','');
+    form.setAttribute('netlify','');
+    form.setAttribute('netlify-honeypot','company');
+    form.setAttribute('novalidate','');
+    form.innerHTML='\
+      <input type="hidden" name="form-name">\
+      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
+      <input type="hidden" name="program_interest">\
+      <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>';
+    form.querySelector('[name="form-name"]').value=name;
+    form.querySelector('[name="program_interest"]').value=programInterest;
+    (extraHidden||[]).forEach(function(field){
+      var input=document.createElement('input');
+      input.type='hidden';
+      input.name=field;
+      form.appendChild(input);
+    });
+    return form;
+  }
+  function quickSubmit(text){
+    var button=quickText('button','btn btn-blue btn-lg ql-submit',text);
+    button.type='submit';
+    return button;
+  }
+
+  function injectQuickLeadForm(){
+    var config=QUICK_LEAD_FORMS[leadFormPath()];
+    if(!config||document.getElementById(config.id))return;
+    var hero=document.querySelector('.page-hero');
+    var inner=hero&&hero.querySelector('.page-hero-inner');
+    if(!inner)return;
+    var interest=(floridaLanding?'Florida / ':'')+config.programInterest;
+    var points=config.points.filter(function(text){return !(floridaLanding&&/California/.test(text));});
+    if(floridaLanding)points.push('Licensed for mortgage activity in Florida');
+
+    /* In-hero links to this same form are pointless once the form sits beside them. */
+    inner.querySelectorAll('a[href="#'+config.id+'"]').forEach(function(link){
+      var row=link.parentNode;
+      link.parentNode.removeChild(link);
+      if(row&&row.classList&&row.classList.contains('btn-row')&&!row.children.length)row.parentNode.removeChild(row);
+    });
+    hero.id=config.id;
+    hero.classList.add('has-quick-lead');
+    var copy=document.createElement('div');
+    copy.className='ql-copy';
+    while(inner.firstChild)copy.appendChild(inner.firstChild);
+    var list=document.createElement('ul');
+    list.className='ql-points';
+    points.forEach(function(text){list.appendChild(quickText('li','',text));});
+    copy.appendChild(list);
+
+    /* Step 1 — the lead */
+    var step1=quickFormShell(config.formName,'ql-step ql-step1',interest);
+    step1.id=config.formName+'-form';
+    step1.appendChild(quickText('p','ql-kicker',config.kicker+' · about 20 seconds'));
+    step1.appendChild(quickText('h2','ql-title',config.title));
+    step1.appendChild(quickChipGroup({name:'goal',label:'What do you need?',options:config.goals},config.id));
+    var contact=document.createElement('div');
+    contact.className='form-grid';
+    CONTACT_FIELDS.forEach(function(spec){
+      if(spec.name!=='email')contact.appendChild(buildLeadField(spec,config.id));
+    });
+    step1.appendChild(contact);
+    step1.appendChild(quickSubmit('Request a Call'));
+    step1.appendChild(quickText('p','ql-note','No application and no credit check at this step.'));
+    var talk=quickText('p','ql-note ql-talk','Prefer to talk? ');
+    var talkLink=quickText('a','','Call 310-654-1577');
+    talkLink.href='tel:3106541577';
+    talk.appendChild(talkLink);
+    step1.appendChild(talk);
+    step1.appendChild(quickText('p','ql-legal','Not a commitment to lend. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.'));
+
+    /* Step 2 — optional details, linked to the step-1 submission */
+    var step2=quickFormShell('lead-details','ql-step ql-step2',interest,['lead_submission_id','source_form','full_name','phone','goal']);
+    step2.hidden=true;
+    var sent=document.createElement('div');
+    sent.className='ql-sent';
+    sent.setAttribute('role','status');
+    sent.appendChild(quickText('span','ql-sent-icon','✓'));
+    var sentText=quickText('span','ql-sent-text','Request received.');
+    sent.appendChild(sentText);
+    step2.appendChild(sent);
+    step2.appendChild(quickText('span','ql-optional','Optional'));
+    step2.appendChild(quickText('h2','ql-title','Help us prepare for the call'));
+    step2.appendChild(quickChipGroup(config.chips,config.id+'-d'));
+    var details=document.createElement('div');
+    details.className='form-grid';
+    config.fields.forEach(function(spec){
+      var field=quickField(spec,config.id+'-d');
+      if(spec.name==='property_area'&&floridaLanding)field.querySelector('label').textContent='Florida city or county';
+      details.appendChild(field);
+    });
+    step2.appendChild(details);
+    var actions=document.createElement('div');
+    actions.className='ql-actions';
+    actions.appendChild(quickSubmit('Send Details'));
+    var skip=quickText('button','ql-skip','Skip');
+    skip.type='button';
+    actions.appendChild(skip);
+    step2.appendChild(actions);
+
+    /* Step 3 — done */
+    var done=document.createElement('div');
+    done.className='form ql-done';
+    done.hidden=true;
+    done.setAttribute('role','status');
+    done.appendChild(quickText('div','ql-check','✓'));
+    done.appendChild(quickText('h2','ql-title','You’re all set'));
+    var doneText=quickText('p','ql-done-text','A licensed mortgage professional will call you back.');
+    done.appendChild(doneText);
+    done.appendChild(quickText('p','ql-note','Prefer to talk now?'));
+    var call=quickText('a','btn btn-outline ql-call','Call 310-654-1577');
+    call.href='tel:3106541577';
+    done.appendChild(call);
+
+    var card=document.createElement('div');
+    card.className='quick-lead';
+    card.appendChild(step1);
+    card.appendChild(step2);
+    card.appendChild(done);
+    inner.appendChild(copy);
+    inner.appendChild(card);
+
+    /* The site header is sticky, so "in view" starts below it (CSS gives the
+       card a matching scroll-margin-top). */
+    function keepCardInView(){
+      var header=document.querySelector('.site-header');
+      var top=card.getBoundingClientRect().top;
+      var min=header?header.getBoundingClientRect().bottom:0;
+      if(top<min||top>window.innerHeight*0.6)card.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function setValue(form,name,value){
+      var input=form.querySelector('input[name="'+name+'"]');
+      if(input)input.value=value||'';
+    }
+    function finish(withDetails){
+      step1.hidden=true;
+      step2.hidden=true;
+      if(withDetails)doneText.textContent='Thanks — your details are attached to your request. A licensed mortgage professional will call you back.';
+      done.hidden=false;
+      keepCardInView();
+    }
+    step1.addEventListener('wccm:lead-sent',function(){
+      var name=(step1.querySelector('[name="full_name"]')||{}).value||'';
+      var phone=(step1.querySelector('[name="phone"]')||{}).value||'';
+      var goal=step1.querySelector('[name="goal"]:checked');
+      setValue(step2,'lead_submission_id',(step1.querySelector('[name="submission_id"]')||{}).value);
+      setValue(step2,'source_form',config.formName);
+      setValue(step2,'full_name',name);
+      setValue(step2,'phone',phone);
+      setValue(step2,'goal',goal?goal.value:'');
+      var first=name.trim().split(/\s+/)[0]||'';
+      sentText.textContent='Request received'+(first?', '+first:'')+'. We’ll call you at '+phone.trim().replace(/ /g,' ')+'.';
+      step1.hidden=true;
+      step2.hidden=false;
+      keepCardInView();
+    });
+    /* An empty step 2 is the same as Skip — nothing worth posting. Registered
+       before the shared submit handler, so it runs first. */
+    step2.addEventListener('submit',function(e){
+      var filled=false;
+      step2.querySelectorAll('input:not([type="hidden"]):not(.hp),select').forEach(function(el){
+        if(el.type==='radio'){if(el.checked)filled=true;}
+        else if((el.value||'').trim())filled=true;
+      });
+      if(!filled){e.preventDefault();e.stopImmediatePropagation();finish(false);}
+    });
+    step2.addEventListener('wccm:lead-sent',function(){finish(true);});
+    skip.addEventListener('click',function(){finish(false);});
+
+    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"],a.btn.btn-blue[href="/apply"],a.btn.btn-blue[href="../../apply.html"]');
+    if(firstCta){
+      firstCta.setAttribute('href','#'+config.id);
+      firstCta.textContent='Request a Call';
+      firstCta.addEventListener('click',function(e){
+        e.preventDefault();
+        activateLeadForm(step1.hidden?step2:step1);
+      });
+    }
+  }
+
   function injectProgramLeadForm(){
     var path=leadFormPath();
+    if(QUICK_LEAD_FORMS[path])return;
     var config=PROGRAM_LEAD_FORMS[path];
     if(!config)return;
     if(document.getElementById(config.id))return;
@@ -669,6 +961,8 @@
       });
     }
   }
+  injectQuickLeadForm();
+  injectBankStatementLeadForm();
   injectProgramLeadForm();
 
   function adaptFloridaLeadPage(){
@@ -704,7 +998,8 @@
       }
     });
     var hero=h1&&h1.closest('section');
-    if(hero&&!hero.querySelector('a[href="#'+section.id+'"]')){
+    // A hero that already holds the quick form needs no CTA pointing at itself.
+    if(hero&&hero!==section&&!hero.querySelector('a[href="#'+section.id+'"]')){
       var cta=document.createElement('a');
       cta.className='btn btn-blue btn-lg';
       cta.href='#'+section.id;
@@ -757,6 +1052,19 @@
     document.body.classList.add('has-mobile-action-bar');
   }
   injectMobileActionBar();
+
+  /* While the hero quick form is on screen, its own button and call link do the
+     bar's job — and on short phones the bar would cover that submit button. */
+  (function(){
+    var bar=document.querySelector('.mobile-action-bar');
+    var card=document.querySelector('.quick-lead');
+    if(!bar||!card||typeof window.IntersectionObserver!=='function')return;
+    new IntersectionObserver(function(entries){
+      var entry=entries[entries.length-1];
+      if(entry.intersectionRatio>=0.25)bar.classList.add('mab-away');
+      else bar.classList.remove('mab-away');
+    },{threshold:[0,0.25,0.5]}).observe(card);
+  })();
 
   /* iOS: the on-screen keyboard covers a fixed bottom bar (and often the
      submit button behind it), so hide the bar while a lead-form field has
@@ -919,6 +1227,7 @@
           f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});
           if(ok)ok.scrollIntoView({behavior:'smooth',block:'center'});
           if(f===document.querySelector('form[data-ack]'))markMobileBarDone();
+          try{f.dispatchEvent(new CustomEvent('wccm:lead-sent',{detail:{id:submissionId}}));}catch(err){}
         },
         onFail:function(){
           f.dataset.submitting='false';
