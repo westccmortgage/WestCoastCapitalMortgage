@@ -1,0 +1,86 @@
+name: Refresh Florida discovery sitemap
+
+on:
+  push:
+    paths:
+      - '.github/workflows/refresh-florida-discovery-sitemap-20260916.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh high-intent Florida URLs in primary sitemap
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('wccm-corporate/sitemap.xml')
+          s = p.read_text(encoding='utf-8')
+          today = '2026-09-16'
+
+          def refresh_lastmod(url, text):
+              pattern = re.compile(r'(<url>\s*<loc>' + re.escape(url) + r'</loc>\s*<lastmod>)([^<]+)(</lastmod>)', re.S)
+              return pattern.sub(r'\g<1>' + today + r'\g<3>', text)
+
+          for url in [
+              'https://westcoastcapitalmortgage.com/',
+              'https://westcoastcapitalmortgage.com/florida',
+          ]:
+              s = refresh_lastmod(url, s)
+
+          urls = [
+              ('https://westcoastcapitalmortgage.com/florida-bank-statement-loans', 'weekly', '0.9'),
+              ('https://westcoastcapitalmortgage.com/florida-dscr-loans', 'weekly', '0.9'),
+              ('https://westcoastcapitalmortgage.com/florida-condo-financing', 'monthly', '0.9'),
+              ('https://westcoastcapitalmortgage.com/miami-dscr-foreign-national-loans', 'monthly', '0.9'),
+              ('https://westcoastcapitalmortgage.com/boca-raton-mortgage-loans', 'monthly', '0.9'),
+              ('https://westcoastcapitalmortgage.com/mortgage-second-opinion', 'monthly', '0.9'),
+          ]
+
+          additions = []
+          for url, freq, priority in urls:
+              if f'<loc>{url}</loc>' not in s:
+                  additions.append(
+                      '  <url>\n'
+                      f'    <loc>{url}</loc>\n'
+                      f'    <lastmod>{today}</lastmod>\n'
+                      f'    <changefreq>{freq}</changefreq>\n'
+                      f'    <priority>{priority}</priority>\n'
+                      '  </url>\n'
+                  )
+
+          if additions:
+              s = s.replace('</urlset>', ''.join(additions) + '</urlset>')
+
+          p.write_text(s, encoding='utf-8')
+          print('Primary sitemap refreshed; added', len(additions), 'high-intent URLs')
+          PY
+      - name: Validate sitemap refresh
+        run: |
+          grep -F '<loc>https://westcoastcapitalmortgage.com/florida-bank-statement-loans</loc>' wccm-corporate/sitemap.xml
+          grep -F '<loc>https://westcoastcapitalmortgage.com/florida-dscr-loans</loc>' wccm-corporate/sitemap.xml
+          grep -F '<loc>https://westcoastcapitalmortgage.com/florida-condo-financing</loc>' wccm-corporate/sitemap.xml
+          grep -F '<loc>https://westcoastcapitalmortgage.com/miami-dscr-foreign-national-loans</loc>' wccm-corporate/sitemap.xml
+          grep -F '<loc>https://westcoastcapitalmortgage.com/boca-raton-mortgage-loans</loc>' wccm-corporate/sitemap.xml
+          grep -F '<loc>https://westcoastcapitalmortgage.com/mortgage-second-opinion</loc>' wccm-corporate/sitemap.xml
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          ET.parse('wccm-corporate/sitemap.xml')
+          print('XML validation passed')
+          PY
+      - name: Commit sitemap refresh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wccm-corporate/sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No sitemap changes needed"
+          else
+            git commit -m "Refresh Florida mortgage discovery sitemap"
+            git push origin HEAD:main
+          fi
