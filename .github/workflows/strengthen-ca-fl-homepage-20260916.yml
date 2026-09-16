@@ -1,0 +1,109 @@
+name: Strengthen WCCM California Florida homepage signals
+
+on:
+  push:
+    paths:
+      - '.github/workflows/strengthen-ca-fl-homepage-20260916.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  strengthen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Strengthen California and Florida entity and discovery signals
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('wccm-corporate/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = s
+
+          # The corporate homepage serves multiple states. Remove legacy CA-only
+          # geo meta tags that conflict with the page's California + Florida scope.
+          s = s.replace('<meta name="geo.region" content="US-CA">\n', '')
+          s = s.replace('<meta name="geo.placename" content="California">\n', '')
+
+          # Balance the MortgageLender areaServed graph with Florida markets that
+          # are already supported by live WCCM Florida/local pages.
+          needle = '    { "@type": "State", "name": "Florida" },\n    { "@type": "AdministrativeArea", "name": "Los Angeles County, California" },'
+          replacement = '''    { "@type": "State", "name": "Florida" },
+    { "@type": "AdministrativeArea", "name": "Miami-Dade County, Florida" },
+    { "@type": "AdministrativeArea", "name": "Broward County, Florida" },
+    { "@type": "AdministrativeArea", "name": "Palm Beach County, Florida" },
+    { "@type": "AdministrativeArea", "name": "Monroe County, Florida" },
+    { "@type": "City", "name": "Miami, Florida" },
+    { "@type": "City", "name": "Fort Lauderdale, Florida" },
+    { "@type": "City", "name": "Boca Raton, Florida" },
+    { "@type": "City", "name": "West Palm Beach, Florida" },
+    { "@type": "City", "name": "Key West, Florida" },
+    { "@type": "AdministrativeArea", "name": "Los Angeles County, California" },'''
+          if needle in s:
+              s = s.replace(needle, replacement, 1)
+
+          old_service = '  "serviceType": ["Conventional Loans", "FHA Loans", "VA Loans", "Jumbo Loans", "DSCR Loans", "Non-QM Loans", "Bank Statement Loans", "HELOC"],'
+          new_service = '  "serviceType": ["Conventional Loans", "FHA Loans", "VA Loans", "Jumbo Loans", "DSCR Loans", "Non-QM Loans", "Bank Statement Loans", "Self-Employed Mortgage Review", "Foreign National Mortgage Loans", "Florida Condo Financing", "Mortgage Second Opinion", "HELOC"],'
+          s = s.replace(old_service, new_service)
+
+          old_knows = '  "knowsAbout": ["Mortgage", "Home Loans", "Refinancing", "Investment Property Loans",\n    "Jumbo Loans", "DSCR Loans", "Non-QM Loans", "Bank Statement Loans", "FHA Loans", "VA Loans"],'
+          new_knows = '  "knowsAbout": ["Mortgage", "Home Loans", "Refinancing", "Investment Property Loans",\n    "Jumbo Loans", "DSCR Loans", "Non-QM Loans", "Bank Statement Loans", "Self-Employed Mortgage", "Foreign National Loans", "Florida Condo Financing", "Mortgage Second Opinion", "FHA Loans", "VA Loans"],'
+          s = s.replace(old_knows, new_knows)
+
+          marker = '<!-- CA-FL-DISCOVERY-HUB:20260916 -->'
+          if marker not in s:
+              anchor = '<section class="homepage-rating-strip" id="google-rating" aria-label="Google review rating">'
+              block = '''<!-- CA-FL-DISCOVERY-HUB:20260916 -->
+<section class="bg-light" aria-label="California and Florida mortgage guidance">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">California &amp; Florida</span>
+      <h2>Mortgage guidance by market and borrower scenario</h2>
+      <p class="lead">Start with the state, property, or income situation that matches your file. These guides connect high-intent purchase, refinance, self-employed, investor, condo, and complex mortgage scenarios to the most relevant WCCM review path.</p>
+    </div>
+    <div class="grid grid-4">
+      <a class="card" href="/california-mortgage-locations"><span class="label">California</span><h3>California mortgage markets</h3><p>Local and county guidance for jumbo, high-balance, purchase, refinance, self-employed, and investor scenarios.</p><span class="more">Explore California <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="/florida"><span class="label">Florida</span><h3>Florida mortgage guidance</h3><p>Statewide purchase, refinance, condo, investor, foreign-national, and complex-income mortgage guidance.</p><span class="more">Explore Florida <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="/florida-bank-statement-loans"><span class="label">Self-Employed</span><h3>Florida bank statement review</h3><p>For Florida business owners, 1099 borrowers, and files where traditional tax-return income may not tell the full story.</p><span class="more">Review self-employed options <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="/florida-dscr-loans"><span class="label">Investors</span><h3>Florida DSCR loans</h3><p>State-specific DSCR guidance for eligible Florida rental and investment-property scenarios.</p><span class="more">Review Florida DSCR <span aria-hidden="true">&rarr;</span></span></a>
+    </div>
+  </div>
+</section>
+
+'''
+              if anchor not in s:
+                  raise SystemExit('Homepage rating anchor not found; refusing unsafe patch')
+              s = s.replace(anchor, block + anchor, 1)
+
+          if s == old:
+              print('No source changes needed')
+          else:
+              p.write_text(s, encoding='utf-8')
+              print('Updated', p)
+          PY
+      - name: Validate entity and lead-discovery changes
+        run: |
+          ! grep -F '<meta name="geo.region" content="US-CA">' wccm-corporate/index.html
+          ! grep -F '<meta name="geo.placename" content="California">' wccm-corporate/index.html
+          grep -F 'Palm Beach County, Florida' wccm-corporate/index.html
+          grep -F 'Miami-Dade County, Florida' wccm-corporate/index.html
+          grep -F 'Mortgage Second Opinion' wccm-corporate/index.html
+          grep -F 'CA-FL-DISCOVERY-HUB:20260916' wccm-corporate/index.html
+          grep -F 'href="/florida-bank-statement-loans"' wccm-corporate/index.html
+          grep -F 'href="/florida-dscr-loans"' wccm-corporate/index.html
+          grep -F 'GTM-K2X3X454' wccm-corporate/index.html
+          grep -F 'AW-18417657219' wccm-corporate/index.html
+          grep -F 'wzzlo9s35g' wccm-corporate/index.html
+      - name: Commit homepage discovery improvement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wccm-corporate/index.html
+          if git diff --cached --quiet; then
+            echo "No source changes needed"
+          else
+            git commit -m "Strengthen California and Florida mortgage discovery"
+            git push origin HEAD:main
+          fi
