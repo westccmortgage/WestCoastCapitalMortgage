@@ -86,8 +86,6 @@ CONTACT_NEW_SCHEMA = '''{
 }'''
 CONTACT_OLD_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p>\n    <p class="muted">Equal Housing Opportunity &middot; NMLS #2817729</p>'
 CONTACT_NEW_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502</p>\n    <p class="muted">West Coast Capital Mortgage Inc. &middot; Company NMLS #2817729 &middot; Equal Housing Opportunity</p>'
-LEAD_SCRIPT_OLD = "script.js?v=20260915-leads2"
-LEAD_SCRIPT_NEW = "script.js?v=20260917-ca-fl"
 
 
 def replace_domain(path: Path) -> int:
@@ -136,22 +134,6 @@ def normalize_contact_entity(path: Path) -> int:
         path.write_text(text, encoding="utf-8")
         return 1
     return 0
-
-
-def refresh_lead_script_cache(root: Path) -> int:
-    """Bust stale browser/render caches after the CA/FL-neutral lead-form update."""
-    changed = 0
-    for path in root.glob("*.html"):
-        text = path.read_text(encoding="utf-8")
-        if LEAD_SCRIPT_OLD not in text:
-            continue
-        path.write_text(text.replace(LEAD_SCRIPT_OLD, LEAD_SCRIPT_NEW), encoding="utf-8")
-        changed += 1
-    if LEAD_SCRIPT_OLD in (root / "index.html").read_text(encoding="utf-8"):
-        raise SystemExit("Homepage still references stale lead script cache key")
-    if LEAD_SCRIPT_NEW not in (root / "index.html").read_text(encoding="utf-8"):
-        raise SystemExit("Homepage lead script cache key was not normalized")
-    return changed
 
 
 def clean_redirects(path: Path) -> tuple[int, int]:
@@ -259,11 +241,8 @@ def main() -> int:
             changed_files += 1
 
     contact_changed = normalize_contact_entity(publish / "contact.html")
-    cache_changed = refresh_lead_script_cache(publish)
     if contact_changed:
         changed_files += contact_changed
-    if cache_changed:
-        changed_files += cache_changed
 
     if args.source:
         candidates = [
@@ -304,8 +283,7 @@ def main() -> int:
     print(
         f"Canonical domain normalized: {replacement_count} domain replacements; "
         f"changed_files={changed_files}; contact={contact_changed}; "
-        f"script_cache={cache_changed}; redirects={rule_count}; "
-        f"duplicates_removed={duplicate_count}"
+        f"redirects={rule_count}; duplicates_removed={duplicate_count}"
     )
     return 0
 
