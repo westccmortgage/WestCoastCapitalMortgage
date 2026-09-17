@@ -48,7 +48,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           commit_normalized() {
-            git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools .github/workflows
+            # Do not stage .github/workflows here. The connected GitHub App has
+            # contents:write but not workflows:write; staging workflow rewrites
+            # makes an otherwise-valid production normalization push fail.
+            git add wccm-corporate gen_city_pages.py gen_geo_pages.py flagship_detail.py flagship_data.json ping_indexnow.py tools
             if git diff --cached --quiet; then
               echo "No production-source changes needed."
               return 1
