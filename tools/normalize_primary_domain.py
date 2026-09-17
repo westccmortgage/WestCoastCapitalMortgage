@@ -33,6 +33,62 @@ CANONICAL_PATH_RULES = [
     "/florida-dscr-loans.html /florida-dscr-loans 301!",
 ]
 
+CONTACT_OLD_DESC = (
+    "Contact West Coast Capital Mortgage Call 310-654-1577 or email us. "
+    "Licensed mortgage lender in California. NMLS #2817729."
+)
+CONTACT_NEW_DESC = (
+    "Contact West Coast Capital Mortgage Inc. at (310) 654-1577 for mortgage "
+    "questions, scenario review, purchase, refinance, jumbo, self-employed, "
+    "bank-statement, Non-QM and investor financing. Company NMLS #2817729."
+)
+CONTACT_OLD_SCHEMA = '''{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "West Coast Capital Mortgage",
+  "url": "https://westcoastcapitalmortgage.com",
+  "telephone": "+1-310-654-1577",
+  "email": "westccmortgage@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "identifier": { "@type": "PropertyValue", "name": "NMLS", "value": "2817729" }
+}'''
+CONTACT_NEW_SCHEMA = '''{
+  "@context": "https://schema.org",
+  "@type": ["FinancialService", "LocalBusiness"],
+  "name": "West Coast Capital Mortgage Inc.",
+  "alternateName": "West Coast Capital Mortgage",
+  "legalName": "West Coast Capital Mortgage Inc.",
+  "url": "https://westcoastcapitalmortgage.com",
+  "telephone": "+1-310-654-1577",
+  "email": "westccmortgage@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "150 E Olive Ave, Unit 112",
+    "addressLocality": "Burbank",
+    "addressRegion": "CA",
+    "postalCode": "91502",
+    "addressCountry": "US"
+  },
+  "areaServed": [
+    { "@type": "State", "name": "California" },
+    { "@type": "State", "name": "Florida" }
+  ],
+  "serviceType": ["Home Purchase Loans", "Mortgage Refinance", "Jumbo Loans", "Bank Statement Loans", "Non-QM Loans", "DSCR Loans", "Investment Property Loans", "Mortgage Second Opinion"],
+  "sameAs": [
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729",
+    "https://g.page/r/CXUFd3B5e-n3EBM"
+  ],
+  "identifier": { "@type": "PropertyValue", "name": "NMLS", "value": "2817729" }
+}'''
+CONTACT_OLD_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p>\n    <p class="muted">Equal Housing Opportunity &middot; NMLS #2817729</p>'
+CONTACT_NEW_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502</p>\n    <p class="muted">West Coast Capital Mortgage Inc. &middot; Company NMLS #2817729 &middot; Equal Housing Opportunity</p>'
+LEAD_SCRIPT_OLD = "script.js?v=20260915-leads2"
+LEAD_SCRIPT_NEW = "script.js?v=20260917-ca-fl"
+
 
 def replace_domain(path: Path) -> int:
     if not path.is_file() or path.name == "_redirects":
@@ -45,6 +101,57 @@ def replace_domain(path: Path) -> int:
     if count:
         path.write_text(text.replace(OLD, NEW), encoding="utf-8")
     return count
+
+
+def normalize_contact_entity(path: Path) -> int:
+    """Keep the Contact page state-neutral while preserving canonical WCCM identity."""
+    if not path.exists():
+        raise FileNotFoundError(path)
+    text = path.read_text(encoding="utf-8")
+    original = text
+
+    text = text.replace(CONTACT_OLD_DESC, CONTACT_NEW_DESC)
+    text = text.replace('<meta name="geo.region" content="US-CA">\n', '')
+    text = text.replace('<meta name="geo.placename" content="California">\n', '')
+    text = text.replace(CONTACT_OLD_SCHEMA, CONTACT_NEW_SCHEMA)
+    text = text.replace(CONTACT_OLD_DETAILS, CONTACT_NEW_DETAILS)
+
+    # Idempotent guards: after the first source repair, every later deploy must
+    # still carry the correct entity signals and must not reintroduce CA-only copy.
+    required = [
+        CONTACT_NEW_DESC,
+        CONTACT_NEW_SCHEMA,
+        "150 E Olive Ave, Unit 112, Burbank, CA 91502",
+        "Company NMLS #2817729",
+    ]
+    missing = [item[:80] for item in required if item not in text]
+    if missing:
+        raise SystemExit("Contact entity normalization guard failed: " + " | ".join(missing))
+    if "Licensed mortgage lender in California" in text:
+        raise SystemExit("CA-only Contact licensing copy remains")
+    if 'meta name="geo.region"' in text or 'meta name="geo.placename"' in text:
+        raise SystemExit("CA-only Contact geo metadata remains")
+
+    if text != original:
+        path.write_text(text, encoding="utf-8")
+        return 1
+    return 0
+
+
+def refresh_lead_script_cache(root: Path) -> int:
+    """Bust stale browser/render caches after the CA/FL-neutral lead-form update."""
+    changed = 0
+    for path in root.glob("*.html"):
+        text = path.read_text(encoding="utf-8")
+        if LEAD_SCRIPT_OLD not in text:
+            continue
+        path.write_text(text.replace(LEAD_SCRIPT_OLD, LEAD_SCRIPT_NEW), encoding="utf-8")
+        changed += 1
+    if LEAD_SCRIPT_OLD in (root / "index.html").read_text(encoding="utf-8"):
+        raise SystemExit("Homepage still references stale lead script cache key")
+    if LEAD_SCRIPT_NEW not in (root / "index.html").read_text(encoding="utf-8"):
+        raise SystemExit("Homepage lead script cache key was not normalized")
+    return changed
 
 
 def clean_redirects(path: Path) -> tuple[int, int]:
@@ -151,6 +258,13 @@ def main() -> int:
             replacement_count += n
             changed_files += 1
 
+    contact_changed = normalize_contact_entity(publish / "contact.html")
+    cache_changed = refresh_lead_script_cache(publish)
+    if contact_changed:
+        changed_files += contact_changed
+    if cache_changed:
+        changed_files += cache_changed
+
     if args.source:
         candidates = [
             repo / "gen_city_pages.py",
@@ -188,8 +302,10 @@ def main() -> int:
         raise SystemExit("Old canonical domain remains in: " + ", ".join(leftovers))
 
     print(
-        f"Canonical domain normalized: {replacement_count} replacements in "
-        f"{changed_files} files; redirects={rule_count}; duplicates_removed={duplicate_count}"
+        f"Canonical domain normalized: {replacement_count} domain replacements; "
+        f"changed_files={changed_files}; contact={contact_changed}; "
+        f"script_cache={cache_changed}; redirects={rule_count}; "
+        f"duplicates_removed={duplicate_count}"
     )
     return 0
 
