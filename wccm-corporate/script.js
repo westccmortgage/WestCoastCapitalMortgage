@@ -251,7 +251,13 @@
 
   function plausibleEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim());}
   function plausiblePhone(v){return ((v||'').replace(/\D/g,'')).length>=10;}
-  function stateContext(){return param('state').toUpperCase()==='FL'?'FL':'CA';}
+  function stateContext(){
+    var explicit=param('state').toUpperCase();
+    if(explicit==='FL'||explicit==='CA')return explicit;
+    var path=(window.location.pathname||'').replace(/\.html$/,'').replace(/\/$/,'');
+    if(path==='/florida'||path==='/florida-bank-statement-loans'||path==='/florida-dscr-loans'||path==='/florida-condo-financing'||path==='/boca-raton-mortgage-loans'||path==='/miami-dscr-foreign-national-loans')return 'FL';
+    return 'CA';
+  }
   function labelTextFor(form,el){
     if(el.id){
       var labels=form.querySelectorAll('label[for]');
@@ -419,7 +425,7 @@
       <div class="wrap" style="max-width:920px">\
         <div class="section-head center">\
           <span class="eyebrow">Bank Statement Review</span>\
-          <h2>See whether a bank-statement path fits your California scenario</h2>\
+          <h2>See whether a bank-statement path fits your scenario</h2>\
           <p class="lead">Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.</p>\
         </div>\
         <form id="bank-statement-lead-form" class="form" data-ack data-validate name="bank-statement-lead" netlify netlify-honeypot="company" novalidate>\
@@ -430,7 +436,7 @@
           <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your bank-statement scenario and follow up.</div>\
           <div class="form-grid">\
             <div class="field"><label for="bs-goal">Loan goal</label><select id="bs-goal" name="goal"><option>Buy a Home</option><option>Refinance</option><option>Investment Property</option></select></div>\
-            <div class="field"><label for="bs-area">California city / county</label><input id="bs-area" name="property_area" autocomplete="address-level2" data-error-required="Enter a California city or county." required></div>\
+            <div class="field"><label for="bs-area">Property city / county</label><input id="bs-area" name="property_area" autocomplete="address-level2" data-error-required="Enter the property city or county." required></div>\
             <div class="field"><label for="bs-loan">Estimated loan amount ($)</label><input id="bs-loan" type="number" min="0" step="1000" name="loan_amount"></div>\
             <div class="field"><label for="bs-statements">Statements available</label><select id="bs-statements" name="statements_available"><option>12 months</option><option>24 months</option><option>Personal statements</option><option>Business statements</option><option>Personal + business</option><option>Not sure yet</option></select></div>\
             <div class="field"><label for="bs-years">Years self-employed</label><select id="bs-years" name="self_employed_years"><option>Less than 1 year</option><option>1–2 years</option><option>2–5 years</option><option>5+ years</option></select></div>\
@@ -462,7 +468,7 @@
      on-page form. Field names must match the hidden schema twins that
      tools/install_wccm_ads_readiness.py writes into the static HTML, because
      Netlify stores only the fields of a registered form. */
-  var CITY_FIELD={name:'property_area',label:'California city / county',required:'Enter a California city or county.',autocomplete:'address-level2'};
+  var CITY_FIELD={name:'property_area',label:'Property city / county',required:'Enter the property city or county.',autocomplete:'address-level2'};
   var AMOUNT_FIELD={name:'loan_amount',label:'Estimated loan amount ($)',type:'number',min:'0',step:'1000'};
   var CONTACT_FIELDS=[
     {name:'full_name',label:'Full name',required:'Enter your full name.',autocomplete:'name',minlength:'2'},
@@ -476,7 +482,7 @@
   var PROGRAM_LEAD_FORMS={
     '/':{
       id:'mortgage-review',formName:'mortgage-lead',programInterest:'General mortgage inquiry',
-      eyebrow:'Mortgage Review',heading:'Talk with a licensed California mortgage broker',
+      eyebrow:'Mortgage Review',heading:'Talk with a mortgage professional',
       lead:'Share the basics and a licensed mortgage professional will review your scenario before discussing any program, pricing, or qualification.',
       button:'Request a Mortgage Review',
       fields:[
@@ -487,7 +493,7 @@
     },
     '/jumbo-loans':{
       id:'jumbo-review',formName:'jumbo-lead',programInterest:'Jumbo',
-      eyebrow:'Jumbo Review',heading:'See whether a jumbo loan fits your California purchase or refinance',
+      eyebrow:'Jumbo Review',heading:'See whether a jumbo loan fits your purchase or refinance',
       lead:'Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.',
       button:'Request a Jumbo Review',
       fields:[
@@ -514,7 +520,7 @@
     },
     '/self-employed-borrowers':{
       id:'self-employed-review',formName:'self-employed-lead',programInterest:'Self-employed',
-      eyebrow:'Self-Employed Review',heading:'See which self-employed path fits your California scenario',
+      eyebrow:'Self-Employed Review',heading:'See which self-employed mortgage path fits your scenario',
       lead:'Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.',
       button:'Request a Self-Employed Review',
       fields:[
@@ -570,7 +576,7 @@
       id:'dscr-review',formName:'dscr-lead',programInterest:'DSCR / Investor',
       kicker:'DSCR review',title:'Get a call from a DSCR specialist',
       goals:['Purchase','Refinance','Cash-out','Several properties'],
-      points:['Qualify on the property’s rent, not your W-2','Close in your personal name or an LLC','Licensed California broker, many DSCR lenders'],
+      points:['Qualify on the property’s rent, not your W-2','Close in your personal name or an LLC','Multiple DSCR lender options reviewed'],
       chips:{name:'property_type',label:'Property type',options:['Single-family','Condo','2-4 units','5+ units','Short-term rental']},
       fields:[QUICK_CITY,QUICK_AMOUNT,{name:'monthly_rent',label:'Monthly rent ($)',type:'number',inputmode:'numeric',min:'0',step:'50'},QUICK_EMAIL]
     },
@@ -578,7 +584,7 @@
       id:'jumbo-review',formName:'jumbo-lead',programInterest:'Jumbo',
       kicker:'Jumbo review',title:'Get a call from a jumbo loan specialist',
       goals:['Purchase','Refinance','Cash-out','Second home'],
-      points:['Financing above conforming loan limits','Purchase, refinance, or cash-out','Licensed California broker, many jumbo lenders'],
+      points:['Financing above conforming loan limits','Purchase, refinance, or cash-out','Multiple jumbo lender options reviewed'],
       chips:{name:'income_documentation',label:'How is income documented?',options:['W-2 / salaried','Self-employed','Bank statements','Assets','Not sure yet']},
       fields:[QUICK_CITY,{name:'purchase_price',label:'Price or value ($)',type:'number',inputmode:'numeric',min:'0',step:'10000'},QUICK_AMOUNT,QUICK_EMAIL]
     },
@@ -586,7 +592,7 @@
       id:'bank-statement-review',formName:'bank-statement-lead',programInterest:'Bank Statement / Self-Employed',
       kicker:'Bank statement review',title:'Get a call about bank statement loans',
       goals:['Purchase','Refinance','Cash-out','Investment property'],
-      points:['Qualify using bank deposits, not tax returns','Personal or business statements','Licensed California broker, many non-QM lenders'],
+      points:['Alternative income documentation may use bank deposits','Personal or business statements may be reviewed','Multiple Non-QM lender options reviewed'],
       chips:{name:'statements_available',label:'Which statements do you have?',options:['Personal','Business','Both','Not sure yet']},
       fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_YEARS,QUICK_EMAIL]
     },
@@ -594,7 +600,7 @@
       id:'self-employed-review',formName:'self-employed-lead',programInterest:'Self-employed',
       kicker:'Self-employed review',title:'Get a call about self-employed mortgages',
       goals:['Purchase','Refinance','Cash-out','Investment property'],
-      points:['Options beyond tax returns','Bank statements, P&L, or 1099s may work','Licensed California broker, many lenders'],
+      points:['Options beyond traditional tax-return income','Bank statements, P&L, or 1099s may be considered','Multiple lender options reviewed'],
       chips:{name:'income_documentation',label:'How would you show income?',options:['Bank statements','Profit and loss','1099s','Tax returns','Not sure yet']},
       fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_YEARS,QUICK_EMAIL]
     }
