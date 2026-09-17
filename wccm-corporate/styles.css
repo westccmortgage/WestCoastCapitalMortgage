@@ -644,3 +644,21 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
   .ql-step1 .form-grid{grid-template-columns:1fr 1fr;gap:10px}
   .ql-step1 .field input{padding:12px 11px}
 }
+
+/* ---------- Program highlight stats (paid-search landings) ---------- */
+.dscr-highlights .section-head{max-width:760px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.stat-value{display:block;font-size:1.28rem;font-weight:800;letter-spacing:-.02em;color:var(--navy);line-height:1.2}
+.stat-label{display:block;margin-top:6px;color:var(--gray);font-size:.88rem;line-height:1.45}
+.stat-note{margin:22px 0 0;color:var(--gray);font-size:.86rem;line-height:1.6;max-width:80ch}
+@media(max-width:560px){
+  .stat-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .stat{padding:14px 13px}
+  .stat-value{font-size:1.02rem}
+  .stat-label{font-size:.78rem;margin-top:4px}
+}
+@media(max-width:340px){.stat-grid{grid-template-columns:1fr}}
+.stat-ask{margin:22px 0 0;font-size:1rem;font-weight:600;color:var(--navy)}
+.stat-ask a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.stat-ask + .stat-note{margin-top:10px}

@@ -267,7 +267,7 @@ def main() -> None:
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20260916-quicklead\2', html)
+                         r'\1?v=20260917-dscr-highlights\2', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
