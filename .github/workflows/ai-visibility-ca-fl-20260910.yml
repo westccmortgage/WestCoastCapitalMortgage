@@ -24,6 +24,8 @@ jobs:
         run: python3 .github/scripts/bank_statement_claims_cleanup_20260915.py
       - name: Normalize California and Florida lead capture
         run: python3 .github/scripts/normalize_ca_fl_lead_capture_20260917.py
+      - name: Normalize About-page California and Florida entity signals
+        run: python3 .github/scripts/about_ca_fl_entity_consistency_20260918.py
       - name: Commit production changes
         run: |
           if git diff --quiet -- wccm-corporate; then
