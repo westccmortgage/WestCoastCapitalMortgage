@@ -1,0 +1,99 @@
+name: Strengthen self-employed AI discovery
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ai-visibility-self-employed-20260918.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Improve self-employed and bank-statement entity signals
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('wccm-corporate')
+
+          # Self-employed page: remove CA-only geo metadata from a CA+FL service page,
+          # normalize the legal entity, soften absolute qualification language,
+          # and add an explicit CA/FL service block for answer engines.
+          p = root / 'self-employed-borrowers.html'
+          s = p.read_text(encoding='utf-8')
+          old = s
+          s = s.replace('<meta name="geo.region" content="US-CA">\n<meta name="geo.placename" content="California">\n', '')
+          s = s.replace('"publisher":{"@type":"Organization","name":"West Coast Capital Mortgage","identifier":"NMLS #2817729"}',
+                        '"publisher":{"@type":"Organization","name":"West Coast Capital Mortgage Inc.","identifier":"NMLS #2817729","url":"https://westcoastcapitalmortgage.com/"}')
+          s = s.replace('<div class="card center"><h3 style="color:var(--blue)">Bank stmt</h3><p style="margin:0">Qualify on deposits</p></div>',
+                        '<div class="card center"><h3 style="color:var(--blue)">Bank stmt</h3><p style="margin:0">Deposit analysis</p></div>')
+          s = s.replace('We work with bank statement loans, Non-QM programs, and asset-based options to present your income accurately.',
+                        'We compare traditional income analysis with bank-statement, Non-QM, asset-based, and other eligible options to identify the documentation path that may fit the borrower and property.')
+          s = s.replace('<li>No reliance on net taxable income for some options</li>',
+                        '<li>Alternative income documentation may be available under eligible programs</li>')
+
+          service_schema = '''\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Self-Employed Mortgage Scenario Review","serviceType":"Self-Employed Mortgage Guidance","url":"https://westcoastcapitalmortgage.com/self-employed-borrowers","areaServed":[{"@type":"State","name":"California"},{"@type":"State","name":"Florida"}],"provider":{"@type":"Organization","name":"West Coast Capital Mortgage Inc.","url":"https://westcoastcapitalmortgage.com/","identifier":"NMLS #2817729","telephone":"+1-310-654-1577"}}</script>\n'''
+          if '"name":"Self-Employed Mortgage Scenario Review"' not in s:
+              s = s.replace('</head>', service_schema + '</head>', 1)
+
+          state_block = '''\n<!-- AI-VISIBILITY-CA-FL:self-employed-20260918 -->\n<section class="bg-light"><div class="wrap">\n  <div class="section-head"><span class="eyebrow">California &amp; Florida</span><h2>Self-Employed Mortgage Review in California and Florida</h2></div>\n  <p><strong>Direct answer:</strong> West Coast Capital Mortgage Inc. reviews self-employed purchase and refinance scenarios in California and Florida. Depending on the borrower, occupancy, property and transaction, possible qualification paths may include traditional tax-return analysis, bank-statement programs, other Non-QM options, asset-based or asset-utilization methods, or DSCR for eligible investment properties. Program availability and documentation vary by lender and file.</p>\n  <h3>What if another lender already declined the file?</h3>\n  <p>A prior decline does not by itself determine whether every mortgage path is unavailable. A second review can compare the reason for the decline with alternative documentation methods and current lender guidelines before assuming the scenario is finished.</p>\n  <div class="btn-row"><a class="btn btn-blue" href="bank-statement-loans.html">Bank Statement Options</a><a class="btn btn-outline" href="florida-bank-statement-loans.html">Florida Bank Statement Guide</a><a class="btn btn-outline" href="california-mortgage-locations.html">California Mortgage Markets</a><a class="btn btn-outline" href="mortgage-second-opinion.html">Mortgage Second Opinion</a></div>\n</div></section>\n'''
+          marker = '<section><div class="wrap"><div class="wcci-cta">'
+          if 'AI-VISIBILITY-CA-FL:self-employed-20260918' not in s:
+              if marker not in s:
+                  raise SystemExit('Self-employed CTA insertion marker not found')
+              s = s.replace(marker, state_block + '\n' + marker, 1)
+          if s != old:
+              p.write_text(s, encoding='utf-8')
+
+          # Bank-statement page: keep high-intent copy but make eligibility language
+          # lender/file-specific and normalize the legal entity in structured data.
+          p = root / 'bank-statement-loans.html'
+          s = p.read_text(encoding='utf-8')
+          old = s
+          s = s.replace('"description": "Mortgage loans for self-employed borrowers using bank statements as income documentation."',
+                        '"description": "Mortgage programs for eligible self-employed borrowers that may use bank statements as alternative income documentation."')
+          s = s.replace('"name": "West Coast Capital Mortgage",', '"name": "West Coast Capital Mortgage Inc.",', 1)
+          s = s.replace('Designed for self-employed borrowers &mdash; qualify using your bank deposits instead of traditional tax-return income.',
+                        'Designed for self-employed borrowers &mdash; eligible programs may evaluate bank deposits as alternative income documentation when traditional tax-return analysis does not fit the file.')
+          s = s.replace('<div class="card center"><h3 style="color:var(--blue)">Self-employed</h3><p style="margin:0">Built for owners</p></div><div class="card center"><h3 style="color:var(--blue)">No W-2</h3><p style="margin:0">Required</p></div>',
+                        '<div class="card center"><h3 style="color:var(--blue)">Self-employed</h3><p style="margin:0">Built for owners</p></div><div class="card center"><h3 style="color:var(--blue)">Alt-doc</h3><p style="margin:0">Program-specific</p></div>')
+          s = s.replace('A bank statement loan lets you qualify based on deposits over a recent period (often 12&ndash;24 months) rather than net income on tax returns.',
+                        'Eligible bank-statement programs may evaluate qualifying income using deposits over a recent period, often 12&ndash;24 months, with lender-specific expense and documentation rules instead of relying solely on taxable net income.')
+          s = s.replace('<li>Qualify on cash flow, not net taxable income</li>',
+                        '<li>Alternative income analysis based on eligible cash flow</li>')
+          if s != old:
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validate AI discovery update
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          se = Path('wccm-corporate/self-employed-borrowers.html').read_text(encoding='utf-8')
+          bs = Path('wccm-corporate/bank-statement-loans.html').read_text(encoding='utf-8')
+          assert 'geo.region' not in se and 'geo.placename' not in se
+          assert 'Self-Employed Mortgage Scenario Review' in se
+          assert '"name":"West Coast Capital Mortgage Inc."' in se
+          assert 'Self-Employed Mortgage Review in California and Florida' in se
+          assert 'mortgage-second-opinion.html' in se
+          assert 'Qualify on deposits' not in se
+          assert 'West Coast Capital Mortgage Inc.' in bs
+          assert 'qualify using your bank deposits instead of traditional tax-return income' not in bs
+          assert 'A bank statement loan lets you qualify based on deposits' not in bs
+          assert 'Alternative income analysis based on eligible cash flow' in bs
+          print('Self-employed AI discovery validation passed')
+          PY
+      - name: Commit source improvements
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wccm-corporate/self-employed-borrowers.html wccm-corporate/bank-statement-loans.html
+          if git diff --cached --quiet; then
+            echo "No source changes needed"
+          else
+            git commit -m "Strengthen self-employed mortgage AI discovery"
+            git push origin HEAD:main
+          fi
