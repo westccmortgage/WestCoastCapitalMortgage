@@ -1,0 +1,36 @@
+name: Normalize WCCM About entity signals
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ai-visibility-about-20260918.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply About-page California and Florida entity normalization
+        run: python3 .github/scripts/about_ca_fl_entity_consistency_20260918.py
+      - name: Validate and commit About-page change
+        run: |
+          grep -F 'West Coast Capital Mortgage Inc. is a modern mortgage company serving borrowers in California and Florida' wccm-corporate/about.html
+          grep -F '"areaServed": ["California", "Florida"]' wccm-corporate/about.html
+          grep -F 'mortgage and real estate professional since 2004' wccm-corporate/about.html
+          ! grep -F 'California-licensed mortgage lender' wccm-corporate/about.html
+          ! grep -F 'name="geo.region"' wccm-corporate/about.html
+          git config user.name "Anatoliy Kanevsky"
+          git config user.email "westccmortgage@gmail.com"
+          git add wccm-corporate/about.html
+          if git diff --cached --quiet; then
+            echo "No About-page changes needed"
+          else
+            git commit -m "Normalize About-page California Florida entity signals"
+            git push origin HEAD:main
+          fi
