@@ -1,0 +1,40 @@
+name: Update WCCM Florida condo 2026 visibility
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ai-visibility-florida-condo-20260919.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply sourced 2026 Florida condo update
+        run: python3 .github/scripts/florida_condo_2026_update_20260919.py
+      - name: Validate and commit Florida condo page
+        run: |
+          grep -F '2026 AGENCY CONDO UPDATE' wccm-corporate/florida-condo-financing.html
+          grep -F 'August 3, 2026' wccm-corporate/florida-condo-financing.html
+          grep -F 'January 4, 2027' wccm-corporate/florida-condo-financing.html
+          grep -F 'Fannie Mae LL-2026-03 announcement' wccm-corporate/florida-condo-financing.html
+          grep -F 'Freddie Mac Condominium Unit Mortgage FAQ' wccm-corporate/florida-condo-financing.html
+          grep -F 'West Coast Capital Mortgage Inc.' wccm-corporate/florida-condo-financing.html
+          grep -F 'NMLS #2817729' wccm-corporate/florida-condo-financing.html
+          grep -F 'GTM-K2X3X454' wccm-corporate/florida-condo-financing.html
+          grep -F 'AW-18417657219' wccm-corporate/florida-condo-financing.html
+          git config user.name "Anatoliy Kanevsky"
+          git config user.email "westccmortgage@gmail.com"
+          git add wccm-corporate/florida-condo-financing.html
+          if git diff --cached --quiet; then
+            echo "No Florida condo page changes needed"
+          else
+            git commit -m "Update Florida condo financing for 2026 agency review rules"
+            git push origin HEAD:main
+          fi
