@@ -793,7 +793,7 @@ def _home():
 <section class="bg-light"><div class="wrap">
   <div class="rate-snap">
     <div>
-      <span class="eyebrow" style="color:var(--blue)">Today&rsquo;s Rates</span>
+      <span class="eyebrow" style="color:var(--blue)">Sample Mortgage Rates</span>
       <h2 style="margin:0 0 .3em">Sample mortgage rates</h2>
       <p class="muted" style="margin:0">Estimates for well-qualified borrowers. <a href="rates.html" style="color:var(--blue);font-weight:600">See all rates &rarr;</a></p>
     </div>
@@ -1228,7 +1228,7 @@ PAGES["calculators.html"] = dict(title="Mortgage Calculators", desc="Estimate yo
 
 # ---------------- Rates ----------------
 def _rates():
-    return page_hero("Today&rsquo;s Rates", "Sample rates from our latest pricing, updated regularly &mdash; estimates for well-qualified borrowers, not a quote or commitment to lend.", "Today&rsquo;s Rates") + f"""
+    return page_hero("Sample Mortgage Rates", "Sample rates from our latest pricing, updated regularly &mdash; estimates for well-qualified borrowers, not a quote or commitment to lend.", "Sample Mortgage Rates") + f"""
 <section><div class="wrap">
   <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Today&rsquo;s Sample Rates</span><h2>Sample rates</h2>
   <p class="lead">Illustrative best-case rates for well-qualified borrowers. Your actual rate depends on your full profile.</p></div>
