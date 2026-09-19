@@ -1,0 +1,50 @@
+name: Fix WCCM rate freshness visibility
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ai-visibility-rate-freshness-20260920.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove stale today claims from sample rate surfaces
+        run: python3 .github/scripts/rate_freshness_visibility_20260920.py
+      - name: Validate and commit rate visibility fix
+        run: |
+          grep -F '<span class="eyebrow" style="color:var(--blue)">Sample Rates</span>' wccm-corporate/index.html
+          grep -F '<title>Sample Mortgage Rates — FHA, VA, Conventional | West Coast Capital Mortgage Inc.</title>' wccm-corporate/rates.html
+          grep -F 'Dated Pricing Examples' wccm-corporate/rates.html
+          grep -F '"name":"Sample Mortgage Rates"' wccm-corporate/rates.html
+          grep -F '"name":"California"' wccm-corporate/rates.html
+          grep -F '"name":"Florida"' wccm-corporate/rates.html
+          if grep -Fq 'Updated daily' wccm-corporate/rates.html; then
+            echo 'Stale Updated daily claim remains' >&2
+            exit 1
+          fi
+          if grep -Fq '<meta name="geo.region" content="US-CA">' wccm-corporate/rates.html; then
+            echo 'CA-only geo metadata remains on shared rates page' >&2
+            exit 1
+          fi
+          grep -F 'GTM-K2X3X454' wccm-corporate/index.html
+          grep -F 'AW-18417657219' wccm-corporate/index.html
+          grep -F 'GTM-K2X3X454' wccm-corporate/rates.html
+          grep -F 'AW-18417657219' wccm-corporate/rates.html
+          git config user.name "Anatoliy Kanevsky"
+          git config user.email "westccmortgage@gmail.com"
+          git add wccm-corporate/index.html wccm-corporate/rates.html
+          if [ -f tools/build_site.py ]; then git add tools/build_site.py; fi
+          if git diff --cached --quiet; then
+            echo "No rate freshness changes needed"
+          else
+            git commit -m "Clarify dated sample mortgage rates"
+            git push origin HEAD:main
+          fi
