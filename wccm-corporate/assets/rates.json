@@ -1,11 +1,11 @@
 {
-  "effective": "Sep 14, 2026 · 6:44 AM PT",
+  "effective": "Sep 21, 2026 · 6:52 AM PT",
   "source": "Lender wholesale base pricing; best-case borrower profile.",
   "comp_points": 0,
   "products": [
     {
       "name": "Conventional 30-Year Fixed",
-      "rate": 6.624
+      "rate": 6.625
     },
     {
       "name": "Conventional 15-Year Fixed",
