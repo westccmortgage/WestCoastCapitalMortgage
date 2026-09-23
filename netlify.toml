@@ -4,7 +4,7 @@
 # and install production tracking at build time so generated pages cannot
 # re-introduce retired domains, stale state-hub blocks, or lose tracking.
 [build]
-  command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/link_florida_jumbo_2026.py && python3 scripts/disable_pending_state_pages_20260907.py && python3 tools/install_wccm_gtm.py && python3 tools/install_wccm_ads_readiness.py && python3 tools/install_early_845k_readiness.py && python3 tools/verify_wccm_clarity.py"
+  command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/link_florida_jumbo_2026.py && python3 tools/strengthen_refinance_visibility_20260922.py && python3 scripts/disable_pending_state_pages_20260907.py && python3 tools/install_wccm_gtm.py && python3 tools/install_wccm_ads_readiness.py && python3 tools/install_early_845k_readiness.py && python3 tools/verify_wccm_clarity.py"
   publish = "wccm-corporate"
 
 # Keep the existing Florida hub link working while the canonical page uses the clean URL.
