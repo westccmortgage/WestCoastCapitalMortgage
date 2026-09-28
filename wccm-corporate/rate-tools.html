@@ -146,6 +146,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 <script>
 (function(){
   "use strict";
@@ -178,12 +179,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     if(maxR>=0) ws['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:maxR,c:maxC}});
   }
+  // Since 09.28.2026 PennyMac ships the sheet with ZIP64 headers (sizes = 0xFFFFFFFF);
+  // SheetJS 0.18.5 then tries to allocate 4 GB. Re-zip it with the real sizes first.
+  function repackZip64(u, fflate){
+    var dv=new DataView(u.buffer,u.byteOffset,u.byteLength), e=-1;
+    for(var i=u.length-22;i>=Math.max(0,u.length-65557);i--){ if(dv.getUint32(i,true)===0x06054b50){e=i;break;} }
+    if(e<0) return u;
+    var n=dv.getUint16(e+10,true), p=dv.getUint32(e+16,true), out={}, z64=false;
+    for(var k=0;k<n;k++){
+      if(dv.getUint32(p,true)!==0x02014b50) return u;
+      var meth=dv.getUint16(p+10,true), cs=dv.getUint32(p+20,true), us=dv.getUint32(p+24,true),
+          nl=dv.getUint16(p+28,true), el=dv.getUint16(p+30,true), cl=dv.getUint16(p+32,true), off=dv.getUint32(p+42,true),
+          name=new TextDecoder().decode(u.subarray(p+46,p+46+nl)), x=p+46+nl, xe=x+el;
+      while(x+4<=xe){
+        var id=dv.getUint16(x,true), sz=dv.getUint16(x+2,true), q=x+4;
+        if(id===1){ z64=true;
+          if(us===0xFFFFFFFF){us=Number(dv.getBigUint64(q,true));q+=8;}
+          if(cs===0xFFFFFFFF){cs=Number(dv.getBigUint64(q,true));q+=8;}
+          if(off===0xFFFFFFFF){off=Number(dv.getBigUint64(q,true));q+=8;}
+        }
+        x+=4+sz;
+      }
+      var d=off+30+dv.getUint16(off+26,true)+dv.getUint16(off+28,true), raw=u.subarray(d,d+cs);
+      if(!/\/$/.test(name)) out[name]= meth===0 ? raw.slice() : fflate.inflateSync(raw,{out:new Uint8Array(us)});
+      p+=46+nl+el+cl;
+    }
+    return z64 ? fflate.zipSync(out) : u;
+  }
   function num(v){ if(typeof v==='number') return v; if(v==null) return NaN; return parseFloat(String(v).replace(/[^0-9.\-]/g,'')); }
 
   function parse(buf){
     status("Reading rate sheet…");
     var wb;
-    try{ wb=XLSX.read(new Uint8Array(buf),{type:'array'}); }
+    try{ wb=XLSX.read(repackZip64(new Uint8Array(buf),fflate),{type:'array'}); }
     catch(e){ status("Could not read this file. Is it the .xlsx rate sheet? ("+e.message+")",true); return; }
     var ws=wb.Sheets["Price"];
     if(!ws){ status("No “Price” tab found — this doesn’t look like the PennyMac rate sheet.",true); return; }
