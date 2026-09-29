@@ -7,27 +7,6 @@ function requireEnv(name) {
 }
 
 export default {
-  async fetch(req) {
-    if (req.method !== 'GET') {
-      return new Response('Method not allowed', { status: 405 })
-    }
-
-    const token = requireEnv('WCCM_CRM_LEAD_TOKEN')
-    const response = await fetch(CRM_ENDPOINT, {
-      method: 'GET',
-      headers: { 'x-lead-token': token },
-      redirect: 'error',
-    })
-
-    return Response.json(
-      { ok: response.ok },
-      {
-        status: response.ok ? 200 : 502,
-        headers: { 'cache-control': 'no-store' },
-      },
-    )
-  },
-
   async formSubmitted(event) {
     const token = requireEnv('WCCM_CRM_LEAD_TOKEN')
     const data = event?.data
