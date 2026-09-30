@@ -14,7 +14,7 @@
   function param(name){
     try{return new URLSearchParams(window.location.search).get(name)||'';}catch(e){return '';}
   }
-  var attributionKeys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid'];
+  var attributionKeys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid','fbclid'];
   function storeAttribution(){
     try{
       attributionKeys.forEach(function(k){var v=param(k);if(v)sessionStorage.setItem('wccm_'+k,v);});
@@ -326,6 +326,7 @@
       gclid:attributionValue('gclid'),
       gbraid:attributionValue('gbraid'),
       wbraid:attributionValue('wbraid'),
+      fbclid:attributionValue('fbclid'),
       landing_page:landing,
       referrer:ref
     };
@@ -603,6 +604,18 @@
       points:['Options beyond traditional tax-return income','Bank statements, P&L, or 1099s may be considered','Multiple lender options reviewed'],
       chips:{name:'income_documentation',label:'How would you show income?',options:['Bank statements','Profit and loss','1099s','Tax returns','Not sure yet']},
       fields:[QUICK_CITY,QUICK_AMOUNT,QUICK_YEARS,QUICK_EMAIL]
+    },
+    '/heloc':{
+      id:'heloc-review',formName:'heloc-lead',programInterest:'HELOC / Home Equity',
+      kicker:'HELOC review',title:'Get a call about a HELOC',
+      goals:['Home improvement','Pay off debt','Buy another property','Other / not sure'],
+      points:['Keep your first mortgage in place','HELOC or fixed second-lien options','Multiple home equity lender options reviewed'],
+      chips:{name:'occupancy',label:'How is the home used?',options:['Primary home','Second home','Investment']},
+      fields:[QUICK_CITY,
+        {name:'home_value',label:'Home value ($)',type:'number',inputmode:'numeric',min:'0',step:'10000'},
+        {name:'mortgage_balance',label:'Current mortgage balance ($)',type:'number',inputmode:'numeric',min:'0',step:'1000'},
+        {name:'loan_amount',label:'Cash needed ($)',type:'number',inputmode:'numeric',min:'0',step:'1000'},
+        QUICK_EMAIL]
     }
   };
   if(floridaLanding){

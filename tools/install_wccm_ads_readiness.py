@@ -26,7 +26,7 @@ SCRIPT_ANCHOR_ROOTED = '<script src="/i18n.js">'
 
 ATTRIBUTION_FIELDS = (
     "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
-    "gclid", "gbraid", "wbraid", "landing_page", "conversion_page", "source_path",
+    "gclid", "gbraid", "wbraid", "fbclid", "landing_page", "conversion_page", "source_path",
     "referrer",
 )
 
@@ -44,7 +44,7 @@ PARTIAL_LEAD_CONTENT_FIELDS = (
 )
 PARTIAL_LEAD_ATTRIBUTION_FIELDS = (
     "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
-    "gclid", "gbraid", "wbraid", "landing_page", "referrer",
+    "gclid", "gbraid", "wbraid", "fbclid", "landing_page", "referrer",
 )
 
 FORM_SCHEMAS = {
@@ -68,6 +68,10 @@ FORM_SCHEMAS = {
         "goal", "property_area", "loan_amount", "income_documentation", "self_employed_years",
         "full_name", "email", "phone", "message",
     ),
+    "heloc-lead": (
+        "goal", "property_area", "home_value", "mortgage_balance", "loan_amount", "occupancy",
+        "full_name", "email", "phone", "message",
+    ),
     # Optional step 2 of the hero quick form (QUICK_LEAD_FORMS in script.js):
     # one shared form for every landing page, linked to the step-1 lead by
     # lead_submission_id. Union of every page's step-2 fields.
@@ -76,6 +80,7 @@ FORM_SCHEMAS = {
         "property_type", "income_documentation", "statements_available", "occupancy",
         "property_area", "purchase_price", "loan_amount", "monthly_rent",
         "self_employed_years", "country_of_residence", "email",
+        "home_value", "mortgage_balance",
     ),
 }
 
@@ -89,6 +94,7 @@ PAGE_FORMS = {
     "foreign-national-loans.html": "mortgage-lead",
     "loans/jumbo/los-angeles-county.html": "jumbo-lead",
     "loans/dscr/los-angeles-metro.html": "dscr-lead",
+    "heloc.html": "heloc-lead",
 }
 
 # Pages whose hero quick form posts step 2 as "lead-details".
@@ -99,6 +105,7 @@ QUICK_FORM_PAGES = (
     "self-employed-borrowers.html",
     "florida-condo-financing.html",
     "foreign-national-loans.html",
+    "heloc.html",
 )
 
 
@@ -267,7 +274,7 @@ def main() -> None:
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20260917-dscr-highlights\2', html)
+                         r'\1?v=20260930-heloc-form\2', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
