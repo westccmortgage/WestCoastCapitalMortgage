@@ -1,0 +1,44 @@
+name: WCCM visibility checks
+
+on:
+  pull_request:
+    paths:
+      - 'wccm-corporate/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'netlify.toml'
+      - '.github/workflows/wccm-visibility-checks.yml'
+  push:
+    branches: [main, codex/wccm-broward-entity-20261002]
+    paths:
+      - 'wccm-corporate/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'netlify.toml'
+      - '.github/workflows/wccm-visibility-checks.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test source and JavaScript syntax
+        run: |
+          python3 -m unittest discover -s tests -v
+          node --check wccm-corporate/i18n.js
+      - name: Run existing Netlify production build
+        run: |
+          python3 - <<'PY'
+          import re, subprocess
+          from pathlib import Path
+          command = re.search(r'command = "(.*?)"', Path('netlify.toml').read_text())[1]
+          subprocess.run(command, shell=True, check=True)
+          PY
+      - name: Validate built pages
+        run: python3 -m unittest discover -s tests -v

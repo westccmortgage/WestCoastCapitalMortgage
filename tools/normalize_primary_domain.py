@@ -58,9 +58,9 @@ CONTACT_OLD_SCHEMA = '''{
 }'''
 CONTACT_NEW_SCHEMA = '''{
   "@context": "https://schema.org",
-  "@type": ["FinancialService", "LocalBusiness"],
+  "@type": "FinancialService",
   "name": "West Coast Capital Mortgage Inc.",
-  "alternateName": "West Coast Capital Mortgage",
+  "@id": "https://westcoastcapitalmortgage.com/#organization",
   "legalName": "West Coast Capital Mortgage Inc.",
   "url": "https://westcoastcapitalmortgage.com",
   "telephone": "+1-310-654-1577",
@@ -77,12 +77,12 @@ CONTACT_NEW_SCHEMA = '''{
     { "@type": "State", "name": "California" },
     { "@type": "State", "name": "Florida" }
   ],
-  "serviceType": ["Home Purchase Loans", "Mortgage Refinance", "Jumbo Loans", "Bank Statement Loans", "Non-QM Loans", "DSCR Loans", "Investment Property Loans", "Mortgage Second Opinion"],
+  "hasOfferCatalog": {"@type":"OfferCatalog","name":"Mortgage services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Home Purchase Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Mortgage Refinance","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Jumbo Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bank Statement Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Non-QM Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DSCR Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Investment Property Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Mortgage Second Opinion","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}}]},
   "sameAs": [
     "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729",
     "https://g.page/r/CXUFd3B5e-n3EBM"
   ],
-  "identifier": { "@type": "PropertyValue", "name": "NMLS", "value": "2817729" }
+  "identifier": [{"@type":"PropertyValue","name":"Company NMLS","value":"2817729"},{"@type":"PropertyValue","name":"CA DRE Corporation License","value":"02440065"}]
 }'''
 CONTACT_OLD_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p>\n    <p class="muted">Equal Housing Opportunity &middot; NMLS #2817729</p>'
 CONTACT_NEW_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502</p>\n    <p class="muted">West Coast Capital Mortgage Inc. &middot; Company NMLS #2817729 &middot; Equal Housing Opportunity</p>'
