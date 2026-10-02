@@ -16,7 +16,7 @@ from pathlib import Path
 GTM_ID = "GTM-K2X3X454"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
-ASSET_VERSION = "20261001-cta-cleanup"
+ASSET_VERSION = "20261001-i18n"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
@@ -82,6 +82,12 @@ SCRIPT_ASSET_RE = re.compile(
 )
 STYLE_ASSET_RE = re.compile(
     r"(<link\b[^>]*\bhref=[\"'][^\"']*styles\.css)(?:\?[^\"']*)?([\"'])",
+    re.IGNORECASE,
+)
+# Cloudflare lets browsers keep i18n.js for hours; a versioned URL makes new
+# translations reach returning visitors right after a deploy.
+I18N_ASSET_RE = re.compile(
+    r"(<script\b[^>]*\bsrc=[\"'][^\"']*i18n\.js)(?:\?[^\"']*)?([\"'])",
     re.IGNORECASE,
 )
 
@@ -167,7 +173,7 @@ def inject(path: Path) -> tuple[bool, str | None]:
     # every page's script.js with its own literal version, so that value is
     # what actually ships — keep both in step on every reliable-delivery /
     # lead-form change instead of relying on this per-page distinction.
-    script_version = "20261001-cta-cleanup" if path.name in {
+    script_version = "20261001-i18n" if path.name in {
         "bank-statement-loans.html", "self-employed-borrowers.html", "dscr-loans.html",
         "jumbo-loans.html", "florida-condo-financing.html", "foreign-national-loans.html",
     } else ASSET_VERSION
@@ -177,7 +183,10 @@ def inject(path: Path) -> tuple[bool, str | None]:
     text, style_versioned = STYLE_ASSET_RE.subn(
         lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
     )
-    changed = changed or bool(script_versioned) or bool(style_versioned)
+    text, i18n_versioned = I18N_ASSET_RE.subn(
+        lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
+    )
+    changed = changed or bool(script_versioned) or bool(style_versioned) or bool(i18n_versioned)
 
     if "googletagmanager.com/ns.html" not in text:
         body = BODY_TAG_RE.search(text)
