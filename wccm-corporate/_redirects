@@ -508,4 +508,6 @@ https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat
 /loans/dscr/yucaipa /loans/dscr/inland-empire 301!
 
 # Catch-all must remain last
+/ai-mortgage-review /apply 302!
+/ai-mortgage-review.html /apply 302!
 /* /404.html 404

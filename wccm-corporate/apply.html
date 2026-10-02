@@ -118,7 +118,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="nav-collapse" id="navc">
       <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="rates.html">Today's Rates</a><a href="loans.html">Loans</a><a href="resources.html">Resources</a><a href="about.html">About Us</a></nav>
       <div class="header-cta">
-        <a class="btn btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Apply Now</a>
+        <a class="btn btn-blue" href="/apply" data-cta="preapproval">Get Preapproved</a>
       </div>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
@@ -132,24 +132,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wallpaper-line w2" style="top:58%">WEST COAST CAPITAL MORTGAGE</div>
   </div>
   <div class="wrap page-hero-inner">
-    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Apply Now</div>
-    <h1>Start Your Application</h1>
-    <p class="lead">Ready to move forward? Start the full 1003 application below &mdash; a licensed mortgage professional reviews every submission.</p>
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Get Preapproved</div>
+    <h1>Get Preapproved</h1>
+    <p class="lead">Leave your name, phone and email. A licensed loan officer will contact you to start your preapproval.</p>
   </div>
 </section>
-<section><div class="wrap" style="max-width:880px;text-align:center">
-  <a class="btn btn-lg btn-blue" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener noreferrer">Start Full 1003 Application</a>
-  <p class="apply-note">You will be redirected to our secure mortgage application portal.</p>
-  <p class="muted" style="margin-top:20px">Not ready for the full application? Try WWCCM.ai AI Mortgage Review first. <a href="https://wwccm.ai" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-weight:600">Open WWCCM.ai</a></p>
-  <p class="wcci-lang-note">WWCCM.ai may open in a multilingual experience. English, Russian, and other language support may vary by tool version.</p>
-  <p class="wcci-note" style="margin-top:8px">WWCCM.ai provides preliminary educational mortgage guidance only and is not a loan approval, rate quote, rate lock, or commitment to lend.</p>
-  <div class="apply-support"><h3>Questions before applying?</h3><p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div>
-</div></section>
-<section id="apply-form" class="bg-light"><div class="wrap" style="max-width:880px">
-  <div class="section-head center"><h2>Or send a quick request</h2><p class="lead">Prefer we reach out first? Share a few details and a licensed professional will follow up.</p></div>
-  
-<form class="form" data-ack name="apply" netlify netlify-honeypot="company" novalidate>
+<section id="apply-form" class="bg-light"><div class="wrap" style="max-width:640px">
+  <div class="section-head center"><span class="eyebrow">Quick start</span><h2>Start with a quick call</h2><p class="lead">No credit pull at this step.</p></div>
+<form class="form" data-ack data-validate name="apply" netlify netlify-honeypot="company" novalidate>
   <input type="hidden" name="form-name" value="apply">
+  <input type="hidden" name="program_interest" value="Preapproval">
   <!-- Attribution: script.js fills these at submit time, but Netlify only keeps
        fields it parsed from this HTML at deploy time. Declared, or dropped. -->
   <input type="hidden" name="utm_source">
@@ -160,33 +152,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <input type="hidden" name="gclid">
   <input type="hidden" name="gbraid">
   <input type="hidden" name="wbraid">
+  <input type="hidden" name="fbclid">
   <input type="hidden" name="landing_page">
   <input type="hidden" name="conversion_page">
   <input type="hidden" name="source_path">
   <input type="hidden" name="referrer">
   <input type="hidden" name="submission_id">
-  <div class="form-ok" hidden>Thank you. This is not a full loan application &mdash; a licensed mortgage professional will follow up to discuss next steps.</div>
   <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">
+  <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>
+  <div class="form-ok" role="status" aria-live="polite" hidden>Thank you! A licensed loan officer will contact you shortly to start your preapproval.</div>
   <div class="form-grid">
-    <div class="field"><label for="fn">First name</label><input id="fn" name="fn" required></div>
-    <div class="field"><label for="ln">Last name</label><input id="ln" name="ln" required></div>
-    <div class="field"><label for="em">Email</label><input id="em" type="email" name="em" required></div>
-    <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" name="ph" required></div>
-    <div class="field"><label for="goal">Loan goal</label><select id="goal" name="goal"><option>Buy a Home</option><option>Refinance</option><option>Home Equity</option><option>Investment Property</option></select></div>
-    <div class="field"><label for="price">Estimated price / value ($)</label><input id="price" type="number" name="price"></div>
-    <div class="field"><label for="dp">Down payment / equity ($)</label><input id="dp" type="number" name="dp"></div>
-    <div class="field"><label for="cr">Credit range</label><select id="cr" name="cr"><option>Excellent (740+)</option><option>Good (680&ndash;739)</option><option>Fair (620&ndash;679)</option><option>Below 620</option><option>Not sure</option></select></div>
-    <div class="field"><label for="emp">Employment type</label><select id="emp" name="emp"><option>W-2 employee</option><option>Self-employed</option><option>Retired</option><option>Other</option></select></div>
-    <div class="field full"><label for="msg">Message</label><textarea id="msg" name="msg"></textarea></div>
+    <div class="field full"><label for="fn">Your name</label><input id="fn" name="fn" autocomplete="name" required></div>
+    <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" name="ph" autocomplete="tel" required></div>
+    <div class="field"><label for="em">Email</label><input id="em" type="email" name="em" autocomplete="email" required></div>
   </div>
-  <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit">Submit Request</button></div>
-  <p class="form-note">This is not a full loan application. A licensed mortgage professional will follow up to discuss next steps. NMLS #2817729 &middot; Equal Housing Opportunity.</p>
+  <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit" style="width:100%">Call Me Back</button></div>
+  <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. West Coast Capital Mortgage Inc. &middot; NMLS #2817729 &middot; Equal Housing Opportunity.</p>
 </form>
+</div></section>
+<section><div class="wrap" style="max-width:640px;text-align:center">
+  <h2>Prefer to do it all online?</h2>
+  <p class="lead">Start the full mortgage application (1003) in our secure portal.</p>
+  <a class="btn btn-lg btn-blue" href="https://2817729.my1003app.com/2775380/register" style="width:100%">Start Full 1003 Application</a>
+  <p class="apply-note">Secure application portal &middot; NMLS #2817729 &middot; Equal Housing Opportunity</p>
+  <div class="apply-support"><h3>Questions before applying?</h3><p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div>
 </div></section>
 
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="https://wwccm.ai" target="_blank" rel="noopener noreferrer">WWCCM.ai AI Mortgage Review</a><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="https://2817729.myagentloans.com/register" target="_blank" rel="noopener noreferrer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
+    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="/loan-officer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
     <div class="footer-bottom">
       <div class="row">
         <nav aria-label="Legal">

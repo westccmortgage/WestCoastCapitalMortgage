@@ -356,6 +356,18 @@
     sendEncoded(encodePairs(payload));
   }
 
+  /* First in-content CTA that points at /apply. The header button and explicit
+     "Get Preapproved" CTAs (data-cta="preapproval") keep their own label and
+     destination, so a page's quick-form rewrite never renames them. */
+  function firstApplyCta(){
+    var list=document.querySelectorAll('a.btn.btn-blue[href="apply.html"],a.btn.btn-blue[href="/apply"],a.btn.btn-blue[href="/apply.html"],a.btn.btn-blue[href="../../apply.html"]');
+    for(var i=0;i<list.length;i++){
+      if(list[i].closest('.site-header')||list[i].hasAttribute('data-cta'))continue;
+      return list[i];
+    }
+    return null;
+  }
+
   /* Shared "take me to the lead form" behavior for the mobile bar, program
      card taps, and every in-page CTA that scrolls to the form. iOS Safari
      only opens the keyboard for a focus() call made synchronously inside the
@@ -453,7 +465,7 @@
     faq.parentNode.insertBefore(section,faq);
 
     /* Make the first high-intent CTA keep paid visitors on the relevant page. */
-    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"]');
+    var firstCta=firstApplyCta();
     if(firstCta){
       firstCta.setAttribute('href','#bank-statement-review');
       firstCta.textContent='Request Bank Statement Review';
@@ -896,7 +908,7 @@
     step2.addEventListener('wccm:lead-sent',function(){finish(true);});
     skip.addEventListener('click',function(){finish(false);});
 
-    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"],a.btn.btn-blue[href="/apply"],a.btn.btn-blue[href="../../apply.html"]');
+    var firstCta=firstApplyCta();
     if(firstCta){
       firstCta.setAttribute('href','#'+config.id);
       firstCta.textContent='Request a Call';
@@ -970,7 +982,7 @@
     insertBeforeEl.parentNode.insertBefore(section,insertBeforeEl);
 
     /* Keep the first high-intent CTA on the page the visitor paid to land on. */
-    var firstCta=document.querySelector('a.btn.btn-blue[href="apply.html"],a.btn.btn-blue[href="/apply"],a.btn.btn-blue[href="../../apply.html"]');
+    var firstCta=firstApplyCta();
     if(firstCta){
       firstCta.setAttribute('href','#'+config.id);
       firstCta.textContent=config.button;
