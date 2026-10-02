@@ -269,12 +269,13 @@ def main() -> None:
 
     # Bust previously cached handlers on every page, including nested pages.
     # This runs after tools/install_wccm_gtm.py in the build command and
-    # touches every page unconditionally, so this literal is the version that
-    # actually ships — keep it in step with ASSET_VERSION in that script.
+    # touches every page unconditionally; keep the Bank Statement override
+    # in step with BANK_STATEMENT_ASSET_VERSION in that script.
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
+        version = "20261002-bank-disclosure" if page.name == "bank-statement-loans.html" else "20261001-highlights"
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20261001-highlights\2', html)
+                         lambda match: f'{match.group(1)}?v={version}{match.group(2)}', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
