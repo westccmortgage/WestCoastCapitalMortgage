@@ -14,6 +14,8 @@ REPLACEMENTS = (
     ("https://wcci.online", "https://wwccm.ai"),
     ("http://wcci.online", "https://wwccm.ai"),
     ("WCCI.Online", "WWCCM.ai"),
+    ("Ask Wallet AI", "WWCCM.ai AI Mortgage Review"),
+    ("AI Strategy Advisor", "WWCCM.ai AI Mortgage Review"),
     ("WCCI AI Mortgage Review", "WWCCM.ai AI Mortgage Review"),
 )
 
