@@ -274,7 +274,7 @@ def main() -> None:
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
-                         r'\1?v=20261001-i18n\2', html)
+                         r'\1?v=20261001-highlights\2', html)
         if updated != html:
             page.write_text(updated, encoding="utf-8")
 
