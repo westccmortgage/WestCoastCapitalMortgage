@@ -17,6 +17,7 @@ GTM_ID = "GTM-K2X3X454"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 ASSET_VERSION = "20261001-highlights"
+BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 
@@ -170,18 +171,13 @@ def inject(path: Path) -> tuple[bool, str | None]:
     # Bust stale browser/CDN copies whenever the shared lead form or its styles
     # change. The build applies this consistently to every deployable page.
     # tools/install_wccm_ads_readiness.py runs after this script and stamps
-    # every page's script.js with its own literal version, so that value is
-    # what actually ships — keep both in step on every reliable-delivery /
-    # lead-form change instead of relying on this per-page distinction.
-    script_version = "20261001-highlights" if path.name in {
-        "bank-statement-loans.html", "self-employed-borrowers.html", "dscr-loans.html",
-        "jumbo-loans.html", "florida-condo-financing.html", "foreign-national-loans.html",
-    } else ASSET_VERSION
+    # script.js again; keep its Bank Statement override in step here.
+    asset_version = BANK_STATEMENT_ASSET_VERSION if path.name == "bank-statement-loans.html" else ASSET_VERSION
     text, script_versioned = SCRIPT_ASSET_RE.subn(
-        lambda match: f"{match.group(1)}?v={script_version}{match.group(2)}", text
+        lambda match: f"{match.group(1)}?v={asset_version}{match.group(2)}", text
     )
     text, style_versioned = STYLE_ASSET_RE.subn(
-        lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
+        lambda match: f"{match.group(1)}?v={asset_version}{match.group(2)}", text
     )
     text, i18n_versioned = I18N_ASSET_RE.subn(
         lambda match: f"{match.group(1)}?v={ASSET_VERSION}{match.group(2)}", text
