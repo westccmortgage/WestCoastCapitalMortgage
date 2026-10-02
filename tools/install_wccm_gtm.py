@@ -167,7 +167,7 @@ def inject(path: Path) -> tuple[bool, str | None]:
     # every page's script.js with its own literal version, so that value is
     # what actually ships — keep both in step on every reliable-delivery /
     # lead-form change instead of relying on this per-page distinction.
-    script_version = "20260930-heloc-form" if path.name in {
+    script_version = "20261001-cta-cleanup" if path.name in {
         "bank-statement-loans.html", "self-employed-borrowers.html", "dscr-loans.html",
         "jumbo-loans.html", "florida-condo-financing.html", "foreign-national-loans.html",
     } else ASSET_VERSION
