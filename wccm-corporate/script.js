@@ -808,7 +808,9 @@
     talkLink.href='tel:3106541577';
     talk.appendChild(talkLink);
     step1.appendChild(talk);
-    step1.appendChild(quickText('p','ql-legal','Not a commitment to lend. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.'));
+    var legal='Not a commitment to lend. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
+    if(config.formName==='bank-statement-lead')legal='Not a commitment to lend. West Coast Capital Mortgage Inc. · 150 E Olive Ave, Unit 112, Burbank, CA 91502 · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
+    step1.appendChild(quickText('p','ql-legal',legal));
 
     /* Step 2 — optional details, linked to the step-1 submission */
     var step2=quickFormShell('lead-details','ql-step ql-step2',interest,['lead_submission_id','source_form','full_name','phone','goal']);

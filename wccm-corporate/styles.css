@@ -154,6 +154,10 @@ body:has(.mortgage-compact-hero) .site-footer .footer-bottom .row{margin-bottom:
 /* interior page hero */
 .page-hero{position:relative;overflow:hidden;background:var(--light);border-bottom:1px solid var(--border);padding:78px 0}
 .page-hero .wallpaper-line{color:rgba(12,28,51,.035)}
+.bank-statement-address{font-size:.9rem;line-height:1.5;margin:16px 0 0;color:var(--navy)}
+.bank-statement-costs{padding:28px 0;background:#f5f8fc;border-bottom:1px solid var(--border)}
+.bank-statement-costs h2{font-size:1.25rem;margin:0 0 8px}
+.bank-statement-costs p{margin:0;max-width:950px;line-height:1.6}
 .page-hero-inner{position:relative;z-index:1;max-width:760px}
 .crumbs{font-size:.82rem;color:var(--gray);margin-bottom:18px;letter-spacing:.02em}
 .crumbs a:hover{color:var(--blue)}
