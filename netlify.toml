@@ -13,3 +13,10 @@
   to = "/florida-dscr-loans"
   status = 301
   force = true
+
+# Consolidate the legacy explicit HTML contact URL into the canonical clean URL.
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact"
+  status = 301
+  force = true
