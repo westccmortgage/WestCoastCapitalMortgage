@@ -16,6 +16,8 @@ from pathlib import Path
 GTM_ID = "GTM-K2X3X454"
 GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
+# GA4 shares the same gtag.js loader as Ads (one library, two config calls).
+GA4_ID = "G-GB57YWMKBH"
 ASSET_VERSION = "20261001-highlights"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
@@ -62,6 +64,12 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
           'currency':'USD',
           'transaction_id':leadEventId
         }});
+        window.gtag('event','generate_lead',{{
+          'send_to':'{GA4_ID}',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId
+        }});
       }}
     }}
   }},200);
@@ -69,6 +77,7 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
 
 window.gtag('js',new Date());
 window.gtag('config','{GOOGLE_ADS_ID}');
+window.gtag('config','{GA4_ID}');
 </script>
 {ADS_BLOCK_END}"""
 
@@ -196,6 +205,7 @@ def inject(path: Path) -> tuple[bool, str | None]:
         GOOGLE_ADS_ID,
         f"gtag/js?id={GOOGLE_ADS_ID}",
         GOOGLE_ADS_LEAD_DESTINATION,
+        GA4_ID,
         "wccm_lead_submit",
     )
     if not all(token in text for token in required):
@@ -219,6 +229,7 @@ def verify_critical(path: Path) -> None:
         GOOGLE_ADS_ID,
         f"gtag/js?id={GOOGLE_ADS_ID}",
         GOOGLE_ADS_LEAD_DESTINATION,
+        GA4_ID,
         "wccm_lead_submit",
     )
     if not all(token in text for token in required):
@@ -252,7 +263,7 @@ def main() -> int:
         verify_critical(publish / rel)
 
     print(
-        f"WCCM tracking GTM={GTM_ID} Ads={GOOGLE_ADS_ID}: "
+        f"WCCM tracking GTM={GTM_ID} Ads={GOOGLE_ADS_ID} GA4={GA4_ID}: "
         f"verified={installed_docs}, changed={changed}, "
         f"non_document_stubs={skipped_non_document}, "
         f"nonstandard_stubs={skipped_nonstandard}, "

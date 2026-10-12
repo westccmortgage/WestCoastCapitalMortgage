@@ -36,6 +36,12 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
           'currency':'USD',
           'transaction_id':leadEventId
         });
+        window.gtag('event','generate_lead',{
+          'send_to':'G-GB57YWMKBH',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId
+        });
       }
     }
   },200);
@@ -43,6 +49,7 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
 
 window.gtag('js',new Date());
 window.gtag('config','AW-18417657219');
+window.gtag('config','G-GB57YWMKBH');
 </script>
 <!-- End Google tag - Google Ads -->
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
