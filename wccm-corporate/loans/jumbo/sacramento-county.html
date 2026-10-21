@@ -52,6 +52,41 @@ window.gtag('config','AW-18417657219');
 window.gtag('config','G-GB57YWMKBH');
 </script>
 <!-- End Google tag - Google Ads -->
+<!-- OpenAI Ads pixel -->
+<script>
+(function(w,d,s,u){
+  if(w.oaiq)return;
+  var q=function(){q.q.push(arguments);};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{};
+  setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{type:"customer_action"},
+        leadEventId?{event_id:leadEventId}:undefined);
+    }
+  },200);
+})();
+</script>
+<!-- End OpenAI Ads pixel -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jumbo Loans in Sacramento County, CA — 2026 Limit $832,750 | West Coast Capital Mortgage</title>
