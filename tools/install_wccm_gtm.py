@@ -5,6 +5,9 @@ The publish tree contains normal pages plus a few redirect/legacy .html stubs.
 Normal documents receive GTM plus the Google Ads base tag. The Ads tag also
 listens for the site's existing `wccm_lead_submit` dataLayer event and sends the
 Google Ads `WCCM - Mortgage Lead` conversion only after a form was accepted.
+When OPENAI_PIXEL_ID is set, the OpenAI Ads (ChatGPT ads) measurement pixel is
+installed right after the Google Ads block and reports the same accepted
+`wccm_lead_submit` events as `lead_created`.
 Nonstandard stubs are skipped, while critical lead and paid-search pages are
 explicitly required to contain both tracking layers.
 """
@@ -22,6 +25,10 @@ ASSET_VERSION = "20261001-highlights"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
+# OpenAI Ads Manager > Conversions > data source (pixel) ID. Empty = not installed.
+OPENAI_PIXEL_ID = "SJQeDxdLY3Jhg74ed29uyH"
+OPENAI_BLOCK_START = "<!-- OpenAI Ads pixel -->"
+OPENAI_BLOCK_END = "<!-- End OpenAI Ads pixel -->"
 
 GTM_HEAD_SNIPPET = f"""<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
@@ -80,6 +87,42 @@ window.gtag('config','{GOOGLE_ADS_ID}');
 window.gtag('config','{GA4_ID}');
 </script>
 {ADS_BLOCK_END}"""
+
+OPENAI_PIXEL_HEAD_SNIPPET = f"""{OPENAI_BLOCK_START}
+<script>
+(function(w,d,s,u){{
+  if(w.oaiq)return;
+  var q=function(){{q.q.push(arguments);}};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+}})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{{pixelId:"{OPENAI_PIXEL_ID}"}});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){{
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{{}};
+  setInterval(function(){{
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){{
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{{type:"customer_action"}},
+        leadEventId?{{event_id:leadEventId}}:undefined);
+    }}
+  }},200);
+}})();
+</script>
+{OPENAI_BLOCK_END}"""
 
 HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
@@ -143,6 +186,28 @@ def replace_ads_block(text: str) -> tuple[str, bool]:
     return text[: head.end()] + "\n" + GOOGLE_ADS_HEAD_SNIPPET + text[head.end() :], True
 
 
+def replace_openai_block(text: str) -> tuple[str, bool]:
+    """Install, upgrade or (with no pixel ID) remove the OpenAI Ads pixel block."""
+    start = text.find(OPENAI_BLOCK_START)
+    end = text.find(OPENAI_BLOCK_END)
+    if start >= 0 and end >= start:
+        end += len(OPENAI_BLOCK_END)
+        if not OPENAI_PIXEL_ID:
+            return text[:start].rstrip("\n") + text[end:], True
+        if text[start:end] == OPENAI_PIXEL_HEAD_SNIPPET:
+            return text, False
+        return text[:start] + OPENAI_PIXEL_HEAD_SNIPPET + text[end:], True
+    if not OPENAI_PIXEL_ID:
+        return text, False
+
+    # Keep it next to the Google Ads block, which inject() installs first.
+    pos = text.find(ADS_BLOCK_END)
+    if pos < 0:
+        return text, False
+    pos += len(ADS_BLOCK_END)
+    return text[:pos] + "\n" + OPENAI_PIXEL_HEAD_SNIPPET + text[pos:], True
+
+
 def inject(path: Path) -> tuple[bool, str | None]:
     text = path.read_text(encoding="utf-8")
     lower = text.lower()
@@ -175,7 +240,8 @@ def inject(path: Path) -> tuple[bool, str | None]:
         changed = True
 
     text, ads_changed = replace_ads_block(text)
-    changed = changed or ads_changed
+    text, openai_changed = replace_openai_block(text)
+    changed = changed or ads_changed or openai_changed
 
     # Bust stale browser/CDN copies whenever the shared lead form or its styles
     # change. The build applies this consistently to every deployable page.
@@ -232,6 +298,8 @@ def verify_critical(path: Path) -> None:
         GA4_ID,
         "wccm_lead_submit",
     )
+    if OPENAI_PIXEL_ID:
+        required += (OPENAI_PIXEL_ID, "bzrcdn.openai.com/sdk/oaiq.min.js")
     if not all(token in text for token in required):
         raise SystemExit(f"Critical WCCM page is not fully instrumented: {path}")
 
