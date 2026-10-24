@@ -32,11 +32,27 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
           'currency':'USD',
           'transaction_id':leadEventId
         });
+        /* Only emit known mortgage categories and technical form/page identifiers.
+           Never send borrower text, contact fields, or URL query parameters to GA4. */
+        var knownPrograms=[
+          'General mortgage inquiry','Jumbo','DSCR / Investor',
+          'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
+          'Condo','Foreign National','Mortgage Second Opinion'
+        ];
+        var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
+        var safeProgram=knownPrograms.indexOf(rawProgram)>=0?rawProgram:'Other Mortgage Inquiry';
+        var rawForm=typeof item.form_name==='string'?item.form_name:'';
+        var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
+        var rawPath=window.location.pathname||'/';
+        var safePath=(rawPath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(rawPath))?rawPath:'/';
         window.gtag('event','generate_lead',{
           'send_to':'G-GB57YWMKBH',
           'value':1.0,
           'currency':'USD',
-          'lead_event_id':leadEventId
+          'lead_event_id':leadEventId,
+          'form_name':safeForm,
+          'program_interest':safeProgram,
+          'page_path':safePath
         });
       }
     }
