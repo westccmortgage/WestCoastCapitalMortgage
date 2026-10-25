@@ -12,6 +12,45 @@ ROOT = Path(__file__).resolve().parents[1] / "wccm-corporate"
 
 
 class GA4LeadAttributionTest(unittest.TestCase):
+    def test_florida_programs_survive_privacy_allowlist(self):
+        """Florida qualified mortgage leads must not be collapsed to 'Other'."""
+        ads_block = gtm.GOOGLE_ADS_HEAD_SNIPPET.split(gtm.ADS_BLOCK_START, 1)[1].split(gtm.ADS_BLOCK_END, 1)[0]
+        script = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", ads_block, re.S)[0]
+        harness = r"""
+var hits = [];
+var scan = null;
+var window = {
+  location: { pathname: '/florida-dscr-loans' },
+  dataLayer: [],
+  gtag: function(kind, event, payload) {
+    if (kind === 'event' && event === 'generate_lead') hits.push(payload.program_interest);
+  }
+};
+var setInterval = function(fn) { scan = fn; };
+"""
+        cases = [
+            ("Florida / DSCR / Investor", "Florida / DSCR / Investor"),
+            ("Florida / Bank Statement / Self-Employed", "Florida / Bank Statement / Self-Employed"),
+            ("Florida / Condo", "Florida / Condo"),
+            ("Florida / Foreign National", "Florida / Foreign National"),
+            ("Florida / Jumbo", "Florida / Jumbo"),
+            ("Florida / Self-employed", "Florida / Self-employed"),
+            ("Mortgage Second Opinion", "Mortgage Second Opinion"),
+            ("Florida / borrower@example.com", "Other Mortgage Inquiry"),
+            ("Florida / Not on the allowlist", "Other Mortgage Inquiry"),
+        ]
+        fixture = "\\n".join(
+            "window.dataLayer.push({event:'wccm_lead_submit',lead_event_id:'test_%s',form_name:'dscr-lead',program_interest:%s}); scan();" % (idx, repr(name))
+            for idx, (name, _) in enumerate(cases)
+        )
+        completed = subprocess.run(
+            ["node", "-e", harness + script + "\\n" + fixture + "\\nconsole.log(JSON.stringify(hits));"],
+            text=True, capture_output=True, check=False
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        import json
+        self.assertEqual(json.loads(completed.stdout), [expected for _, expected in cases])
+
     def test_accepted_lead_context_is_safe_consistent_and_idempotent(self):
         for name in ("contact.html", "index.html", "bank-statement-loans.html", "dscr-loans.html"):
             with self.subTest(page=name), TemporaryDirectory() as directory:
