@@ -39,12 +39,12 @@ var setInterval = function(fn) { scan = fn; };
             ("Florida / borrower@example.com", "Other Mortgage Inquiry"),
             ("Florida / Not on the allowlist", "Other Mortgage Inquiry"),
         ]
-        fixture = "\\n".join(
+        fixture = "\n".join(
             "window.dataLayer.push({event:'wccm_lead_submit',lead_event_id:'test_%s',form_name:'dscr-lead',program_interest:%s}); scan();" % (idx, repr(name))
             for idx, (name, _) in enumerate(cases)
         )
         completed = subprocess.run(
-            ["node", "-e", harness + script + "\\n" + fixture + "\\nconsole.log(JSON.stringify(hits));"],
+            ["node", "-e", harness + script + "\n" + fixture + "\nconsole.log(JSON.stringify(hits));"],
             text=True, capture_output=True, check=False
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
