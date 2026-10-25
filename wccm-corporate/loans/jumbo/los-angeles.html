@@ -44,7 +44,13 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
           'Condo','Foreign National','Mortgage Second Opinion'
         ];
         var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
-        var safeProgram=knownPrograms.indexOf(rawProgram)>=0?rawProgram:'Other Mortgage Inquiry';
+        /* The Florida lead funnel prefixes otherwise approved mortgage categories.
+           Retain that market context while still rejecting arbitrary or personal text. */
+        var floridaPrefix='Florida / ';
+        var isFlorida=rawProgram.indexOf(floridaPrefix)===0;
+        var baseProgram=isFlorida?rawProgram.slice(floridaPrefix.length):rawProgram;
+        var safeProgram=knownPrograms.indexOf(baseProgram)>=0?
+          (isFlorida?floridaPrefix:'')+baseProgram:'Other Mortgage Inquiry';
         var rawForm=typeof item.form_name==='string'?item.form_name:'';
         var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
         var rawPath=window.location.pathname||'/';
