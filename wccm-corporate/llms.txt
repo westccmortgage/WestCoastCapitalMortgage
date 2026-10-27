@@ -2,7 +2,7 @@
 
 > Independent mortgage brokerage serving homebuyers, homeowners, and real estate investors in California, Florida, and Texas. We shop wholesale lenders and compare real options for the borrower instead of quoting off a single rate sheet.
 
-West Coast Capital Mortgage Inc. is a licensed brokerage led by Anatoliy Kanevsky, a mortgage and real estate broker based in the Los Angeles area and working across the markets below since 2004. We place conventional, jumbo, FHA, VA, and the full range of non-QM programs (DSCR, bank-statement, foreign-national, investment-property) for both purchases and refinances, and we handle the loan side and, where applicable, the real estate side of a transaction.
+West Coast Capital Mortgage Inc. is a mortgage brokerage led by Anatoliy Kanevsky, a mortgage professional based in the Los Angeles area. This is the company's mortgage-financing website, not a property-listing or real estate services directory. Borrowers can request a professional review of purchase, refinance, conventional, jumbo, FHA, VA, Non-QM, DSCR, bank-statement, foreign-national, and investment-property mortgage scenarios. Program availability and eligibility depend on lender and underwriting review.
 
 - Primary markets: California, Florida, Texas
 - Company NMLS #2817729 · CA DRE Corporation License #02440065
@@ -33,6 +33,17 @@ West Coast Capital Mortgage Inc. is a licensed brokerage led by Anatoliy Kanevsk
 - [California](https://westcoastcapitalmortgage.com/california-mortgage-locations): Statewide, with deep coverage of Greater Los Angeles and the South Bay.
 - [Florida](https://westcoastcapitalmortgage.com/florida): Jumbo, condo, DSCR, and foreign-national financing.
 - [Texas](https://westcoastcapitalmortgage.com/texas): Purchase and refinance financing for Texas borrowers.
+
+## High-intent California and Florida mortgage reviews
+- [Mortgage denied or delayed — second opinion](https://westcoastcapitalmortgage.com/mortgage-second-opinion): Review an earlier underwriting denial, stalled closing, or complex borrower/property concern; no approval is promised.
+- [Florida jumbo mortgage guide](https://westcoastcapitalmortgage.com/florida-jumbo-loans): Florida county loan limits and higher-balance purchase or refinance scenarios.
+- [Florida self-employed and bank-statement loans](https://westcoastcapitalmortgage.com/florida-bank-statement-loans): Alternative income documentation for eligible Florida borrowers.
+- [Florida DSCR investor loans](https://westcoastcapitalmortgage.com/florida-dscr-loans): Rental-property financing and debt-service coverage review.
+- [Florida condo financing](https://westcoastcapitalmortgage.com/florida-condo-financing): Condominium-project eligibility, association documentation and borrower review.
+- [Miami investor and foreign-national mortgage review](https://westcoastcapitalmortgage.com/miami-dscr-foreign-national-loans): South Florida international-investor financing scenarios.
+- [Boca Raton and Palm Beach County mortgage guide](https://westcoastcapitalmortgage.com/boca-raton-mortgage-loans): Jumbo, bank-statement and DSCR considerations for Palm Beach County.
+- [Fort Lauderdale and Broward County mortgage guide](https://westcoastcapitalmortgage.com/fort-lauderdale-broward-mortgage): High-intent purchase, refinance, investor and second-opinion options for Broward.
+- [California mortgage locations](https://westcoastcapitalmortgage.com/california-mortgage-locations): Southern California county and local mortgage guides.
 
 ## Get started
 - [Apply](https://westcoastcapitalmortgage.com/apply): Start a loan application.
