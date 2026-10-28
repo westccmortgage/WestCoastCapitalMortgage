@@ -59,6 +59,19 @@ class VisibilityTest(unittest.TestCase):
         for name in ('index.html','contact.html',SLUG+'.html','ai-mortgage-review.html'):
             self.assertTrue(schemas(name))
 
+    def test_florida_guides_are_visible_and_high_intent_paths_are_local(self):
+        css = (ROOT / 'styles.css').read_text()
+        page = (ROOT / 'florida.html').read_text()
+        # The homepage keeps its short funnel, but the Florida page must show
+        # its county guides, lending scenarios, FAQ and consumer resources.
+        self.assertIn('<body class="florida-mortgage-page">', page)
+        self.assertIn('body:has(.mortgage-compact-hero):not(.florida-mortgage-page) > section', css)
+        self.assertNotIn('body:has(.mortgage-compact-hero) > section:not', css)
+        self.assertIn('href="florida-dscr-loans.html"', page)
+        self.assertIn('href="/mortgage-second-opinion"', page)
+        self.assertIn('South Florida mortgage guides', page)
+        self.assertIn('Florida regulatory information', page)
+
     def test_normalizer_is_idempotent_and_preserves_tracking(self):
         fixture = '<a href="/existing-path">Ask Wallet AI</a><p>AI Strategy Advisor</p><script>window.dataLayer.push({event:"wccm_lead_submit"});</script>'
         with TemporaryDirectory() as directory:
