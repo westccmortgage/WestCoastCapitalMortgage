@@ -22,6 +22,7 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 
 def main() -> None:
     text = PAGE.read_text(encoding="utf-8")
+    text = text.replace('<a href="rates.html">Sample Rates</a>', '<a href="rates.html">Mortgage Rates</a>')
 
     replacements = [
         (
@@ -81,7 +82,7 @@ def main() -> None:
         ),
         (
             '<a href="rates.html">Today\'s Rates</a>',
-            '<a href="rates.html">Sample Rates</a>',
+            '<a href="rates.html">Mortgage Rates</a>',
             "rates navigation label",
         ),
     ]

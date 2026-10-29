@@ -8,11 +8,15 @@
   /* Chinese overlay (Simplified). Strings not listed here fall back to English
      under the ZH setting, so coverage can grow over time without risk. */
   var ZH = {
-    "Sample Rates": "示例利率",
-    "Illustrative Examples": "说明性示例",
-    "Illustrative examples only. No live quotes or rate locks.": "仅供说明的示例，并非实时报价或利率锁定。",
-    "Illustrative mortgage rate examples only. These are not live quotes, rate locks, or a commitment to lend.": "房贷利率示例仅供说明，并非实时报价、利率锁定或贷款承诺。",
-    "Sample rates are illustrative only.": "示例利率仅供说明。",
+    "Mortgage Rates": "房贷利率",
+    "Mortgage rates": "房贷利率",
+    "Latest Published Rates": "最新公布利率",
+    "Published lender rates, updated manually. Rates may change between updates.": "已公布的贷款机构利率，由人工更新。两次更新之间利率可能发生变化。",
+    "Published lender rates, updated manually. See the effective date below; rates may change between updates.": "已公布的贷款机构利率，由人工更新。请查看下方生效日期；两次更新之间利率可能发生变化。",
+    "Rates are updated manually.": "利率由人工更新。",
+    "Lender pricing for well-qualified borrowers as of the date shown. Your actual rate depends on your full profile.": "截至所示日期，适用于资质良好借款人的贷款机构利率。您的实际利率取决于您的完整情况。",
+    "We'll review lender pricing and prepare a personalized quote for your situation.": "我们将查看贷款机构定价并根据您的情况提供个性化报价。",
+
     "Request a personalized quote →": "申请个性化报价 →",
     /* Navigation */
     "Buy a Home": "购房", "Home Search": "房源搜索", "Realty": "房地产", "Refinance": "再融资",
@@ -73,11 +77,14 @@
   var NKZH = null;
 
   var DICT = {
-    "Sample Rates": ["Tasas de muestra", "Примерные ставки"],
-    "Illustrative Examples": ["Ejemplos ilustrativos", "Иллюстративные примеры"],
-    "Illustrative examples only. No live quotes or rate locks.": ["Solo ejemplos ilustrativos. No son cotizaciones en tiempo real ni fijaciones de tasa.", "Только иллюстративные примеры. Не текущие котировки и не фиксация ставки."],
-    "Illustrative mortgage rate examples only. These are not live quotes, rate locks, or a commitment to lend.": ["Solo ejemplos ilustrativos de tasas hipotecarias. No son cotizaciones en tiempo real, fijaciones de tasa ni un compromiso de préstamo.", "Только иллюстративные примеры ипотечных ставок. Это не текущие котировки, не фиксация ставки и не обязательство о кредитовании."],
-    "Sample rates are illustrative only.": ["Las tasas de muestra son solo ilustrativas.", "Примерные ставки приведены только для иллюстрации."],
+    "Mortgage rates": ["Tasas hipotecarias", "Ипотечные ставки"],
+    "Latest Published Rates": ["Últimas tasas publicadas", "Последние опубликованные ставки"],
+    "Published lender rates, updated manually. Rates may change between updates.": ["Tasas publicadas de prestamistas, actualizadas manualmente. Las tasas pueden cambiar entre actualizaciones.", "Опубликованные ставки кредиторов обновляются вручную. Между обновлениями ставки могут измениться."],
+    "Published lender rates, updated manually. See the effective date below; rates may change between updates.": ["Tasas publicadas de prestamistas, actualizadas manualmente. Consulte la fecha de vigencia a continuación; las tasas pueden cambiar entre actualizaciones.", "Опубликованные ставки кредиторов обновляются вручную. Дата действия указана ниже; между обновлениями ставки могут измениться."],
+    "Rates are updated manually.": ["Las tasas se actualizan manualmente.", "Ставки обновляются вручную."],
+    "Lender pricing for well-qualified borrowers as of the date shown. Your actual rate depends on your full profile.": ["Precios de prestamistas para prestatarios bien calificados a la fecha indicada. Su tasa real depende de su perfil completo.", "Ставки кредиторов для заёмщиков с высоким уровнем кредитоспособности на указанную дату. Ваша индивидуальная ставка зависит от полного профиля."],
+    "We'll review lender pricing and prepare a personalized quote for your situation.": ["Revisaremos los precios de los prestamistas y prepararemos una cotización personalizada para su situación.", "Мы проверим условия кредиторов и подготовим индивидуальный расчёт для вашей ситуации."],
+
     "Request a personalized quote →": ["Solicite una cotización personalizada →", "Запросить индивидуальный расчёт →"],
     /* ===== Top bar + navigation ===== */
     "Mortgage": ["Hipotecas", "Ипотека"],

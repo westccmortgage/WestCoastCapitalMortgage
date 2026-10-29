@@ -107,8 +107,8 @@ def replace_domain(path: Path) -> int:
         "https://westccrealty.com", "https://westcoastcapitalrealty.com"
     )
     updated, nav_count = re.subn(
-        r'(<a\b[^>]*href="/?rates(?:\.html)?"[^>]*>)Today(?:\x27|’|&rsquo;|&#39;)s Rates(</a>)',
-        r'\1Sample Rates\2',
+        r'(<a\b[^>]*href="/?rates(?:\.html)?"[^>]*>)(?:Today(?:\x27|’|&rsquo;|&#39;)s Rates|Sample Rates)(</a>)',
+        r'\1Mortgage Rates\2',
         updated,
     )
     count += nav_count
