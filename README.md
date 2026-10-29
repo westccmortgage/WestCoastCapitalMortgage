@@ -8,7 +8,7 @@ step, no dependencies.
 - **`wccm-corporate/`** — the deployable West Coast static site. **This is the Netlify publish directory.**
   - `index.html`, `rates.html`, loan pages, `404.html`, `_redirects`, `assets/`, `styles.css`, `script.js`, `i18n.js`
   - `rate-tools.html` — internal, unlinked tool: converts the lender rate sheet (`.xlsx`) to `assets/rates.json` in the browser.
-  - `assets/rates.json` — the small file that powers the public "Today's Rates" board.
+  - `assets/rates.json` — the small file that powers the public illustrative sample-rate board (a saved snapshot, not live pricing).
 - **`suncoast-corporate/`** — the deployable **Suncoast Capital Mortgage** static site (Florida‑facing brand,
   operated through West Coast Capital Mortgage). Same page structure, navy + gold palette, Suncoast
   homepage/About. Deploy as its own Netlify site (publish directory `suncoast-corporate`).
@@ -24,9 +24,9 @@ step, no dependencies.
 - Build command: *(none)*
 - Publish directory: `wccm-corporate` (West Coast). For Suncoast, create a second Netlify site with publish directory `suncoast-corporate`.
 
-## Updating today's rates
+## Updating illustrative sample rates
 1. Open `/rate-tools.html`, drop the lender `.xlsx`, set comp points, **Download `rates.json`**.
 2. Upload it to `wccm-corporate/assets/rates.json` (replace) and commit to `main`.
-3. Netlify auto‑deploys; `/rates` and the homepage snapshot update.
+3. Netlify auto‑deploys; `/rates` and the homepage snapshot update. These examples are educational only; they are not live quotes or rate locks.
 
 West Coast Capital Mortgage · NMLS #2817729 · Equal Housing Opportunity.

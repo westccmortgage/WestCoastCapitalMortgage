@@ -8,6 +8,12 @@
   /* Chinese overlay (Simplified). Strings not listed here fall back to English
      under the ZH setting, so coverage can grow over time without risk. */
   var ZH = {
+    "Sample Rates": "示例利率",
+    "Illustrative Examples": "说明性示例",
+    "Illustrative examples only. No live quotes or rate locks.": "仅供说明的示例，并非实时报价或利率锁定。",
+    "Illustrative mortgage rate examples only. These are not live quotes, rate locks, or a commitment to lend.": "房贷利率示例仅供说明，并非实时报价、利率锁定或贷款承诺。",
+    "Sample rates are illustrative only.": "示例利率仅供说明。",
+    "Request a personalized quote →": "申请个性化报价 →",
     /* Navigation */
     "Buy a Home": "购房", "Home Search": "房源搜索", "Realty": "房地产", "Refinance": "再融资",
     "Today's Rates": "今日利率", "Loans": "贷款", "Resources": "资源中心",
@@ -67,6 +73,12 @@
   var NKZH = null;
 
   var DICT = {
+    "Sample Rates": ["Tasas de muestra", "Примерные ставки"],
+    "Illustrative Examples": ["Ejemplos ilustrativos", "Иллюстративные примеры"],
+    "Illustrative examples only. No live quotes or rate locks.": ["Solo ejemplos ilustrativos. No son cotizaciones en tiempo real ni fijaciones de tasa.", "Только иллюстративные примеры. Не текущие котировки и не фиксация ставки."],
+    "Illustrative mortgage rate examples only. These are not live quotes, rate locks, or a commitment to lend.": ["Solo ejemplos ilustrativos de tasas hipotecarias. No son cotizaciones en tiempo real, fijaciones de tasa ni un compromiso de préstamo.", "Только иллюстративные примеры ипотечных ставок. Это не текущие котировки, не фиксация ставки и не обязательство о кредитовании."],
+    "Sample rates are illustrative only.": ["Las tasas de muestra son solo ilustrativas.", "Примерные ставки приведены только для иллюстрации."],
+    "Request a personalized quote →": ["Solicite una cotización personalizada →", "Запросить индивидуальный расчёт →"],
     /* ===== Top bar + navigation ===== */
     "Mortgage": ["Hipotecas", "Ипотека"],
     "Realty": ["Bienes Raíces", "Недвижимость"],
