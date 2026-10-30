@@ -479,11 +479,11 @@ JS = r"""/* West Coast Capital Mortgage — site scripts (no dependencies) */
     calc();
   }
 
-  /* Sample rate boards (homepage snapshot + Today's Rates page) — read assets/rates.json */
+  /* Published lender rates, updated manually from assets/rates.json. */
   document.querySelectorAll('.rate-board[data-src]').forEach(function(rb){
     var lim=parseInt(rb.getAttribute('data-limit')||'0',10);
     var more=rb.getAttribute('data-more');
-    fetch(rb.getAttribute('data-src'),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    fetch(rb.getAttribute('data-src'),{cache:'no-store'}).then(function(r){if(!r.ok) throw new Error('Published rates unavailable');return r.json();}).then(function(d){
       if(!d||!d.products||!d.products.length){throw 0;}
       var list=(lim>0)?d.products.slice(0,lim):d.products;
       var rows=list.map(function(p){
@@ -491,11 +491,11 @@ JS = r"""/* West Coast Capital Mortgage — site scripts (no dependencies) */
         return '<div class="rate-row"><span class="rate-name">'+p.name+'</span><span class="rate-val">'+rate+'</span></div>';
       }).join('');
       var html='<div class="rate-table">'+rows+'</div>';
-      if(d.effective) html+='<p class="rate-effective">Effective '+d.effective+'</p>';
+      if(d.effective) html+='<p class="rate-effective">Rates effective as of: '+d.effective+'</p>';
       if(more) html+='<p style="margin-top:10px"><a href="'+more+'" style="color:var(--blue);font-weight:600">See all rates →</a></p>';
       rb.innerHTML=html;
     }).catch(function(){
-      rb.innerHTML='<p class="muted">Current sample rates are updated regularly. <a href="contact.html" style="color:var(--blue);font-weight:600">Request today’s rate quote →</a></p>';
+      rb.innerHTML='<p class="muted">Published rates are temporarily unavailable. <a href="contact.html" style="color:var(--blue);font-weight:600">Request a personalized quote →</a></p>';
     });
   });
 
@@ -510,7 +510,7 @@ JS = r"""/* West Coast Capital Mortgage — site scripts (no dependencies) */
 NAV_ITEMS = [
     ("buy.html", "Buy a Home", "buy"),
     ("refinance.html", "Refinance", "refinance"),
-    ("rates.html", "Today's Rates", "rates"),
+    ("rates.html", "Mortgage Rates", "rates"),
     ("loans.html", "Loans", "loans"),
     ("resources.html", "Resources", "resources"),
     ("about.html", "About Us", "about"),
@@ -793,11 +793,11 @@ def _home():
 <section class="bg-light"><div class="wrap">
   <div class="rate-snap">
     <div>
-      <span class="eyebrow" style="color:var(--blue)">Sample Mortgage Rates</span>
-      <h2 style="margin:0 0 .3em">Sample mortgage rates</h2>
-      <p class="muted" style="margin:0">Estimates for well-qualified borrowers. <a href="rates.html" style="color:var(--blue);font-weight:600">See all rates &rarr;</a></p>
+      <span class="eyebrow" style="color:var(--blue)">Mortgage Rates</span>
+      <h2 style="margin:0 0 .3em">Mortgage rates</h2>
+      <p class="muted" style="margin:0">Published lender rates, updated manually. Rates may change between updates. <a href="rates.html" style="color:var(--blue);font-weight:600">See all rates &rarr;</a></p>
     </div>
-    <div class="rate-board" data-src="assets/rates.json" data-limit="5"><p class="muted">Loading current rates&hellip;</p></div>
+    <div class="rate-board" data-src="assets/rates.json" data-limit="5"><p class="muted">Rates are updated manually. <a href="contact.html">Request a personalized quote &rarr;</a></p></div>
   </div>
 </div></section>
 
@@ -1228,18 +1228,18 @@ PAGES["calculators.html"] = dict(title="Mortgage Calculators", desc="Estimate yo
 
 # ---------------- Rates ----------------
 def _rates():
-    return page_hero("Sample Mortgage Rates", "Sample rates from our latest pricing, updated regularly &mdash; estimates for well-qualified borrowers, not a quote or commitment to lend.", "Sample Mortgage Rates") + f"""
+    return page_hero("Mortgage Rates", "Published lender rates, updated manually. See the effective date below; rates may change between updates.", "Mortgage Rates") + f"""
 <section><div class="wrap">
-  <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Today&rsquo;s Sample Rates</span><h2>Sample rates</h2>
-  <p class="lead">Illustrative best-case rates for well-qualified borrowers. Your actual rate depends on your full profile.</p></div>
-  <div class="rate-board" data-src="assets/rates.json"><p class="muted">Loading current rates&hellip;</p></div>
-  <p class="form-note">Sample rates are estimates for educational purposes only, based on a best-case borrower scenario (e.g., strong credit, low loan-to-value, owner-occupied). They are not a Loan Estimate, rate quote, rate lock, APR, or commitment to lend. Rates change daily and depend on your credit profile, loan program, occupancy, property type, loan amount, and other factors. Equal Housing Opportunity &middot; NMLS #{NMLS}.</p>
+  <div class="section-head"><span class="eyebrow" style="color:var(--blue)">Latest Published Rates</span><h2>Mortgage rates</h2>
+  <p class="lead">Lender pricing for well-qualified borrowers as of the date shown. Your actual rate depends on your full profile.</p></div>
+  <div class="rate-board" data-src="assets/rates.json"><p class="muted">Rates are updated manually. <a href="contact.html">Request a personalized quote &rarr;</a></p></div>
+  <p class="form-note">Published rates reflect lender pricing for well-qualified borrowers as of the date shown and are updated manually. Rates may change between updates. Your rate and eligibility depend on your credit profile, loan program, occupancy, property type, loan amount, and other factors. Published interest rates are not APRs, a personalized rate quote, a Loan Estimate, a rate lock, or a commitment to lend. Equal Housing Opportunity &middot; NMLS #{NMLS}.</p>
 </div></section>
 <section class="bg-light"><div class="wrap split">
   <div>
     <span class="eyebrow">Today&rsquo;s market</span>
     <h2>Request today&rsquo;s rate quote</h2>
-    <p class="lead">Mortgage rates change daily based on market conditions, loan program, credit profile, occupancy, property type, loan amount, and other factors. The sample rates above are a starting point &mdash; we&rsquo;ll prepare a personalized quote for your scenario.</p>
+    <p class="lead">Mortgage rates change daily based on market conditions, loan program, credit profile, occupancy, property type, loan amount, and other factors. We&rsquo;ll review current lender pricing and prepare a personalized quote for your scenario.</p>
     <div class="btn-row"><a class="btn btn-blue" href="contact.html">Request a Quote</a><a class="btn btn-outline" href="loan-officer.html">Talk to a Loan Officer</a></div>
   </div>
   <ul class="feature-list">
@@ -1259,9 +1259,9 @@ def _rates():
     {card("","Plan your timeline","Your time horizon affects which option costs less overall.","Talk to us","loan-officer.html")}
   </div>
 </div></section>
-{cta_band(h="Get a personalized rate quote",p="Sample rates are estimates &mdash; we&rsquo;ll build a real quote around your situation.",b1=("Request a Quote","contact.html","btn-blue"))}
+{cta_band(h="Get a personalized rate quote",p="We&rsquo;ll review lender pricing and prepare a personalized quote for your situation.",b1=("Request a Quote","contact.html","btn-blue"))}
 """
-PAGES["rates.html"] = dict(title="Today's Mortgage Rates", desc="Today's sample mortgage rates from West Coast Capital Mortgage — illustrative estimates for well-qualified borrowers across conventional, FHA, VA, USDA, jumbo, Non-QM, and DSCR. Not a quote or commitment to lend.", nav="rates", body=_rates())
+PAGES["rates.html"] = dict(title="Mortgage Rates", desc="Published mortgage rates from West Coast Capital Mortgage, updated manually. See the effective date and request a personalized quote.", nav="rates", body=_rates())
 
 # ---------------- Resources ----------------
 def _resources():

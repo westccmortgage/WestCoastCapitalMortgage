@@ -8,6 +8,7 @@ re-introduce the retired short domain.
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 OLD = "westccmortgage.com"
@@ -31,6 +32,12 @@ DOMAIN_RULES = [
 # accidentally place them after the catch-all or remove them as duplicates.
 CANONICAL_PATH_RULES = [
     "/florida-dscr-loans.html /florida-dscr-loans 301!",
+    "/california /california-mortgage-locations 301!",
+    "/california.html /california-mortgage-locations 301!",
+    "/programs /loans 301!",
+    "/programs.html /loans 301!",
+    "/realty https://westcoastcapitalrealty.com/ 301!",
+    "/realty.html https://westcoastcapitalrealty.com/ 301!",
 ]
 
 CONTACT_OLD_DESC = (
@@ -95,9 +102,18 @@ def replace_domain(path: Path) -> int:
         text = path.read_text(encoding="utf-8")
     except (UnicodeDecodeError, OSError):
         return 0
-    count = text.count(OLD)
-    if count:
-        path.write_text(text.replace(OLD, NEW), encoding="utf-8")
+    count = text.count(OLD) + text.count("https://westccrealty.com")
+    updated = text.replace(OLD, NEW).replace(
+        "https://westccrealty.com", "https://westcoastcapitalrealty.com"
+    )
+    updated, nav_count = re.subn(
+        r'(<a\b[^>]*href="/?rates(?:\.html)?"[^>]*>)(?:Today(?:\x27|’|&rsquo;|&#39;)s Rates|Sample Rates)(</a>)',
+        r'\1Mortgage Rates\2',
+        updated,
+    )
+    count += nav_count
+    if updated != text:
+        path.write_text(updated, encoding="utf-8")
     return count
 
 

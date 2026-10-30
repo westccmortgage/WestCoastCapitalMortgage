@@ -53,6 +53,12 @@ https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat
 
 # Canonical path redirects
 /florida-dscr-loans.html /florida-dscr-loans 301!
+/california /california-mortgage-locations 301!
+/california.html /california-mortgage-locations 301!
+/programs /loans 301!
+/programs.html /loans 301!
+/realty https://westcoastcapitalrealty.com/ 301!
+/realty.html https://westcoastcapitalrealty.com/ 301!
 
 # Retired URLs -> current consolidated pages (first-match order preserved)
 /loans/jumbo/manhattan-beach /mortgage/manhattan-beach 301!
