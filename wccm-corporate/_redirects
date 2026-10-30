@@ -509,5 +509,11 @@ https://westccmortgage.netlify.app/* https://westcoastcapitalmortgage.com/:splat
 /ai-mortgage-review /apply 302!
 /ai-mortgage-review.html /apply 302!
 
+# Restore natural-language mortgage discovery paths; route to canonical, existing WCCM pages
+/california /california-mortgage-locations 301!
+/california.html /california-mortgage-locations 301!
+/programs /loans 301!
+/programs.html /loans 301!
+
 # Catch-all must remain last
 /* /404.html 404
