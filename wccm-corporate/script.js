@@ -482,7 +482,7 @@
      tools/install_wccm_ads_readiness.py writes into the static HTML, because
      Netlify stores only the fields of a registered form. */
   var CITY_FIELD={name:'property_area',label:'Property city / county',required:'Enter the property city or county.',autocomplete:'address-level2'};
-  var AMOUNT_FIELD={name:'loan_amount',label:'Estimated loan amount ($)',type:'number',min:'0',step:'1000'};
+  var AMOUNT_FIELD={name:'loan_amount',label:'Estimated loan amount ($)',type:'number',min:'0',step:'1000',hint:'Enter the full amount in dollars (e.g., 2000000 for $2 million).'};
   var CONTACT_FIELDS=[
     {name:'full_name',label:'Full name',required:'Enter your full name.',autocomplete:'name',minlength:'2'},
     {name:'email',label:'Email',type:'email',required:'Enter your email address.',autocomplete:'email'},
@@ -581,7 +581,7 @@
      never loses the lead. Every field here must be declared in the schema twins
      written by tools/install_wccm_ads_readiness.py. */
   var QUICK_CITY={name:'property_area',label:'City or county',autocomplete:'address-level2'};
-  var QUICK_AMOUNT={name:'loan_amount',label:'Loan amount ($)',type:'number',inputmode:'numeric',min:'0',step:'1000'};
+  var QUICK_AMOUNT={name:'loan_amount',label:'Loan amount ($)',type:'number',inputmode:'numeric',min:'0',step:'1000',hint:'Enter the full amount in dollars (e.g., 2000000 for $2 million).'};
   var QUICK_YEARS={name:'self_employed_years',label:'Years self-employed',options:['Less than 1 year','1-2 years','2-5 years','5+ years']};
   var QUICK_EMAIL={name:'email',label:'Email',type:'email',autocomplete:'email'};
   var QUICK_LEAD_FORMS={
@@ -682,6 +682,14 @@
     }
     wrap.appendChild(label);
     wrap.appendChild(control);
+    if(spec.hint){
+      var hint=document.createElement('span');
+      hint.className='form-note';
+      hint.id=id+'-hint';
+      hint.textContent=spec.hint;
+      control.setAttribute('aria-describedby',hint.id);
+      wrap.appendChild(hint);
+    }
     return wrap;
   }
 
