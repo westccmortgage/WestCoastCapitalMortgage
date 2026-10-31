@@ -72,6 +72,11 @@ class VisibilityTest(unittest.TestCase):
         self.assertIn('South Florida mortgage guides', page)
         self.assertIn('Florida regulatory information', page)
 
+    def test_high_intent_forms_explain_full_dollar_amount(self):
+        script = (ROOT / 'script.js').read_text()
+        self.assertEqual(script.count("hint:'Enter the full amount in dollars (e.g., 2000000 for $2 million).'"), 2)
+        self.assertIn("control.setAttribute('aria-describedby',hint.id);", script)
+
     def test_normalizer_is_idempotent_and_preserves_tracking(self):
         fixture = '<a href="/existing-path">Ask Wallet AI</a><p>AI Strategy Advisor</p><script>window.dataLayer.push({event:"wccm_lead_submit"});</script>'
         with TemporaryDirectory() as directory:
