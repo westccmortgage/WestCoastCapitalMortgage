@@ -34,6 +34,13 @@ class VisibilityTest(unittest.TestCase):
         self.assertEqual(person['@type'], 'Person')
         self.assertEqual({i['value'] for i in person['identifier']}, {'2775380', '01385024'})
 
+    def test_shared_mortgage_company_entity_graph(self):
+        self.assertEqual(schemas('about.html')[0]['@id'], ENTITY)
+        self.assertEqual(schemas('florida.html')[0]['about']['provider']['@id'], ENTITY)
+        self.assertEqual(schemas('mortgage-second-opinion.html')[0]['provider']['@id'], ENTITY)
+        self.assertEqual(schemas('index.html')[0]['@id'], ENTITY)
+        self.assertEqual(schemas('contact.html')[0]['@id'], ENTITY)
+
     def test_broward_is_linked_and_indexable(self):
         html = (ROOT / (SLUG + '.html')).read_text()
         self.assertIn('href="' + DOMAIN + '/' + SLUG + '"', html)
