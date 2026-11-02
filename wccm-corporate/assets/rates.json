@@ -1,11 +1,11 @@
 {
-  "effective": "Oct 26, 2026 · 6:53 AM PT",
+  "effective": "Nov 2, 2026 · 6:35 AM PT",
   "source": "Lender wholesale base pricing; best-case borrower profile.",
   "comp_points": 0,
   "products": [
     {
       "name": "Conventional 30-Year Fixed",
-      "rate": 6.75
+      "rate": 6.624
     },
     {
       "name": "Conventional 15-Year Fixed",
@@ -25,7 +25,7 @@
     },
     {
       "name": "Jumbo 30-Year Fixed",
-      "rate": 6.625
+      "rate": 6.75
     },
     {
       "name": "Non-QM (A+) 30-Year Fixed",
