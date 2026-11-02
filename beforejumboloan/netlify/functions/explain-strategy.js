@@ -40,9 +40,63 @@ Hard rules:
 - 140-190 words. Short paragraphs or tight bullets. End by inviting them to send the scenario for review by a licensed mortgage professional.
 - Respond with ONLY the explanation. No headers, no restating the JSON, no preamble.`;
 
+// The endpoint is public and spends Anthropic credit, so it only takes calls from our own
+// pages, a bounded body, and a few calls per visitor per warm instance (best effort).
+const MAX_BODY_BYTES = 16 * 1024;
+const RATE_WINDOW_MS = 60 * 1000;
+const RATE_MAX_CALLS = 6;
+const recentCalls = new Map();
+
+function sameSiteOrigin(event) {
+  const headers = event.headers || {};
+  const origin = headers.origin || headers.Origin;
+  const host = headers.host || headers.Host;
+  if (!origin || !host) return false;
+  try {
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
+function overLimit(event) {
+  const headers = event.headers || {};
+  const ip = headers['x-nf-client-connection-ip'] || headers['client-ip'] || 'unknown';
+  const now = Date.now();
+  const calls = (recentCalls.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  calls.push(now);
+  recentCalls.set(ip, calls);
+  if (recentCalls.size > 5000) recentCalls.clear();
+  return calls.length > RATE_MAX_CALLS;
+}
+
+// Keep only scenario-shaped data: numbers, booleans and short strings, shallow. Long free text
+// is where instructions to the model would hide, and the studio never sends any.
+function scenarioOnly(value, depth = 0) {
+  if (value === null || typeof value === 'number' || typeof value === 'boolean') return value;
+  if (typeof value === 'string') return value.slice(0, 300);
+  if (depth >= 3 || typeof value !== 'object') return undefined;
+  if (Array.isArray(value)) return value.slice(0, 12).map((v) => scenarioOnly(v, depth + 1));
+  const out = {};
+  for (const [key, v] of Object.entries(value).slice(0, 60)) {
+    const clean = scenarioOnly(v, depth + 1);
+    if (clean !== undefined) out[key.slice(0, 60)] = clean;
+  }
+  return out;
+}
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return json(405, { ok: false, message: 'Method not allowed' });
+  }
+  if (!sameSiteOrigin(event)) {
+    return json(403, { ok: false, message: 'Forbidden' });
+  }
+  if ((event.body || '').length > MAX_BODY_BYTES) {
+    return json(413, { ok: false, message: 'Scenario is too large.' });
+  }
+  if (overLimit(event)) {
+    return json(429, { ok: false, message: 'The explainer is busy. Try again in a moment.' });
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -55,9 +109,10 @@ export const handler = async (event) => {
   } catch {
     return json(400, { ok: false, message: 'Invalid JSON' });
   }
-  if (!context || typeof context !== 'object') {
+  if (!context || typeof context !== 'object' || Array.isArray(context)) {
     return json(422, { ok: false, message: 'Missing scenario context.' });
   }
+  context = scenarioOnly(context);
 
   const client = new Anthropic(); // reads ANTHROPIC_API_KEY from env
 

@@ -230,7 +230,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   var DATA=null, EFF="", CHOSEN=30;
   var statusEl=document.getElementById('status');
-  function status(msg,err){statusEl.innerHTML=msg; statusEl.className="rt-status"+(err?" rt-err":"");}
+  function status(msg,err){statusEl.textContent=msg; statusEl.className="rt-status"+(err?" rt-err":"");}
 
   // The workbook stores a wrong dimension for the Price tab, so SheetJS reads only
   // the header row. Recompute the real used range from the actual cell addresses.
