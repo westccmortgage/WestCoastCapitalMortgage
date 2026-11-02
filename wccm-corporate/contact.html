@@ -291,10 +291,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="i18n.js?v=20261001-highlights"></script>
 <script>
 (function(){
-  // Only the Second Opinion entry path receives extra intake context.
-  // Do not copy borrower details into URLs, cookies, or analytics events.
+  // Allow only known inquiry types. Do not copy borrower details into URLs,
+  // cookies, or analytics events; preserve the existing Netlify contact fields.
   var scenario='';
   try{scenario=new URLSearchParams(window.location.search).get('scenario')||'';}catch(e){}
+  // These entry tags are fixed, not borrower-supplied data.
+  var intake={
+    'florida-condo':{
+      program:'Florida / Condo',
+      subject:'Florida Condo Financing Review',
+      prompt:'Which Florida city or county is the condo in, and what is the timeline? Please do not enter account or identification numbers.',
+      button:'Request Florida Condo Review'
+    },
+    'foreign-national':{
+      program:'Foreign National',
+      subject:'Foreign National Mortgage Review',
+      prompt:'Is the property in California or Florida? Share the city and purchase timeline. Do not enter passport, bank account or identification numbers.',
+      button:'Request Foreign-National Review'
+    }
+  };
+  if(Object.prototype.hasOwnProperty.call(intake,scenario)){
+    var context=intake[scenario];
+    var shortForm=document.querySelector('form[name="contact"]');
+    if(!shortForm)return;
+    var programField=shortForm.querySelector('[name="program_interest"]');
+    if(programField)programField.value=context.program;
+    var subjectField=shortForm.querySelector('[name="subject"]');
+    if(subjectField&&!subjectField.value)subjectField.value=context.subject;
+    var messageField=shortForm.querySelector('[name="message"]');
+    if(messageField)messageField.placeholder=context.prompt;
+    var sendButton=shortForm.querySelector('button[type="submit"]');
+    if(sendButton)sendButton.textContent=context.button;
+    return;
+  }
   if(scenario!=='second-opinion')return;
   var form=document.querySelector('form[name="contact"]');
   if(!form)return;
