@@ -79,6 +79,20 @@ class VisibilityTest(unittest.TestCase):
         self.assertIn('South Florida mortgage guides', page)
         self.assertIn('Florida regulatory information', page)
 
+    def test_florida_dscr_review_paths_are_fast_and_state_specific(self):
+        florida = (ROOT / 'florida-dscr-loans.html').read_text()
+        dscr = (ROOT / 'dscr-loans.html').read_text()
+        # The Florida page should offer the established callback form before
+        # requiring a full 1003. Retain the full application as an option.
+        self.assertEqual(florida.count('href="/dscr-loans?state=FL">Request a Florida DSCR Call</a>'), 2)
+        self.assertIn('href="https://2817729.my1003app.com/2775380/register">Full Loan Application</a>', florida)
+        # Both investor guides should route denied/delayed scenarios to
+        # the existing low-pressure second-opinion intake.
+        self.assertIn('href="mortgage-second-opinion.html">Request a Mortgage Second Opinion</a>', florida)
+        self.assertIn('href="mortgage-second-opinion.html">DSCR Denied? Request a Second Opinion</a>', dscr)
+        self.assertIn('not guarantee approval or a closing date', florida)
+        self.assertIn('not a commitment to lend', dscr)
+
     def test_high_intent_forms_explain_full_dollar_amount(self):
         script = (ROOT / 'script.js').read_text()
         self.assertEqual(script.count("hint:'Enter the full amount in dollars (e.g., 2000000 for $2 million).'"), 2)
