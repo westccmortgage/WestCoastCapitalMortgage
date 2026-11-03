@@ -21,8 +21,8 @@ GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 # GA4 shares the same gtag.js loader as Ads (one library, two config calls).
 GA4_ID = "G-GB57YWMKBH"
-ASSET_VERSION = "20261001-highlights"
-BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
+ASSET_VERSION = "20261102-cls"
+BANK_STATEMENT_ASSET_VERSION = "20261102-bank-cls"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 # OpenAI Ads Manager > Conversions > data source (pixel) ID. Empty = not installed.
@@ -60,6 +60,18 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
     var dl=window.dataLayer||[];
     while(window.__wccmAdsLeadCursor<dl.length){{
       var item=dl[window.__wccmAdsLeadCursor++];
+      /* Tap-to-call from the site: forward to GA4 as phone_click so it can be
+         marked a key event and imported into Google Ads as a call conversion. */
+      if(item&&item.event==='wccm_phone_click'&&!item.__wccmPhoneSent){{
+        item.__wccmPhoneSent=true;
+        var phonePath=window.location.pathname||'/';
+        var safePhonePath=(phonePath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(phonePath))?phonePath:'/';
+        window.gtag('event','phone_click',{{
+          'send_to':'{GA4_ID}',
+          'page_path':safePhonePath
+        }});
+        continue;
+      }}
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){{
         item.__wccmAdsLeadSent=true;
         var leadEventId=item.lead_event_id||'';

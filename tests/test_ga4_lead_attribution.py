@@ -51,6 +51,33 @@ var setInterval = function(fn) { scan = fn; };
         import json
         self.assertEqual(json.loads(completed.stdout), [expected for _, expected in cases])
 
+    def test_phone_click_reaches_ga4_once_without_ads_conversion(self):
+        """Tap-to-call is sent to GA4 once and never fires the lead conversion."""
+        ads_block = gtm.GOOGLE_ADS_HEAD_SNIPPET.split(gtm.ADS_BLOCK_START, 1)[1].split(gtm.ADS_BLOCK_END, 1)[0]
+        script = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", ads_block, re.S)[0]
+        harness = r"""
+var hits = [];
+var scan = null;
+var window = {
+  location: { pathname: '/dscr-loans' },
+  dataLayer: [],
+  gtag: function(kind, event, payload) {
+    if (kind === 'event') hits.push([event, payload.send_to, payload.page_path || null]);
+  }
+};
+var setInterval = function(fn) { scan = fn; };
+"""
+        fixture = (
+            "window.dataLayer.push({event:'wccm_phone_click',page_path:'/dscr-loans',phone_number:'3106541577'}); scan(); scan();"
+        )
+        completed = subprocess.run(
+            ["node", "-e", harness + script + "\n" + fixture + "\nconsole.log(JSON.stringify(hits));"],
+            text=True, capture_output=True, check=False
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        import json
+        self.assertEqual(json.loads(completed.stdout), [["phone_click", gtm.GA4_ID, "/dscr-loans"]])
+
     def test_accepted_lead_context_is_safe_consistent_and_idempotent(self):
         for name in ("contact.html", "index.html", "bank-statement-loans.html", "dscr-loans.html"):
             with self.subTest(page=name), TemporaryDirectory() as directory:

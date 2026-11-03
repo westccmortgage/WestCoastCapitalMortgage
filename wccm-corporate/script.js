@@ -789,6 +789,9 @@
     });
     hero.id=config.id;
     hero.classList.add('has-quick-lead');
+    /* The page shipped with .ql-pending so phones reserve this layout before
+       script.js arrives; drop it now that the real form is in place. */
+    hero.classList.remove('ql-pending');
     var copy=document.createElement('div');
     copy.className='ql-copy';
     while(inner.firstChild)copy.appendChild(inner.firstChild);

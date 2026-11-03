@@ -273,7 +273,7 @@ def main() -> None:
     # in step with BANK_STATEMENT_ASSET_VERSION in that script.
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
-        version = "20261002-bank-disclosure" if page.name == "bank-statement-loans.html" else "20261001-highlights"
+        version = "20261102-bank-cls" if page.name == "bank-statement-loans.html" else "20261102-cls"
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
                          lambda match: f'{match.group(1)}?v={version}{match.group(2)}', html)
         if updated != html:
