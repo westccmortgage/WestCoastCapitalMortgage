@@ -26,9 +26,9 @@ class BankStatementAssetVersionTest(unittest.TestCase):
                     readiness.main()
                     bank = (publish / "bank-statement-loans.html").read_text()
                     other = (publish / "self-employed-borrowers.html").read_text()
-                    self.assertIn('styles.css?v=20261002-bank-disclosure', bank)
-                    self.assertIn('script.js?v=20261002-bank-disclosure', bank)
-                    self.assertIn('script.js?v=20261001-highlights', other)
+                    self.assertIn('styles.css?v=20261102-bank-cls', bank)
+                    self.assertIn('script.js?v=20261102-bank-cls', bank)
+                    self.assertIn('script.js?v=20261102-cls', other)
             finally:
                 readiness.PUBLISH_DIR = original_publish
 

@@ -643,6 +643,26 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 @media(max-width:560px){
   .page-hero.has-quick-lead .lead{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 }
+/* Quick-lead pages ship with .ql-pending on the hero. Until script.js injects
+   the form, phones show the same compact hero plus a reserved block where the
+   form will land, so the page does not jump (CLS) on slow connections.
+   Per-page --ql-reserve values are set on the hero in the HTML. If script.js
+   never runs, the reserve releases after 8s. */
+@media(max-width:860px){
+  .page-hero.ql-pending{padding:20px 0 32px}
+  .ql-pending .crumbs,.ql-pending .page-hero-inner>.eyebrow,.ql-pending .page-hero-inner>.btn-row,
+  .ql-pending .page-hero-inner>.hero-actions,.ql-pending .page-hero-inner>.lang-badges,.ql-pending .page-hero-inner>.trust-line{display:none}
+  .page-hero.ql-pending h1{font-size:1.6rem;margin-bottom:.25em}
+  .page-hero.ql-pending .lead{font-size:.98rem;margin:0}
+  .page-hero.ql-pending .page-hero-inner::after{content:"";display:block;margin-top:16px;height:var(--ql-reserve,520px);animation:ql-release 0s 8s forwards}
+}
+@media(max-width:560px){
+  .page-hero.ql-pending .lead{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+}
+@media(max-width:379px){
+  .page-hero.ql-pending .page-hero-inner::after{height:var(--ql-reserve-sm,700px)}
+}
+@keyframes ql-release{to{height:0;margin-top:0}}
 /* Phones: name + phone side by side keeps the submit button above Safari's fold. */
 @media(min-width:360px) and (max-width:560px){
   .ql-step1 .form-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -666,3 +686,6 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .stat-ask{margin:22px 0 0;font-size:1rem;font-weight:600;color:var(--navy)}
 .stat-ask a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 .stat-ask + .stat-note{margin-top:10px}
+/* Phones: long button labels wrap instead of pushing the page wider than the
+   screen (e.g. "DSCR Denied? Request a Second Opinion" on /dscr-loans). */
+@media(max-width:560px){.btn-row .btn{white-space:normal;max-width:100%;text-align:center}}
