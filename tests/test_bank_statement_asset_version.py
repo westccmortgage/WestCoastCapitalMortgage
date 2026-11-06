@@ -28,7 +28,8 @@ class BankStatementAssetVersionTest(unittest.TestCase):
                     other = (publish / "self-employed-borrowers.html").read_text()
                     self.assertIn('styles.css?v=20261002-bank-disclosure', bank)
                     self.assertIn('script.js?v=20261002-bank-disclosure', bank)
-                    self.assertIn('script.js?v=20261001-highlights', other)
+                    self.assertIn(f'script.js?v={gtm.ASSET_VERSION}', other)
+                    self.assertEqual(readiness.ASSET_VERSION, gtm.ASSET_VERSION)
             finally:
                 readiness.PUBLISH_DIR = original_publish
 

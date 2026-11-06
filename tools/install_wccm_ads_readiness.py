@@ -72,6 +72,13 @@ FORM_SCHEMAS = {
         "goal", "property_area", "home_value", "mortgage_balance", "loan_amount", "occupancy",
         "full_name", "email", "phone", "message",
     ),
+    # Real-estate investor pages (tools/build_investor_loan_pages.py). Step 1
+    # sends goal + name + phone; deal details arrive through "lead-details".
+    "investor-lead": (
+        "goal", "property_area", "purchase_price", "rehab_budget", "arv", "loan_amount",
+        "experience", "credit_score", "property_count", "units", "monthly_rent",
+        "full_name", "email", "phone", "message",
+    ),
     # Optional step 2 of the hero quick form (QUICK_LEAD_FORMS in script.js):
     # one shared form for every landing page, linked to the step-1 lead by
     # lead_submission_id. Union of every page's step-2 fields.
@@ -81,8 +88,19 @@ FORM_SCHEMAS = {
         "property_area", "purchase_price", "loan_amount", "monthly_rent",
         "self_employed_years", "country_of_residence", "email",
         "home_value", "mortgage_balance",
+        "rehab_budget", "arv", "experience", "credit_score", "property_count", "units",
     ),
 }
+
+INVESTOR_PAGES = (
+    "investor-loans.html",
+    "fix-and-flip-loans.html",
+    "ground-up-construction-loans.html",
+    "bridge-loans.html",
+    "rental-portfolio-loans.html",
+    "multifamily-bridge-loans.html",
+    "hard-money-loans.html",
+)
 
 PAGE_FORMS = {
     "bank-statement-loans.html": "bank-statement-lead",
@@ -95,6 +113,7 @@ PAGE_FORMS = {
     "loans/jumbo/los-angeles-county.html": "jumbo-lead",
     "loans/dscr/los-angeles-metro.html": "dscr-lead",
     "heloc.html": "heloc-lead",
+    **{page: "investor-lead" for page in INVESTOR_PAGES},
 }
 
 # Pages whose hero quick form posts step 2 as "lead-details".
@@ -106,7 +125,12 @@ QUICK_FORM_PAGES = (
     "florida-condo-financing.html",
     "foreign-national-loans.html",
     "heloc.html",
+    *INVESTOR_PAGES,
 )
+
+# Keep in step with ASSET_VERSION / BANK_STATEMENT_ASSET_VERSION in tools/install_wccm_gtm.py.
+ASSET_VERSION = "20261105-investor-loans"
+BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 
 
 def build_schema_twin(form_name: str) -> str:
@@ -273,7 +297,7 @@ def main() -> None:
     # in step with BANK_STATEMENT_ASSET_VERSION in that script.
     for page in PUBLISH_DIR.rglob("*.html"):
         html = page.read_text(encoding="utf-8")
-        version = "20261002-bank-disclosure" if page.name == "bank-statement-loans.html" else "20261001-highlights"
+        version = BANK_STATEMENT_ASSET_VERSION if page.name == "bank-statement-loans.html" else ASSET_VERSION
         updated = re.sub(r'(src=["\'](?:[^"\']*/)?script\\.js)(?:\\?[^"\']*)?(["\'])',
                          lambda match: f'{match.group(1)}?v={version}{match.group(2)}', html)
         if updated != html:

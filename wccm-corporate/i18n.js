@@ -10,7 +10,7 @@
   var ZH = {
     /* Navigation */
     "Buy a Home": "购房", "Home Search": "房源搜索", "Realty": "房地产", "Refinance": "再融资",
-    "Today's Rates": "今日利率", "Loans": "贷款", "Resources": "资源中心",
+    "Today's Rates": "今日利率", "Loans": "贷款", "Investors": "投资者", "Resources": "资源中心",
     "About Us": "关于我们", "Find a Loan Officer": "寻找贷款专员",
     /* Buttons / CTAs */
     "Apply Now": "立即申请", "Get Preapproved": "获取预批", "Make a Payment": "在线还款",
@@ -67,6 +67,39 @@
   var NKZH = null;
 
   var DICT = {
+    /* ===== Investor blocks on shared pages (home card, /loans, DSCR cross-links) ===== */
+    "PRIVATE LENDING": ["PRÉSTAMOS PRIVADOS", "ЧАСТНОЕ КРЕДИТОВАНИЕ"],
+    "Private lending for real estate investors: fix & flip, construction, bridge and rental loans, closed in your LLC.": ["Préstamos privados para inversionistas inmobiliarios: fix & flip, construcción, préstamos puente y de alquiler, a nombre de su LLC.", "Частное кредитование для инвесторов в недвижимость: fix & flip, строительство, бридж-кредиты и кредиты под аренду — оформляются на вашу LLC."],
+    "SEE INVESTOR PROGRAMS": ["VER PROGRAMAS PARA INVERSIONISTAS", "ПРОГРАММЫ ДЛЯ ИНВЕСТОРОВ"],
+    "Real estate investors": ["Inversionistas inmobiliarios", "Инвесторы в недвижимость"],
+    "Investor & business-purpose loans": ["Préstamos para inversionistas y con fines comerciales", "Кредиты для инвесторов и бизнес-целей"],
+    "Short-term financing to buy, renovate, build and hold investment property - for borrowers who close in an LLC or corporation.": ["Financiamiento a corto plazo para comprar, renovar, construir y conservar propiedades de inversión, para prestatarios que cierran a nombre de una LLC o corporación.", "Краткосрочное финансирование, чтобы купить, отремонтировать, построить и держать инвестиционную недвижимость, — для заёмщиков, которые оформляют сделку на LLC или корпорацию."],
+    "Fix & Flip": ["Fix & Flip", "Fix & Flip"],
+    "Up to 90% of purchase and 100% of the rehab budget, interest only.": ["Hasta el 90% de la compra y el 100% del presupuesto de remodelación, solo intereses.", "До 90% цены покупки и 100% бюджета ремонта, только проценты."],
+    "New Construction": ["Construcción nueva", "Новое строительство"],
+    "Land plus 100% of the construction budget for experienced builders.": ["Terreno más el 100% del presupuesto de construcción para constructores con experiencia.", "Земля плюс 100% бюджета строительства для опытных застройщиков."],
+    "Bridge": ["Puente", "Бридж"],
+    "Short-term financing for finished properties that are listed or leasing up.": ["Financiamiento a corto plazo para propiedades terminadas que están a la venta o en proceso de alquiler.", "Краткосрочное финансирование готовых объектов, выставленных на продажу или сдающихся в аренду."],
+    "Two to ten rentals in one 30-year loan, qualified on rent.": ["De dos a diez propiedades de alquiler en un préstamo a 30 años, calificado con la renta.", "От двух до десяти арендных объектов в одном кредите на 30 лет, одобрение по аренде."],
+    "5+ Units": ["5+ unidades", "5+ юнитов"],
+    "$2M-$5M to buy and renovate California apartment buildings.": ["De $2M a $5M para comprar y renovar edificios de apartamentos en California.", "От $2M до $5M на покупку и ремонт многоквартирных домов в Калифорнии."],
+    "All programs": ["Todos los programas", "Все программы"],
+    "Compare Investor Loans": ["Comparar préstamos para inversionistas", "Сравнить кредиты для инвесторов"],
+    "Side-by-side leverage, loan sizes, terms and credit minimums.": ["Apalancamiento, montos, plazos y crédito mínimo, lado a lado.", "Плечо, суммы, сроки и минимальный кредитный рейтинг — в одной таблице."],
+    "Still needs work before it can be rented?": ["¿Todavía necesita trabajo antes de poder alquilarse?", "Объекту ещё нужен ремонт перед сдачей в аренду?"],
+    "A DSCR loan is for a property that is ready to rent. If it still needs a rehab or is being built, it is usually financed first with a": ["Un préstamo DSCR es para una propiedad lista para alquilar. Si todavía necesita remodelación o está en construcción, normalmente se financia primero con un préstamo", "Кредит DSCR — для объекта, который готов к аренде. Если ему ещё нужен ремонт или он строится, его обычно сначала финансируют через"],
+    "fix and flip": ["fix and flip", "fix and flip"],
+    "ground-up construction": ["de construcción ground-up", "строительство (ground-up)"],
+    "or": ["o", "или"],
+    "bridge loan": ["puente", "бридж-кредит"],
+    ", then refinanced into a DSCR loan once it is rented. Have several rentals? See": [", y luego se refinancia con un préstamo DSCR cuando ya está alquilada. ¿Tiene varias propiedades de alquiler? Vea los", ", а после сдачи в аренду рефинансируют в кредит DSCR. Несколько арендных объектов? Смотрите"],
+    "rental portfolio loans": ["préstamos de cartera de alquileres", "портфельные кредиты на аренду"],
+    "See All Investor Loans": ["Ver todos los préstamos para inversionistas", "Все кредиты для инвесторов"],
+    "Fix and Flip Loans": ["Préstamos Fix and Flip", "Кредиты fix and flip"],
+    "Ground-Up Construction Loans": ["Préstamos de Construcción (Ground-Up)", "Кредиты на строительство (ground-up)"],
+    "Investor Bridge Loans": ["Préstamos Puente para Inversionistas", "Бридж-кредиты для инвесторов"],
+    "Rental Portfolio Loans": ["Préstamos de Cartera de Alquileres", "Портфельные кредиты на аренду"],
+    "Multifamily Bridge Loans": ["Préstamos Puente Multifamiliares", "Мультифэмили бридж-кредиты"],
     /* ===== Top bar + navigation ===== */
     "Mortgage": ["Hipotecas", "Ипотека"],
     "Realty": ["Bienes Raíces", "Недвижимость"],
@@ -1205,7 +1238,9 @@
   function tt(s) { return s.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, "-"); }
   function norm(s) { return tt(s).replace(/\s+/g, " ").trim(); }
   var NK = null;
-  function buildNK() { NK = {}; for (var k in DICT) NK[norm(k)] = DICT[k]; }
+  function buildNK() { NK = {}; for (var k in DICT) NK[norm(k)] = DICT[k];
+    /* Page-specific dictionaries (e.g. i18n-investor.js) add entries via window.WCCM_I18N_EXTRA. */
+    var X = window.WCCM_I18N_EXTRA || {}; for (var x in X) NK[norm(x)] = X[x]; }
   function readLang() { var l = null; try { l = localStorage.getItem(STORE); } catch (e) {} return LANGS.indexOf(l) >= 0 ? l : "en"; }
   function writeLang(l) { try { localStorage.setItem(STORE, l); } catch (e) {} }
 

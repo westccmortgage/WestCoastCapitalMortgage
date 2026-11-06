@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K2X3X454');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18417657219"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
+  window.__wccmAdsLeadScanner=setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){
+      var item=dl[window.__wccmAdsLeadCursor++];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
+        item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
+        window.gtag('event','conversion',{
+          'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
+          'value':1.0,
+          'currency':'USD',
+          'transaction_id':leadEventId
+        });
+        /* Only emit known mortgage categories and technical form/page identifiers.
+           Never send borrower text, contact fields, or URL query parameters to GA4. */
+        var knownPrograms=[
+          'General mortgage inquiry','Jumbo','DSCR / Investor',
+          'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
+          'Condo','Foreign National','Mortgage Second Opinion',
+          'Investor Loans','Fix & Flip','Ground-Up Construction','Bridge',
+          'Rental Portfolio','Multifamily Bridge'
+        ];
+        var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
+        /* The Florida lead funnel prefixes otherwise approved mortgage categories.
+           Retain that market context while still rejecting arbitrary or personal text. */
+        var floridaPrefix='Florida / ';
+        var isFlorida=rawProgram.indexOf(floridaPrefix)===0;
+        var baseProgram=isFlorida?rawProgram.slice(floridaPrefix.length):rawProgram;
+        var safeProgram=knownPrograms.indexOf(baseProgram)>=0?
+          (isFlorida?floridaPrefix:'')+baseProgram:'Other Mortgage Inquiry';
+        var rawForm=typeof item.form_name==='string'?item.form_name:'';
+        var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
+        var rawPath=window.location.pathname||'/';
+        var safePath=(rawPath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(rawPath))?rawPath:'/';
+        window.gtag('event','generate_lead',{
+          'send_to':'G-GB57YWMKBH',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId,
+          'form_name':safeForm,
+          'program_interest':safeProgram,
+          'page_path':safePath
+        });
+      }
+    }
+  },200);
+})();
+
+window.gtag('js',new Date());
+window.gtag('config','AW-18417657219');
+window.gtag('config','G-GB57YWMKBH');
+</script>
+<!-- End Google tag - Google Ads -->
+<!-- OpenAI Ads pixel -->
+<script>
+(function(w,d,s,u){
+  if(w.oaiq)return;
+  var q=function(){q.q.push(arguments);};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{};
+  setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{type:"customer_action"},
+        leadEventId?{event_id:leadEventId}:undefined);
+    }
+  },200);
+})();
+</script>
+<!-- End OpenAI Ads pixel -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rental Portfolio Loans | West Coast Capital Mortgage</title>
+<meta name="description" content="One 30-year blanket loan for 2–10 rentals, qualified on rent with DSCR from 1.05: up to 80% LTV on purchases and rate-and-term, 75% cash-out.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261105-investor-loans">
+<link rel="canonical" href="https://westcoastcapitalmortgage.com/rental-portfolio-loans">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="West Coast Capital Mortgage">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
+<meta property="og:title" content="Rental Portfolio Loans | West Coast Capital Mortgage">
+<meta property="og:description" content="One 30-year blanket loan for 2–10 rentals, qualified on rent with DSCR from 1.05: up to 80% LTV on purchases and rate-and-term, 75% cash-out.">
+<meta property="og:url" content="https://westcoastcapitalmortgage.com/rental-portfolio-loans">
+<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rental Portfolio Loans | West Coast Capital Mortgage">
+<meta name="twitter:description" content="One 30-year blanket loan for 2–10 rentals, qualified on rent with DSCR from 1.05: up to 80% LTV on purchases and rate-and-term, 75% cash-out.">
+<meta name="twitter:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FinancialService",
+   "@id": "https://westcoastcapitalmortgage.com/#organization",
+   "name": "West Coast Capital Mortgage Inc.",
+   "legalName": "West Coast Capital Mortgage Inc.",
+   "url": "https://westcoastcapitalmortgage.com",
+   "logo": "https://westcoastcapitalmortgage.com/assets/logo.svg",
+   "telephone": "+1-310-654-1577",
+   "email": "westccmortgage@gmail.com",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "150 E Olive Ave, Unit 112",
+    "addressLocality": "Burbank",
+    "addressRegion": "CA",
+    "postalCode": "91502",
+    "addressCountry": "US"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.1776,
+    "longitude": -118.3085
+   },
+   "sameAs": [
+    "https://g.page/r/CXUFd3B5e-n3EBM",
+    "https://www.facebook.com/people/West-Coast-Capital-Mortgage/61585857321645/",
+    "https://www.instagram.com/westccmortgage/",
+    "https://www.tiktok.com/@westccmortgage",
+    "https://www.youtube.com/channel/UCeV1dkJNhcJS-N-5oRXFFzQ",
+    "https://www.yelp.com/biz/west-coast-capital-mortgage-burbank",
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729"
+   ],
+   "priceRange": "$$",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    },
+    {
+     "@type": "State",
+     "name": "Florida"
+    },
+    {
+     "@type": "State",
+     "name": "Texas"
+    }
+   ],
+   "knowsAbout": [
+    "Fix and flip loans",
+    "Hard money loans",
+    "Private money loans",
+    "Ground-up construction loans",
+    "Bridge loans",
+    "DSCR loans",
+    "Rental portfolio loans",
+    "Multifamily bridge loans",
+    "Jumbo loans",
+    "Non-QM loans",
+    "Bank statement loans"
+   ]
+  },
+  {
+   "@type": "Person",
+   "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky",
+   "name": "Anatoliy Kanevsky",
+   "jobTitle": "Founder",
+   "identifier": "NMLS #2775380",
+   "worksFor": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "image": "https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky-avatar.webp",
+   "sameAs": [
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/INDIVIDUAL/2775380"
+   ],
+   "knowsAbout": [
+    "Real estate investor financing",
+    "Residential development",
+    "Mortgage lending"
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#webpage",
+   "url": "https://westcoastcapitalmortgage.com/rental-portfolio-loans",
+   "name": "Rental Portfolio Loans | West Coast Capital Mortgage",
+   "description": "One 30-year blanket loan for 2–10 rentals, qualified on rent with DSCR from 1.05: up to 80% LTV on purchases and rate-and-term, 75% cash-out.",
+   "inLanguage": "en-US",
+   "datePublished": "2026-11-05",
+   "dateModified": "2026-11-05",
+   "publisher": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "reviewedBy": {
+    "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky"
+   },
+   "breadcrumb": {
+    "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#breadcrumb"
+   },
+   "about": {
+    "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#loan"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://westcoastcapitalmortgage.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Loans",
+     "item": "https://westcoastcapitalmortgage.com/loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Investor Loans",
+     "item": "https://westcoastcapitalmortgage.com/investor-loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Rental Portfolio Loans",
+     "item": "https://westcoastcapitalmortgage.com/rental-portfolio-loans"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Can I mix property types in one portfolio loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Single-family homes, 2–4 unit properties, townhomes, PUDs and warrantable condos can be combined in one loan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I sell one property later?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. A property is released from the blanket loan by paying 120% of the loan amount allocated to it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is there a prepayment penalty?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You choose the structure: five, four, three or one year, or no prepayment penalty."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What credit score do I need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "660 minimum, with 700 or higher needed for 80% loan-to-value. Leverage is based on the lowest middle score among the guarantors, and every owner with 20% or more of the entity guarantees the loan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the lease and occupancy rules?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "At least 90% of the units must be leased, on 12–36 month leases to unrelated individuals; month-to-month is accepted after an initial lease term. Short-term and vacation rentals are not eligible in this program."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How much cash do I need in reserve?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Closing costs plus three months of payments for a purchase or six months for a refinance, shown on two consecutive statements. Cash-out proceeds can cover up to half of the requirement. The first three months of principal, interest, taxes and insurance are also collected into reserves at closing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When can I do a cash-out refinance?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "After 90 days of ownership. Between 91 and 180 days a new, higher value can be used only with documentation of the completed renovation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can foreign nationals get a portfolio loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Foreign nationals can borrow up to 65% of value on a purchase or rate-and-term refinance and 60% on cash-out, with 12 months of payments in reserve."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "I only have one rental. Which loan fits?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A single-property DSCR loan. Portfolio loans start at two properties."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I need an LLC or corporation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The loan closes in your LLC or corporation, and the owners sign a personal guarantee. No entity yet? Set one up before closing. For closing we need the articles or certificate of formation, the EIN letter, the operating agreement and a recent certificate of good standing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where is the portfolio loan available?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For rentals in California, Florida and Texas. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible, and rural or luxury properties are excluded."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "LoanOrCredit",
+   "@id": "https://westcoastcapitalmortgage.com/rental-portfolio-loans#loan",
+   "name": "Rental Portfolio (Blanket) Loan",
+   "url": "https://westcoastcapitalmortgage.com/rental-portfolio-loans",
+   "description": "Long-term blanket loan for 2–10 rentals qualified on rent (DSCR from 1.05): up to 80% LTV on purchases and rate-and-term refinances, 75% on cash-out.",
+   "loanType": "DSCR blanket loan",
+   "category": "Business-purpose real estate investor loan",
+   "amount": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "minValue": 100000,
+    "maxValue": 2000000
+   },
+   "loanTerm": {
+    "@type": "QuantitativeValue",
+    "value": 30,
+    "unitCode": "ANN"
+   },
+   "requiredCollateral": "Two to ten leased 1–4 unit residential rental properties",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    },
+    {
+     "@type": "State",
+     "name": "Florida"
+    },
+    {
+     "@type": "State",
+     "name": "Texas"
+    }
+   ],
+   "provider": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   }
+  }
+ ]
+}
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wzzlo9s35g");
+</script>
+</head>
+<body class="investor-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2X3X454"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <nav class="topbar-left" aria-label="Utility">
+      <a class="active-service" href="/">Mortgage</a>
+      <a href="https://westccrealty.com">Realty</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <!-- Replace with <img src="assets/logo.png" alt="West Coast Capital Mortgage"> when ready -->
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home">
+      <span class="l1">WEST COAST CAPITAL</span>
+      <span class="l2">MORTGAGE</span>
+    </a>
+    <div class="nav-collapse" id="navc">
+      <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="rates.html">Today's Rates</a><a href="loans.html">Loans</a><a href="investor-loans.html" class="active">Investors</a><a href="resources.html">Resources</a><a href="about.html">About Us</a></nav>
+      <div class="header-cta">
+        <a class="btn btn-blue" href="#investor-review" data-cta="investor-deal">Tell Me Your Scenario</a>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<section class="page-hero inv-hero">
+  <div class="hero-wallpaper" aria-hidden="true">
+    <div class="wallpaper-line" style="top:18%">WEST COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:58%">WEST COAST CAPITAL MORTGAGE</div>
+  </div>
+  <div class="wrap page-hero-inner">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="loans.html">Loans</a> &nbsp;/&nbsp; <a href="investor-loans.html">Investor Loans</a> &nbsp;/&nbsp; Rental Portfolio Loans</div>
+    <h1>Rental Portfolio Loans</h1>
+    <p class="lead">Two to ten rentals under one 30-year loan. One closing, one payment, qualified on the rent instead of your personal income.</p>
+    <div class="inv-updated"><img class="inv-face" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span><b><a href="/loan-officer">Anatoliy Kanevsky</a></b><em>Founder &middot; NMLS #2775380</em></span></div>
+    <div class="btn-row inv-hero-actions"><a class="btn btn-blue" href="#investor-review">Request a Call</a><a class="btn btn-outline" href="tel:+13106541577">Call 310-654-1577</a></div>
+  </div>
+</section>
+<section class="inv-strip" aria-label="At a glance"><div class="wrap"><ul><li>Qualify on rent</li><li>No tax returns or W-2s</li><li>2 to 10 rentals, one payment</li><li>30-year terms</li></ul></div></section>
+<section class="inv-terms-sec"><div class="wrap">
+  <div class="inv-terms">
+    <div class="inv-terms-head"><h2>Rental portfolio loan terms</h2></div>
+    <dl class="inv-terms-list"><div class="ts-row"><dt>Properties</dt><dd>2&ndash;10 in one blanket loan</dd></div><div class="ts-row"><dt>Loan amount</dt><dd>Up to $2M total <small>from $50K per property; property value from $72K</small></dd></div><div class="ts-row"><dt>Purchase or rate-and-term</dt><dd>Up to 80% LTV</dd></div><div class="ts-row"><dt>Cash-out refinance</dt><dd>Up to 75% LTV</dd></div><div class="ts-row"><dt>DSCR minimum</dt><dd>1.05 <small>gross rent divided by the monthly payment</small></dd></div><div class="ts-row"><dt>Term</dt><dd>30 years <small>fixed or 5/6, 7/6 and 10/6 ARMs; interest-only options</small></dd></div><div class="ts-row"><dt>Income documents</dt><dd>None <small>no tax returns, W-2s or pay stubs</small></dd></div><div class="ts-row"><dt>Credit score</dt><dd>From 660 <small>700+ for 80% LTV</small></dd></div></dl>
+    <p class="inv-note">Program maximums for leased 1&ndash;4 unit rentals held in an LLC or corporation. If a quarter or more of the properties are valued under $100,000, the maximum is 70% LTV. Not a commitment to lend.</p>
+  </div>
+</div></section>
+<section><div class="wrap inv-answer">
+  <h2>What is a rental portfolio loan?</h2>
+  <p>A rental portfolio loan, also called a blanket loan, is one long-term loan secured by several rental properties at once, here two to ten. It replaces separate mortgages with one closing and one payment, and it qualifies on the properties&rsquo; rent rather than your personal income.</p>
+</div></section>
+<section class="bg-light" id="leverage"><div class="wrap inv-answer">
+  <h2>How is a portfolio loan qualified?</h2>
+  <p>On the debt-service coverage ratio: the portfolio&rsquo;s monthly gross rent divided by its monthly principal, interest, taxes, insurance and HOA. The minimum is 1.05, and leverage depends on credit.</p><div class="inv-table-wrap inv-ledger" role="region" aria-label="How the debt-service coverage ratio is calculated" tabindex="0"><table class="inv-table"><caption class="inv-caption">How the debt-service coverage ratio is calculated</caption><thead><tr><th scope="col">Example portfolio of five rentals</th><th scope="col">Monthly</th></tr></thead><tbody><tr><th scope="row">Gross rent (lower of leases and the appraiser&rsquo;s market rent)</th><td>$12,000</td></tr><tr><th scope="row">Principal, interest, taxes, insurance and HOA (PITIA)</th><td>$10,500</td></tr><tr><th scope="row"><strong>DSCR = $12,000 &divide; $10,500</strong></th><td><strong>1.14 &mdash; above the 1.05 minimum</strong></td></tr></tbody></table></div><div class="inv-table-wrap" role="region" aria-label="Maximum loan-to-value by credit score" tabindex="0"><table class="inv-table wide"><caption class="inv-caption">Maximum loan-to-value by credit score</caption><thead><tr><th scope="col">Credit score</th><th scope="col">Purchase</th><th scope="col">Rate-and-term refinance</th><th scope="col">Cash-out refinance</th></tr></thead><tbody><tr><th scope="row">700 and above</th><td>80%</td><td>80%</td><td>75%</td></tr><tr><th scope="row">680&ndash;699</th><td>75%</td><td>75%</td><td>70%</td></tr><tr><th scope="row">660&ndash;679</th><td>65%</td><td>65%</td><td>60%</td></tr></tbody></table></div>
+</div></section>
+<section><div class="wrap">
+  <h2 class="inv-h2">What qualifies</h2>
+  <div class="inv-split">
+    <div><h3>Eligible properties</h3><ul class="feature-list"><li>Single-family homes, 2&ndash;4 unit properties, townhomes and PUDs</li><li>Warrantable condos</li><li>Properties in C1&ndash;C4 condition with no deferred maintenance; single-family at least 700 square feet</li><li>At least 90% of units leased</li></ul></div>
+    <div class="inv-checklist-box"><h3>What you will need</h3><ul class="inv-checklist"><li>An LLC or corporation as the borrower; owners with 20% or more guarantee</li><li>Current leases and a rent roll for every property</li><li>Two consecutive statements showing closing costs and reserves</li><li>Entity documents: articles, EIN letter, operating agreement and certificate of good standing</li></ul></div>
+  </div>
+</div></section>
+<section class="bg-light"><div class="wrap">
+  <div class="inv-two">
+    <div><h2 class="inv-h2">What happens after you send a deal</h2><p class="lead">Same person from the first call to the payoff.</p></div>
+    <ol class="steps"><li><b>We look at the numbers</b><span>Address, price, budget, what it will sell or rent for, and your track record. By form or by phone. No application and no credit check yet.</span></li><li><b>You get a straight answer</b><span>Which program fits and roughly how much leverage to expect, before you pay for an appraisal. If the deal doesn&rsquo;t work, we say so.</span></li><li><b>Written terms</b><span>Credit is checked with a soft pull that doesn&rsquo;t touch your score. Then we order the appraisal and line up title, insurance and your entity documents.</span></li><li><b>Close in your LLC</b><span>One payment for the whole portfolio, with escrow for taxes and insurance.</span></li></ol>
+  </div>
+</div></section>
+<section class="inv-person-sec"><div class="wrap">
+  <div class="inv-person">
+    <img class="inv-person-photo" src="assets/anatoliy-kanevsky-portrait.webp" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" width="720" height="810" loading="lazy" decoding="async">
+    <div class="inv-person-note">
+      <h2 class="inv-h2">Send me the rent roll first</h2>
+      <p>Send me the addresses, the rents, rough values and what you owe on each one. I&rsquo;ll run the DSCR and tell you how much the portfolio supports.</p>
+      <div class="inv-sign">
+        <span class="inv-sign-name" aria-hidden="true">Anatoliy Kanevsky</span>
+        <span class="inv-sign-meta"><a href="/loan-officer">Anatoliy Kanevsky</a>, founder &middot; NMLS #2775380 &middot; CA DRE #01385024</span>
+        <span class="inv-sign-meta">Direct line <a href="tel:+13106865053">310-686-5053</a> &middot; Burbank office</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section class="bg-light" id="faq"><div class="wrap inv-faq">
+  <h2 class="inv-h2">Questions about portfolio loans</h2>
+  <details class="acc"><summary>Can I mix property types in one portfolio loan?</summary><div class="acc-body">Yes. Single-family homes, 2&ndash;4 unit properties, townhomes, PUDs and warrantable condos can be combined in one loan.</div></details><details class="acc"><summary>Can I sell one property later?</summary><div class="acc-body">Yes. A property is released from the blanket loan by paying 120% of the loan amount allocated to it.</div></details><details class="acc"><summary>Is there a prepayment penalty?</summary><div class="acc-body">You choose the structure: five, four, three or one year, or no prepayment penalty.</div></details><details class="acc"><summary>What credit score do I need?</summary><div class="acc-body">660 minimum, with 700 or higher needed for 80% loan-to-value. Leverage is based on the lowest middle score among the guarantors, and every owner with 20% or more of the entity guarantees the loan.</div></details><details class="acc"><summary>What are the lease and occupancy rules?</summary><div class="acc-body">At least 90% of the units must be leased, on 12&ndash;36 month leases to unrelated individuals; month-to-month is accepted after an initial lease term. Short-term and vacation rentals are not eligible in this program.</div></details><details class="acc"><summary>How much cash do I need in reserve?</summary><div class="acc-body">Closing costs plus three months of payments for a purchase or six months for a refinance, shown on two consecutive statements. Cash-out proceeds can cover up to half of the requirement. The first three months of principal, interest, taxes and insurance are also collected into reserves at closing.</div></details><details class="acc"><summary>When can I do a cash-out refinance?</summary><div class="acc-body">After 90 days of ownership. Between 91 and 180 days a new, higher value can be used only with documentation of the completed renovation.</div></details><details class="acc"><summary>Can foreign nationals get a portfolio loan?</summary><div class="acc-body">Yes. Foreign nationals can borrow up to 65% of value on a purchase or rate-and-term refinance and 60% on cash-out, with 12 months of payments in reserve.</div></details><details class="acc"><summary>I only have one rental. Which loan fits?</summary><div class="acc-body">A single-property <a href="dscr-loans.html">DSCR loan</a>. Portfolio loans start at two properties.</div></details><details class="acc"><summary>Do I need an LLC or corporation?</summary><div class="acc-body">Yes. The loan closes in your LLC or corporation, and the owners sign a personal guarantee. No entity yet? Set one up before closing. For closing we need the articles or certificate of formation, the EIN letter, the operating agreement and a recent certificate of good standing.</div></details><details class="acc"><summary>Where is the portfolio loan available?</summary><div class="acc-body">For rentals in California, Florida and Texas. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible, and rural or luxury properties are excluded.</div></details>
+</div></section>
+<section class="inv-also"><div class="wrap">
+  <h2 class="inv-h2">Not quite this deal?</h2>
+  <ul class="inv-also-list"><li><a href="investor-loans.html">Investor Loans</a><span>Compare every investor program side by side.</span></li><li><a href="fix-and-flip-loans.html">Fix and Flip Loans</a><span>Up to 90% of purchase and 100% of rehab.</span></li><li><a href="ground-up-construction-loans.html">Ground-Up Construction Loans</a><span>Land plus 100% of the construction budget.</span></li><li><a href="bridge-loans.html">Investor Bridge Loans</a><span>Finished properties listed for sale or leasing up.</span></li><li><a href="multifamily-bridge-loans.html">Multifamily Bridge Loans</a><span>$2M&ndash;$5M value-add loans in California.</span></li><li><a href="dscr-loans.html">DSCR Loans</a><span>Qualify a single rental on its rent.</span></li><li><a href="hard-money-loans.html">Hard Money Loans in California</a><span>Private money to buy, fix, build or bridge.</span></li></ul>
+</div></section>
+<section><div class="wrap"><div class="cta-band inv-cta">
+  <h2>Ready to put your rentals under one loan?</h2><p>Send the addresses, rents, values and current payoffs. You&rsquo;ll hear the DSCR and how much the portfolio supports.</p>
+  <div class="btn-row"><a class="btn btn-lg btn-blue" href="#investor-review">Tell Me Your Scenario</a><a class="btn btn-lg btn-outline-light" href="tel:+13106541577">Call 310-654-1577</a></div>
+  <p class="inv-cta-who"><img class="inv-face sm" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span>Anatoliy Kanevsky reviews investor deals himself. Direct line <a href="tel:+13106865053">310-686-5053</a></span></p>
+</div></div></section>
+<section class="inv-disclosure"><div class="wrap">
+  <p><strong>Business-purpose loans only.</strong> The programs on this page finance non-owner-occupied investment property purchased or refinanced by an LLC or corporation. They are not available for personal, family or household purposes or for a home you live in. Owners typically sign a personal guarantee. Loans are made or arranged by West Coast Capital Mortgage (NMLS #2817729, CA DRE Corporation License #02440065) and funded by our private lender. Figures are program maximums under current program guidelines as of November 5, 2026. Actual leverage, loan amount, rate, term and eligibility depend on experience, credit, liquidity, the property, the market and underwriting. Some markets receive lower leverage or are not eligible, and programs change without notice. Nothing on this page is an offer of credit, a rate quote or a commitment to lend.</p>
+</div></section>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Phone:</b> <a href="tel:3106541577">(310) 654-1577</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502<br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="/loan-officer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
+    <div class="footer-bottom">
+      <div class="row">
+        <nav aria-label="Legal">
+          <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
+          <a href="privacy-policy.html" style="display:inline;margin-right:18px">Privacy Policy</a>
+          <a href="terms.html" style="display:inline;margin-right:18px">Terms of Use</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
+        </nav>
+        <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
+      </div>
+      <p>West Coast Capital Mortgage Inc. Company NMLS #2817729. CA DRE Corporation License #02440065. Anatoliy Kanevsky NMLS #2775380, CA Broker DRE #01385024. Equal Housing Opportunity. Information is provided for
+      educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
+      and underwriting approval.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="i18n-investor.js?v=20261105-investor-loans"></script>
+<script src="i18n.js?v=20261105-investor-loans"></script>
+<script src="script.js?v=20261105-investor-loans"></script>
+<form name="investor-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="investor-lead">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="goal">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="loan_amount">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="monthly_rent">
+  <input name="full_name">
+  <input name="email">
+  <input name="phone">
+  <textarea name="message"></textarea>
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="lead-details" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="lead-details">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="lead_submission_id">
+  <input name="source_form">
+  <input name="full_name">
+  <input name="phone">
+  <input name="goal">
+  <input name="property_type">
+  <input name="income_documentation">
+  <input name="statements_available">
+  <input name="occupancy">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="loan_amount">
+  <input name="monthly_rent">
+  <input name="self_employed_years">
+  <input name="country_of_residence">
+  <input name="email">
+  <input name="home_value">
+  <input name="mortgage_balance">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="partial-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="partial-lead">
+  <input type="text" name="company">
+  <input name="source_form">
+  <input name="page_path">
+  <input name="state_context">
+  <input name="name">
+  <input name="first_name">
+  <input name="last_name">
+  <input name="email">
+  <input name="phone">
+  <input name="program_interest">
+  <textarea name="details"></textarea>
+  <input name="submission_id">
+  <input name="partial_reason">
+  <input name="status">
+  <input name="sms_consent">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="referrer">
+</form>
+</body>
+</html>

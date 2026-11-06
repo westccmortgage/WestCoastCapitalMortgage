@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K2X3X454');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18417657219"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
+  window.__wccmAdsLeadScanner=setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){
+      var item=dl[window.__wccmAdsLeadCursor++];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
+        item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
+        window.gtag('event','conversion',{
+          'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
+          'value':1.0,
+          'currency':'USD',
+          'transaction_id':leadEventId
+        });
+        /* Only emit known mortgage categories and technical form/page identifiers.
+           Never send borrower text, contact fields, or URL query parameters to GA4. */
+        var knownPrograms=[
+          'General mortgage inquiry','Jumbo','DSCR / Investor',
+          'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
+          'Condo','Foreign National','Mortgage Second Opinion',
+          'Investor Loans','Fix & Flip','Ground-Up Construction','Bridge',
+          'Rental Portfolio','Multifamily Bridge'
+        ];
+        var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
+        /* The Florida lead funnel prefixes otherwise approved mortgage categories.
+           Retain that market context while still rejecting arbitrary or personal text. */
+        var floridaPrefix='Florida / ';
+        var isFlorida=rawProgram.indexOf(floridaPrefix)===0;
+        var baseProgram=isFlorida?rawProgram.slice(floridaPrefix.length):rawProgram;
+        var safeProgram=knownPrograms.indexOf(baseProgram)>=0?
+          (isFlorida?floridaPrefix:'')+baseProgram:'Other Mortgage Inquiry';
+        var rawForm=typeof item.form_name==='string'?item.form_name:'';
+        var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
+        var rawPath=window.location.pathname||'/';
+        var safePath=(rawPath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(rawPath))?rawPath:'/';
+        window.gtag('event','generate_lead',{
+          'send_to':'G-GB57YWMKBH',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId,
+          'form_name':safeForm,
+          'program_interest':safeProgram,
+          'page_path':safePath
+        });
+      }
+    }
+  },200);
+})();
+
+window.gtag('js',new Date());
+window.gtag('config','AW-18417657219');
+window.gtag('config','G-GB57YWMKBH');
+</script>
+<!-- End Google tag - Google Ads -->
+<!-- OpenAI Ads pixel -->
+<script>
+(function(w,d,s,u){
+  if(w.oaiq)return;
+  var q=function(){q.q.push(arguments);};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{};
+  setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{type:"customer_action"},
+        leadEventId?{event_id:leadEventId}:undefined);
+    }
+  },200);
+})();
+</script>
+<!-- End OpenAI Ads pixel -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hard Money Loans in California | West Coast Capital Mortgage</title>
+<meta name="description" content="Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261105-investor-loans">
+<link rel="canonical" href="https://westcoastcapitalmortgage.com/hard-money-loans">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="West Coast Capital Mortgage">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
+<meta property="og:title" content="Hard Money Loans in California | West Coast Capital Mortgage">
+<meta property="og:description" content="Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.">
+<meta property="og:url" content="https://westcoastcapitalmortgage.com/hard-money-loans">
+<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hard Money Loans in California | West Coast Capital Mortgage">
+<meta name="twitter:description" content="Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.">
+<meta name="twitter:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FinancialService",
+   "@id": "https://westcoastcapitalmortgage.com/#organization",
+   "name": "West Coast Capital Mortgage Inc.",
+   "legalName": "West Coast Capital Mortgage Inc.",
+   "url": "https://westcoastcapitalmortgage.com",
+   "logo": "https://westcoastcapitalmortgage.com/assets/logo.svg",
+   "telephone": "+1-310-654-1577",
+   "email": "westccmortgage@gmail.com",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "150 E Olive Ave, Unit 112",
+    "addressLocality": "Burbank",
+    "addressRegion": "CA",
+    "postalCode": "91502",
+    "addressCountry": "US"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.1776,
+    "longitude": -118.3085
+   },
+   "sameAs": [
+    "https://g.page/r/CXUFd3B5e-n3EBM",
+    "https://www.facebook.com/people/West-Coast-Capital-Mortgage/61585857321645/",
+    "https://www.instagram.com/westccmortgage/",
+    "https://www.tiktok.com/@westccmortgage",
+    "https://www.youtube.com/channel/UCeV1dkJNhcJS-N-5oRXFFzQ",
+    "https://www.yelp.com/biz/west-coast-capital-mortgage-burbank",
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729"
+   ],
+   "priceRange": "$$",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    },
+    {
+     "@type": "State",
+     "name": "Florida"
+    },
+    {
+     "@type": "State",
+     "name": "Texas"
+    }
+   ],
+   "knowsAbout": [
+    "Fix and flip loans",
+    "Hard money loans",
+    "Private money loans",
+    "Ground-up construction loans",
+    "Bridge loans",
+    "DSCR loans",
+    "Rental portfolio loans",
+    "Multifamily bridge loans",
+    "Jumbo loans",
+    "Non-QM loans",
+    "Bank statement loans"
+   ]
+  },
+  {
+   "@type": "Person",
+   "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky",
+   "name": "Anatoliy Kanevsky",
+   "jobTitle": "Founder",
+   "identifier": "NMLS #2775380",
+   "worksFor": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "image": "https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky-avatar.webp",
+   "sameAs": [
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/INDIVIDUAL/2775380"
+   ],
+   "knowsAbout": [
+    "Real estate investor financing",
+    "Residential development",
+    "Mortgage lending"
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#webpage",
+   "url": "https://westcoastcapitalmortgage.com/hard-money-loans",
+   "name": "Hard Money Loans in California | West Coast Capital Mortgage",
+   "description": "Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.",
+   "inLanguage": "en-US",
+   "datePublished": "2026-11-05",
+   "dateModified": "2026-11-05",
+   "publisher": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "reviewedBy": {
+    "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky"
+   },
+   "breadcrumb": {
+    "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#breadcrumb"
+   },
+   "about": {
+    "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#loan"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://westcoastcapitalmortgage.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Loans",
+     "item": "https://westcoastcapitalmortgage.com/loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Investor Loans",
+     "item": "https://westcoastcapitalmortgage.com/investor-loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Hard Money Loans",
+     "item": "https://westcoastcapitalmortgage.com/hard-money-loans"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Who offers hard money loans in Los Angeles?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "West Coast Capital Mortgage, based in Burbank, offers hard money and private money loans across Los Angeles County and the rest of California: fix and flip, bridge and ground-up construction loans for investors who close in an LLC or corporation, plus Florida and Texas."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is private money the same as hard money?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "In practice, yes. Both describe short-term, interest-only loans secured by investment real estate and sized mainly on the property and the deal. Ours are funded by our private lender, with published guidelines instead of one-off terms."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How much can I borrow with a hard money loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Up to 90% of the purchase price plus 100% of the rehab budget on a fix and flip, within 70% of the after-repair value (75% for qualifying experienced investors). Construction loans fund up to 75% of the land and 100% of the build, and bridge loans up to 70% of value. Loans run from $50,000 to $3 million."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I get a hard money loan for my first flip in California?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. With 680+ credit, a first flip can be financed at 75% up to 90% of the purchase price depending on your score, plus 100% of a light or moderate rehab budget of up to $100,000, on a property in the area where you live that shows at least a 30% projected return."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What credit score do I need for a hard money loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "660 for investors with three or more completed projects in the last three years and 680 for first-time and newer investors. Construction loans need 680, or 660 for builders with five or more completed projects."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do you check my income for a hard money loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No personal income verification. The loan is sized on the property, your credit, your track record and the cash you bring to closing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are California hard money lenders licensed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Companies making or arranging these loans in California are licensed by the Department of Real Estate or the Department of Financial Protection and Innovation. West Coast Capital Mortgage holds California DRE Corporation License #02440065 and NMLS #2817729, and you can check both on the DRE and NMLS Consumer Access websites."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does a hard money loan cost?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more interest is charged only on disbursed funds, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You get all of it in a written term sheet before you pay for an appraisal."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How fast can the loan close?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Timing depends mostly on the appraisal and title, so we start both right after the pre-screen. What moves a closing fastest is a complete file: entity documents, purchase contract, scope of work or plans, insurance and clear title."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I get the rehab or construction money?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The renovation or construction budget is held back at closing. As work is completed you request a draw online in the borrower portal, an inspection confirms the progress and the funds are released. On loans of $100,000 or more, interest is charged only on the money that has actually been disbursed, not on budget still in the holdback."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I need an LLC or corporation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The loan closes in your LLC or corporation, and the owners sign a personal guarantee. No entity yet? Set one up before closing. For closing we need the articles or certificate of formation, the EIN letter, the operating agreement and a recent certificate of good standing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which states and markets do you lend in?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We arrange investor loans for properties in California, Florida and Texas. In Florida and Travis, Harris and Bexar counties in Texas (the Austin, Houston and San Antonio areas), fix and flip, bridge and construction loans need at least three completed projects and a credit score of 680 or higher (700 for construction); the loan is capped at 65% of value (after-repair value on rehab and construction loans) and cost-based leverage is 5% lower, so first-time investors are not eligible there. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible. Rural properties are not eligible for bridge, construction or rental loans, and on fix and flip loans only for investors with three or more projects, at lower leverage."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "LoanOrCredit",
+   "@id": "https://westcoastcapitalmortgage.com/hard-money-loans#loan",
+   "name": "Hard Money Loan",
+   "url": "https://westcoastcapitalmortgage.com/hard-money-loans",
+   "description": "Short-term, interest-only private money loans for California real estate investors: fix and flip, bridge and ground-up construction, up to 90% of purchase and 100% of rehab.",
+   "loanType": "Hard money (private money) loan",
+   "category": "Business-purpose real estate investor loan",
+   "amount": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "minValue": 50000,
+    "maxValue": 3000000
+   },
+   "loanTerm": {
+    "@type": "QuantitativeValue",
+    "value": 12,
+    "unitCode": "MON"
+   },
+   "requiredCollateral": "Non-owner-occupied 1–4 unit residential investment property",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    },
+    {
+     "@type": "State",
+     "name": "Florida"
+    },
+    {
+     "@type": "State",
+     "name": "Texas"
+    }
+   ],
+   "provider": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   }
+  }
+ ]
+}
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wzzlo9s35g");
+</script>
+</head>
+<body class="investor-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2X3X454"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <nav class="topbar-left" aria-label="Utility">
+      <a class="active-service" href="/">Mortgage</a>
+      <a href="https://westccrealty.com">Realty</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <!-- Replace with <img src="assets/logo.png" alt="West Coast Capital Mortgage"> when ready -->
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home">
+      <span class="l1">WEST COAST CAPITAL</span>
+      <span class="l2">MORTGAGE</span>
+    </a>
+    <div class="nav-collapse" id="navc">
+      <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="rates.html">Today's Rates</a><a href="loans.html">Loans</a><a href="investor-loans.html" class="active">Investors</a><a href="resources.html">Resources</a><a href="about.html">About Us</a></nav>
+      <div class="header-cta">
+        <a class="btn btn-blue" href="#investor-review" data-cta="investor-deal">Tell Me Your Scenario</a>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<section class="page-hero inv-hero">
+  <div class="hero-wallpaper" aria-hidden="true">
+    <div class="wallpaper-line" style="top:18%">WEST COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:58%">WEST COAST CAPITAL MORTGAGE</div>
+  </div>
+  <div class="wrap page-hero-inner">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="loans.html">Loans</a> &nbsp;/&nbsp; <a href="investor-loans.html">Investor Loans</a> &nbsp;/&nbsp; Hard Money Loans</div>
+    <h1>Hard Money Loans in California</h1>
+    <p class="lead">Short-term private money for California real estate investors: buy, fix, build or bridge a 1&ndash;4 unit property, with the loan closed in your LLC. Also available in Florida and Texas.</p>
+    <div class="inv-updated"><img class="inv-face" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span><b><a href="/loan-officer">Anatoliy Kanevsky</a></b><em>Founder &middot; NMLS #2775380</em></span></div>
+    <div class="btn-row inv-hero-actions"><a class="btn btn-blue" href="#investor-review">Request a Call</a><a class="btn btn-outline" href="tel:+13106541577">Call 310-654-1577</a></div>
+  </div>
+</section>
+<section class="inv-strip" aria-label="At a glance"><div class="wrap"><ul><li>Up to 90% of the price + 100% of the rehab</li><li>Loans from $50K to $3M</li><li>No personal income verification</li><li>Soft credit pull for terms</li></ul></div></section>
+<section class="inv-terms-sec"><div class="wrap">
+  <div class="inv-terms">
+    <div class="inv-terms-head"><h2>Hard money loan terms</h2></div>
+    <dl class="inv-terms-list"><div class="ts-row"><dt>Programs</dt><dd>Fix and flip, bridge and ground-up construction <small>plus 30-year rental refinances when you keep the property</small></dd></div><div class="ts-row"><dt>Purchase price financed</dt><dd>Up to 90% <small>fix and flip</small></dd></div><div class="ts-row"><dt>Rehab or construction budget</dt><dd>100%, released in draws</dd></div><div class="ts-row"><dt>Loan amount</dt><dd>$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small></dd></div><div class="ts-row"><dt>Term</dt><dd>12 months, interest only <small>no prepayment penalty</small></dd></div><div class="ts-row"><dt>Credit score</dt><dd>From 660 <small>680 for first-time and newer investors</small></dd></div><div class="ts-row"><dt>Where</dt><dd>Statewide in California <small>also Florida and Texas</small></dd></div><div class="ts-row"><dt>Borrower</dt><dd>LLC or corporation <small>non-owner-occupied investment property</small></dd></div></dl>
+    <p class="inv-note">Program maximums for 1&ndash;4 unit residential investment property. Leverage depends on experience, credit, the project and market. Not a commitment to lend.</p>
+  </div>
+</div></section>
+<section><div class="wrap inv-answer">
+  <h2>What is a hard money loan?</h2>
+  <p>A hard money loan is a short-term, interest-only loan secured by investment real estate and sized mainly on the property and the deal rather than your personal income. Investors use it to buy and renovate, to build, or to hold a finished property until it sells or refinances. In California the terms hard money and private money are used for the same kind of loan.</p>
+  <p>Our loans do that job with our private lender behind them: published guidelines, online draw requests and no prepayment penalty on fix and flip, construction and bridge loans.</p>
+</div></section>
+<section class="bg-light" id="programs"><div class="wrap inv-answer">
+  <h2>Hard money programs we offer</h2>
+  <div class="inv-table-wrap" role="region" aria-label="Hard money and private money programs" tabindex="0"><table class="inv-table wide"><caption class="inv-caption">Hard money and private money programs</caption><thead><tr><th scope="col">Hard money program</th><th scope="col">Use it to</th><th scope="col">Maximum leverage</th><th scope="col">Loan size</th><th scope="col">Term</th></tr></thead><tbody><tr><th scope="row"><a href="fix-and-flip-loans.html">Fix and flip</a></th><td>Buy and renovate a 1&ndash;4 unit home</td><td>90% of purchase + 100% of rehab</td><td>$50K&ndash;$3M</td><td>12 months</td></tr><tr><th scope="row"><a href="ground-up-construction-loans.html">Ground-up construction</a></th><td>Build on a lot or a teardown</td><td>75% of land + 100% of construction</td><td>$50K&ndash;$3M</td><td>12 months (18&ndash;24 available)</td></tr><tr><th scope="row"><a href="bridge-loans.html">Bridge</a></th><td>Hold a finished property while it sells or leases</td><td>70% of value</td><td>$50K&ndash;$3M</td><td>12 months</td></tr><tr><th scope="row"><a href="multifamily-bridge-loans.html">Multifamily bridge</a></th><td>Buy and renovate 5+ units</td><td>75% of purchase + 100% of renovation</td><td>$2M&ndash;$5M</td><td>18&ndash;24 months</td></tr><tr><th scope="row"><a href="rental-portfolio-loans.html">Rental refinance</a></th><td>Keep the property long term</td><td>80% LTV</td><td>Up to $2M</td><td>30 years</td></tr></tbody></table></div>
+</div></section>
+<section><div class="wrap inv-answer">
+  <h2>Where we lend in California</h2>
+  <p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit. Rural properties are financed for experienced investors on fix and flip loans, at lower leverage.</p>
+  <p>We also lend in Florida and Texas, with market rules explained in the questions below.</p>
+</div></section>
+<section class="bg-light"><div class="wrap inv-answer">
+  <h2>What a hard money loan costs</h2>
+  <p>Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more you pay interest only on money that has been disbursed, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You see all of it in a written term sheet before you pay for an appraisal.</p>
+</div></section>
+<section class="bg-light"><div class="wrap">
+  <div class="inv-two">
+    <div><h2 class="inv-h2">What happens after you send a deal</h2><p class="lead">Same person from the first call to the payoff.</p></div>
+    <ol class="steps"><li><b>We look at the numbers</b><span>Address, price, budget, what it will sell or rent for, and your track record. By form or by phone. No application and no credit check yet.</span></li><li><b>You get a straight answer</b><span>Which program fits and roughly how much leverage to expect, before you pay for an appraisal. If the deal doesn&rsquo;t work, we say so.</span></li><li><b>Written terms</b><span>Credit is checked with a soft pull that doesn&rsquo;t touch your score. Then we order the appraisal and line up title, insurance and your entity documents.</span></li><li><b>Close in your LLC</b><span>The rehab or construction budget is released through draws you request online as work is completed.</span></li></ol>
+  </div>
+</div></section>
+<section class="inv-person-sec"><div class="wrap">
+  <div class="inv-person">
+    <img class="inv-person-photo" src="assets/anatoliy-kanevsky-portrait.webp" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" width="720" height="810" loading="lazy" decoding="async">
+    <div class="inv-person-note">
+      <h2 class="inv-h2">Send me the deal first</h2>
+      <p>Send me the address, the price, your budget and what it will sell for. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>
+      <div class="inv-sign">
+        <span class="inv-sign-name" aria-hidden="true">Anatoliy Kanevsky</span>
+        <span class="inv-sign-meta"><a href="/loan-officer">Anatoliy Kanevsky</a>, founder &middot; NMLS #2775380 &middot; CA DRE #01385024</span>
+        <span class="inv-sign-meta">Direct line <a href="tel:+13106865053">310-686-5053</a> &middot; Burbank office</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section class="bg-light" id="faq"><div class="wrap inv-faq">
+  <h2 class="inv-h2">Questions about hard money loans</h2>
+  <details class="acc"><summary>Who offers hard money loans in Los Angeles?</summary><div class="acc-body">West Coast Capital Mortgage, based in Burbank, offers hard money and private money loans across Los Angeles County and the rest of California: fix and flip, bridge and ground-up construction loans for investors who close in an LLC or corporation, plus Florida and Texas.</div></details><details class="acc"><summary>Is private money the same as hard money?</summary><div class="acc-body">In practice, yes. Both describe short-term, interest-only loans secured by investment real estate and sized mainly on the property and the deal. Ours are funded by our private lender, with published guidelines instead of one-off terms.</div></details><details class="acc"><summary>How much can I borrow with a hard money loan?</summary><div class="acc-body">Up to 90% of the purchase price plus 100% of the rehab budget on a fix and flip, within 70% of the after-repair value (75% for qualifying experienced investors). Construction loans fund up to 75% of the land and 100% of the build, and bridge loans up to 70% of value. Loans run from $50,000 to $3 million.</div></details><details class="acc"><summary>Can I get a hard money loan for my first flip in California?</summary><div class="acc-body">Yes. With 680+ credit, a first flip can be financed at 75% up to 90% of the purchase price depending on your score, plus 100% of a light or moderate rehab budget of up to $100,000, on a property in the area where you live that shows at least a 30% projected return.</div></details><details class="acc"><summary>What credit score do I need for a hard money loan?</summary><div class="acc-body">660 for investors with three or more completed projects in the last three years and 680 for first-time and newer investors. Construction loans need 680, or 660 for builders with five or more completed projects.</div></details><details class="acc"><summary>Do you check my income for a hard money loan?</summary><div class="acc-body">No personal income verification. The loan is sized on the property, your credit, your track record and the cash you bring to closing.</div></details><details class="acc"><summary>Are California hard money lenders licensed?</summary><div class="acc-body">Companies making or arranging these loans in California are licensed by the Department of Real Estate or the Department of Financial Protection and Innovation. West Coast Capital Mortgage holds California DRE Corporation License #02440065 and NMLS #2817729, and you can check both on the DRE and NMLS Consumer Access websites.</div></details><details class="acc"><summary>What does a hard money loan cost?</summary><div class="acc-body">Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more interest is charged only on disbursed funds, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You get all of it in a written term sheet before you pay for an appraisal.</div></details><details class="acc"><summary>How fast can the loan close?</summary><div class="acc-body">Timing depends mostly on the appraisal and title, so we start both right after the pre-screen. What moves a closing fastest is a complete file: entity documents, purchase contract, scope of work or plans, insurance and clear title.</div></details><details class="acc"><summary>How do I get the rehab or construction money?</summary><div class="acc-body">The renovation or construction budget is held back at closing. As work is completed you request a draw online in the borrower portal, an inspection confirms the progress and the funds are released. On loans of $100,000 or more, interest is charged only on the money that has actually been disbursed, not on budget still in the holdback.</div></details><details class="acc"><summary>Do I need an LLC or corporation?</summary><div class="acc-body">Yes. The loan closes in your LLC or corporation, and the owners sign a personal guarantee. No entity yet? Set one up before closing. For closing we need the articles or certificate of formation, the EIN letter, the operating agreement and a recent certificate of good standing.</div></details><details class="acc"><summary>Which states and markets do you lend in?</summary><div class="acc-body">We arrange investor loans for properties in California, Florida and Texas. In Florida and Travis, Harris and Bexar counties in Texas (the Austin, Houston and San Antonio areas), fix and flip, bridge and construction loans need at least three completed projects and a credit score of 680 or higher (700 for construction); the loan is capped at 65% of value (after-repair value on rehab and construction loans) and cost-based leverage is 5% lower, so first-time investors are not eligible there. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible. Rural properties are not eligible for bridge, construction or rental loans, and on fix and flip loans only for investors with three or more projects, at lower leverage.</div></details>
+</div></section>
+<section class="inv-also"><div class="wrap">
+  <h2 class="inv-h2">Not quite this deal?</h2>
+  <ul class="inv-also-list"><li><a href="investor-loans.html">Investor Loans</a><span>Compare every investor program side by side.</span></li><li><a href="fix-and-flip-loans.html">Fix and Flip Loans</a><span>Up to 90% of purchase and 100% of rehab.</span></li><li><a href="ground-up-construction-loans.html">Ground-Up Construction Loans</a><span>Land plus 100% of the construction budget.</span></li><li><a href="bridge-loans.html">Investor Bridge Loans</a><span>Finished properties listed for sale or leasing up.</span></li><li><a href="rental-portfolio-loans.html">Rental Portfolio Loans</a><span>Two to ten rentals in one 30-year loan.</span></li><li><a href="multifamily-bridge-loans.html">Multifamily Bridge Loans</a><span>$2M&ndash;$5M value-add loans in California.</span></li><li><a href="dscr-loans.html">DSCR Loans</a><span>Qualify a single rental on its rent.</span></li></ul>
+</div></section>
+<section><div class="wrap"><div class="cta-band inv-cta">
+  <h2>Have a deal in California?</h2><p>Send the address, price and budget. You&rsquo;ll hear which loan fits and how much leverage to expect before you pay for an appraisal.</p>
+  <div class="btn-row"><a class="btn btn-lg btn-blue" href="#investor-review">Tell Me Your Scenario</a><a class="btn btn-lg btn-outline-light" href="tel:+13106541577">Call 310-654-1577</a></div>
+  <p class="inv-cta-who"><img class="inv-face sm" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span>Anatoliy Kanevsky reviews investor deals himself. Direct line <a href="tel:+13106865053">310-686-5053</a></span></p>
+</div></div></section>
+<section class="inv-disclosure"><div class="wrap">
+  <p><strong>Business-purpose loans only.</strong> The programs on this page finance non-owner-occupied investment property purchased or refinanced by an LLC or corporation. They are not available for personal, family or household purposes or for a home you live in. Owners typically sign a personal guarantee. Loans are made or arranged by West Coast Capital Mortgage (NMLS #2817729, CA DRE Corporation License #02440065) and funded by our private lender. Figures are program maximums under current program guidelines as of November 5, 2026. Actual leverage, loan amount, rate, term and eligibility depend on experience, credit, liquidity, the property, the market and underwriting. Some markets receive lower leverage or are not eligible, and programs change without notice. Nothing on this page is an offer of credit, a rate quote or a commitment to lend.</p>
+</div></section>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Phone:</b> <a href="tel:3106541577">(310) 654-1577</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502<br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="/loan-officer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
+    <div class="footer-bottom">
+      <div class="row">
+        <nav aria-label="Legal">
+          <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
+          <a href="privacy-policy.html" style="display:inline;margin-right:18px">Privacy Policy</a>
+          <a href="terms.html" style="display:inline;margin-right:18px">Terms of Use</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
+        </nav>
+        <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
+      </div>
+      <p>West Coast Capital Mortgage Inc. Company NMLS #2817729. CA DRE Corporation License #02440065. Anatoliy Kanevsky NMLS #2775380, CA Broker DRE #01385024. Equal Housing Opportunity. Information is provided for
+      educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
+      and underwriting approval.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="i18n-investor.js?v=20261105-investor-loans"></script>
+<script src="i18n.js?v=20261105-investor-loans"></script>
+<script src="script.js?v=20261105-investor-loans"></script>
+<form name="investor-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="investor-lead">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="goal">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="loan_amount">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="monthly_rent">
+  <input name="full_name">
+  <input name="email">
+  <input name="phone">
+  <textarea name="message"></textarea>
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="lead-details" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="lead-details">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="lead_submission_id">
+  <input name="source_form">
+  <input name="full_name">
+  <input name="phone">
+  <input name="goal">
+  <input name="property_type">
+  <input name="income_documentation">
+  <input name="statements_available">
+  <input name="occupancy">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="loan_amount">
+  <input name="monthly_rent">
+  <input name="self_employed_years">
+  <input name="country_of_residence">
+  <input name="email">
+  <input name="home_value">
+  <input name="mortgage_balance">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="partial-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="partial-lead">
+  <input type="text" name="company">
+  <input name="source_form">
+  <input name="page_path">
+  <input name="state_context">
+  <input name="name">
+  <input name="first_name">
+  <input name="last_name">
+  <input name="email">
+  <input name="phone">
+  <input name="program_interest">
+  <textarea name="details"></textarea>
+  <input name="submission_id">
+  <input name="partial_reason">
+  <input name="status">
+  <input name="sms_consent">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="referrer">
+</form>
+</body>
+</html>

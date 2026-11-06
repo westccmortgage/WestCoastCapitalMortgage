@@ -903,9 +903,8 @@ def _home_compact():
       <h2>Experience behind every decision.</h2>
     </div>
     <div class="mortgage-compact-about-copy">
-      <p>West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional helping clients move forward since 2004.</p>
+      <p>West Coast Capital Mortgage is led by Anatoliy Kanevsky, a mortgage and real estate professional helping clients move forward.</p>
       <div class="mortgage-about-facts" aria-label="Company experience">
-        <span>SINCE 2004</span>
         <span>MORTGAGE &amp; REAL ESTATE</span>
         <span>HUMAN GUIDANCE</span>
       </div>
@@ -1530,7 +1529,6 @@ def _about():
       <ul class="founder-cred">
         <li>Founder, West Coast Capital Mortgage</li>
         <li>California Real Estate Broker &mdash; DRE #01385024</li>
-        <li>Mortgage and real estate professional since 2004</li>
         <li>Purchase, refinance, jumbo, Non-QM, and DSCR experience</li>
         <li>Luxury residential development background</li>
       </ul>

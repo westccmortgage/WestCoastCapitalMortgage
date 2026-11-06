@@ -666,3 +666,186 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .stat-ask{margin:22px 0 0;font-size:1rem;font-weight:600;color:var(--navy)}
 .stat-ask a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 .stat-ask + .stat-note{margin-top:10px}
+
+/* ---------- Real-estate investor section (tools/build_investor_loan_pages.py) ---------- */
+.inv-updated{font-size:.84rem;color:var(--gray);margin:16px 0 0}
+.inv-updated a{color:var(--blue);font-weight:600}
+.inv-hero-actions{margin-top:22px}
+.inv-highlights .section-head{max-width:760px}
+.inv-answer{max-width:940px}
+.inv-answer > p{max-width:80ch}
+.inv-answer a,.inv-note a,.acc-body a,.feature-list span a,.steps span a{color:var(--blue);font-weight:600}
+.inv-qa h3{font-size:1.18rem;margin:30px 0 8px}
+.inv-qa h3:first-child{margin-top:0}
+.inv-table-wrap{margin:24px 0 0;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:12px;background:#fff}
+.inv-table-wrap:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.inv-table{width:100%;border-collapse:collapse;font-size:.93rem;line-height:1.5}
+.inv-caption{caption-side:top;text-align:left;padding:14px 18px 12px;font-weight:700;color:var(--navy);font-size:.95rem;border-bottom:1px solid var(--border)}
+.inv-table th,.inv-table td{padding:12px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
+.inv-table thead th{background:var(--navy);color:#fff;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.inv-table tbody th{font-weight:700;color:var(--navy)}
+.inv-table tbody td{color:var(--black)}
+.inv-table tbody tr:last-child th,.inv-table tbody tr:last-child td{border-bottom:0}
+.inv-table tbody tr:nth-child(even){background:#fafbfc}
+.inv-table a{color:var(--blue);font-weight:700}
+.inv-note{color:var(--gray);font-size:.86rem;line-height:1.6;margin:16px 0 0;max-width:85ch}
+.inv-split{display:grid;grid-template-columns:1fr 1fr;gap:28px 54px}
+.inv-split h3{margin-bottom:18px}
+.inv-two{display:grid;grid-template-columns:.85fr 1.15fr;gap:54px;align-items:start}
+.inv-two .section-head{margin-bottom:0}
+.inv-cards .card,.inv-related .card{display:flex;flex-direction:column}
+.inv-cards .card .more,.inv-related .card .more{margin-top:auto;padding-top:10px}
+.inv-figures{list-style:none;margin:4px 0 14px;padding:0;display:grid;gap:7px}
+.inv-figures li{position:relative;padding-left:18px;font-size:.92rem;font-weight:600;color:var(--navy);line-height:1.45}
+.inv-figures li::before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.card:hover .inv-figures li,.card:focus-visible .inv-figures li{color:#fff}
+.card:hover .inv-figures li::before,.card:focus-visible .inv-figures li::before{background:#5aa9ff}
+.inv-disclosure{padding:34px 0 46px;border-top:1px solid var(--border)}
+.inv-disclosure p{margin:0;color:var(--gray);font-size:.8rem;line-height:1.7;max-width:110ch}
+@media(max-width:960px){
+  .inv-two{grid-template-columns:1fr;gap:28px}
+}
+@media(max-width:860px){
+  .has-quick-lead .inv-updated{display:none}
+}
+@media(max-width:760px){
+  .inv-split{grid-template-columns:1fr}
+  .inv-table{font-size:.86rem}
+  .inv-table.wide{min-width:640px}
+  .inv-table th,.inv-table td{padding:10px 12px}
+  .inv-caption{padding:12px}
+}
+@media(max-width:560px){
+  .inv-cards.grid-3,.inv-related.grid-3{grid-template-columns:1fr}
+}
+
+/* ---------- Investor section: human layer (Nov 5, 2026) ---------- */
+@media(min-width:1101px){html[lang="en"] .mainnav a{white-space:nowrap}}
+@media(min-width:961px) and (max-width:1260px){.mainnav{gap:0}.mainnav a{padding:10px 8px;font-size:.88rem;letter-spacing:.01em}.header-inner{gap:16px}.header-cta .btn{padding:11px 14px}}
+.investor-page .btn-row{flex-wrap:wrap}
+.inv-h2{margin:0 0 14px}
+.inv-lead{max-width:62ch;margin:0 0 26px}
+.inv-face{--s:44px;display:inline-block;flex:none;width:var(--s);height:var(--s);border-radius:50%;background:#e9edf2 url(assets/anatoliy-kanevsky.webp) no-repeat;background-size:calc(var(--s)*4.5) auto;background-position:calc(var(--s)*-1.825) calc(var(--s)*-.29);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--border)}
+.inv-face.sm{--s:38px}
+.inv-updated{display:flex;align-items:center;gap:12px;line-height:1.45}
+.inv-terms-sec{padding-top:56px}
+.inv-terms{background:#fbf8f3;border:1px solid #e8e1d6;border-radius:14px;padding:28px 32px;max-width:880px}
+.inv-terms-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 18px;margin-bottom:10px}
+.inv-terms-head h2{margin:0;font-size:1.5rem}
+.inv-stamp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a6d3b;border:1.5px solid #c9b48a;border-radius:6px;padding:4px 9px;transform:rotate(-2deg)}
+.inv-terms-list{margin:0}
+.ts-row{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px dashed #ddd3c3}
+.ts-row:last-child{border-bottom:0}
+.ts-row dt{flex:0 0 38%;color:#5b5b5b;font-size:.95rem}
+.ts-row dd{margin:0;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.ts-row dd small{display:block;font-weight:500;color:var(--gray);font-size:.84rem;margin-top:2px}
+.inv-ledger{background:#fbf8f3;border-color:#e8e1d6;max-width:640px}
+.inv-ledger .inv-table tbody tr:nth-child(even){background:transparent}
+.inv-ledger .inv-table td{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.inv-ledger .inv-table tbody tr:has(strong) th,.inv-ledger .inv-table tbody tr:has(strong) td{border-top:2px solid var(--navy)}
+.inv-pick{list-style:none;margin:0;padding:0;border-top:1px solid var(--border)}
+.inv-pick a{display:grid;grid-template-columns:1.2fr 1fr 24px;align-items:center;gap:18px;padding:20px 6px;border-bottom:1px solid var(--border);color:var(--navy);transition:background .15s}
+.inv-pick a:hover{background:#f6f9fd}
+.pick-q{font-size:1.18rem;font-weight:600}
+.pick-a b{display:block;color:var(--blue)}
+.pick-a small{color:var(--gray);font-size:.9rem}
+.pick-go{color:var(--blue);font-size:1.3rem;transition:transform .15s}
+.inv-pick a:hover .pick-go{transform:translateX(4px)}
+.inv-person-sec{background:#fbf8f3;border-top:1px solid #efe8dc;border-bottom:1px solid #efe8dc}
+.inv-person{display:grid;grid-template-columns:300px 1fr;gap:44px;align-items:center;max-width:980px}
+.inv-person-photo{width:100%;height:auto;border-radius:14px;background:#fff;mix-blend-mode:multiply}
+.inv-person-note p{font-size:1.06rem;line-height:1.7;max-width:62ch}
+.inv-person-note a{color:var(--blue);font-weight:600}
+.inv-sign{margin-top:18px;display:grid;gap:3px}
+.inv-sign-name{font-family:Caveat,cursive;font-size:2.2rem;line-height:1;color:var(--navy);transform:rotate(-3deg);transform-origin:left;margin-bottom:6px}
+.inv-sign-meta{font-size:.86rem;color:var(--gray)}
+.inv-cycle{list-style:none;counter-reset:cyc;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.inv-cycle li{counter-increment:cyc;position:relative;padding:18px 22px 0 0;border-top:3px solid var(--blue)}
+.inv-cycle li::before{content:counter(cyc);position:absolute;top:-15px;left:0;width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid var(--blue);font-weight:800;font-size:.8rem;display:grid;place-items:center;color:var(--blue)}
+.inv-cycle b{display:block;font-size:1.1rem;margin:8px 0 6px;color:var(--navy)}
+.inv-cycle span{color:#444;font-size:.95rem;line-height:1.6}
+.inv-cycle a{color:var(--blue);font-weight:600}
+.inv-checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.inv-checklist li{position:relative;padding-left:30px;line-height:1.55}
+.inv-checklist li::before{content:"";position:absolute;left:0;top:.2em;width:16px;height:16px;border:2px solid var(--navy);border-radius:3px}
+.inv-checklist-box{background:#fbf8f3;border:1px solid #e8e1d6;border-radius:12px;padding:22px 24px}
+.inv-also-list{list-style:none;margin:0;padding:0;columns:2;column-gap:40px}
+.inv-also-list li{break-inside:avoid;padding:8px 0}
+.inv-also-list a{color:var(--blue);font-weight:700;margin-right:8px}
+.inv-also-list span{color:var(--gray);font-size:.92rem}
+.inv-cta-who{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px auto 0;font-size:.92rem;opacity:.9;max-width:560px;text-align:left}
+.inv-cta-who a{color:inherit;text-decoration:underline;white-space:nowrap}
+.inv-ledger .inv-table tbody th{width:62%}
+.inv-ledger .inv-table thead th{background:transparent;color:var(--navy);border-bottom:2px solid var(--navy)}
+.inv-ledger .inv-table thead th:last-child{text-align:right}
+@media(max-width:860px){
+  .inv-person{grid-template-columns:1fr;gap:22px}
+  .inv-person-photo{max-width:260px}
+  .inv-cycle{grid-template-columns:1fr 1fr;gap:34px 0}
+}
+@media(max-width:560px){
+  .inv-terms{padding:20px 18px}
+  .ts-row{flex-direction:column;gap:2px}
+  .ts-row dt{flex:none;font-size:.86rem}
+  .inv-pick a{grid-template-columns:1fr 20px;gap:6px 12px;padding:16px 2px}
+  .pick-q{grid-column:1;font-size:1.05rem}
+  .pick-a{grid-column:1}
+  .pick-go{grid-column:2;grid-row:1/span 2}
+  .inv-cycle{grid-template-columns:1fr}
+  .inv-also-list{columns:1}
+  .inv-ledger .inv-table td{white-space:normal}
+}
+@media(min-width:961px){.inv-hero{scroll-margin-top:84px}}
+.inv-answer a.btn-blue,.inv-answer a.btn-blue:hover{color:#fff}
+@media(max-width:560px){.btn-row .btn{max-width:100%;white-space:normal;text-align:center}}
+/* Home page: the investor card stands out from the residential cards */
+.mortgage-funnel-card.investor-card{background:var(--navy);color:#fff}
+.mortgage-funnel-card.investor-card h2{color:#fff}
+.mortgage-funnel-card.investor-card p{color:rgba(255,255,255,.82)}
+.mortgage-funnel-card.investor-card .mortgage-funnel-meta,.mortgage-funnel-card.investor-card .mortgage-funnel-action{color:#7cc0ff}
+.mortgage-funnel-card.investor-card:hover,.mortgage-funnel-card.investor-card:focus-visible{background:var(--blue)}
+.mortgage-funnel-card.investor-card:hover .mortgage-funnel-meta,.mortgage-funnel-card.investor-card:hover .mortgage-funnel-action,.mortgage-funnel-card.investor-card:focus-visible .mortgage-funnel-meta,.mortgage-funnel-card.investor-card:focus-visible .mortgage-funnel-action{color:#fff}
+/* Investor pages: trust strip under the hero and the "your loan closes with us" list */
+.inv-strip{background:var(--navy);color:#fff;padding:16px 0}
+.inv-strip ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 28px}
+.inv-strip li{position:relative;padding-left:24px;font-weight:600;font-size:.95rem;letter-spacing:.01em}
+.inv-strip li::before{content:"";position:absolute;left:0;top:.28em;width:14px;height:8px;border-left:2.5px solid #7cc0ff;border-bottom:2.5px solid #7cc0ff;transform:rotate(-45deg)}
+.inv-get li{font-size:1.02rem}
+.inv-get li b{color:var(--navy)}
+@media(max-width:760px){.inv-strip ul{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}.inv-strip li{font-size:.86rem;padding-left:20px}}
+@media(max-width:380px){.inv-strip ul{grid-template-columns:1fr}}
+.investor-page .inv-hero h1{font-size:clamp(2.1rem,3.6vw,3.3rem);line-height:1.08}
+/* Longer ES/RU/ZH menu labels: let them wrap and tighten spacing so the header never overflows */
+@media(min-width:961px){
+  html:not([lang="en"]) .mainnav a{white-space:normal;line-height:1.15;text-align:center}
+}
+@media(min-width:961px) and (max-width:1440px){
+  html:not([lang="en"]) .mainnav{gap:0}
+  html:not([lang="en"]) .mainnav a{padding:8px 6px;font-size:.84rem;letter-spacing:0}
+  html:not([lang="en"]) .header-inner{gap:14px}
+  html:not([lang="en"]) .header-cta .btn{padding:10px 12px;font-size:.72rem}
+}
+/* Anatoliy's photo: real head-and-shoulders image instead of a tight CSS face crop */
+.inv-face{display:inline-block;flex:none;width:76px;height:76px;border-radius:50%;object-fit:cover;background:#eef3f9;border:3px solid #fff;box-shadow:0 6px 18px rgba(11,35,69,.18),0 0 0 1px rgba(11,35,69,.08)}
+.inv-face.sm{width:58px;height:58px}
+.inv-updated{display:flex;align-items:center;gap:16px;margin:22px 0 0;font-size:1rem;color:var(--gray)}
+.inv-updated span{display:flex;flex-direction:column;gap:2px;line-height:1.35}
+.inv-updated b{font-size:1.06rem;color:var(--navy)}
+.inv-updated b a{color:var(--navy);font-weight:800}
+.inv-updated em{font-style:normal;font-size:.9rem;color:#4b5563}
+.inv-updated small{font-size:.82rem;color:var(--gray)}
+.inv-person{grid-template-columns:400px 1fr;gap:56px}
+.inv-person-photo{border-radius:18px;mix-blend-mode:normal;background:#fff;box-shadow:0 18px 40px rgba(11,35,69,.16);border:1px solid #ece4d6}
+.inv-cta-who{gap:14px;font-size:.95rem}
+@media(max-width:960px){.inv-person{grid-template-columns:320px 1fr;gap:36px}}
+@media(max-width:860px){.inv-person{grid-template-columns:1fr}.inv-person-photo{max-width:340px}}
+/* Investor hub: real numbers band */
+.inv-numbers{padding:34px 0 8px}
+.inv-num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:14px;background:#fff}
+.inv-num{padding:22px 24px;border-left:1px solid var(--border)}
+.inv-num:first-child{border-left:0}
+.inv-num b{display:block;font-size:2rem;line-height:1.1;color:var(--navy);letter-spacing:-.02em}
+.inv-num span{display:block;margin-top:6px;color:var(--gray);font-size:.92rem;line-height:1.4}
+.inv-num a{color:var(--blue);font-weight:600}
+@media(max-width:860px){.inv-num-grid{grid-template-columns:1fr 1fr}.inv-num:nth-child(3){border-left:0}.inv-num:nth-child(n+3){border-top:1px solid var(--border)}}
+@media(max-width:420px){.inv-num{padding:16px}.inv-num b{font-size:1.5rem}}

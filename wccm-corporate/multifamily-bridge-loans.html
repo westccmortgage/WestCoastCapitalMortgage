@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K2X3X454');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18417657219"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
+  window.__wccmAdsLeadScanner=setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){
+      var item=dl[window.__wccmAdsLeadCursor++];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
+        item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
+        window.gtag('event','conversion',{
+          'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
+          'value':1.0,
+          'currency':'USD',
+          'transaction_id':leadEventId
+        });
+        /* Only emit known mortgage categories and technical form/page identifiers.
+           Never send borrower text, contact fields, or URL query parameters to GA4. */
+        var knownPrograms=[
+          'General mortgage inquiry','Jumbo','DSCR / Investor',
+          'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
+          'Condo','Foreign National','Mortgage Second Opinion',
+          'Investor Loans','Fix & Flip','Ground-Up Construction','Bridge',
+          'Rental Portfolio','Multifamily Bridge'
+        ];
+        var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
+        /* The Florida lead funnel prefixes otherwise approved mortgage categories.
+           Retain that market context while still rejecting arbitrary or personal text. */
+        var floridaPrefix='Florida / ';
+        var isFlorida=rawProgram.indexOf(floridaPrefix)===0;
+        var baseProgram=isFlorida?rawProgram.slice(floridaPrefix.length):rawProgram;
+        var safeProgram=knownPrograms.indexOf(baseProgram)>=0?
+          (isFlorida?floridaPrefix:'')+baseProgram:'Other Mortgage Inquiry';
+        var rawForm=typeof item.form_name==='string'?item.form_name:'';
+        var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
+        var rawPath=window.location.pathname||'/';
+        var safePath=(rawPath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(rawPath))?rawPath:'/';
+        window.gtag('event','generate_lead',{
+          'send_to':'G-GB57YWMKBH',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId,
+          'form_name':safeForm,
+          'program_interest':safeProgram,
+          'page_path':safePath
+        });
+      }
+    }
+  },200);
+})();
+
+window.gtag('js',new Date());
+window.gtag('config','AW-18417657219');
+window.gtag('config','G-GB57YWMKBH');
+</script>
+<!-- End Google tag - Google Ads -->
+<!-- OpenAI Ads pixel -->
+<script>
+(function(w,d,s,u){
+  if(w.oaiq)return;
+  var q=function(){q.q.push(arguments);};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{};
+  setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{type:"customer_action"},
+        leadEventId?{event_id:leadEventId}:undefined);
+    }
+  },200);
+})();
+</script>
+<!-- End OpenAI Ads pixel -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multifamily Bridge Loans | West Coast Capital Mortgage</title>
+<meta name="description" content="Value-add bridge loans for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, 18–24 months plus extensions.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261105-investor-loans">
+<link rel="canonical" href="https://westcoastcapitalmortgage.com/multifamily-bridge-loans">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="West Coast Capital Mortgage">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
+<meta property="og:title" content="Multifamily Bridge Loans | West Coast Capital Mortgage">
+<meta property="og:description" content="Value-add bridge loans for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, 18–24 months plus extensions.">
+<meta property="og:url" content="https://westcoastcapitalmortgage.com/multifamily-bridge-loans">
+<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Multifamily Bridge Loans | West Coast Capital Mortgage">
+<meta name="twitter:description" content="Value-add bridge loans for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, 18–24 months plus extensions.">
+<meta name="twitter:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FinancialService",
+   "@id": "https://westcoastcapitalmortgage.com/#organization",
+   "name": "West Coast Capital Mortgage Inc.",
+   "legalName": "West Coast Capital Mortgage Inc.",
+   "url": "https://westcoastcapitalmortgage.com",
+   "logo": "https://westcoastcapitalmortgage.com/assets/logo.svg",
+   "telephone": "+1-310-654-1577",
+   "email": "westccmortgage@gmail.com",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "150 E Olive Ave, Unit 112",
+    "addressLocality": "Burbank",
+    "addressRegion": "CA",
+    "postalCode": "91502",
+    "addressCountry": "US"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.1776,
+    "longitude": -118.3085
+   },
+   "sameAs": [
+    "https://g.page/r/CXUFd3B5e-n3EBM",
+    "https://www.facebook.com/people/West-Coast-Capital-Mortgage/61585857321645/",
+    "https://www.instagram.com/westccmortgage/",
+    "https://www.tiktok.com/@westccmortgage",
+    "https://www.youtube.com/channel/UCeV1dkJNhcJS-N-5oRXFFzQ",
+    "https://www.yelp.com/biz/west-coast-capital-mortgage-burbank",
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729"
+   ],
+   "priceRange": "$$",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    },
+    {
+     "@type": "State",
+     "name": "Florida"
+    },
+    {
+     "@type": "State",
+     "name": "Texas"
+    }
+   ],
+   "knowsAbout": [
+    "Fix and flip loans",
+    "Hard money loans",
+    "Private money loans",
+    "Ground-up construction loans",
+    "Bridge loans",
+    "DSCR loans",
+    "Rental portfolio loans",
+    "Multifamily bridge loans",
+    "Jumbo loans",
+    "Non-QM loans",
+    "Bank statement loans"
+   ]
+  },
+  {
+   "@type": "Person",
+   "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky",
+   "name": "Anatoliy Kanevsky",
+   "jobTitle": "Founder",
+   "identifier": "NMLS #2775380",
+   "worksFor": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "image": "https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky-avatar.webp",
+   "sameAs": [
+    "https://www.nmlsconsumeraccess.org/EntityDetails.aspx/INDIVIDUAL/2775380"
+   ],
+   "knowsAbout": [
+    "Real estate investor financing",
+    "Residential development",
+    "Mortgage lending"
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#webpage",
+   "url": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans",
+   "name": "Multifamily Bridge Loans | West Coast Capital Mortgage",
+   "description": "Value-add bridge loans for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, 18–24 months plus extensions.",
+   "inLanguage": "en-US",
+   "datePublished": "2026-11-05",
+   "dateModified": "2026-11-05",
+   "publisher": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   },
+   "reviewedBy": {
+    "@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky"
+   },
+   "breadcrumb": {
+    "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#breadcrumb"
+   },
+   "about": {
+    "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#loan"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://westcoastcapitalmortgage.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Loans",
+     "item": "https://westcoastcapitalmortgage.com/loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Investor Loans",
+     "item": "https://westcoastcapitalmortgage.com/investor-loans"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Multifamily Bridge Loans",
+     "item": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the exit for a multifamily bridge loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The program is built for a refinance into long-term agency financing, such as Freddie Mac small-balance loans, once the property is stabilized at a 1.25x DSCR."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How many units do I need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Five or more, in a 100% residential building with an as-is value of at least $100,000 per unit."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What experience do I need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Experience owning and operating multifamily property in the same submarket, including renovation, with past projects taken to full or substantial stabilization. Sponsor references are checked."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the borrower requirements?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A single-purpose LLC or corporation (newly formed, or an existing one that owns no other property) with no more than two members, a credit score of 725 or higher for each member, no bankruptcy or foreclosure in seven years, liquidity of 10% of the loan after closing and net worth at least equal to the loan amount. Foreign nationals are not eligible."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What renovations can be financed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Light to moderate value-add work up to about half of the purchase price. Structural work, additions, expansions and ground-up construction are not eligible."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does prepayment work?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You can pay the loan off at any time; a minimum of 12 months of interest is due at payoff. A 12-month interest and carry reserve is funded at closing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where can I use a multifamily bridge loan?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For apartment buildings in primary and secondary markets in California, bought directly from the seller (no wholesale deals), one property per loan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What due diligence is required?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A commercial appraisal, Phase I environmental report, property condition report, renovation budget review, site visit, sponsor interview and monthly rent rolls."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "LoanOrCredit",
+   "@id": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans#loan",
+   "name": "Multifamily Bridge Loan",
+   "url": "https://westcoastcapitalmortgage.com/multifamily-bridge-loans",
+   "description": "Short-term, interest-only value-add loan for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, within 80% of total cost.",
+   "loanType": "Multifamily bridge (value-add) loan",
+   "category": "Business-purpose real estate investor loan",
+   "amount": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "minValue": 2000000,
+    "maxValue": 5000000
+   },
+   "loanTerm": {
+    "@type": "QuantitativeValue",
+    "value": 24,
+    "unitCode": "MON"
+   },
+   "requiredCollateral": "100% residential apartment building with five or more units",
+   "areaServed": [
+    {
+     "@type": "State",
+     "name": "California"
+    }
+   ],
+   "provider": {
+    "@id": "https://westcoastcapitalmortgage.com/#organization"
+   }
+  }
+ ]
+}
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wzzlo9s35g");
+</script>
+</head>
+<body class="investor-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2X3X454"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <nav class="topbar-left" aria-label="Utility">
+      <a class="active-service" href="/">Mortgage</a>
+      <a href="https://westccrealty.com">Realty</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <!-- Replace with <img src="assets/logo.png" alt="West Coast Capital Mortgage"> when ready -->
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home">
+      <span class="l1">WEST COAST CAPITAL</span>
+      <span class="l2">MORTGAGE</span>
+    </a>
+    <div class="nav-collapse" id="navc">
+      <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="rates.html">Today's Rates</a><a href="loans.html">Loans</a><a href="investor-loans.html" class="active">Investors</a><a href="resources.html">Resources</a><a href="about.html">About Us</a></nav>
+      <div class="header-cta">
+        <a class="btn btn-blue" href="#investor-review" data-cta="investor-deal">Tell Me Your Scenario</a>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<section class="page-hero inv-hero">
+  <div class="hero-wallpaper" aria-hidden="true">
+    <div class="wallpaper-line" style="top:18%">WEST COAST CAPITAL MORTGAGE</div>
+    <div class="wallpaper-line w2" style="top:58%">WEST COAST CAPITAL MORTGAGE</div>
+  </div>
+  <div class="wrap page-hero-inner">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="loans.html">Loans</a> &nbsp;/&nbsp; <a href="investor-loans.html">Investor Loans</a> &nbsp;/&nbsp; Multifamily Bridge Loans</div>
+    <h1>Multifamily Bridge Loans</h1>
+    <p class="lead">Buy, renovate and stabilize a 5+ unit apartment building in California, then refinance into long-term agency financing.</p>
+    <div class="inv-updated"><img class="inv-face" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span><b><a href="/loan-officer">Anatoliy Kanevsky</a></b><em>Founder &middot; NMLS #2775380</em></span></div>
+    <div class="btn-row inv-hero-actions"><a class="btn btn-blue" href="#investor-review">Request a Call</a><a class="btn btn-outline" href="tel:+13106541577">Call 310-654-1577</a></div>
+  </div>
+</section>
+<section class="inv-strip" aria-label="At a glance"><div class="wrap"><ul><li>$2M to $5M</li><li>100% of the renovation</li><li>Built for an agency refinance</li><li>California apartment buildings</li></ul></div></section>
+<section class="inv-terms-sec"><div class="wrap">
+  <div class="inv-terms">
+    <div class="inv-terms-head"><h2>Multifamily bridge terms</h2></div>
+    <dl class="inv-terms-list"><div class="ts-row"><dt>Loan amount</dt><dd>$2M &ndash; $5M <small>one property per loan</small></dd></div><div class="ts-row"><dt>Purchase price</dt><dd>Up to 75%</dd></div><div class="ts-row"><dt>Renovation budget</dt><dd>100%, through a holdback</dd></div><div class="ts-row"><dt>Total project cost</dt><dd>Up to 80% <small>experienced sponsors, strong markets, in-place cash flow</small></dd></div><div class="ts-row"><dt>Term</dt><dd>18&ndash;24 months, interest only <small>plus two 6-month extensions, subject to approval</small></dd></div><div class="ts-row"><dt>As-stabilized value</dt><dd>70% LTV max</dd></div><div class="ts-row"><dt>Once stabilized</dt><dd>1.25x DSCR and a 9% debt yield</dd></div><div class="ts-row"><dt>Credit score</dt><dd>725+ for every member of the entity</dd></div></dl>
+    <p class="inv-note">Program maximums for 5+ unit residential buildings in California. Not a commitment to lend.</p>
+  </div>
+</div></section>
+<section><div class="wrap inv-answer">
+  <h2>What is a multifamily bridge loan?</h2>
+  <p>A multifamily bridge loan is a short-term, interest-only loan to buy and renovate an apartment building with five or more units, lease it up and then refinance into long-term agency financing. The purchase is funded at closing and the renovation budget is released from a holdback as the work is completed.</p>
+</div></section>
+<section class="bg-light" id="leverage"><div class="wrap inv-answer">
+  <h2>How is a multifamily bridge loan sized?</h2>
+  <p>Up to 75% of the purchase price plus 100% of the renovation budget, within 80% of the total cost, as long as the stabilized property supports a 1.25x DSCR, a 9% debt yield and 70% of its as-stabilized value.</p><div class="inv-table-wrap" role="region" aria-label="Multifamily bridge loan sizing tests" tabindex="0"><table class="inv-table"><caption class="inv-caption">Multifamily bridge loan sizing tests</caption><thead><tr><th scope="col">Sizing test</th><th scope="col">Limit</th></tr></thead><tbody><tr><th scope="row">Loan-to-purchase price</th><td>75%</td></tr><tr><th scope="row">Loan-to-cost (initial)</th><td>70%</td></tr><tr><th scope="row">Loan-to-total cost (with renovation)</th><td>80%</td></tr><tr><th scope="row">As-is loan-to-value</th><td>75%</td></tr><tr><th scope="row">As-stabilized loan-to-value</th><td>70%</td></tr><tr><th scope="row">Stabilized debt-service coverage</th><td>1.25x</td></tr><tr><th scope="row">Debt yield</th><td>9% or higher</td></tr></tbody></table></div>
+</div></section>
+<section><div class="wrap">
+  <h2 class="inv-h2">Property and sponsor requirements</h2>
+  <div class="inv-split">
+    <div><h3>Eligible properties</h3><ul class="feature-list"><li>100% residential buildings with five or more units</li><li>As-is value of at least $100,000 per unit</li><li>Light to moderate renovation; no structural work, additions or ground-up</li><li>California primary and secondary markets; one property per loan; no wholesale deals</li></ul></div>
+    <div class="inv-checklist-box"><h3>Sponsor requirements</h3><ul class="inv-checklist"><li>Multifamily ownership and management experience in the same submarket</li><li>Single-purpose LLC or corporation (new, or existing with no other property), up to two members</li><li>725+ credit for every member; no bankruptcy or foreclosure in seven years</li><li>Liquidity of 10% of the loan after closing and net worth equal to the loan</li></ul></div>
+  </div>
+</div></section>
+<section class="bg-light"><div class="wrap">
+  <div class="inv-two">
+    <div><h2 class="inv-h2">What happens after you send a deal</h2><p class="lead">Same person from the first call to the payoff.</p></div>
+    <ol class="steps"><li><b>We look at the numbers</b><span>Address, price, budget, what it will sell or rent for, and your track record. By form or by phone. No application and no credit check yet.</span></li><li><b>You get a straight answer</b><span>Which program fits and roughly how much leverage to expect, before you pay for an appraisal. If the deal doesn&rsquo;t work, we say so.</span></li><li><b>Written terms</b><span>A full credit report is pulled on every member of the entity. Then come the commercial appraisal, third-party reports, a site visit and a sponsor interview.</span></li><li><b>Close in a single-purpose entity</b><span>Renovation funds are released from the holdback as work is completed.</span></li></ol>
+  </div>
+</div></section>
+<section class="inv-person-sec"><div class="wrap">
+  <div class="inv-person">
+    <img class="inv-person-photo" src="assets/anatoliy-kanevsky-portrait.webp" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage" width="720" height="810" loading="lazy" decoding="async">
+    <div class="inv-person-note">
+      <h2 class="inv-h2">Send me the deal first</h2>
+      <p>Send me the rent roll, the price, the renovation budget and your business plan. I&rsquo;ll check it against the sizing tests before you pay for third-party reports.</p>
+      <div class="inv-sign">
+        <span class="inv-sign-name" aria-hidden="true">Anatoliy Kanevsky</span>
+        <span class="inv-sign-meta"><a href="/loan-officer">Anatoliy Kanevsky</a>, founder &middot; NMLS #2775380 &middot; CA DRE #01385024</span>
+        <span class="inv-sign-meta">Direct line <a href="tel:+13106865053">310-686-5053</a> &middot; Burbank office</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section class="bg-light" id="faq"><div class="wrap inv-faq">
+  <h2 class="inv-h2">Questions about multifamily bridge loans</h2>
+  <details class="acc"><summary>What is the exit for a multifamily bridge loan?</summary><div class="acc-body">The program is built for a refinance into long-term agency financing, such as Freddie Mac small-balance loans, once the property is stabilized at a 1.25x DSCR.</div></details><details class="acc"><summary>How many units do I need?</summary><div class="acc-body">Five or more, in a 100% residential building with an as-is value of at least $100,000 per unit.</div></details><details class="acc"><summary>What experience do I need?</summary><div class="acc-body">Experience owning and operating multifamily property in the same submarket, including renovation, with past projects taken to full or substantial stabilization. Sponsor references are checked.</div></details><details class="acc"><summary>What are the borrower requirements?</summary><div class="acc-body">A single-purpose LLC or corporation (newly formed, or an existing one that owns no other property) with no more than two members, a credit score of 725 or higher for each member, no bankruptcy or foreclosure in seven years, liquidity of 10% of the loan after closing and net worth at least equal to the loan amount. Foreign nationals are not eligible.</div></details><details class="acc"><summary>What renovations can be financed?</summary><div class="acc-body">Light to moderate value-add work up to about half of the purchase price. Structural work, additions, expansions and ground-up construction are not eligible.</div></details><details class="acc"><summary>How does prepayment work?</summary><div class="acc-body">You can pay the loan off at any time; a minimum of 12 months of interest is due at payoff. A 12-month interest and carry reserve is funded at closing.</div></details><details class="acc"><summary>Where can I use a multifamily bridge loan?</summary><div class="acc-body">For apartment buildings in primary and secondary markets in California, bought directly from the seller (no wholesale deals), one property per loan.</div></details><details class="acc"><summary>What due diligence is required?</summary><div class="acc-body">A commercial appraisal, Phase I environmental report, property condition report, renovation budget review, site visit, sponsor interview and monthly rent rolls.</div></details>
+</div></section>
+<section class="inv-also"><div class="wrap">
+  <h2 class="inv-h2">Not quite this deal?</h2>
+  <ul class="inv-also-list"><li><a href="investor-loans.html">Investor Loans</a><span>Compare every investor program side by side.</span></li><li><a href="fix-and-flip-loans.html">Fix and Flip Loans</a><span>Up to 90% of purchase and 100% of rehab.</span></li><li><a href="ground-up-construction-loans.html">Ground-Up Construction Loans</a><span>Land plus 100% of the construction budget.</span></li><li><a href="bridge-loans.html">Investor Bridge Loans</a><span>Finished properties listed for sale or leasing up.</span></li><li><a href="rental-portfolio-loans.html">Rental Portfolio Loans</a><span>Two to ten rentals in one 30-year loan.</span></li><li><a href="dscr-loans.html">DSCR Loans</a><span>Qualify a single rental on its rent.</span></li><li><a href="hard-money-loans.html">Hard Money Loans in California</a><span>Private money to buy, fix, build or bridge.</span></li></ul>
+</div></section>
+<section><div class="wrap"><div class="cta-band inv-cta">
+  <h2>Underwriting an apartment deal?</h2><p>Send the rent roll, purchase price, renovation budget and business plan. You&rsquo;ll hear how it sizes before you commit to third-party reports.</p>
+  <div class="btn-row"><a class="btn btn-lg btn-blue" href="#investor-review">Tell Me Your Scenario</a><a class="btn btn-lg btn-outline-light" href="tel:+13106541577">Call 310-654-1577</a></div>
+  <p class="inv-cta-who"><img class="inv-face sm" src="assets/anatoliy-kanevsky-avatar.webp" alt="Anatoliy Kanevsky" width="360" height="360" decoding="async"><span>Anatoliy Kanevsky reviews investor deals himself. Direct line <a href="tel:+13106865053">310-686-5053</a></span></p>
+</div></div></section>
+<section class="inv-disclosure"><div class="wrap">
+  <p><strong>Business-purpose loans only.</strong> The programs on this page finance non-owner-occupied investment property purchased or refinanced by an LLC or corporation. They are not available for personal, family or household purposes or for a home you live in. Owners typically sign a personal guarantee. Loans are made or arranged by West Coast Capital Mortgage (NMLS #2817729, CA DRE Corporation License #02440065) and funded by our private lender. Figures are program maximums under current program guidelines as of November 5, 2026. Actual leverage, loan amount, rate, term and eligibility depend on experience, credit, liquidity, the property, the market and underwriting. Some markets receive lower leverage or are not eligible, and programs change without notice. Nothing on this page is an offer of credit, a rate quote or a commitment to lend.</p>
+</div></section>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid"><div class="footer-brand"><div class="l1">WEST COAST CAPITAL</div><div class="l2">MORTGAGE</div><p style="color:#aab2bd;font-size:.9rem">Modern mortgage guidance for buying, refinancing, and building equity.</p><p class="footer-contact"><b>Phone:</b> <a href="tel:3106541577">(310) 654-1577</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502<br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p></div><div><h4>Buy A Home</h4><a href="homebuying-guide.html">Homebuying Guide</a><a href="apply.html">Mortgage Pre-Approval</a><a href="first-time-homebuyer.html">First-Time Homebuyers</a><a href="buy.html">Down Payment Assistance</a><a href="loans.html">Home Purchase Loans</a></div><div><h4>Refinance</h4><a href="refinancing-guide.html">Refinancing Guide</a><a href="rates.html">Refinance Mortgage Rates</a><a href="refinance.html">Cash-Out Refinance</a><a href="refinance.html">Rate-and-Term Refinance</a></div><div><h4>Loans</h4><a href="conventional-loans.html">Conventional Loans</a><a href="fha-loans.html">FHA Loans</a><a href="va-loans.html">VA Loans</a><a href="jumbo-loans.html">Jumbo Loans</a><a href="non-qm-loans.html">Non-QM Loans</a><a href="bank-statement-loans.html">Bank Statement Loans</a><a href="dscr-loans.html">DSCR Loans</a><a href="investment-property-loans.html">Investment Property Loans</a></div><div><h4>Resources</h4><a href="calculators.html">Mortgage Calculators</a><a href="mortgage-articles.html">Mortgage Articles</a><a href="glossary.html">Mortgage Glossary</a><a href="faq.html">Mortgage FAQ</a><a href="resources.html">Mortgage Videos</a><a href="rates.html">Rate Watch</a></div><div><h4>About Us</h4><a href="about.html">About West Coast Capital Mortgage</a><a href="contact.html">Contact Us</a><a href="/loan-officer">Find a Loan Officer</a><a href="about.html">Licensing & Disclosures</a></div></div>
+    <div class="footer-bottom">
+      <div class="row">
+        <nav aria-label="Legal">
+          <a href="about.html" style="display:inline;margin-right:18px">Licensing and Disclosures</a>
+          <a href="privacy-policy.html" style="display:inline;margin-right:18px">Privacy Policy</a>
+          <a href="terms.html" style="display:inline;margin-right:18px">Terms of Use</a>
+          <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" style="display:inline">NMLS Consumer Access</a>
+        </nav>
+        <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
+      </div>
+      <p>West Coast Capital Mortgage Inc. Company NMLS #2817729. CA DRE Corporation License #02440065. Anatoliy Kanevsky NMLS #2775380, CA Broker DRE #01385024. Equal Housing Opportunity. Information is provided for
+      educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
+      and underwriting approval.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script src="i18n-investor.js?v=20261105-investor-loans"></script>
+<script src="i18n.js?v=20261105-investor-loans"></script>
+<script src="script.js?v=20261105-investor-loans"></script>
+<form name="investor-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="investor-lead">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="goal">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="loan_amount">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="monthly_rent">
+  <input name="full_name">
+  <input name="email">
+  <input name="phone">
+  <textarea name="message"></textarea>
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="lead-details" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="lead-details">
+  <input type="text" name="company">
+  <input type="hidden" name="program_interest">
+  <input name="lead_submission_id">
+  <input name="source_form">
+  <input name="full_name">
+  <input name="phone">
+  <input name="goal">
+  <input name="property_type">
+  <input name="income_documentation">
+  <input name="statements_available">
+  <input name="occupancy">
+  <input name="property_area">
+  <input name="purchase_price">
+  <input name="loan_amount">
+  <input name="monthly_rent">
+  <input name="self_employed_years">
+  <input name="country_of_residence">
+  <input name="email">
+  <input name="home_value">
+  <input name="mortgage_balance">
+  <input name="rehab_budget">
+  <input name="arv">
+  <input name="experience">
+  <input name="credit_score">
+  <input name="property_count">
+  <input name="units">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="conversion_page">
+  <input name="source_path">
+  <input name="referrer">
+  <input name="submission_id">
+</form>
+<form name="partial-lead" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="partial-lead">
+  <input type="text" name="company">
+  <input name="source_form">
+  <input name="page_path">
+  <input name="state_context">
+  <input name="name">
+  <input name="first_name">
+  <input name="last_name">
+  <input name="email">
+  <input name="phone">
+  <input name="program_interest">
+  <textarea name="details"></textarea>
+  <input name="submission_id">
+  <input name="partial_reason">
+  <input name="status">
+  <input name="sms_consent">
+  <input name="utm_source">
+  <input name="utm_medium">
+  <input name="utm_campaign">
+  <input name="utm_term">
+  <input name="utm_content">
+  <input name="gclid">
+  <input name="gbraid">
+  <input name="wbraid">
+  <input name="fbclid">
+  <input name="landing_page">
+  <input name="referrer">
+</form>
+</body>
+</html>

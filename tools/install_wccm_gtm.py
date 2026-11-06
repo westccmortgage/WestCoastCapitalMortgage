@@ -21,7 +21,8 @@ GOOGLE_ADS_ID = "AW-18417657219"
 GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 # GA4 shares the same gtag.js loader as Ads (one library, two config calls).
 GA4_ID = "G-GB57YWMKBH"
-ASSET_VERSION = "20261001-highlights"
+# Keep in step with the script.js stamp in tools/install_wccm_ads_readiness.py.
+ASSET_VERSION = "20261105-investor-loans"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
@@ -76,7 +77,9 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
         var knownPrograms=[
           'General mortgage inquiry','Jumbo','DSCR / Investor',
           'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
-          'Condo','Foreign National','Mortgage Second Opinion'
+          'Condo','Foreign National','Mortgage Second Opinion',
+          'Investor Loans','Fix & Flip','Ground-Up Construction','Bridge',
+          'Rental Portfolio','Multifamily Bridge'
         ];
         var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
         /* The Florida lead funnel prefixes otherwise approved mortgage categories.
@@ -173,6 +176,12 @@ CRITICAL_PAGES = (
     "jumbo-loans.html",
     "dscr-loans.html",
     "loans/jumbo/los-angeles-county.html",
+    "investor-loans.html",
+    "fix-and-flip-loans.html",
+    "ground-up-construction-loans.html",
+    "bridge-loans.html",
+    "rental-portfolio-loans.html",
+    "multifamily-bridge-loans.html",
 )
 
 
