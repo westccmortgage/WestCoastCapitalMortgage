@@ -509,8 +509,6 @@ def page_ground_up() -> dict:
     faqs = [
         ("Can I get a construction loan before permits are approved?",
          "Yes. Without approved permits the loan funds up to 60% of the land price at closing, and a catch-up draw brings it to 75% once permits are issued. An architect letter is required while permits are pending."),
-        ("How much experience do I need for a ground-up construction loan?",
-         "At least one completed ground-up project as a borrower, counted over the last three years. A licensed general contractor who has built ground-up as a contractor may qualify with pulled permits and entity documents that show ownership of the contracting company. Rental experience does not count. Fix and flip experience counts only case by case, when it includes large additions or expansions (two such projects count as one build)."),
         ("What credit score do I need?",
          "680 or higher, or from 660 for builders with five or more completed projects, using the score of the guarantor with the most experience. Building in a new market, in Florida or in Travis, Harris and Bexar counties in Texas requires 700 or higher."),
         ("How much cash do I need to build?",
