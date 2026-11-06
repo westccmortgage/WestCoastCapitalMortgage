@@ -287,7 +287,7 @@ def page_hub() -> dict:
         ["Program", "Best for", "Maximum leverage", "Loan size", "Term", "Credit from", "Experience"],
         [
             ['<a href="fix-and-flip-loans.html">Fix &amp; flip</a>', "Buy, renovate, then sell or rent", "90% of purchase + 100% of rehab, within 70&ndash;75% of ARV", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required (light&ndash;moderate rehab, 680+)"],
-            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New 1&ndash;4 unit homes", "75% of land + 100% of construction, within 85% of total cost", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "660 (680 for newer builders)", "Completed ground-up projects"],
+            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction, within 85% of total cost", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "660 (680 for newer builders)", "Completed ground-up projects"],
             ['<a href="bridge-loans.html">Bridge</a>', "Finished property being sold or leased", "The lower of 70% of value and, if owned under 6 months, 80% of cost (90% with 3+ projects)", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required for renovated homes"],
             ['<a href="rental-portfolio-loans.html">Rental portfolio</a>', "2&ndash;10 leased rentals", "80% LTV purchase or rate-and-term, 75% cash-out", "Up to $2M", "30 years, fixed or ARM", "660 (700 for 80% LTV)", "Not required"],
             ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "5+ unit value-add in California", "75% of purchase + 100% of renovation, within 80% of total cost", "$2M&ndash;$5M", "18&ndash;24 months + extensions", "725", "Multifamily in the same submarket"],
@@ -533,7 +533,7 @@ def page_ground_up() -> dict:
         term_sheet("Ground-up construction terms", terms,
                    "Program maximums for new 1&ndash;4 unit residential construction. Leverage is the same for every eligible builder, except in a new market (700+ credit, a GC agreement and 5% less of the land) and in Florida and Travis, Harris and Bexar counties, TX (700+ credit, 5% less of total cost, loan capped at 65% of completed value). Not a commitment to lend."),
         answer("What is a ground-up construction loan?",
-               """<p>A ground-up construction loan is a short-term, interest-only loan that finances the land (or a teardown) and the full construction budget to build new 1&ndash;4 unit homes. The land portion is funded at closing, construction money is released in draws as each stage is inspected, and the loan is repaid when the homes are sold or refinanced.</p>
+               """<p>A ground-up construction loan is a short-term, interest-only loan that finances the land (or a teardown) and the full construction budget to build new homes. The land portion is funded at closing, construction money is released in draws as each stage is inspected, and the loan is repaid when the homes are sold or refinanced.</p>
   <p><strong>No permits yet?</strong> The loan can fund 60% of the land now and release a catch-up draw to 75% when the permits are issued.</p>"""),
         answer("How much can I borrow to build?",
                f"""<p>Up to 75% of the land price plus 100% of the construction budget, limited to 85% of the total project cost (90% when interest is financed) and 70% of the completed value. The loan is the lowest of those three numbers:</p>{example}
@@ -568,9 +568,9 @@ def page_ground_up() -> dict:
         terms=terms,
         strip=["100% of construction financed", "Up to 6 months of interest built in", "Draws requested online", "Soft credit pull for terms"],
         title="Ground-Up Construction Loans | West Coast Capital Mortgage",
-        description="Ground-up construction loans for 1–4 unit homes: up to 75% of land and 100% of construction, up to 85% of total cost, $50K–$3M, interest reserve financing.",
+        description="Ground-up construction loans for new homes: up to 75% of land and 100% of construction, up to 85% of total cost, $50K–$3M, interest reserve financing.",
         h1="Ground-Up Construction Loans", crumb="Ground-Up Construction Loans",
-        lead="Land plus 100% of the construction budget for builders putting up new 1&ndash;4 unit homes, with up to six months of interest built into the loan.",
+        lead="Land plus 100% of the construction budget for builders putting up new homes, with up to six months of interest built into the loan.",
         sections=sections, faqs=faqs,
         product=dict(name="Ground-Up Construction Loan", loanType="Residential construction loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Land and new 1–4 unit residential construction (non-owner-occupied)",
