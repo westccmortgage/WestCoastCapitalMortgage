@@ -87,7 +87,6 @@ def term_sheet(title: str, rows: list[tuple[str, str]], note: str) -> str:
   <div class="inv-terms">
     <div class="inv-terms-head"><h2>{title}</h2></div>
     <dl class="inv-terms-list">{items}</dl>
-    <p class="inv-note">{note}</p>
   </div>
 </div></section>"""
 
