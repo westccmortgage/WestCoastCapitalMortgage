@@ -120,6 +120,11 @@
     "Refinance": ["Refinanciar", "Рефинансирование"],
     "Find a Loan Officer": ["Buscar un Oficial de Préstamos", "Найти кредитного специалиста"],
     "Loans": ["Préstamos", "Кредиты"],
+    "Loan Options": ["Opciones de préstamo", "Программы кредитов"],
+    "Texas": ["Texas", "Техас"],
+    "Reviews": ["Reseñas", "Отзывы"],
+    "Partner With Us": ["Colabore con nosotros", "Партнёрам"],
+    "HELOC": ["HELOC", "HELOC"],
     "Resources": ["Recursos", "Ресурсы"],
     "About Us": ["Nosotros", "О нас"],
 

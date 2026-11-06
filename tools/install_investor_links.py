@@ -64,6 +64,39 @@ def investor_href(match: re.Match) -> str:
     return f'{match.group("prefix")}investor-loans{match.group("ext") or ""}'
 
 
+REFI_LINK_RE = re.compile(r'<a href="(?:\.\./)*/?refinance(?:\.html)?"[^>]*>\s*Refinance\s*</a>', re.IGNORECASE)
+NAV_DD_RE = re.compile(r'<div class="nav-dd">.*?</div></div>', re.IGNORECASE | re.DOTALL)
+
+
+def add_loans_dropdown(text: str, page_name: str) -> tuple[str, int]:
+    """Loans / Loan Options opens a small menu with Refinance and HELOC; Refinance leaves the top row."""
+    changed = 0
+
+    def fix(nav: re.Match) -> str:
+        nonlocal changed
+        body = nav.group(2)
+        if 'class="nav-dd"' in body:
+            return nav.group(0)
+        refi = REFI_LINK_RE.search(body)
+        if refi:
+            body = body[: refi.start()] + body[refi.end():]
+        loans = LOANS_LINK_RE.search(body)
+        if not loans:
+            return nav.group(0)
+        prefix, ext = loans.group("prefix"), loans.group("ext") or ""
+        refi_html = refi.group(0) if refi else f'<a href="{prefix}refinance{ext}">Refinance</a>'
+        heloc_cls = ' class="active"' if page_name == "heloc.html" else ""
+        heloc_html = f'<a href="{prefix}heloc{ext}"{heloc_cls}>HELOC</a>'
+        parent = loans.group(0)
+        if ('class="active"' in refi_html or heloc_cls) and 'class="active"' not in parent:
+            parent = parent.replace("<a ", '<a class="active" ', 1)
+        dd = f'<div class="nav-dd">{parent}<div class="nav-dd-menu">{refi_html}{heloc_html}</div></div>'
+        changed += 1
+        return nav.group(1) + body[: loans.start()] + dd + body[loans.end():] + nav.group(3)
+
+    return NAV_RE.sub(fix, text), changed
+
+
 def add_nav_link(text: str, active: bool = False) -> tuple[str, int]:
     """Insert the Investors link after Loans in every primary nav that lacks it."""
     changed = 0
@@ -79,7 +112,9 @@ def add_nav_link(text: str, active: bool = False) -> tuple[str, int]:
         cls = ' class="active"' if active else ""
         link = f'<a href="{investor_href(loans)}"{cls}>Investment Property Loans</a>'
         changed += 1
-        return nav.group(1) + body[: loans.end()] + link + body[loans.end():] + nav.group(3)
+        dd = NAV_DD_RE.search(body)
+        at = dd.end() if dd and dd.start() <= loans.start() < dd.end() else loans.end()
+        return nav.group(1) + body[:at] + link + body[at:] + nav.group(3)
 
     return NAV_RE.sub(fix, text), changed
 
@@ -107,7 +142,7 @@ def replace_block(text: str, start: str, end: str, block: str, before: re.Patter
 def main(publish: Path = PUBLISH_DIR) -> int:
     if not publish.is_dir():
         raise SystemExit(f"Publish directory not found: {publish}")
-    nav_links = pages = 0
+    nav_links = pages = nav_menus = 0
     for page in sorted(publish.rglob("*.html")):
         if "graphify-out" in page.parts:
             continue
@@ -115,10 +150,12 @@ def main(publish: Path = PUBLISH_DIR) -> int:
         if 'class="mainnav"' not in text:
             continue
         pages += 1
-        updated, added = add_nav_link(text)
-        if added:
+        updated, dropdowns = add_loans_dropdown(text, page.name)
+        updated, added = add_nav_link(updated)
+        if added or dropdowns:
             page.write_text(updated, encoding="utf-8")
             nav_links += added
+            nav_menus += dropdowns
 
     home = publish / "index.html"
     text, card = add_home_card(home.read_text(encoding="utf-8"))
