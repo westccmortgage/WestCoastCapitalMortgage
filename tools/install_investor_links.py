@@ -32,7 +32,7 @@ HOME_CARD = HOME_CARD_MARKER + """
       <a class="mortgage-funnel-card investor-card" href="investor-loans.html">
         <span class="mortgage-funnel-meta"><b>02</b><b>PRIVATE LENDING</b></span>
         <h2>Investment Property Loans</h2>
-        <p>Private lending for real estate investors: fix &amp; flip, construction, bridge and rental loans, closed in your LLC.</p>
+        <p>Private lending for real estate investors: fix &amp; flip, hard money, construction, bridge and rental loans, closed in your LLC.</p>
         <span class="mortgage-funnel-action">SEE INVESTOR PROGRAMS <span aria-hidden="true">&rarr;</span></span>
       </a>
       """
