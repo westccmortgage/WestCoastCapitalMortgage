@@ -557,8 +557,9 @@ def page_ground_up() -> dict:
             "Entity documents and funds for equity, closing costs and interest reserve",
         ], "What we finance and what you need"),
         how_it_works("Construction funds are released through draws as each stage is inspected."),
-        anatoliy_note("<p>Send me the lot, where the permits stand, the budget and what the finished homes should be worth. I&rsquo;ll size it against the limits on this page and tell you what the loan comes to before you pay for an appraisal.</p>",
-                      "Send me the build first"),
+        anatoliy_note("<p>I come from luxury residential development, so I read a build the way a builder does: whether the budget matches the plans, how long permits and construction will really take, what the finished homes will sell for and how much cash you need until they do.</p>"
+                      "<p>Send me the lot, where the permits stand, the budget and the completed value, and I&rsquo;ll size the loan before you pay for an appraisal.</p>",
+                      "I&rsquo;ve been on the builder&rsquo;s side"),
         faq_section(faqs, "Questions about construction loans"),
         related("ground-up-construction-loans"),
         cta_band("Planning a build?", "Send the lot, the plans or permit status, the budget and the completed value. You&rsquo;ll get the loan sized before you pay for an appraisal."),
