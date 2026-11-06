@@ -21,9 +21,6 @@ Disallow: /
 User-agent: MistralAI-Training
 Disallow: /
 
-User-agent: GoogleOther
-Disallow: /
-
 User-agent: Baiduspider
 Disallow: /
 
