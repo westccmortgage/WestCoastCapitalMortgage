@@ -459,7 +459,7 @@
             <div class="field full"><label for="bs-notes">Anything important about the income or property?</label><textarea id="bs-notes" name="message" placeholder="For example: business type, approximate monthly deposits, purchase timing, or property type."></textarea></div>\
           </div>\
           <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit">Request Bank Statement Review</button></div>\
-          <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE Corporation License #02440065 · Equal Housing Opportunity.</p>\
+          <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage · NMLS #2817729 · CA DRE Corporation License #02440065 · Equal Housing Opportunity.</p>\
         </form>\
       </div>';
     faq.parentNode.insertBefore(section,faq);
@@ -874,8 +874,8 @@
     talkLink.href='tel:3106541577';
     talk.appendChild(talkLink);
     step1.appendChild(talk);
-    var legal='Not a commitment to lend. West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
-    if(config.formName==='bank-statement-lead')legal='Not a commitment to lend. West Coast Capital Mortgage Inc. · 150 E Olive Ave, Unit 112, Burbank, CA 91502 · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
+    var legal='Not a commitment to lend. West Coast Capital Mortgage · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
+    if(config.formName==='bank-statement-lead')legal='Not a commitment to lend. West Coast Capital Mortgage · 150 E Olive Ave, Unit 112, Burbank, CA 91502 · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity.';
     step1.appendChild(quickText('p','ql-legal',legal));
 
     /* Step 2 — optional details, linked to the step-1 submission */
@@ -1027,7 +1027,7 @@
       <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your scenario and follow up.</div>\
       <div class="form-grid"></div>\
       <div style="margin-top:20px"><button class="btn btn-blue btn-lg" type="submit"></button></div>\
-      <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage Inc. — NMLS #2817729 — CA DRE Corporation License #02440065 — Equal Housing Opportunity.</p>';
+      <p class="form-note">This is not a loan application, approval, rate quote, or commitment to lend. Programs and eligibility are subject to borrower, property, documentation, lender, licensing, and underwriting review. West Coast Capital Mortgage — NMLS #2817729 — CA DRE Corporation License #02440065 — Equal Housing Opportunity.</p>';
     form.querySelector('[name="form-name"]').value=config.formName;
     form.querySelector('[name="program_interest"]').value=config.programInterest;
     form.querySelector('button[type="submit"]').textContent=config.button;

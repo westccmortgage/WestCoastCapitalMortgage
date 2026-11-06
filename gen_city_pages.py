@@ -1644,7 +1644,7 @@ def financialproduct_jsonld(prog_cfg, url, city, prog_name):
         "description": prog_cfg["fp_desc"],
         "provider": {
             "@type": "Organization",
-            "name": "West Coast Capital Mortgage Inc.",
+            "name": "West Coast Capital Mortgage",
             "url": "https://westcoastcapitalmortgage.com",
             "telephone": PHONE,
         },
@@ -1782,11 +1782,11 @@ def render_page(prog, prog_cfg, c):
 
 <link rel="canonical" href="{url}">
 <meta name="robots" content="index, follow">
-<meta name="author" content="West Coast Capital Mortgage Inc.">
+<meta name="author" content="West Coast Capital Mortgage">
 <meta name="geo.region" content="US-CA">
 <meta name="geo.placename" content="{city}, California">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="West Coast Capital Mortgage Inc.">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
@@ -1832,8 +1832,8 @@ def render_page(prog, prog_cfg, c):
 </div>
 <header class="site-header">
   <div class="wrap header-inner">
-    <!-- Replace with <img src="/assets/logo.png" alt="West Coast Capital Mortgage Inc."> when ready -->
-    <a class="logo" href="/index.html" aria-label="West Coast Capital Mortgage Inc. home">
+    <!-- Replace with <img src="/assets/logo.png" alt="West Coast Capital Mortgage"> when ready -->
+    <a class="logo" href="/index.html" aria-label="West Coast Capital Mortgage home">
       <span class="l1">WEST COAST CAPITAL</span>
       <span class="l2">MORTGAGE INC.</span>
     </a>
@@ -1919,10 +1919,10 @@ def render_page(prog, prog_cfg, c):
         </nav>
         <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
       </div>
-      <p>West Coast Capital Mortgage Inc. NMLS #{nmls}. Equal Housing Opportunity. Information is provided for
+      <p>West Coast Capital Mortgage NMLS #{nmls}. Equal Housing Opportunity. Information is provided for
       educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
       and underwriting approval.</p>
-      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc. All rights reserved.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
     </div>
   </div>
 </footer>

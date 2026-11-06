@@ -157,11 +157,11 @@ SHELL = """<!DOCTYPE html>
 
 <link rel="canonical" href="@@URL@@">
 <meta name="robots" content="index, follow">
-<meta name="author" content="West Coast Capital Mortgage Inc.">
+<meta name="author" content="West Coast Capital Mortgage">
 <meta name="geo.region" content="US-CA">
 <meta name="geo.placename" content="@@PLACE@@, California">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="West Coast Capital Mortgage Inc.">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
 <meta property="og:title" content="@@TITLE@@">
 <meta property="og:description" content="@@DESC@@">
 <meta property="og:url" content="@@URL@@">
@@ -199,7 +199,7 @@ SHELL = """<!DOCTYPE html>
 </div>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo" href="/index.html" aria-label="West Coast Capital Mortgage Inc. home">
+    <a class="logo" href="/index.html" aria-label="West Coast Capital Mortgage home">
       <span class="l1">WEST COAST CAPITAL</span>
       <span class="l2">MORTGAGE INC.</span>
     </a>
@@ -251,10 +251,10 @@ SHELL = """<!DOCTYPE html>
         </nav>
         <span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px;opacity:.92"> Equal Housing Opportunity</span>
       </div>
-      <p>West Coast Capital Mortgage Inc. NMLS #@@NMLS@@. Equal Housing Opportunity. Information is provided for
+      <p>West Coast Capital Mortgage NMLS #@@NMLS@@. Equal Housing Opportunity. Information is provided for
       educational purposes only and is not a commitment to lend. All loans are subject to credit, income, property,
       and underwriting approval.</p>
-      <p>&copy; <span class="year"></span> West Coast Capital Mortgage Inc. All rights reserved.</p>
+      <p>&copy; <span class="year"></span> West Coast Capital Mortgage. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -315,7 +315,7 @@ def product_jsonld(prog, url, place, area_names):
         "name": "%s in %s" % (PROGRAMS[prog]["fp_name"], place),
         "url": url,
         "provider": {
-            "@type": "Organization", "name": "West Coast Capital Mortgage Inc.",
+            "@type": "Organization", "name": "West Coast Capital Mortgage",
             "url": BASE, "telephone": PHONE,
             "identifier": {"@type": "PropertyValue", "name": "NMLS", "value": NMLS},
         },

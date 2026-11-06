@@ -10,7 +10,7 @@ for name in PAGES:
     p=ROOT/name
     s=p.read_text(encoding='utf-8')
     s=re.sub(r'<meta name="robots" content="[^"]*">','<meta name="robots" content="noindex,nofollow">',s,count=1)
-    notice='<section class="bg-light"><div class="wrap"><div class="card"><h2>State Licensing Status</h2><p><strong>West Coast Capital Mortgage Inc. is not currently offering mortgage financing in this state.</strong> This page is retained for future use while licensing/approval is pending. Current mortgage services are offered only where West Coast Capital Mortgage Inc. is properly licensed and authorized.</p></div></div></section>'
+    notice='<section class="bg-light"><div class="wrap"><div class="card"><h2>State Licensing Status</h2><p><strong>West Coast Capital Mortgage is not currently offering mortgage financing in this state.</strong> This page is retained for future use while licensing/approval is pending. Current mortgage services are offered only where West Coast Capital Mortgage is properly licensed and authorized.</p></div></div></section>'
     if 'State Licensing Status' not in s:
         s=s.replace('<section><div class="wrap">',notice+'<section><div class="wrap">',1)
     p.write_text(s,encoding='utf-8')

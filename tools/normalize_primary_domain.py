@@ -38,7 +38,7 @@ CONTACT_OLD_DESC = (
     "Licensed mortgage lender in California. NMLS #2817729."
 )
 CONTACT_NEW_DESC = (
-    "Contact West Coast Capital Mortgage Inc. at (310) 654-1577 for mortgage "
+    "Contact West Coast Capital Mortgage at (310) 654-1577 for mortgage "
     "questions, scenario review, purchase, refinance, jumbo, self-employed, "
     "bank-statement, Non-QM and investor financing. Company NMLS #2817729."
 )
@@ -59,9 +59,9 @@ CONTACT_OLD_SCHEMA = '''{
 CONTACT_NEW_SCHEMA = '''{
   "@context": "https://schema.org",
   "@type": "FinancialService",
-  "name": "West Coast Capital Mortgage Inc.",
+  "name": "West Coast Capital Mortgage",
   "@id": "https://westcoastcapitalmortgage.com/#organization",
-  "legalName": "West Coast Capital Mortgage Inc.",
+  "legalName": "West Coast Capital Mortgage",
   "url": "https://westcoastcapitalmortgage.com",
   "telephone": "+1-310-654-1577",
   "email": "westccmortgage@gmail.com",
@@ -85,7 +85,7 @@ CONTACT_NEW_SCHEMA = '''{
   "identifier": [{"@type":"PropertyValue","name":"Company NMLS","value":"2817729"},{"@type":"PropertyValue","name":"CA DRE Corporation License","value":"02440065"}]
 }'''
 CONTACT_OLD_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a></p>\n    <p class="muted">Equal Housing Opportunity &middot; NMLS #2817729</p>'
-CONTACT_NEW_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502</p>\n    <p class="muted">West Coast Capital Mortgage Inc. &middot; Company NMLS #2817729 &middot; Equal Housing Opportunity</p>'
+CONTACT_NEW_DETAILS = '<p class="contact-lines"><b>Office / Loan Officer Questions:</b> <a href="tel:3106541577">310-654-1577</a><br><b>Anatoliy Direct:</b> <a href="tel:3106865053">310-686-5053</a><br><b>Email:</b> <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a><br><b>Office:</b> 150 E Olive Ave, Unit 112, Burbank, CA 91502</p>\n    <p class="muted">West Coast Capital Mortgage &middot; Company NMLS #2817729 &middot; Equal Housing Opportunity</p>'
 
 
 def replace_domain(path: Path) -> int:

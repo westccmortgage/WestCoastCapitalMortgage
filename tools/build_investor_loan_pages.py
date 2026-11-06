@@ -914,7 +914,7 @@ def page_hard_money() -> dict:
 
 def llms_full(pages: list[dict]) -> str:
     out = ["# West Coast Capital Mortgage: investment property loans (full text)", "",
-           f"> Investment property loans for real estate investors and developers in California, Florida and Texas. Loans close with West Coast Capital Mortgage Inc. (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065) and are funded by its private lender partner. Figures are program maximums; not a commitment to lend.",
+           f"> Investment property loans for real estate investors and developers in California, Florida and Texas. Loans close with West Coast Capital Mortgage (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065) and are funded by its private lender partner. Figures are program maximums; not a commitment to lend.",
            "", "Site summary and other sections: https://westcoastcapitalmortgage.com/llms.txt", ""]
     for p in pages:
         out += [f"## {plain(p['h1'])}", f"URL: {SITE}/{p['slug']}", "", plain(p["lead"]), ""]

@@ -25,7 +25,7 @@ class VisibilityTest(unittest.TestCase):
             company = schemas(name)[0]
             self.assertEqual(company['@type'], 'FinancialService')
             self.assertEqual(company['@id'], ENTITY)
-            self.assertEqual(company['name'], 'West Coast Capital Mortgage Inc.')
+            self.assertEqual(company['name'], 'West Coast Capital Mortgage')
             self.assertNotIn('alternateName', company)
             self.assertEqual({i['value'] for i in company['identifier']}, {'2817729', '02440065'})
             self.assertEqual(company['telephone'], '+1-310-654-1577')

@@ -29,7 +29,7 @@ HEADER = '''<header class="site-header" id="siteHeader">
           <rect x="29" y="40" width="6" height="8" rx="1" fill="#b08a4c"/>
         </svg>
       </span>
-      <span class="brand-text"><span class="brand-name">California Mortgage</span><span class="brand-sub">Powered by West Coast Capital Mortgage Inc.</span></span>
+      <span class="brand-text"><span class="brand-name">California Mortgage</span><span class="brand-sub">Powered by West Coast Capital Mortgage</span></span>
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="/index.html#concierge">Concierge</a>
@@ -52,7 +52,7 @@ FOOTER = '''<footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
       <span class="brand-name">California Mortgage</span>
-      <span class="brand-sub">Powered by West Coast Capital Mortgage Inc.</span>
+      <span class="brand-sub">Powered by West Coast Capital Mortgage</span>
       <ul class="footer-contact">
         <li><a href="tel:+13106865053">Phone: (310) 686-5053</a></li>
         <li><a href="mailto:info@californiamtg.com">Email: info@californiamtg.com</a></li>
@@ -86,7 +86,7 @@ FOOTER = '''<footer class="site-footer">
     <div class="footer-col">
       <h4>Disclosures</h4>
       <ul class="footer-disclosure">
-        <li>West Coast Capital Mortgage Inc.</li>
+        <li>West Coast Capital Mortgage</li>
         <li>NMLS #2817729</li>
         <li>CA DRE #01385024</li>
         <li>Equal Housing Opportunity</li>
@@ -105,7 +105,7 @@ FOOTER = '''<footer class="site-footer">
       <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Use</a>
     </div>
-    <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. Powered by West Coast Capital Mortgage Inc. All rights reserved.</p>
+    <p class="copyright">&copy; <span id="year">2026</span> California Mortgage. Powered by West Coast Capital Mortgage. All rights reserved.</p>
   </div>
 </footer>'''
 
@@ -120,7 +120,7 @@ def page(path, title, description, body, canonical_path, head_extra=""):
 <meta name="description" content="{description}">
 <meta name="theme-color" content="#2c2722">
 <meta name="robots" content="index, follow">
-<meta name="author" content="West Coast Capital Mortgage Inc.">
+<meta name="author" content="West Coast Capital Mortgage">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="canonical" href="https://californiamtg.com{canonical_path}">
 <meta property="og:type" content="website">
@@ -203,7 +203,7 @@ TRUST_BLOCK = '''<div class="trust-block">
     <img src="/assets/equal-housing.svg" alt="" width="40" height="44" loading="lazy">
   </div>
   <div class="trust-lines">
-    <p class="trust-name">West Coast Capital Mortgage Inc.</p>
+    <p class="trust-name">West Coast Capital Mortgage</p>
     <ul>
       <li>NMLS #2817729</li>
       <li>CA DRE #01385024</li>
@@ -297,7 +297,7 @@ contact_body = hero(
       <aside class="contact-aside">
         <div class="info-card">
           <h3>California Mortgage</h3>
-          <p>Powered by West Coast Capital Mortgage Inc.</p>
+          <p>Powered by West Coast Capital Mortgage</p>
           <p><a href="tel:+13106865053">Phone: (310) 686-5053</a><br>
              <a href="mailto:info@californiamtg.com">info@californiamtg.com</a><br>
              Serving California</p>
@@ -309,7 +309,7 @@ contact_body = hero(
         </div>
         <div class="info-card">
           <h3>Licensed company</h3>
-          <p>West Coast Capital Mortgage Inc.<br>NMLS #2817729 &middot; CA DRE #01385024<br>Equal Housing Opportunity</p>
+          <p>West Coast Capital Mortgage<br>NMLS #2817729 &middot; CA DRE #01385024<br>Equal Housing Opportunity</p>
         </div>
       </aside>
     </div>
@@ -330,7 +330,7 @@ about_body = hero(
     explain their mortgage situation before starting a full application. The purpose is to help
     organize the scenario, create a clearer starting point, and route the visitor toward AI-assisted
     review or professional mortgage review.</p>
-    <p>California Mortgage is powered by West Coast Capital Mortgage Inc., the licensed mortgage
+    <p>California Mortgage is powered by West Coast Capital Mortgage, the licensed mortgage
     company behind professional review and follow-up.</p>
   </div>
 </section>
@@ -343,20 +343,20 @@ about_body = hero(
     <div class="person">
       <div class="person-photo">
         <div class="photo-placeholder" aria-hidden="true">Photo coming soon</div>
-        <img class="person-img" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc."
+        <img class="person-img" alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage"
              src="/images/anatoliy-kanevsky.jpg" width="520" height="600" loading="lazy" decoding="async"
              onerror="if(this.dataset.s!=='1'){this.dataset.s='1';this.src='/public/images/anatoliy-kanevsky.png';}else{this.parentNode.classList.add('show-placeholder');}">
       </div>
       <div class="person-copy prose">
         <h2>Meet Anatoliy Kanevsky</h2>
-        <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage Inc. and a California real
+        <p>Anatoliy Kanevsky is the founder of West Coast Capital Mortgage and a California real
         estate and mortgage professional with decades of experience helping borrowers, homeowners,
         Realtors, investors, and self-employed clients navigate real-world financing scenarios.</p>
         <p>His background combines mortgage lending, real estate brokerage, luxury residential
         development, and practical deal analysis. That experience helps California Mortgage focus on
         clear guidance, smart scenario organization, and human review behind the technology.</p>
         <ul class="check-list">
-          <li>Founder, West Coast Capital Mortgage Inc.</li>
+          <li>Founder, West Coast Capital Mortgage</li>
           <li>California real estate broker</li>
           <li>Mortgage and real estate professional experience</li>
           <li>Luxury residential development background</li>
@@ -410,13 +410,13 @@ human_review_body = hero(
     <div class="person">
       <div class="person-photo">
         <img src="/public/images/anatoliy-kanevsky.png"
-             alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage Inc."
+             alt="Anatoliy Kanevsky, founder of West Coast Capital Mortgage"
              width="520" height="600" loading="lazy" decoding="async">
       </div>
       <div class="person-copy prose">
         <h2>Reviewed by Experience, Not Just Automation</h2>
         <p>California Mortgage is a premium educational and concierge entry point. Behind the
-        experience is West Coast Capital Mortgage Inc., a licensed mortgage company helping buyers,
+        experience is West Coast Capital Mortgage, a licensed mortgage company helping buyers,
         homeowners, Realtors, self-employed borrowers, and investors review real mortgage scenarios.</p>
         <p>Anatoliy Kanevsky brings decades of real estate, mortgage, and luxury residential
         development experience to help clients understand their financing path before starting a
@@ -426,7 +426,7 @@ human_review_body = hero(
           <li>Mortgage professional experience</li>
           <li>Luxury residential development background</li>
           <li>Purchase, refinance, jumbo, DSCR, Non-QM, and self-employed borrower scenarios</li>
-          <li>Founder, West Coast Capital Mortgage Inc.</li>
+          <li>Founder, West Coast Capital Mortgage</li>
         </ul>
       </div>
     </div>
@@ -733,7 +733,7 @@ scenarios_body = hero(
 privacy_body = hero("Legal", "Privacy Policy", "How information you share with California Mortgage is collected, used, and protected.") + '''
 <section class="section">
   <div class="container article prose">
-    <p>California Mortgage, powered by West Coast Capital Mortgage Inc., respects your privacy.
+    <p>California Mortgage, powered by West Coast Capital Mortgage, respects your privacy.
     This policy explains, in plain English, what we collect and how it is used.</p>
 
     <h2>What data we collect</h2>
@@ -759,7 +759,7 @@ privacy_body = hero("Legal", "Privacy Policy", "How information you share with C
 
     <h2>How your data is used</h2>
     <p>We use your information to respond to your request, operate and improve the website, and route
-    your mortgage inquiry to West Coast Capital Mortgage Inc. To do this, data <em>may</em> be processed
+    your mortgage inquiry to West Coast Capital Mortgage. To do this, data <em>may</em> be processed
     by service providers and tools we use (for example, our database, analytics, CRM, automation
     webhooks, or email). We do not sell your personal information.</p>
 
@@ -784,7 +784,7 @@ privacy_body = hero("Legal", "Privacy Policy", "How information you share with C
 terms_body = hero("Legal", "Terms of Use", "The terms that apply to your use of this website.") + '''
 <section class="section">
   <div class="container article prose">
-    <p>By using California Mortgage (powered by West Coast Capital Mortgage Inc.), you agree to these
+    <p>By using California Mortgage (powered by West Coast Capital Mortgage), you agree to these
     terms. The content on this site is provided for general, educational purposes.</p>
     <h2>No approval or commitment</h2>
     <p>Nothing on this site is a loan approval, loan commitment, or rate quote. Final loan options are
@@ -808,7 +808,7 @@ LOANS = [
         "slug": "jumbo-loans", "nav_label": "Jumbo Loans",
         "card": "Financing above conforming limits for California's higher‑value homes.",
         "title": "Jumbo Loans in California | California Mortgage",
-        "desc": "Jumbo home loans for higher‑value California properties — purchase and refinance options above conforming and high‑balance limits. Powered by West Coast Capital Mortgage Inc.",
+        "desc": "Jumbo home loans for higher‑value California properties — purchase and refinance options above conforming and high‑balance limits. Powered by West Coast Capital Mortgage",
         "eyebrow": "Loan Program", "h1": "Jumbo Loans in California",
         "lead": "Financing for California homes priced above the conforming and high‑balance limits — for primary residences, second homes, and investment properties.",
         "intro": [
@@ -1204,7 +1204,7 @@ for _d in LOANS:
 get_preapproved_body = hero(
     "Get Pre-Approved",
     "Start Your Pre-Approval",
-    "Share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. "
+    "Share a few details and a licensed mortgage professional with West Coast Capital Mortgage "
     "will reach out to start your pre-approval. No credit check to begin."
 ) + '''
 <section class="section">
@@ -1387,10 +1387,10 @@ how_it_works_body = hero(
 
 PAGES = [
     ("how-it-works.html", "How It Works | California Mortgage", "A guided, interactive explainer — move a slider and watch the county line, PMI, your rate, taxes, and payment react. Educational only.", how_it_works_body, "/how-it-works", '<script src="/how-it-works.js" defer></script>\n'),
-    ("get-preapproved.html", "Get Pre-Approved | California Mortgage", "Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage Inc. will reach out. No credit check to begin.", get_preapproved_body, "/get-preapproved"),
-    ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage Inc. can review it.", contact_body, "/contact"),
-    ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage Inc.", about_body, "/about"),
-    ("about-human-review.html", "Human Review | California Mortgage", "Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage Inc. review your scenario.", human_review_body, "/about-human-review"),
+    ("get-preapproved.html", "Get Pre-Approved | California Mortgage", "Start your California mortgage pre-approval — share a few details and a licensed mortgage professional with West Coast Capital Mortgage will reach out. No credit check to begin.", get_preapproved_body, "/get-preapproved"),
+    ("contact.html", "Contact | California Mortgage", "Contact California Mortgage — share your scenario and a licensed mortgage professional with West Coast Capital Mortgage can review it.", contact_body, "/contact"),
+    ("about.html", "About | California Mortgage", "About California Mortgage — a premium mortgage concierge experience powered by West Coast Capital Mortgage", about_body, "/about"),
+    ("about-human-review.html", "Human Review | California Mortgage", "Human review behind the technology — licensed mortgage professionals from West Coast Capital Mortgage review your scenario.", human_review_body, "/about-human-review"),
     ("rates-payments.html", "Rates & Payments | California Mortgage", "Understanding mortgage rates and payments — educational guidance, not a rate quote.", rates_body, "/rates-payments"),
     ("education/index.html", "Education | California Mortgage", "Mortgage education — credit, programs, complex scenarios, rates, and human review.", education_index_body, "/education"),
     ("education/no-credit-check-to-start.html", "Why No Credit Check to Start? | California Mortgage", "Why no credit check is required to start the concierge review, and how it differs from a full application.", no_credit_body, "/education/no-credit-check-to-start"),

@@ -35,10 +35,10 @@ def contact_block(office_label="Office / Loan Officer Questions"):
 OUT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "suncoast-corporate"))
 SRC_ASSETS = os.path.join(os.path.dirname(wc.OUT), "wccm-corporate", "assets")
 
-COMPLIANCE_BAR = ("Licensed &amp; operated under West Coast Capital Mortgage Inc. "
+COMPLIANCE_BAR = ("Licensed &amp; operated under West Coast Capital Mortgage "
                   "&middot; NMLS #2817729 &middot; Equal Housing Lender &middot; Licensed in FL &amp; CA")
 FOOTER_LEGAL = ("Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through "
-                "West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Lender. Licensed in FL &amp; CA. "
+                "West Coast Capital Mortgage NMLS #2817729. Equal Housing Lender. Licensed in FL &amp; CA. "
                 "Information is provided for educational purposes only and is not a commitment to lend. All loans "
                 "are subject to credit, income, property, and underwriting approval.")
 
@@ -205,7 +205,7 @@ def footer():
     cols = "".join([
         f'<div class="footer-brand"><div class="l1">SUNCOAST CAPITAL</div><div class="l2">MORTGAGE</div>'
         f'<p style="color:#aab2bd;font-size:.9rem">A Florida-facing mortgage experience, operated through '
-        f'West Coast Capital Mortgage Inc.</p>'
+        f'West Coast Capital Mortgage</p>'
         f'<p class="footer-contact">{contact_block()}</p></div>',
         col("Explore", [("Buy a Home", "buy.html"), ("Refinance", "refinance.html"), ("Loans", "loans.html")]),
         col("Resources", [("Resources", "resources.html"), ("Calculators", "calculators.html"),
@@ -250,7 +250,7 @@ def _home():
         info_card("Florida-Focused", "Florida-Focused Mortgage Support",
                   "Guidance for Florida buyers, homeowners, investors, and self-employed borrowers."),
         info_card("The Platform", "West Coast Capital Mortgage Platform",
-                  "Applications, tools, resources, and mortgage workflows are powered through West Coast Capital Mortgage Inc."),
+                  "Applications, tools, resources, and mortgage workflows are powered through West Coast Capital Mortgage"),
         info_card("Licensed Review", "Licensed Mortgage Review",
                   "Mortgage options are subject to borrower qualification, documentation, property review, and underwriting approval."),
     ])
@@ -274,20 +274,20 @@ def _home():
   <div class="wrap hero-inner">
     <span class="eyebrow">Florida Mortgage Guidance</span>
     <h1>Your Florida Home Loan Starts Here</h1>
-    <p class="lead">Suncoast Capital Mortgage helps Florida buyers, homeowners, investors, and self-employed borrowers explore mortgage options through West Coast Capital Mortgage Inc.</p>
+    <p class="lead">Suncoast Capital Mortgage helps Florida buyers, homeowners, investors, and self-employed borrowers explore mortgage options through West Coast Capital Mortgage</p>
     <div class="btn-row">
       <a class="btn btn-lg btn-sun" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Online</a>
       <a class="btn btn-lg btn-outline-light" href="calculators.html">View Mortgage Tools</a>
       <a class="btn btn-lg btn-outline-light" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Talk to AI</a>
     </div>
-    <p class="hero-note">Applications are processed through West Coast Capital Mortgage Inc. AI review opens WCCI.Online in a separate secure experience.</p>
+    <p class="hero-note">Applications are processed through West Coast Capital Mortgage. AI review opens WCCI.Online in a separate secure experience.</p>
   </div>
 </section>
 
 <section><div class="wrap">
   <div class="section-head"><span class="eyebrow gold">Powered by West Coast</span>
   <h2>Florida-focused guidance, backed by West Coast Capital Mortgage.</h2>
-  <p class="lead">Suncoast Capital Mortgage gives Florida borrowers a warmer local entry point while using the same mortgage platform, application process, educational resources, and licensed review structure operated through West Coast Capital Mortgage Inc.</p></div>
+  <p class="lead">Suncoast Capital Mortgage gives Florida borrowers a warmer local entry point while using the same mortgage platform, application process, educational resources, and licensed review structure operated through West Coast Capital Mortgage</p></div>
   <div class="grid grid-3">{powered}</div>
 </div></section>
 
@@ -318,7 +318,7 @@ def _home():
 <section><div class="wrap"><div class="cta-band">
   <span class="eyebrow" style="color:var(--sun)">Florida Mortgage Guidance</span>
   <h2>Ready to start your Florida mortgage?</h2>
-  <p>Apply online in minutes, or review your scenario first &mdash; both are handled through West Coast Capital Mortgage Inc. and related secure platforms.</p>
+  <p>Apply online in minutes, or review your scenario first &mdash; both are handled through West Coast Capital Mortgage and related secure platforms.</p>
   <div class="btn-row">
     <a class="btn btn-lg btn-sun" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Online</a>
     <a class="btn btn-lg btn-outline-light" href="{WCCI_URL}" target="_blank" rel="noopener noreferrer">Review My Scenario</a>
@@ -332,13 +332,13 @@ def _home():
 # ----------------------------------------------------------------------------
 def _about():
     return wc.page_hero("About Suncoast Capital Mortgage",
-        "A Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support &mdash; connected to West Coast Capital Mortgage Inc.",
+        "A Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support &mdash; connected to West Coast Capital Mortgage",
         "About") + f"""
 <section><div class="wrap split">
   <div>
     <span class="eyebrow gold">Who we are</span>
     <h2>Florida guidance, West Coast platform</h2>
-    <p class="lead">Suncoast Capital Mortgage was created as a Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support. The platform is connected to West Coast Capital Mortgage Inc., allowing clients to access the same application process, mortgage resources, and licensed review structure.</p>
+    <p class="lead">Suncoast Capital Mortgage was created as a Florida-facing mortgage experience for borrowers who want clear guidance, modern tools, and professional mortgage support. The platform is connected to West Coast Capital Mortgage, allowing clients to access the same application process, mortgage resources, and licensed review structure.</p>
     <p class="muted">Serving borrowers where properly licensed. Equal Housing Lender. Licensed in FL &amp; CA.</p>
   </div>
   <ul class="feature-list">
@@ -354,14 +354,14 @@ def _about():
     <div class="founder-photo"><img src="assets/anatoliy-kanevsky.png" alt="Anatoliy Kanevsky" loading="lazy"></div>
     <div>
       <p>Suncoast Capital Mortgage is connected to the broader West Coast Capital Mortgage platform led by Anatoliy Kanevsky, a mortgage and real estate professional with experience across lending, brokerage, luxury residential development, and complex borrower scenarios.</p>
-      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows Suncoast borrowers to access both lending discipline and practical real estate experience &mdash; all operated through West Coast Capital Mortgage Inc.</p>
+      <p>His background combines mortgage lending, real estate brokerage, luxury residential development, and real-world deal analysis. That perspective allows Suncoast borrowers to access both lending discipline and practical real estate experience &mdash; all operated through West Coast Capital Mortgage</p>
       <p>Whether a Florida client is buying a primary residence, refinancing, purchasing a luxury property, financing an investment property, or exploring self-employed, Non-QM, jumbo, FHA, VA, or DSCR options, the focus is simple: clear guidance, smart structure, and a mortgage strategy that fits the client&rsquo;s actual situation.</p>
       <ul class="founder-cred">
         <li>California Real Estate Broker</li>
         <li>Mortgage professional since 2001</li>
         <li>Luxury real estate and development experience</li>
         <li>Purchase, refinance, jumbo, Non-QM, DSCR, and self-employed borrower strategy</li>
-        <li>Founder, West Coast Capital Mortgage Inc.</li>
+        <li>Founder, West Coast Capital Mortgage</li>
       </ul>
       <p class="founder-contact"><b>Anatoliy Direct:</b> <a href="tel:{wc.DIRECT_TEL}">{wc.DIRECT_PHONE}</a><br><b>Email:</b> <a href="mailto:{wc.EMAIL}">{wc.EMAIL}</a></p>
       <div class="btn-row" style="margin-top:18px"><a class="btn btn-sun" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="{APPLY_URL}" target="_blank" rel="noopener noreferrer">Apply Online</a></div>
@@ -375,7 +375,7 @@ def _about():
     {card("","Modern tools","Calculators and a short application to move quickly.","Try our tools","calculators.html")}
     {card("","Human guidance","Licensed professionals who explain every step.","Talk to us","contact.html")}
   </div>
-  <p class="form-note center" style="margin-top:30px">Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #{NMLS}. Equal Housing Lender. Licensed in FL &amp; CA. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
+  <p class="form-note center" style="margin-top:30px">Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage NMLS #{NMLS}. Equal Housing Lender. Licensed in FL &amp; CA. This is not a commitment to lend. All loans are subject to credit, income, property, and underwriting approval.</p>
 </div></div></section>
 """
 
@@ -415,7 +415,7 @@ def build_pages():
     # Brand-specific overrides
     pages["index.html"] = dict(
         title="Florida Home Loans, Refinance & Mortgage Guidance",
-        desc="Suncoast Capital Mortgage — a Florida-facing mortgage experience operated through West Coast Capital Mortgage Inc. Explore purchase, refinance, jumbo, FHA/VA, self-employed, bank statement, DSCR, and investment property options.",
+        desc="Suncoast Capital Mortgage — a Florida-facing mortgage experience operated through West Coast Capital Mortgage. Explore purchase, refinance, jumbo, FHA/VA, self-employed, bank statement, DSCR, and investment property options.",
         nav="home", body=_home())
     pages["404.html"] = dict(
         title="Page not found",
@@ -423,7 +423,7 @@ def build_pages():
         nav="", body=_notfound())
     pages["about.html"] = dict(
         title="About Suncoast Capital Mortgage",
-        desc="Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage Inc. NMLS #2817729. Equal Housing Lender. Licensed in FL & CA.",
+        desc="Suncoast Capital Mortgage is a Florida-facing mortgage brand experience operated through West Coast Capital Mortgage NMLS #2817729. Equal Housing Lender. Licensed in FL & CA.",
         nav="about", body=_about().replace("WEST COAST CAPITAL MORTGAGE", "SUNCOAST CAPITAL MORTGAGE"))
     return pages
 
