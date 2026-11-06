@@ -213,7 +213,7 @@ DISCLOSURE = f"""<section class="inv-disclosure"><div class="wrap">
 </div></section>"""
 
 PROGRAMS = {
-    "investor-loans": ("All programs", "Investor Loans", "Compare every investor program side by side."),
+    "investor-loans": ("All programs", "Investment Property Loans", "Compare every program side by side."),
     "fix-and-flip-loans": ("Fix &amp; Flip", "Fix and Flip Loans", "Up to 90% of purchase and 100% of rehab."),
     "ground-up-construction-loans": ("New construction", "Ground-Up Construction Loans", "Land plus 100% of the construction budget."),
     "bridge-loans": ("Bridge", "Investor Bridge Loans", "Finished properties listed for sale or leasing up."),
@@ -345,9 +345,9 @@ def page_hub() -> dict:
                 DISCLOSURE]
     return dict(
         slug="investor-loans",
-        title="Real Estate Investor Loans | West Coast Capital Mortgage",
-        description="Fix & flip, ground-up construction, bridge, rental portfolio and multifamily loans for real estate investors in California, Florida and Texas.",
-        h1="Private Lending for Real Estate Investors", crumb="Investor Loans",
+        title="Investment Property Loans | West Coast Capital Mortgage",
+        description="Investment property loans for investors and developers in CA, FL and TX: fix & flip, ground-up construction, bridge, rental portfolio and multifamily loans.",
+        h1="Financing for Real Estate Investors &amp; Developers", crumb="Investment Property Loans", programs_line="Fix &amp; Flip &middot; Ground-Up Construction &middot; Bridge Loans",
         lead="Fix and flip, construction, bridge and rental loans in California, Florida and Texas. Your loan closes with West Coast Capital Mortgage: our term sheet, our team and our borrower portal, with our private lender behind every loan.",
         sections=sections, faqs=faqs, product=None,
         catalog=[(PROGRAMS[s][1], s) for s in PROGRAMS if s != "investor-loans"],
@@ -953,8 +953,8 @@ def chrome_for(top: str) -> str:
     top = top.replace('<a class="btn btn-blue" href="/apply" data-cta="preapproval">Get Preapproved</a>',
                       f'<a class="btn btn-blue" href="#{FORM_ID}" data-cta="investor-deal">Tell Me Your Scenario</a>', 1)
     if 'investor-loans.html" class="active"' not in top:
-        top = re.sub(r'<a href="([^"]*investor-loans(?:\.html)?)">Investors</a>',
-                     r'<a href="\1" class="active">Investors</a>', top, count=1)
+        top = re.sub(r'<a href="([^"]*investor-loans(?:\.html)?)">Investment Property Loans</a>',
+                     r'<a href="\1" class="active">Investment Property Loans</a>', top, count=1)
     return top
 
 
@@ -994,7 +994,7 @@ def json_ld(page: dict) -> str:
     url = f"{SITE}/{page['slug']}"
     crumbs = [("Home", f"{SITE}/"), ("Loans", f"{SITE}/loans")]
     if page["slug"] != "investor-loans":
-        crumbs.append(("Investor Loans", f"{SITE}/investor-loans"))
+        crumbs.append(("Investment Property Loans", f"{SITE}/investor-loans"))
     crumbs.append((page["crumb"], url))
     states = [{"@type": "State", "name": s} for s in page.get("states", STATES)]
     graph: list[dict] = [
@@ -1056,8 +1056,9 @@ def render(page: dict, top: str, footer: str) -> str:
     desc = html.escape(page["description"], quote=True)
     crumbs = '<a href="index.html">Home</a> &nbsp;/&nbsp; <a href="loans.html">Loans</a> &nbsp;/&nbsp; '
     if page["slug"] != "investor-loans":
-        crumbs += '<a href="investor-loans.html">Investor Loans</a> &nbsp;/&nbsp; '
+        crumbs += '<a href="investor-loans.html">Investment Property Loans</a> &nbsp;/&nbsp; '
     crumbs += page["crumb"]
+    programs_line = f'<p class="inv-programs-line">{page["programs_line"]}</p>\n    ' if page.get("programs_line") else ""
     hero = f"""<section class="page-hero inv-hero">
   <div class="hero-wallpaper" aria-hidden="true">
     <div class="wallpaper-line" style="top:18%">WEST COAST CAPITAL MORTGAGE</div>
@@ -1066,7 +1067,7 @@ def render(page: dict, top: str, footer: str) -> str:
   <div class="wrap page-hero-inner">
     <div class="crumbs">{crumbs}</div>
     <h1>{page['h1']}</h1>
-    <p class="lead">{page['lead']}</p>
+    {programs_line}<p class="lead">{page['lead']}</p>
     <div class="inv-updated">{face()}<span><b><a href="/loan-officer">Anatoliy Kanevsky</a></b><em>Founder &middot; NMLS #2775380</em></span></div>
     <div class="btn-row inv-hero-actions"><a class="btn btn-blue" href="#{FORM_ID}">Request a Call</a><a class="btn btn-outline" href="{PHONE_HREF}">Call {PHONE_TEXT}</a></div>
   </div>

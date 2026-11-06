@@ -7,6 +7,19 @@
   command = "python3 tools/normalize_primary_domain.py --deploy && python3 tools/normalize_ai_mortgage_review_brand.py && python3 tools/link_florida_jumbo_2026.py && python3 tools/strengthen_refinance_visibility_20260922.py && python3 scripts/disable_pending_state_pages_20260907.py && python3 tools/install_investor_links.py && python3 tools/install_wccm_gtm.py && python3 tools/install_wccm_ads_readiness.py && python3 tools/install_early_845k_readiness.py && python3 tools/verify_wccm_clarity.py"
   publish = "wccm-corporate"
 
+# The older investment-property page now lives in the investor section.
+[[redirects]]
+  from = "/investment-property-loans"
+  to = "/investor-loans"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/investment-property-loans.html"
+  to = "/investor-loans"
+  status = 301
+  force = true
+
 # Keep the existing Florida hub link working while the canonical page uses the clean URL.
 [[redirects]]
   from = "/florida-dscr-loans.html"

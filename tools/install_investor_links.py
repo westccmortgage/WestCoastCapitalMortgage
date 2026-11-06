@@ -31,7 +31,7 @@ HOME_CARD_MARKER = "<!-- INVESTOR-CARD -->"
 HOME_CARD = HOME_CARD_MARKER + """
       <a class="mortgage-funnel-card investor-card" href="investor-loans.html">
         <span class="mortgage-funnel-meta"><b>02</b><b>PRIVATE LENDING</b></span>
-        <h2>Investors</h2>
+        <h2>Investment Property Loans</h2>
         <p>Private lending for real estate investors: fix &amp; flip, construction, bridge and rental loans, closed in your LLC.</p>
         <span class="mortgage-funnel-action">SEE INVESTOR PROGRAMS <span aria-hidden="true">&rarr;</span></span>
       </a>
@@ -42,7 +42,7 @@ LOANS_BLOCK_START = "<!-- INVESTOR-LOANS:start -->"
 LOANS_BLOCK_END = "<!-- INVESTOR-LOANS:end -->"
 LOANS_BLOCK = LOANS_BLOCK_START + """
 <section class="bg-light"><div class="wrap">
-  <div class="section-head"><span class="eyebrow">Real estate investors</span><h2>Investor &amp; business-purpose loans</h2><p class="lead">Short-term financing to buy, renovate, build and hold investment property &mdash; for borrowers who close in an LLC or corporation.</p></div>
+  <div class="section-head"><span class="eyebrow">Real estate investors</span><h2>Investment Property Loans</h2><p class="lead">Short-term financing to buy, renovate, build and hold investment property &mdash; for borrowers who close in an LLC or corporation.</p></div>
   <div class="grid grid-3"><a class="card" href="fix-and-flip-loans.html"><span class="label">Fix &amp; Flip</span><h3>Fix and Flip Loans</h3><p>Up to 90% of purchase and 100% of the rehab budget, interest only.</p><span class="more">Learn more <span aria-hidden="true">&rarr;</span></span></a><a class="card" href="ground-up-construction-loans.html"><span class="label">New Construction</span><h3>Ground-Up Construction Loans</h3><p>Land plus 100% of the construction budget for experienced builders.</p><span class="more">Learn more <span aria-hidden="true">&rarr;</span></span></a><a class="card" href="bridge-loans.html"><span class="label">Bridge</span><h3>Investor Bridge Loans</h3><p>Short-term financing for finished properties that are listed or leasing up.</p><span class="more">Learn more <span aria-hidden="true">&rarr;</span></span></a><a class="card" href="rental-portfolio-loans.html"><span class="label">Portfolio</span><h3>Rental Portfolio Loans</h3><p>Two to ten rentals in one 30-year loan, qualified on rent.</p><span class="more">Learn more <span aria-hidden="true">&rarr;</span></span></a><a class="card" href="multifamily-bridge-loans.html"><span class="label">5+ Units</span><h3>Multifamily Bridge Loans</h3><p>$2M&ndash;$5M to buy and renovate California apartment buildings.</p><span class="more">Learn more <span aria-hidden="true">&rarr;</span></span></a><a class="card" href="investor-loans.html"><span class="label">All programs</span><h3>Compare Investor Loans</h3><p>Side-by-side leverage, loan sizes, terms and credit minimums.</p><span class="more">Compare <span aria-hidden="true">&rarr;</span></span></a></div>
 </div></section>
 """ + LOANS_BLOCK_END
@@ -53,7 +53,7 @@ CROSS_BLOCK = CROSS_BLOCK_START + """
 <section><div class="wrap inv-answer">
   <h2>Still needs work before it can be rented?</h2>
   <p>A DSCR loan is for a property that is ready to rent. If it still needs a rehab or is being built, it is usually financed first with a <a href="fix-and-flip-loans.html">fix and flip</a>, <a href="ground-up-construction-loans.html">ground-up construction</a> or <a href="bridge-loans.html">bridge loan</a>, then refinanced into a DSCR loan once it is rented. Have several rentals? See <a href="rental-portfolio-loans.html">rental portfolio loans</a>.</p>
-  <div class="btn-row"><a class="btn btn-blue" href="investor-loans.html">See All Investor Loans</a></div>
+  <div class="btn-row"><a class="btn btn-blue" href="investor-loans.html">See All Investment Property Loans</a></div>
 </div></section>
 """ + CROSS_BLOCK_END
 CROSS_PAGES = ("dscr-loans.html", "investment-property-loans.html")
@@ -77,7 +77,7 @@ def add_nav_link(text: str, active: bool = False) -> tuple[str, int]:
         if not loans:
             return nav.group(0)
         cls = ' class="active"' if active else ""
-        link = f'<a href="{investor_href(loans)}"{cls}>Investors</a>'
+        link = f'<a href="{investor_href(loans)}"{cls}>Investment Property Loans</a>'
         changed += 1
         return nav.group(1) + body[: loans.end()] + link + body[loans.end():] + nav.group(3)
 

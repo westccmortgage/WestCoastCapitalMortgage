@@ -68,6 +68,7 @@
 
   var DICT = {
     /* ===== Investor blocks on shared pages (home card, /loans, DSCR cross-links) ===== */
+    "See All Investment Property Loans": ["Ver todos los préstamos para propiedades de inversión", "Все кредиты на инвестиционную недвижимость"],
     "PRIVATE LENDING": ["PRÉSTAMOS PRIVADOS", "ЧАСТНОЕ КРЕДИТОВАНИЕ"],
     "Private lending for real estate investors: fix & flip, construction, bridge and rental loans, closed in your LLC.": ["Préstamos privados para inversionistas inmobiliarios: fix & flip, construcción, préstamos puente y de alquiler, a nombre de su LLC.", "Частное кредитование для инвесторов в недвижимость: fix & flip, строительство, бридж-кредиты и кредиты под аренду — оформляются на вашу LLC."],
     "SEE INVESTOR PROGRAMS": ["VER PROGRAMAS PARA INVERSIONISTAS", "ПРОГРАММЫ ДЛЯ ИНВЕСТОРОВ"],

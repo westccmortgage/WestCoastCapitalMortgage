@@ -721,7 +721,11 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 
 /* ---------- Investor section: human layer (Nov 5, 2026) ---------- */
 @media(min-width:1101px){html[lang="en"] .mainnav a{white-space:nowrap}}
-@media(min-width:961px) and (max-width:1260px){.mainnav{gap:0}.mainnav a{padding:10px 8px;font-size:.88rem;letter-spacing:.01em}.header-inner{gap:16px}.header-cta .btn{padding:11px 14px}}
+/* Long section label: two balanced lines when the header is tight */
+@media(min-width:961px) and (max-width:1400px){html[lang] .mainnav a[href*="investor-loans"]{white-space:normal;line-height:1.15;text-align:center;min-width:12em;max-width:12.5em}}
+@media(min-width:961px){html:not([lang="en"]) .mainnav a[href*="investor-loans"]{max-width:none;min-width:0}}
+@media(min-width:1101px){html:not([lang="en"]) .mainnav a[href*="investor-loans"]{min-width:15em}html[lang="ru"] .mainnav a[href*="investor-loans"]{min-width:17.5em}}
+@media(min-width:961px) and (max-width:1400px){.mainnav{gap:0}.mainnav a{padding:10px 8px;font-size:.88rem;letter-spacing:.01em}.header-inner{gap:16px}.header-cta .btn{padding:11px 14px}}
 .investor-page .btn-row{flex-wrap:wrap}
 .inv-h2{margin:0 0 14px}
 .inv-lead{max-width:62ch;margin:0 0 26px}
@@ -851,3 +855,4 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 @media(max-width:420px){.inv-num{padding:16px}.inv-num b{font-size:1.5rem}}
 .inv-checklist-solo{max-width:780px}
 .inv-checklist-solo .inv-h2{font-size:1.5rem;margin-bottom:16px}
+.inv-programs-line{margin:14px 0 0;font-size:1.12rem;font-weight:700;color:var(--blue);letter-spacing:.01em}

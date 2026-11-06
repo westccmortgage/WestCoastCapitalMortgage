@@ -836,5 +836,8 @@ window.WCCM_I18N_EXTRA = {
   "Are you licensed in California?": ["¿Tienen licencia en California?", "У вас есть лицензия в Калифорнии?"],
   "Yes: California DRE Corporation License #02440065 and NMLS #2817729.": ["Sí: licencia corporativa del DRE de California #02440065 y NMLS #2817729.", "Да: California DRE Corporation License #02440065 и NMLS #2817729."],
   "A rate and origination points set per deal, plus third-party costs. You see everything in a written term sheet before you pay for an appraisal.": ["Una tasa y puntos de originación definidos para cada operación, más los costos de terceros. Usted ve todo en una hoja de términos por escrito antes de pagar una tasación.", "Ставка и комиссия за выдачу (origination points), которые определяются под каждую сделку, плюс расходы третьих сторон. Вы видите всё в письменном term sheet до того, как платите за оценку."],
-  "We also lend in Florida and Texas.": ["También prestamos en Florida y Texas.", "Мы также кредитуем во Флориде и Техасе."]
+  "We also lend in Florida and Texas.": ["También prestamos en Florida y Texas.", "Мы также кредитуем во Флориде и Техасе."],
+  "Financing for Real Estate Investors & Developers": ["Financiamiento para inversionistas y desarrolladores inmobiliarios", "Финансирование для инвесторов в недвижимость и девелоперов"],
+  "Fix & Flip · Ground-Up Construction · Bridge Loans": ["Fix & Flip · Construcción desde cero · Préstamos puente", "Fix & Flip · Строительство с нуля · Бридж-кредиты"],
+  "Compare every program side by side.": ["Compare todos los programas lado a lado.", "Все программы рядом в одной таблице."]
 };
