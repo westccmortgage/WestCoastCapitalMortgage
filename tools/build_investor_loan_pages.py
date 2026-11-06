@@ -491,7 +491,9 @@ def page_ground_up() -> dict:
             ["Total-cost cap: 85% of $800,000", "$680,000"],
             ["ARV cap: 70% of $1,200,000", "$840,000"],
             ["<strong>Maximum loan (the lowest of the three)</strong>", "<strong>$680,000</strong>"],
-            ["Your equity", "$120,000 + closing costs"],
+            ["Funded at closing for the land", "$230,000 (the cap trims the land advance)"],
+            ["Released in draws for construction", "$450,000"],
+            ["Your cash at closing", "$120,000 + closing costs and one month of interest reserve"],
         ],
         caption="Ground-up construction loan sizing example", ledger=True,
     )
