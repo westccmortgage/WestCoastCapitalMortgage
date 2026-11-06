@@ -643,6 +643,7 @@ window.WCCM_I18N_EXTRA = {
   "with approved permits": ["con permisos aprobados", "при одобренных разрешениях"],
   "with your other rentals: up to 80% of value on a rate-and-term refinance and up to 75% cash-out after 90 days of ownership. The rental loan qualifies on the rent, not on your personal income.": ["junto con sus otras propiedades de alquiler: hasta el 80% del valor en un refinanciamiento de tasa y plazo y hasta el 75% con retiro de efectivo después de 90 días como propietario. El préstamo de alquiler califica según la renta, no según sus ingresos personales.", "вместе с другими вашими арендными объектами: до 80% стоимости при рефинансировании ставки и срока и до 75% при cash-out после 90 дней владения. Кредит на аренду квалифицируется по аренде, а не по вашему личному доходу."],
   "· Los Angeles office": ["· Oficina de Los Ángeles", "· офис в Лос-Анджелесе"],
+  "· Burbank office": ["· Oficina de Burbank", "· офис в Бербанке"],
   "Founder · NMLS #2775380": ["Fundador · NMLS #2775380", "Основатель · NMLS #2775380"],
   "Reviewed and updated November 5, 2026": ["Revisado y actualizado el 5 de noviembre de 2026", "Проверено и обновлено 5 ноября 2026"],
   "Tell Me Your Scenario": ["Cuénteme su escenario", "Расскажите о вашей сделке"],

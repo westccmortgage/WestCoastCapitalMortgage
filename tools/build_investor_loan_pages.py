@@ -40,6 +40,7 @@ SITE = "https://westcoastcapitalmortgage.com"
 ORG_ID = f"{SITE}/#organization"
 PERSON_ID = f"{SITE}/loan-officer#anatoliy-kanevsky"
 UPDATED_ISO = "2026-11-05"
+MODIFIED_ISO = "2026-11-06"
 UPDATED_TEXT = "November 5, 2026"
 UPDATED_SHORT = "Nov 5, 2026"
 PHONE_HREF = "tel:+13106541577"
@@ -221,7 +222,7 @@ PROGRAMS = {
     "multifamily-bridge-loans": ("5+ units", "Multifamily Bridge Loans", "$2M&ndash;$5M value-add loans in California."),
     "dscr-loans": ("Long-term rental", "DSCR Loans", "Qualify a single rental on its rent."),
     "hard-money-loans": ("California", "Hard Money Loans in California", "Private money to buy, fix, build or bridge."),
-    "hard-money-loans-los-angeles": ("Los Angeles", "Hard Money Loans in Los Angeles", "Burbank office, loans across LA County and the Valley."),
+    "hard-money-loans-los-angeles": ("Los Angeles", "Hard Money Loans in Los Angeles", "Los Angeles office, loans across LA County and the Valley."),
 }
 
 
@@ -841,6 +842,7 @@ def page_hard_money() -> dict:
         ("Programs", "Fix and flip, bridge and ground-up construction <small>plus rental refinances</small>"),
         ("Purchase price financed", "Up to 90% <small>fix and flip</small>"),
         ("Rehab or construction budget", "100%, released in draws"),
+        ("Loan vs. after-repair value", "70&ndash;75% max <small>fix and flip</small>"),
         ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
         ("Credit score", "From 660 <small>680 for first-time investors</small>"),
@@ -860,7 +862,7 @@ def page_hard_money() -> dict:
     )
     faqs = [
         ("Who offers hard money loans in Los Angeles?",
-         "West Coast Capital Mortgage in Burbank offers hard money loans across Los Angeles County and the rest of California, plus Florida and Texas: fix and flip, bridge and construction loans."),
+         "West Coast Capital Mortgage in Los Angeles offers hard money loans across Los Angeles County and the rest of California, plus Florida and Texas: fix and flip, bridge and construction loans."),
         ("Is private money the same as hard money?",
          "In practice, yes: short-term, interest-only loans based on the property and the deal."),
         ("How much can I borrow with a hard money loan?",
@@ -921,6 +923,7 @@ def page_hard_money_la() -> dict:
         ("Programs", "Fix and flip, bridge and ground-up construction <small>plus rental refinances</small>"),
         ("Purchase price financed", "Up to 90% <small>fix and flip</small>"),
         ("Rehab or construction budget", "100%, released in draws"),
+        ("Loan vs. after-repair value", "70&ndash;75% max <small>fix and flip</small>"),
         ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
         ("Credit score", "From 660 <small>680 for first-time investors</small>"),
@@ -969,9 +972,9 @@ def page_hard_money_la() -> dict:
                """<p>Rehab and construction money is held back at closing and released in draws after an inspection confirms the work. Permits come from the city the property is in: LADBS for the City of Los Angeles, including most of the Valley, or the building departments of Burbank, Glendale, Pasadena and the other cities.</p>
   <p>On a new build, the land is financed at the highest leverage once permits are approved.</p>"""),
         how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
-        anatoliy_note("<p>Our office is in Burbank, on Olive Avenue. If your property is in the Valley or anywhere in Los Angeles County, send me the address, the price, your budget and what it will sell for, or come by the office. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>"
+        anatoliy_note("<p>Our Los Angeles office is on Olive Avenue in Burbank. If your property is in the Valley or anywhere in Los Angeles County, send me the address, the price, your budget and what it will sell for, or come by the office. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>"
                       "<p>When the work is done, our sister brokerage <a href=\"https://westcoastcapitalrealty.com\">West Coast Capital Realty</a> can list it, and if you keep it, we can move you into a long-term <a href=\"dscr-loans.html\">DSCR loan</a>.</p>",
-                      "We&rsquo;re in Burbank"),
+                      "We&rsquo;re in Los Angeles"),
         faq_section(faqs, "Questions about hard money in Los Angeles"),
         answer("More for Los Angeles",
                """<p><a href="loans/dscr/los-angeles-metro.html">DSCR loans in Los Angeles</a></p>
@@ -985,12 +988,12 @@ def page_hard_money_la() -> dict:
     return dict(
         slug="hard-money-loans-los-angeles",
         terms=terms,
-        strip=["Office in Burbank", "Up to 90% of the price + 100% of the rehab", "Loans from $50K to $3M", "Soft credit pull for terms"],
+        strip=["Office in Los Angeles", "Up to 90% of the price + 100% of the rehab", "Loans from $50K to $3M", "Soft credit pull for terms"],
         title="Hard Money Loans in Los Angeles & San Fernando Valley | West Coast Capital Mortgage",
-        description="Hard money and fix and flip loans in Los Angeles County and the San Fernando Valley from our Burbank office: up to 90% of purchase and 100% of rehab, $50K to $3M.",
+        description="Hard money and fix and flip loans in Los Angeles County and the San Fernando Valley from our Los Angeles office: up to 90% of purchase and 100% of rehab, $50K to $3M.",
         h1="Hard Money Loans in Los Angeles and the San Fernando Valley", crumb="Hard Money Loans in Los Angeles",
         programs_line="Fix &amp; Flip &middot; Ground-Up Construction &middot; Bridge Loans",
-        lead="Fix and flip, construction and bridge loans for investors in the San Fernando Valley and across Los Angeles County, from our office in Burbank. The loan closes in your LLC.",
+        lead="Fix and flip, construction and bridge loans for investors in the San Fernando Valley and across Los Angeles County, from our office in Los Angeles. The loan closes in your LLC.",
         sections=sections, faqs=faqs,
         area_served=[{"@type": "AdministrativeArea", "name": "Los Angeles County, California"},
                      {"@type": "Place", "name": "San Fernando Valley, California"}]
@@ -1098,7 +1101,7 @@ def json_ld(page: dict) -> str:
         {
             "@type": "WebPage", "@id": f"{url}#webpage", "url": url, "name": page["title"],
             "description": page["description"], "inLanguage": "en-US",
-            "datePublished": UPDATED_ISO, "dateModified": UPDATED_ISO,
+            "datePublished": UPDATED_ISO, "dateModified": MODIFIED_ISO,
             "publisher": {"@id": ORG_ID}, "reviewedBy": {"@id": PERSON_ID},
             "breadcrumb": {"@id": f"{url}#breadcrumb"},
         },
