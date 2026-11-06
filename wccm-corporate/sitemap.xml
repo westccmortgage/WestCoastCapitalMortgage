@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://westcoastcapitalmortgage.com/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/about</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -110,7 +110,7 @@
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/loan-officer</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -212,13 +212,13 @@
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/hard-money-loans</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://westcoastcapitalmortgage.com/hard-money-loans-los-angeles</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -638,4 +638,8 @@
     <priority>0.9</priority>
   </url>
   <url><loc>https://westcoastcapitalmortgage.com/fort-lauderdale-broward-mortgage</loc><lastmod>2026-10-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://westcoastcapitalmortgage.com/russian-speaking-mortgage-broker-los-angeles</loc>
+    <lastmod>2026-11-06</lastmod>
+  </url>
 </urlset>

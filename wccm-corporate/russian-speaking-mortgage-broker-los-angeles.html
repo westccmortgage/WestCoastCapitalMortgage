@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K2X3X454');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18417657219"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+
+/* Direct WCCM lead conversion. Keep this conversion out of GTM unless this
+   direct implementation is removed, so the same lead cannot be counted twice. */
+(function(){
+  if(window.__wccmAdsLeadConversionHook)return;
+  window.__wccmAdsLeadConversionHook=true;
+  window.__wccmAdsLeadCursor=0;
+  window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
+  window.__wccmAdsLeadScanner=setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmAdsLeadCursor<dl.length){
+      var item=dl[window.__wccmAdsLeadCursor++];
+      if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
+        item.__wccmAdsLeadSent=true;
+        var leadEventId=item.lead_event_id||'';
+        if(leadEventId&&window.__wccmAdsLeadSentIds[leadEventId])continue;
+        if(leadEventId)window.__wccmAdsLeadSentIds[leadEventId]=true;
+        window.gtag('event','conversion',{
+          'send_to':'AW-18417657219/LiA7CPWd4eocEIPLnM5E',
+          'value':1.0,
+          'currency':'USD',
+          'transaction_id':leadEventId
+        });
+        /* Only emit known mortgage categories and technical form/page identifiers.
+           Never send borrower text, contact fields, or URL query parameters to GA4. */
+        var knownPrograms=[
+          'General mortgage inquiry','Jumbo','DSCR / Investor',
+          'Self-employed','Bank Statement / Self-Employed','HELOC / Home Equity',
+          'Condo','Foreign National','Mortgage Second Opinion',
+          'Investor Loans','Fix & Flip','Ground-Up Construction','Bridge',
+          'Rental Portfolio','Multifamily Bridge'
+        ];
+        var rawProgram=typeof item.program_interest==='string'?item.program_interest:'';
+        /* The Florida lead funnel prefixes otherwise approved mortgage categories.
+           Retain that market context while still rejecting arbitrary or personal text. */
+        var floridaPrefix='Florida / ';
+        var isFlorida=rawProgram.indexOf(floridaPrefix)===0;
+        var baseProgram=isFlorida?rawProgram.slice(floridaPrefix.length):rawProgram;
+        var safeProgram=knownPrograms.indexOf(baseProgram)>=0?
+          (isFlorida?floridaPrefix:'')+baseProgram:'Other Mortgage Inquiry';
+        var rawForm=typeof item.form_name==='string'?item.form_name:'';
+        var safeForm=(rawForm.length>0&&rawForm.length<=64&&new RegExp('^[a-z0-9-]+$').test(rawForm))?rawForm:'lead_form';
+        var rawPath=window.location.pathname||'/';
+        var safePath=(rawPath.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(rawPath))?rawPath:'/';
+        window.gtag('event','generate_lead',{
+          'send_to':'G-GB57YWMKBH',
+          'value':1.0,
+          'currency':'USD',
+          'lead_event_id':leadEventId,
+          'form_name':safeForm,
+          'program_interest':safeProgram,
+          'page_path':safePath
+        });
+      }
+    }
+  },200);
+})();
+
+window.gtag('js',new Date());
+window.gtag('config','AW-18417657219');
+window.gtag('config','G-GB57YWMKBH');
+</script>
+<!-- End Google tag - Google Ads -->
+<!-- OpenAI Ads pixel -->
+<script>
+(function(w,d,s,u){
+  if(w.oaiq)return;
+  var q=function(){q.q.push(arguments);};
+  q.q=[];
+  w.oaiq=q;
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+})(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
+
+/* Same accepted-lead signal as the Google Ads block; lead_event_id doubles as
+   the OpenAI event_id so a resent lead is deduplicated. */
+(function(){
+  if(window.__wccmOpenAiLeadHook)return;
+  window.__wccmOpenAiLeadHook=true;
+  window.__wccmOpenAiLeadCursor=0;
+  window.__wccmOpenAiLeadSentIds=window.__wccmOpenAiLeadSentIds||{};
+  setInterval(function(){
+    var dl=window.dataLayer||[];
+    while(window.__wccmOpenAiLeadCursor<dl.length){
+      var item=dl[window.__wccmOpenAiLeadCursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmOpenAiLeadSent)continue;
+      item.__wccmOpenAiLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&window.__wccmOpenAiLeadSentIds[leadEventId])continue;
+      if(leadEventId)window.__wccmOpenAiLeadSentIds[leadEventId]=true;
+      window.oaiq("measure","lead_created",{type:"customer_action"},
+        leadEventId?{event_id:leadEventId}:undefined);
+    }
+  },200);
+})();
+</script>
+<!-- End OpenAI Ads pixel -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Russian and Ukrainian Speaking Mortgage Broker in Los Angeles | West Coast Capital Mortgage</title>
+<meta name="description" content="Mortgage broker in Los Angeles who speaks Russian, Ukrainian and English. Anatoliy Kanevsky, licensed since 2004: purchase, refinance, jumbo, bank-statement, foreign-national, DSCR and fix and flip loans. NMLS #2775380.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261105-investor-loans">
+<link rel="canonical" href="https://westcoastcapitalmortgage.com/russian-speaking-mortgage-broker-los-angeles">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Anatoliy Kanevsky">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="West Coast Capital Mortgage">
+<meta property="og:title" content="Russian and Ukrainian speaking mortgage broker in Los Angeles">
+<meta property="og:description" content="Mortgage broker in Los Angeles who speaks Russian, Ukrainian and English. Anatoliy Kanevsky, licensed since 2004: purchase, refinance, jumbo, bank-statement, foreign-national, DSCR and fix and flip loans. NMLS #2775380.">
+<meta property="og:url" content="https://westcoastcapitalmortgage.com/russian-speaking-mortgage-broker-los-angeles">
+<meta property="og:image" content="https://westcoastcapitalmortgage.com/assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Service", "name": "Russian and Ukrainian speaking mortgage broker in Los Angeles", "serviceType": "Mortgage brokerage", "url": "https://westcoastcapitalmortgage.com/russian-speaking-mortgage-broker-los-angeles", "availableLanguage": ["English", "Russian", "Ukrainian"], "areaServed": [{"@type": "City", "name": "Los Angeles"}, {"@type": "State", "name": "California"}, {"@type": "State", "name": "Florida"}, {"@type": "State", "name": "Texas"}], "provider": {"@id": "https://westcoastcapitalmortgage.com/#organization"}, "broker": {"@id": "https://westcoastcapitalmortgage.com/loan-officer#anatoliy-kanevsky"}}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I go through the whole mortgage in Russian or Ukrainian?", "acceptedAnswer": {"@type": "Answer", "text": "Yes for the conversation: the application, the document list and every question can be handled in Russian or Ukrainian. The loan documents themselves are in English, and Anatoliy goes through each one with you in your language before you sign."}}, {"@type": "Question", "name": "Можно ли оформить ипотеку полностью на русском?", "acceptedAnswer": {"@type": "Answer", "text": "Общение, анкета, список документов и все вопросы можно вести на русском или украинском. Сами кредитные документы на английском, и Анатолий проходит каждый из них с вами на русском до подписания."}}, {"@type": "Question", "name": "I'm new to the U.S. and don't have a U.S. credit score. Is there a loan for me?", "acceptedAnswer": {"@type": "Answer", "text": "Possibly. Foreign-national and ITIN programs can work without a U.S. credit score, usually with a larger down payment. Whether your file fits depends on the lender's rules, the property and your documents."}}, {"@type": "Question", "name": "Where do you work?", "acceptedAnswer": {"@type": "Answer", "text": "Los Angeles and the rest of California, plus Florida and Texas."}}]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://westcoastcapitalmortgage.com/"}, {"@type": "ListItem", "position": 2, "name": "Russian and Ukrainian speaking mortgage broker", "item": "https://westcoastcapitalmortgage.com/russian-speaking-mortgage-broker-los-angeles"}]}
+</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2X3X454"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <nav class="topbar-left" aria-label="Utility">
+      <a class="active-service" href="/">Mortgage</a>
+      <a href="california-mortgage-locations.html">California</a>
+    </nav>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="index.html" aria-label="West Coast Capital Mortgage home"><span class="l1">WEST COAST CAPITAL</span><span class="l2">MORTGAGE</span></a>
+    <div class="nav-collapse" id="navc">
+      <nav class="mainnav" aria-label="Primary"><a href="buy.html">Buy a Home</a><a href="refinance.html">Refinance</a><a href="loans.html">Loan Options</a><a href="investor-loans.html">Investment Property Loans</a><a href="about.html">About Us</a></nav>
+      <div class="header-cta"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a></div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navc"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<section class="mortgage-compact-hero">
+  <div class="mortgage-compact-watermark" aria-hidden="true">РУССКИЙ · УКРАЇНСЬКА</div>
+  <div class="wrap mortgage-compact-hero-inner">
+    <span class="eyebrow">LOS ANGELES | ENGLISH · РУССКИЙ · УКРАЇНСЬКА</span>
+    <h1>Russian and Ukrainian speaking mortgage broker in Los Angeles</h1>
+    <p>Anatoliy Kanevsky works your loan himself, in Russian, Ukrainian or English. He has been a licensed mortgage broker and real estate broker since 2004.</p>
+    <div class="btn-row"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="tel:+13106541577">Call (310) 654-1577</a></div>
+  </div>
+</section>
+
+<section><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Why it matters</span><h2>A mortgage is hard enough in your second language.</h2></div>
+  <p class="lead">Underwriting conditions, rate locks and disclosures are written for people who grew up with American credit. When you can ask every question in your own language, you catch the problem before closing, not after.</p>
+  <p>As a broker, Anatoliy sends one file to several wholesale and private lenders and compares the terms. You talk to one person from the first call to closing.</p>
+</div></section>
+
+<section class="bg-light"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Loans</span><h2>What Russian and Ukrainian speaking clients usually need</h2></div>
+  <div class="grid grid-3">
+    <a class="card" href="bank-statement-loans.html"><span class="label">Self-employed</span><h3>Bank statement loans</h3><p>Qualify on 12 or 24 months of deposits when tax returns understate what the business earns.</p><span class="more">Read more &rarr;</span></a>
+    <a class="card" href="foreign-national-loans.html"><span class="label">New to the U.S.</span><h3>Foreign-national loans</h3><p>Programs for buyers without a U.S. credit score or with ITIN.</p><span class="more">Read more &rarr;</span></a>
+    <a class="card" href="jumbo-loans.html"><span class="label">Higher prices</span><h3>Jumbo loans</h3><p>Loans above the conforming limit for Westside, Valley and South Bay homes.</p><span class="more">Read more &rarr;</span></a>
+    <a class="card" href="dscr-loans.html"><span class="label">Rentals</span><h3>DSCR loans</h3><p>Qualify an investment property on its rent, not your personal income.</p><span class="more">Read more &rarr;</span></a>
+    <a class="card" href="hard-money-loans-los-angeles.html"><span class="label">Investors</span><h3>Fix and flip and hard money</h3><p>Purchase plus rehab, closed in your LLC.</p><span class="more">Read more &rarr;</span></a>
+    <a class="card" href="mortgage-second-opinion.html"><span class="label">Denied or stuck</span><h3>Second opinion</h3><p>Bring the denial reason. We find out if another lender can do it.</p><span class="more">Read more &rarr;</span></a>
+  </div>
+</div></section>
+
+<section lang="ru"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">По-русски</span><h2>Ипотечный брокер в Лос-Анджелесе, который говорит по-русски</h2></div>
+  <p class="lead">Меня зовут Анатолий Каневский. Я лицензированный ипотечный брокер и брокер по недвижимости с 2004 года и сам веду каждый файл, от первого звонка до закрытия.</p>
+  <p>Чаще всего ко мне приходят с тем, что банк не берёт: доход самозанятого, который в налоговой декларации выглядит меньше, чем есть; покупка без кредитной истории в США; jumbo-кредит; инвестиционный объект под аренду или под ремонт и перепродажу. Я отправляю файл нескольким кредиторам и говорю прямо, где есть шанс, а где нет.</p>
+  <p>Документы по кредиту на английском. Я прохожу каждый с вами на русском до подписания, чтобы не было сюрпризов на закрытии.</p>
+  <p>Работаю по Лос-Анджелесу и всей Калифорнии, а также во Флориде и Техасе. Звоните: <a href="tel:+13106541577">(310) 654-1577</a>.</p>
+</div></section>
+
+<section lang="uk" class="bg-light"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Українською</span><h2>Іпотечний брокер у Лос-Анджелесі, який говорить українською</h2></div>
+  <p class="lead">Анатолій Каневський веде ваш кредит особисто, від першого дзвінка до закриття. Ліцензований іпотечний брокер і брокер з нерухомості з 2004 року.</p>
+  <p>Купівля, рефінансування, jumbo, кредити для самозайнятих за банківськими виписками, програми для покупців без кредитної історії в США, DSCR і fix and flip для інвесторів. Телефонуйте: <a href="tel:+13106541577">(310) 654-1577</a>.</p>
+</div></section>
+
+<section><div class="wrap">
+  <div class="section-head"><span class="eyebrow">FAQ</span><h2>Questions</h2></div>
+  <div class="faq-list">
+    <details><summary>Can I go through the whole mortgage in Russian or Ukrainian?</summary><p>Yes for the conversation: the application, the document list and every question can be handled in Russian or Ukrainian. The loan documents themselves are in English, and Anatoliy goes through each one with you in your language before you sign.</p></details>
+    <details><summary>Можно ли оформить ипотеку полностью на русском?</summary><p>Общение, анкета, список документов и все вопросы можно вести на русском или украинском. Сами кредитные документы на английском, и Анатолий проходит каждый из них с вами на русском до подписания.</p></details>
+    <details><summary>I'm new to the U.S. and don't have a U.S. credit score. Is there a loan for me?</summary><p>Possibly. Foreign-national and ITIN programs can work without a U.S. credit score, usually with a larger down payment. Whether your file fits depends on the lender's rules, the property and your documents.</p></details>
+    <details><summary>Where do you work?</summary><p>Los Angeles and the rest of California, plus Florida and Texas.</p></details>
+  </div>
+</div></section>
+
+<section class="bg-light"><div class="wrap">
+  <div class="btn-row"><a class="btn btn-blue" href="contact.html">Contact Anatoliy</a><a class="btn btn-outline" href="loan-officer.html">About Anatoliy Kanevsky</a></div>
+  <p style="margin-top:1.5rem;font-size:.9rem">Educational information only; not a commitment to lend, approval or rate quote. Programs, terms and eligibility vary by lender and scenario. All loans are subject to credit, income, property and underwriting approval. West Coast Capital Mortgage, Company NMLS #2817729. Anatoliy Kanevsky, NMLS #2775380, CA Broker DRE #01385024. Equal Housing Opportunity.</p>
+</div></section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand"><a class="logo" href="index.html"><span class="l1">WEST COAST CAPITAL</span><span class="l2">MORTGAGE INC.</span></a><p>Modern mortgage guidance for buying, refinancing, and building equity.</p><p><a href="tel:+13106541577">(310) 654-1577</a><br>150 E Olive Ave, Unit 112 · Burbank, CA 91502</p></div>
+    <div class="footer-col"><h4>Mortgage</h4><ul><li><a href="buy.html">Buy a Home</a></li><li><a href="refinance.html">Refinance</a></li><li><a href="loans.html">Loan Options</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Licensing</h4><ul class="footer-disclosure"><li>West Coast Capital Mortgage</li><li>Company NMLS #2817729</li><li>CA DRE Corporation License #02440065</li><li>Anatoliy Kanevsky · NMLS #2775380 · CA Broker DRE #01385024</li><li>Equal Housing Opportunity</li></ul><img src="assets/equal-housing.svg" alt="Equal Housing Opportunity" width="42" height="42" loading="lazy"></div>
+  </div>
+</footer>
+<script src="script.js?v=20261105-investor-loans" defer></script>
+</body>
+</html>
