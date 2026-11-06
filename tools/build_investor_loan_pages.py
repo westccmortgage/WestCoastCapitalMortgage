@@ -416,8 +416,7 @@ def page_fix_flip() -> dict:
         term_sheet("Fix and flip terms", terms,
                    "Program maximums for 1&ndash;4 unit residential investment property. Leverage depends on experience, credit, rehab scope and market. In Florida and Travis, Harris and Bexar counties, TX, these loans need three or more completed projects and 680+ credit and are capped at 65% of ARV. Not a commitment to lend."),
         answer("What is a fix and flip loan?",
-               """<p>A fix and flip loan is a short-term, interest-only loan that finances the purchase and renovation of an investment property. Part of the purchase price is funded at closing, the renovation budget is held back and released in draws as work is completed, and the loan is repaid when the property is sold or refinanced, typically within 12 months.</p>
-  <p>On loans of $100,000 or more you pay interest only on money that has been disbursed, so rehab funds still in the holdback cost nothing until you draw them.</p>"""),
+               """<p>A fix and flip loan is a short-term, interest-only loan that finances the purchase and renovation of an investment property. Part of the purchase price is funded at closing, the renovation budget is held back and released in draws as work is completed, and the loan is repaid when the property is sold or refinanced, typically within 12 months.</p>"""),
         answer("How much can I borrow on a fix and flip?",
                f"""<p>Up to 90% of the purchase price plus 100% of the rehab budget, as long as the total loan stays within 70% of the after-repair value (75% for qualifying experienced investors). Here is the math on a typical deal:</p>{example}
   <p class="inv-note">Illustration only; your terms depend on experience, credit and the project.</p>""",
@@ -521,8 +520,7 @@ def page_ground_up() -> dict:
         term_sheet("Ground-up construction terms", terms,
                    "Program maximums for new 1&ndash;4 unit residential construction. Leverage is the same for every eligible builder, except in a new market (700+ credit, a GC agreement and 5% less of the land) and in Florida and Travis, Harris and Bexar counties, TX (700+ credit, 5% less of total cost, loan capped at 65% of completed value). Not a commitment to lend."),
         answer("What is a ground-up construction loan?",
-               """<p>A ground-up construction loan is a short-term, interest-only loan that finances the land (or a teardown) and the full construction budget to build new homes. The land portion is funded at closing, construction money is released in draws as each stage is inspected, and the loan is repaid when the homes are sold or refinanced.</p>
-  <p><strong>No permits yet?</strong> The loan can fund 60% of the land now and release a catch-up draw to 75% when the permits are issued.</p>"""),
+               """<p>A ground-up construction loan is a short-term, interest-only loan that finances the land (or a teardown) and the full construction budget to build new homes. The land portion is funded at closing, construction money is released in draws as each stage is inspected, and the loan is repaid when the homes are sold or refinanced.</p>"""),
         answer("How much can I borrow to build?",
                f"""<p>Up to 75% of the land price plus 100% of the construction budget, limited to 85% of the total project cost (90% when interest is financed) and 70% of the completed value. The loan is the lowest of those three numbers:</p>{example}
   <p class="inv-note">Illustration only; your terms depend on experience and the project.</p>""",
@@ -890,9 +888,7 @@ def page_hard_money() -> dict:
         answer("Hard money programs we offer", programs, bg=True, anchor="programs"),
         answer("Where we lend in California",
                """<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
-  <p>We also lend in Florida and Texas, with market rules explained in the questions below.</p>"""),
-        answer("What a hard money loan costs",
-               """<p>Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more you pay interest only on money that has been disbursed, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You see all of it in a written term sheet before you pay for an appraisal.</p>""", bg=True),
+  <p>We also lend in Florida and Texas.</p>"""),
         how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
         anatoliy_note("<p>Send me the address, the price, your budget and what it will sell for. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>",
                       "Send me the deal first"),
