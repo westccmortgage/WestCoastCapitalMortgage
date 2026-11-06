@@ -849,3 +849,5 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .inv-num a{color:var(--blue);font-weight:600}
 @media(max-width:860px){.inv-num-grid{grid-template-columns:1fr 1fr}.inv-num:nth-child(3){border-left:0}.inv-num:nth-child(n+3){border-top:1px solid var(--border)}}
 @media(max-width:420px){.inv-num{padding:16px}.inv-num b{font-size:1.5rem}}
+.inv-checklist-solo{max-width:780px}
+.inv-checklist-solo .inv-h2{font-size:1.5rem;margin-bottom:16px}

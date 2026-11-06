@@ -105,12 +105,9 @@ def feature_list(items: list[str], cls: str = "feature-list") -> str:
 
 
 def split_lists(left_title: str, left: list[str], right_title: str, right: list[str], h2: str) -> str:
+    """Only the checklist side is shown: what the borrower needs to bring."""
     return f"""<section><div class="wrap">
-  <h2 class="inv-h2">{h2}</h2>
-  <div class="inv-split">
-    <div><h3>{left_title}</h3>{feature_list(left)}</div>
-    <div class="inv-checklist-box"><h3>{right_title}</h3>{feature_list(right, "inv-checklist")}</div>
-  </div>
+  <div class="inv-checklist-box inv-checklist-solo"><h2 class="inv-h2">{right_title}</h2>{feature_list(right, "inv-checklist")}</div>
 </div></section>"""
 
 
@@ -240,17 +237,17 @@ def related(current: str) -> str:
 
 
 DRAW_FAQ = ("How do I get the rehab or construction money?",
-            "The renovation or construction budget is held back at closing. As work is completed you request a draw online in the borrower portal, an inspection confirms the progress and the funds are released. On loans of $100,000 or more, interest is charged only on the money that has actually been disbursed, not on budget still in the holdback.")
+    "The budget is held back at closing and released in draws as the work is done: you request a draw online, an inspection confirms the progress and the funds go out.")
 LLC_FAQ = ("Do I need an LLC or corporation?",
-           "Yes. The loan closes in your LLC or corporation, and the owners sign a personal guarantee. No entity yet? Set one up before closing. For closing we need the articles or certificate of formation, the EIN letter, the operating agreement and a recent certificate of good standing.")
-SPEED_FAQ = ("How fast can the loan close?",
-             "Timing depends mostly on the appraisal and title, so we start both right after the pre-screen. What moves a closing fastest is a complete file: entity documents, purchase contract, scope of work or plans, insurance and clear title.")
+    "Yes, the loan closes in your LLC or corporation. No entity yet? Set one up before closing.")
+SPEED_FAQ = ("How fast can you close?",
+    "As fast as the appraisal and title allow. We order both right after the pre-screen.")
 CREDIT_PULL_FAQ = ("Will checking my terms affect my credit score?",
-                   "No. The first conversation and the pre-screen need no credit check at all, and when credit is pulled to issue terms and assign an underwriter it is a soft pull that does not affect your score.")
+    "No. It is a soft pull that does not affect your score.")
 REFI_TO_RENTAL_FAQ = ("Can I keep the property as a rental when the work is done?",
-                      "Yes. Once it is rented, refinance into a 30-year <a href=\"dscr-loans.html\">DSCR loan</a> on its own, or into a <a href=\"rental-portfolio-loans.html\">portfolio loan</a> with your other rentals: up to 80% of value on a rate-and-term refinance and up to 75% cash-out after 90 days of ownership. The rental loan qualifies on the rent, not on your personal income.")
-MARKETS_FAQ = ("Which states and markets do you lend in?",
-               "We arrange investor loans for properties in California, Florida and Texas. In Florida and Travis, Harris and Bexar counties in Texas (the Austin, Houston and San Antonio areas), fix and flip, bridge and construction loans need at least three completed projects and a credit score of 680 or higher (700 for construction); the loan is capped at 65% of value (after-repair value on rehab and construction loans) and cost-based leverage is 5% lower, so first-time investors are not eligible there. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible. Rural properties are not eligible for bridge, construction or rental loans, and on fix and flip loans only for investors with three or more projects, at lower leverage.")
+    "Yes. Once it is rented, refinance into a 30-year <a href=\"dscr-loans.html\">DSCR</a> or <a href=\"rental-portfolio-loans.html\">portfolio loan</a>, qualified on the rent.")
+MARKETS_FAQ = ("Which states do you lend in?",
+    "California, Florida and Texas. Terms can vary by market, and we confirm what applies to your property on the first call.")
 
 
 # ---------------------------------------------------------------------------
@@ -286,18 +283,18 @@ def page_hub() -> dict:
     compare = table(
         ["Program", "Best for", "Maximum leverage", "Loan size", "Term", "Credit from", "Experience"],
         [
-            ['<a href="fix-and-flip-loans.html">Fix &amp; flip</a>', "Buy, renovate, then sell or rent", "90% of purchase + 100% of rehab, within 70&ndash;75% of ARV", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required (light&ndash;moderate rehab, 680+)"],
-            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction, within 85% of total cost", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "660 (680 for newer builders)", "Completed ground-up projects"],
-            ['<a href="bridge-loans.html">Bridge</a>', "Finished property being sold or leased", "The lower of 70% of value and, if owned under 6 months, 80% of cost (90% with 3+ projects)", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required for renovated homes"],
+            ['<a href="fix-and-flip-loans.html">Fix &amp; flip</a>', "Buy, renovate, then sell or rent", "90% of purchase + 100% of rehab", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required"],
+            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "660 (680 for newer builders)", "Completed ground-up projects"],
+            ['<a href="bridge-loans.html">Bridge</a>', "Finished property being sold or leased", "70% of value", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required for renovated homes"],
             ['<a href="rental-portfolio-loans.html">Rental portfolio</a>', "2&ndash;10 leased rentals", "80% LTV purchase or rate-and-term, 75% cash-out", "Up to $2M", "30 years, fixed or ARM", "660 (700 for 80% LTV)", "Not required"],
-            ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "5+ unit value-add in California", "75% of purchase + 100% of renovation, within 80% of total cost", "$2M&ndash;$5M", "18&ndash;24 months + extensions", "725", "Multifamily in the same submarket"],
+            ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "5+ unit value-add in California", "75% of purchase + 100% of renovation", "$2M&ndash;$5M", "18&ndash;24 months + extensions", "725", "Multifamily in the same submarket"],
         ],
         caption="Investor loan programs compared",
     )
     compare_section = answer(
         "Investor loan programs compared",
         f"""<p>Use a fix and flip loan to buy and renovate, a ground-up construction loan to build, a bridge loan to hold a finished property while it sells or leases, and a DSCR or rental portfolio loan to keep rentals long term. The table shows each program&rsquo;s maximums.</p>{compare}
-  <p class="inv-note">Program maximums under current program guidelines as of {UPDATED_TEXT}. Single-rental <a href="dscr-loans.html">DSCR loans</a> are arranged across several wholesale lenders, so their terms are listed on the DSCR page.</p>""",
+  <p class="inv-note">Single-rental DSCR terms are on the <a href="dscr-loans.html">DSCR page</a>.</p>""",
         bg=True, anchor="compare")
 
     cycle = f"""<section><div class="wrap">
@@ -313,29 +310,23 @@ def page_hub() -> dict:
 
     faqs = [
         ("What investor loans do you offer?",
-         "Fix and flip, ground-up construction, bridge, single-rental DSCR, rental portfolio and multifamily bridge loans for investors buying, building and holding property in California, Florida and Texas. The loans close in your LLC or corporation, and one deal can go from the purchase and rehab loan to a long-term rental loan with us."),
+         "Fix and flip, ground-up construction, bridge, DSCR, rental portfolio and multifamily bridge loans for investors in California, Florida and Texas, closed in your LLC or corporation."),
         ("Are you a lender or a broker?",
-         "Your loan closes with West Coast Capital Mortgage. We issue your term sheet, manage the loan from application to closing and stay your contact through draws, extensions and payoff, with our private lender behind every loan. We are licensed under NMLS #2817729 and California DRE Corporation License #02440065."),
+         "Your loan closes with West Coast Capital Mortgage, funded by our private lender. We issue your term sheet and stay your contact from the first call to the payoff. NMLS #2817729 &middot; CA DRE #02440065."),
         ("How much can I borrow?",
-         "Fix and flip loans go up to 90% of the purchase price plus 100% of the rehab budget. Ground-up construction loans go up to 75% of the land and 100% of construction, within 85% of total cost. Bridge loans go up to 70% of value, rental portfolio loans up to 80% loan-to-value, and multifamily bridge loans run from $2 million to $5 million."),
+         "Up to 90% of the price plus 100% of the rehab on a fix and flip, 75% of the land plus 100% of construction on a new build, up to 80% LTV on rentals, and $2M to $5M on apartment buildings."),
         ("Will you finance my first flip?",
-         "Yes. With 680+ credit, a first flip can be financed at 75% up to 90% of the purchase price depending on your score, plus 100% of a light or moderate rehab budget of up to $100,000. The property should be in the area where you live and show at least a 30% projected return, in California, or in Texas outside Travis, Harris and Bexar counties. Licensed real estate agents and contractors start with experience credit."),
-        ("Do you need my tax returns or proof of income?",
-         "Not for rental loans: DSCR and portfolio loans qualify on the property&rsquo;s rent, with no tax returns, W-2s or pay stubs. Fix and flip, construction and bridge loans are sized on the property, your credit, your track record and the cash you bring to closing."),
-        ("How much cash do I need to bring?",
-         "On a fix and flip, the part of the purchase price the loan does not cover (from 10%), closing costs and one month of interest reserve; the rehab is financed at 100%. On a ground-up build, at least 15% of the total project cost (10% when interest is financed). On a rental loan, a down payment from 20%, closing costs and three months of payments in reserve."),
+         "Yes. First-time investors can get up to 90% of the price plus 100% of the rehab, depending on credit and the project."),
+        ("Do you verify my personal income?",
+         "No. Rental loans qualify on the rent, and short-term loans are sized on the property, your credit and your experience."),
         DRAW_FAQ,
         ("Is there a prepayment penalty?",
-         "Not on fix and flip, construction or bridge loans: pay off whenever the property sells or refinances. On DSCR and portfolio rental loans you choose the structure, from five years down to none. Multifamily bridge loans carry 12 months of minimum interest."),
+         "Not on fix and flip, construction or bridge loans. On rental loans you choose, including no penalty."),
         REFI_TO_RENTAL_FAQ,
         ("Are these hard money loans?",
-         "They do the same job as hard money: short-term, asset-based, interest-only financing for investors. The difference is that our private lender works from published guidelines, with online draw requests and no prepayment penalty on fix and flip, construction and bridge loans. More on <a href=\"hard-money-loans.html\">hard money loans in California</a>."),
-        LLC_FAQ,
+         "They do the same job: short-term, interest-only loans based on the property and the deal. More on <a href=\"hard-money-loans.html\">hard money loans in California</a>."),
         CREDIT_PULL_FAQ,
-        SPEED_FAQ,
         MARKETS_FAQ,
-        ("What do you need to look at my deal?",
-         "The property address, purchase price, rehab or construction budget, the after-repair or completed value, how many similar projects you have completed in the last three years, an estimated credit score, and whether a wholesaler or a related-party seller is involved."),
     ]
     what_you_get = f"""<section class="bg-light"><div class="wrap">
   <div class="inv-two">
@@ -367,12 +358,12 @@ def page_fix_flip() -> dict:
     terms = [
         ("Purchase price financed", "Up to 90%"),
         ("Rehab budget financed", "100%, released in draws"),
-        ("Loan vs. after-repair value", "70% max <small>75% for experienced investors (700+ credit) on purchases with loans up to $750K and rehab up to $150K; no condos or rural; outside Florida and Austin, Houston and San Antonio counties</small>"),
-        ("Loan amount", "$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small>"),
+        ("Loan vs. after-repair value", "70&ndash;75% max"),
+        ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>18&ndash;24 months for additions and ADUs</small>"),
         ("Prepayment penalty", "None"),
-        ("Credit score", "From 660 <small>680 for first-time and newer investors; 660&ndash;679 needs a 3-month interest reserve</small>"),
-        ("First flip", "Light or moderate rehab with 680+ credit <small>budget up to $100K, in the area where you live; not in Florida or Austin, Houston and San Antonio counties</small>"),
+        ("Credit score", "From 660 <small>680 for first-time investors</small>"),
+        ("First flip", "Yes, with 680+ credit"),
     ]
     example = table(
         ["Example deal", "Amount"],
@@ -391,8 +382,8 @@ def page_fix_flip() -> dict:
     tiers = table(
         ["Projects in the last 3 years", "Credit from", "Light / moderate rehab", "Heavy rehab", "Additions, ADUs, expansion", "Rehab budget up to"],
         [
-            ["None (first flip)", "680", "75%&ndash;90% of purchase*", "Not eligible", "Not eligible", "$100,000"],
-            ["1&ndash;2", "680", "80%&ndash;90% of purchase*", "75%", "Not eligible", "2&times; your largest project, max $500K"],
+            ["None (first flip)", "680", "75%&ndash;90% of purchase", "&mdash;", "&mdash;", "$100,000"],
+            ["1&ndash;2", "680", "80%&ndash;90% of purchase", "75%", "&mdash;", "2&times; your largest project, max $500K"],
             ["3&ndash;4", "660", "85%&ndash;90% of purchase", "80%&ndash;85%", "80%, no ADUs (680+ credit)", "2&times; your largest project, max $500K"],
             ["5&ndash;9", "660", "90%", "85%", "85% (680+ credit)", "2&times; your largest project, max $500K"],
             ["10+", "660", "90%", "90%", "85% (680+ credit)", "2&times; your largest project, max $500K"],
@@ -401,22 +392,22 @@ def page_fix_flip() -> dict:
     )
     faqs = [
         ("Can I get a loan for my first flip?",
-         "Yes. With 680+ credit, a first flip can be financed at 75% (under 720), 80% (720&ndash;739) or up to 90% (740+, at a higher rate) of the purchase price, plus 100% of a light or moderate rehab: up to half the purchase price, with a budget of up to $100,000. The deal should show at least a 30% projected return and be in the area where you live, in California, or in Texas outside Travis, Harris and Bexar counties. Licensed real estate agents and contractors start with experience credit."),
+         "Yes. First-time investors can get up to 90% of the price plus 100% of a light or moderate rehab, depending on credit. Licensed agents and contractors start with experience credit."),
         ("How much do I need to put down?",
-         "Usually 10% to 25% of the purchase price, depending on your experience and credit, plus closing costs and one month of interest reserve. The rehab budget is financed at 100% and released in draws as the work is completed."),
-        ("What credit score do I need for a fix and flip loan?",
-         "660 for investors with three or more completed projects in the last three years and 680 for first-time and newer investors. Scores from 660 to 679 need a three-month interest reserve. Experienced investors with scores from 620 to 659 may be considered case by case with a larger interest reserve and a clean credit history &mdash; no bankruptcy, foreclosure or collections."),
+         "Usually 10% to 25% of the price, plus closing costs. The rehab is financed at 100%."),
+        ("What credit score do I need?",
+         "From 660, or 680 for first-time investors."),
         ("Do I pay interest on the whole loan?",
-         "On loans of $100,000 or more, no: interest is charged only on the money disbursed, so the rehab budget still in the holdback costs nothing until you draw it. On smaller loans interest is charged on the full amount."),
+         "No. On loans of $100,000 or more you pay interest only on the money drawn."),
         DRAW_FAQ,
         ("Is there a prepayment penalty?",
-         "No. You can pay the loan off at any time when you sell or refinance. If the project runs long, extensions of up to half the original term are available for a fee."),
+         "No. Pay it off whenever you sell or refinance."),
         ("Can I refinance a flip that is already underway?",
-         "Experienced investors (three or more projects, 680+ credit) can refinance a project bought within the last year that is at least 50% complete, without cash-out, with at least a 30% projected return, only light to moderate work remaining and no default interest or extension fees in the payoff. The new loan cannot be larger than the current payoff, and refinances are limited to 85% of value."),
+         "Yes, for experienced investors with a project that is at least half done."),
         ("Can I finance a wholesale deal?",
-         "Yes, when the assignment fee is no more than 20% of the underlying purchase price, the full contract chain is provided and the transaction is arm&rsquo;s length. Deals between related parties go through a separate review."),
+         "Yes, with an assignment fee of up to 20% of the price."),
         ("What properties can I flip with this loan?",
-         "Single-family homes, 2&ndash;4 unit properties, townhomes, PUDs and condos (outside Florida), from cosmetic updates to full gut renovations, plus additions, expansions and ADUs for experienced investors. Homes need at least 700 square feet (condos 500) and an existing roof and framing: a lot or a teardown is financed as a <a href=\"ground-up-construction-loans.html\">ground-up construction</a> loan, and 5+ units as a <a href=\"multifamily-bridge-loans.html\">multifamily bridge</a> loan. Rural properties are financed for investors with three or more projects. Mobile homes, co-ops, condotels, mixed-use and luxury or unique homes are outside the program."),
+         "Single-family homes, townhomes and small multi-unit properties, from cosmetic updates to full gut renovations, plus additions and ADUs for experienced investors."),
         REFI_TO_RENTAL_FAQ,
         LLC_FAQ,
         MARKETS_FAQ,
@@ -425,15 +416,15 @@ def page_fix_flip() -> dict:
         term_sheet("Fix and flip terms", terms,
                    "Program maximums for 1&ndash;4 unit residential investment property. Leverage depends on experience, credit, rehab scope and market. In Florida and Travis, Harris and Bexar counties, TX, these loans need three or more completed projects and 680+ credit and are capped at 65% of ARV. Not a commitment to lend."),
         answer("What is a fix and flip loan?",
-               """<p>A fix and flip loan is a short-term, interest-only loan that finances the purchase and renovation of a 1&ndash;4 unit investment property. Part of the purchase price is funded at closing, the renovation budget is held back and released in draws as work is completed, and the loan is repaid when the property is sold or refinanced, typically within 12 months.</p>
+               """<p>A fix and flip loan is a short-term, interest-only loan that finances the purchase and renovation of an investment property. Part of the purchase price is funded at closing, the renovation budget is held back and released in draws as work is completed, and the loan is repaid when the property is sold or refinanced, typically within 12 months.</p>
   <p>On loans of $100,000 or more you pay interest only on money that has been disbursed, so rehab funds still in the holdback cost nothing until you draw them.</p>"""),
         answer("How much can I borrow on a fix and flip?",
                f"""<p>Up to 90% of the purchase price plus 100% of the rehab budget, as long as the total loan stays within 70% of the after-repair value (75% for qualifying experienced investors). Here is the math on a typical deal:</p>{example}
-  <p class="inv-note">Illustration only: an experienced investor with 740+ credit in a market with standard leverage. First-time investors, heavier rehabs and some markets receive less. Closing costs and rate depend on the final terms.</p>""",
+  <p class="inv-note">Illustration only; your terms depend on experience, credit and the project.</p>""",
                bg=True, anchor="example"),
         answer("Fix and flip leverage by experience",
-               f"""<p>The more projects you have completed in the last three years, the more of the purchase price is financed and the heavier the renovation can be. Experience counts properties bought and sold, or renovated and held, in the same metro area or a neighboring state.</p>{tiers}
-  <p class="inv-note">* For first-time and newer investors the percentage steps up with credit: under 720, 720&ndash;739 and 740+ (90% at 740+, at a higher rate, on purchases with loans of $100K&ndash;$750K, no condos or rural properties and no mortgage lates). Light rehab is under 25% of the purchase price, moderate 25&ndash;50%, heavy 50&ndash;100%. Every loan is also capped at 70% of ARV (75% for qualifying experienced investors), and the rehab budget is always financed at 100% within these limits.</p>""",
+               f"""<p>The more projects you have completed in the last three years, the more of the purchase price is financed and the heavier the renovation can be.</p>{tiers}
+  """,
                anchor="leverage"),
         split_lists("What we finance", [
             "Single-family homes, 2&ndash;4 unit properties and townhomes; condos outside Florida",
@@ -462,7 +453,7 @@ def page_fix_flip() -> dict:
         title="Fix & Flip Loans in CA, FL, TX | West Coast Capital Mortgage",
         description="Fix and flip loans up to 90% of purchase and 100% of rehab, $50K–$3M, 12-month interest-only with no prepayment penalty. First-time flippers considered.",
         h1="Fix and Flip Loans", crumb="Fix and Flip Loans",
-        lead="Up to 90% of the purchase price and 100% of the rehab budget. Short-term, interest-only money to buy and renovate 1&ndash;4 unit homes you plan to sell or rent.",
+        lead="Up to 90% of the purchase price and 100% of the rehab budget. Short-term, interest-only money to buy and renovate homes you plan to sell or rent.",
         sections=sections, faqs=faqs,
         product=dict(name="Fix and Flip Loan", loanType="Fix and flip (rehab) loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Non-owner-occupied 1–4 unit residential investment property",
@@ -476,9 +467,9 @@ def page_ground_up() -> dict:
         ("Construction budget", "100%, released in draws"),
         ("Total project cost", "Up to 85% <small>90% with financed interest</small>"),
         ("Loan vs. completed value", "70% max"),
-        ("Loan amount", "$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small>"),
-        ("Term", "12 months, interest only <small>18&ndash;24 months with a pricing adjustment</small>"),
-        ("Credit score", "From 660 <small>660 for builders with 5+ completed projects; 680 for newer builders</small>"),
+        ("Loan amount", "$50K &ndash; $3M"),
+        ("Term", "12 months, interest only <small>18&ndash;24 months available</small>"),
+        ("Credit score", "From 660 <small>680 for newer builders</small>"),
     ]
     example = table(
         ["Example build", "Amount"],
@@ -508,20 +499,20 @@ def page_ground_up() -> dict:
     )
     faqs = [
         ("Can I get a construction loan before permits are approved?",
-         "Yes. Without approved permits the loan funds up to 60% of the land price at closing, and a catch-up draw brings it to 75% once permits are issued. An architect letter is required while permits are pending."),
+         "Yes. We fund 60% of the land now and bring it to 75% once permits are issued."),
         ("How much cash do I need to build?",
-         "At least 15% of the total project cost (10% when up to six months of interest is financed), plus closing costs and one month of interest reserve. At closing the loan funds up to 75% of the land price, and 100% of the construction budget is released in draws."),
+         "Usually from 15% of the total project cost, or 10% when interest is financed, plus closing costs."),
         ("Can I include interest in the loan?",
-         "Yes. Up to six months of interest (up to 5% of the cost basis) can be financed into the loan, which raises the total-cost limit from 85% to 90%."),
+         "Yes, up to six months of interest can be built into the loan."),
         ("How long is the term?",
-         "Twelve months, interest only. Terms of 18 to 24 months are available with a pricing adjustment, and extensions of up to half the original term are available for a fee, subject to approval."),
+         "12 months, interest only, with 18 to 24 months available and extensions if the build runs long."),
         ("Do you finance lot splits and more than one home?",
-         "Yes. A loan can cover up to two properties, and a lot split can be financed with a separate completed value for each home. Builders with 20 or more completed projects can finance three or more homes with additional liquidity, a feasibility study and site-plan review."),
+         "Yes. A loan can cover two homes, including a lot split, and experienced builders can finance larger developments."),
         ("Can I refinance land I already own?",
-         "Yes, if you have owned it for three years or obtained the permits after you bought it, the loan being paid off is not a bridge or construction loan, and comparable sales support a value above your cost."),
+         "Yes, in many cases, including land you bought before getting permits."),
         DRAW_FAQ,
         ("What can I build with a ground-up loan?",
-         "New single-family homes, 2&ndash;4 unit buildings, townhomes and condo projects of up to four units on infill lots in cities and suburbs, including teardowns and lot splits, at mainstream price points. Large tracts, rural sites and luxury or unique homes are outside the program."),
+         "New single-family homes, townhomes, small multi-unit buildings and condo projects on infill lots, including teardowns and lot splits."),
         REFI_TO_RENTAL_FAQ,
         LLC_FAQ,
         MARKETS_FAQ,
@@ -534,11 +525,11 @@ def page_ground_up() -> dict:
   <p><strong>No permits yet?</strong> The loan can fund 60% of the land now and release a catch-up draw to 75% when the permits are issued.</p>"""),
         answer("How much can I borrow to build?",
                f"""<p>Up to 75% of the land price plus 100% of the construction budget, limited to 85% of the total project cost (90% when interest is financed) and 70% of the completed value. The loan is the lowest of those three numbers:</p>{example}
-  <p class="inv-note">Illustration only. The construction budget can be up to twice your largest completed project, to a maximum of $500,000 unless underwriting approves more. Financing up to six months of interest raises the cost limit to 90%; the extra amount covers interest during the build.</p>""",
+  <p class="inv-note">Illustration only; your terms depend on experience and the project.</p>""",
                bg=True, anchor="example"),
         answer("Who qualifies for a ground-up construction loan?",
                f"""<p>Builders with completed ground-up projects. Leverage is the same at every experience level; experience changes the return the finished project must show and where you can build.</p>{tiers}
-  <p class="inv-note">If the finished project does not pass the exit test, the loan is sized down to what the completed home would support as a long-term rental.</p>""",
+  """,
                anchor="leverage"),
         split_lists("What we finance", [
             "New single-family homes, 2&ndash;4 unit buildings and condo projects up to four units",
@@ -579,20 +570,19 @@ def page_ground_up() -> dict:
 def page_bridge() -> dict:
     terms = [
         ("Loan vs. as-is value", "Up to 70%"),
-        ("Loan vs. your cost", "80%, or 90% with 3+ projects <small>homes bought in the last 6 months; the lower of the value and cost limits applies</small>"),
-        ("Loan amount", "$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small>"),
+        ("Loan vs. your cost", "Up to 90% <small>homes bought in the last 6 months</small>"),
+        ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>extension up to 6 months for a fee</small>"),
-        ("Cash-flow test", "None on renovated (C1&ndash;C2) homes <small>1.10 DSCR at exit in C3&ndash;C4 condition</small>"),
+        ("Cash-flow test", "None on renovated homes"),
         ("Prepayment penalty", "None"),
         ("Credit score", "From 660 <small>680 for newer investors</small>"),
     ]
     options = table(
-        ["", "Renovated (C1&ndash;C2)", "C3&ndash;C4 condition"],
+        ["", "Renovated", "Not fully updated"],
         [
             ["Typical use", "Finished flip or new build that is listed for sale or for rent", "Livable property with no deferred maintenance, leasing up before a long-term loan"],
             ["Cash-flow test", "None", "1.10 DSCR at exit"],
             ["Experience", "Not required (680+ credit)", "At least one completed project in the last 3 years"],
-            ["Not eligible", "Rural, exotic or unique properties", "Rural, exotic or unique properties"],
         ],
         caption="Two kinds of bridge loan, by property condition",
     )
@@ -601,25 +591,25 @@ def page_bridge() -> dict:
         [
             ["None", "680", "80% of cost, within 70% of value", "Not eligible", "70% of value (C1&ndash;C2 only)"],
             ["1&ndash;2", "680", "80% of cost, within 70% of value", "75% of cost, within 70% of value, 1.10 DSCR", "70% of value; 1.10 DSCR in C3&ndash;C4"],
-            ["3 or more", "660*", "90% of cost, within 70% of value", "85% of cost, within 70% of value, 1.10 DSCR", "70% of value; 1.10 DSCR in C3&ndash;C4"],
+            ["3 or more", "660", "90% of cost, within 70% of value", "85% of cost, within 70% of value, 1.10 DSCR", "70% of value; 1.10 DSCR in C3&ndash;C4"],
         ],
         caption="Bridge loan leverage by experience and condition (loans up to $1M)",
     )
     faqs = [
-        ("When does a bridge loan make sense for an investor?",
-         "When a renovated or newly built property is finished but not yet sold, when a rehab or construction loan is maturing, when you want to buy a finished property quickly, or when a rental is leasing up before it qualifies for a long-term DSCR loan."),
+        ("When does a bridge loan make sense?",
+         "When a finished flip or new build is listed but not sold, a rehab loan is coming due, or a rental is leasing up before its long-term loan."),
         ("Can a bridge loan pay off my current hard money loan?",
-         "Often, if the project is complete: a bridge loan does not fund remaining work. Payoffs that include default interest, extension fees or penalties, properties with a lis pendens, projects showing a loss, credit scores under 660 and a bankruptcy or foreclosure in the last seven years may not qualify."),
+         "Yes, when the project is finished."),
         ("How is the loan sized for a property that is listed for sale?",
-         "On the lower of the list price and the appraised value. Properties bought in the last six months are sized on your cost (purchase plus documented renovation); after six months of ownership, on the appraised value."),
+         "On the lower of the list price and the appraised value, or on your cost if you bought it in the last six months."),
         ("Is a DSCR required?",
-         "Not for renovated homes in C1 or C2 condition, whether they will be sold or rented. Properties in C3 or C4 condition need a 1.10 debt-service coverage ratio at exit."),
+         "Not for renovated homes. Other properties need a 1.10 DSCR."),
         ("Do I need experience?",
-         "Not for renovated homes in C1&ndash;C2 condition, with a credit score of 680 or higher. Properties in C3&ndash;C4 condition require at least one completed project in the last three years."),
-        ("What credit score do I need for a bridge loan?",
-         "680 for newer investors and 660 for investors with three or more completed projects. Scores from 660 to 679 need a three-month interest reserve."),
+         "Not for renovated homes."),
+        ("What credit score do I need?",
+         "From 660, or 680 for newer investors."),
         ("What happens after the bridge loan?",
-         "You repay it when the property sells, or refinance into a long-term <a href=\"dscr-loans.html\">DSCR loan</a> or <a href=\"rental-portfolio-loans.html\">rental portfolio loan</a> once it is rented. There is no prepayment penalty."),
+         "Sell the property, or refinance into a long-term <a href=\"dscr-loans.html\">DSCR</a> or <a href=\"rental-portfolio-loans.html\">portfolio loan</a> once it is rented. There is no prepayment penalty."),
         LLC_FAQ,
         SPEED_FAQ,
         MARKETS_FAQ,
@@ -628,11 +618,11 @@ def page_bridge() -> dict:
         term_sheet("Bridge loan terms", terms,
                    "Program maximums for finished 1&ndash;4 unit residential investment property. Leverage depends on experience, credit, condition, hold time and market. Not a commitment to lend."),
         answer("What is an investor bridge loan?",
-               """<p>An investor bridge loan is a short-term, interest-only loan on a finished or nearly finished 1&ndash;4 unit investment property that is listed for sale or being leased up but is not yet ready for long-term financing. It pays off a maturing rehab or construction loan, or buys a stabilized property quickly, and is repaid when the property sells or is refinanced.</p>""",
+               """<p>An investor bridge loan is a short-term, interest-only loan on a finished or nearly finished investment property that is listed for sale or being leased up but is not yet ready for long-term financing. It pays off a maturing rehab or construction loan, or buys a stabilized property quickly, and is repaid when the property sells or is refinanced.</p>""",
                extra=options),
         answer("How much can I borrow on a bridge loan?",
-               f"""<p>Up to 70% of the appraised value. For a property you bought in the last six months, the loan is also sized on your total cost: up to 80% for newer investors and up to 90% for experienced investors on renovated homes.</p>{tiers}
-  <p class="inv-note">* Investors with scores from 660 to 679 need a three-month interest reserve. Loans over $1 million require a pre-screen with stronger credit and experience.</p>""",
+               f"""<p>Up to 70% of the appraised value. For a property you bought in the last six months, the loan is also sized on your total cost: up to 80% for newer investors and up to 90% for experienced investors on renovated homes.</p>
+  """,
                bg=True, anchor="leverage"),
         split_lists("Good fits", [
             "A finished flip or new build that is listed but not sold yet",
@@ -671,11 +661,11 @@ def page_bridge() -> dict:
 def page_portfolio() -> dict:
     terms = [
         ("Properties", "2&ndash;10 in one blanket loan"),
-        ("Loan amount", "Up to $2M total <small>from $50K per property; property value from $72K</small>"),
+        ("Loan amount", "Up to $2M total"),
         ("Purchase or rate-and-term", "Up to 80% LTV"),
         ("Cash-out refinance", "Up to 75% LTV"),
         ("DSCR minimum", "1.05 <small>gross rent divided by the monthly payment</small>"),
-        ("Term", "30 years <small>fixed or 5/6, 7/6 and 10/6 ARMs; interest-only options</small>"),
+        ("Term", "30 years <small>fixed, ARM or interest-only</small>"),
         ("Income documents", "None <small>no tax returns, W-2s or pay stubs</small>"),
         ("Credit score", "From 660 <small>700+ for 80% LTV</small>"),
     ]
@@ -699,26 +689,25 @@ def page_portfolio() -> dict:
     )
     faqs = [
         ("Can I mix property types in one portfolio loan?",
-         "Yes. Single-family homes, 2&ndash;4 unit properties, townhomes, PUDs and warrantable condos can be combined in one loan."),
+         "Yes. Single-family homes, 2&ndash;4 unit properties, townhomes, PUDs and condos can be combined in one loan."),
         ("Can I sell one property later?",
-         "Yes. A property is released from the blanket loan by paying 120% of the loan amount allocated to it."),
+         "Yes. Pay 120% of the loan amount allocated to that property and it is released."),
         ("Is there a prepayment penalty?",
-         "You choose the structure: five, four, three or one year, or no prepayment penalty."),
+         "You choose: five, four, three or one year, or no penalty."),
         ("What credit score do I need?",
-         "660 minimum, with 700 or higher needed for 80% loan-to-value. Leverage is based on the lowest middle score among the guarantors, and every owner with 20% or more of the entity guarantees the loan."),
-        ("What are the lease and occupancy rules?",
-         "At least 90% of the units must be leased, on 12&ndash;36 month leases to unrelated individuals; month-to-month is accepted after an initial lease term. Short-term and vacation rentals are not eligible in this program."),
+         "From 660, or 700 for 80% LTV."),
+        ("Do the rentals need to be leased?",
+         "Yes. At least 90% of the units should be leased, on 12- to 36-month leases."),
         ("How much cash do I need in reserve?",
-         "Closing costs plus three months of payments for a purchase or six months for a refinance, shown on two consecutive statements. Cash-out proceeds can cover up to half of the requirement. The first three months of principal, interest, taxes and insurance are also collected into reserves at closing."),
+         "Closing costs plus three months of payments for a purchase, or six months for a refinance."),
         ("When can I do a cash-out refinance?",
-         "After 90 days of ownership. Between 91 and 180 days a new, higher value can be used only with documentation of the completed renovation."),
+         "After 90 days of ownership."),
         ("Can foreign nationals get a portfolio loan?",
-         "Yes. Foreign nationals can borrow up to 65% of value on a purchase or rate-and-term refinance and 60% on cash-out, with 12 months of payments in reserve."),
+         "Yes, up to 65% LTV."),
         ("I only have one rental. Which loan fits?",
          "A single-property <a href=\"dscr-loans.html\">DSCR loan</a>. Portfolio loans start at two properties."),
         LLC_FAQ,
-        ("Where is the portfolio loan available?",
-         "For rentals in California, Florida and Texas. Lee, Charlotte, Sarasota and Collier counties in Florida are not eligible, and rural or luxury properties are excluded."),
+        MARKETS_FAQ,
     ]
     sections = [
         term_sheet("Rental portfolio loan terms", terms,
@@ -767,11 +756,11 @@ def page_multifamily() -> dict:
         ("Loan amount", "$2M &ndash; $5M <small>one property per loan</small>"),
         ("Purchase price", "Up to 75%"),
         ("Renovation budget", "100%, through a holdback"),
-        ("Total project cost", "Up to 80% <small>experienced sponsors, strong markets, in-place cash flow</small>"),
-        ("Term", "18&ndash;24 months, interest only <small>plus two 6-month extensions, subject to approval</small>"),
+        ("Total project cost", "Up to 80%"),
+        ("Term", "18&ndash;24 months, interest only <small>plus two 6-month extensions</small>"),
         ("As-stabilized value", "70% LTV max"),
         ("Once stabilized", "1.25x DSCR and a 9% debt yield"),
-        ("Credit score", "725+ for every member of the entity"),
+        ("Credit score", "725+"),
     ]
     metrics = table(
         ["Sizing test", "Limit"],
@@ -788,21 +777,21 @@ def page_multifamily() -> dict:
     )
     faqs = [
         ("What is the exit for a multifamily bridge loan?",
-         "The program is built for a refinance into long-term agency financing, such as Freddie Mac small-balance loans, once the property is stabilized at a 1.25x DSCR."),
+         "A refinance into long-term agency financing once the property is stabilized."),
         ("How many units do I need?",
-         "Five or more, in a 100% residential building with an as-is value of at least $100,000 per unit."),
+         "Five or more, in a fully residential building."),
         ("What experience do I need?",
-         "Experience owning and operating multifamily property in the same submarket, including renovation, with past projects taken to full or substantial stabilization. Sponsor references are checked."),
+         "Experience owning and operating apartment buildings in the same market."),
         ("What are the borrower requirements?",
-         "A single-purpose LLC or corporation (newly formed, or an existing one that owns no other property) with no more than two members, a credit score of 725 or higher for each member, no bankruptcy or foreclosure in seven years, liquidity of 10% of the loan after closing and net worth at least equal to the loan amount. Foreign nationals are not eligible."),
+         "A single-purpose LLC or corporation, 725+ credit for each member and liquidity of 10% of the loan after closing."),
         ("What renovations can be financed?",
-         "Light to moderate value-add work up to about half of the purchase price. Structural work, additions, expansions and ground-up construction are not eligible."),
+         "Light to moderate value-add work, up to about half of the purchase price."),
         ("How does prepayment work?",
-         "You can pay the loan off at any time; a minimum of 12 months of interest is due at payoff. A 12-month interest and carry reserve is funded at closing."),
+         "You can pay off at any time; a minimum of 12 months of interest is due at payoff."),
         ("Where can I use a multifamily bridge loan?",
-         "For apartment buildings in primary and secondary markets in California, bought directly from the seller (no wholesale deals), one property per loan."),
+         "Apartment buildings in California&rsquo;s primary and secondary markets."),
         ("What due diligence is required?",
-         "A commercial appraisal, Phase I environmental report, property condition report, renovation budget review, site visit, sponsor interview and monthly rent rolls."),
+         "A commercial appraisal, environmental and property condition reports, a budget review and a site visit."),
     ]
     sections = [
         term_sheet("Multifamily bridge terms", terms,
@@ -850,19 +839,19 @@ def page_multifamily() -> dict:
 
 def page_hard_money() -> dict:
     terms = [
-        ("Programs", "Fix and flip, bridge and ground-up construction <small>plus 30-year rental refinances when you keep the property</small>"),
+        ("Programs", "Fix and flip, bridge and ground-up construction <small>plus rental refinances</small>"),
         ("Purchase price financed", "Up to 90% <small>fix and flip</small>"),
         ("Rehab or construction budget", "100%, released in draws"),
-        ("Loan amount", "$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small>"),
+        ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
-        ("Credit score", "From 660 <small>680 for first-time and newer investors</small>"),
+        ("Credit score", "From 660 <small>680 for first-time investors</small>"),
         ("Where", "Statewide in California <small>also Florida and Texas</small>"),
-        ("Borrower", "LLC or corporation <small>non-owner-occupied investment property</small>"),
+        ("Borrower", "LLC or corporation"),
     ]
     programs = table(
         ["Hard money program", "Use it to", "Maximum leverage", "Loan size", "Term"],
         [
-            ['<a href="fix-and-flip-loans.html">Fix and flip</a>', "Buy and renovate a 1&ndash;4 unit home", "90% of purchase + 100% of rehab", "$50K&ndash;$3M", "12 months"],
+            ['<a href="fix-and-flip-loans.html">Fix and flip</a>', "Buy and renovate a home", "90% of purchase + 100% of rehab", "$50K&ndash;$3M", "12 months"],
             ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "Build on a lot or a teardown", "75% of land + 100% of construction", "$50K&ndash;$3M", "12 months (18&ndash;24 available)"],
             ['<a href="bridge-loans.html">Bridge</a>', "Hold a finished property while it sells or leases", "70% of value", "$50K&ndash;$3M", "12 months"],
             ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "Buy and renovate 5+ units", "75% of purchase + 100% of renovation", "$2M&ndash;$5M", "18&ndash;24 months"],
@@ -872,21 +861,21 @@ def page_hard_money() -> dict:
     )
     faqs = [
         ("Who offers hard money loans in Los Angeles?",
-         "West Coast Capital Mortgage, based in Burbank, offers hard money and private money loans across Los Angeles County and the rest of California: fix and flip, bridge and ground-up construction loans for investors who close in an LLC or corporation, plus Florida and Texas."),
+         "West Coast Capital Mortgage in Burbank offers hard money loans across Los Angeles County and the rest of California, plus Florida and Texas: fix and flip, bridge and construction loans."),
         ("Is private money the same as hard money?",
-         "In practice, yes. Both describe short-term, interest-only loans secured by investment real estate and sized mainly on the property and the deal. Ours are funded by our private lender, with published guidelines instead of one-off terms."),
+         "In practice, yes: short-term, interest-only loans based on the property and the deal."),
         ("How much can I borrow with a hard money loan?",
-         "Up to 90% of the purchase price plus 100% of the rehab budget on a fix and flip, within 70% of the after-repair value (75% for qualifying experienced investors). Construction loans fund up to 75% of the land and 100% of the build, and bridge loans up to 70% of value. Loans run from $50,000 to $3 million."),
+         "Up to 90% of the price plus 100% of the rehab on a flip, 75% of the land plus 100% of the build on new construction, and 70% of value on a bridge loan, from $50,000 to $3 million."),
         ("Can I get a hard money loan for my first flip in California?",
-         "Yes. With 680+ credit, a first flip can be financed at 75% up to 90% of the purchase price depending on your score, plus 100% of a light or moderate rehab budget of up to $100,000, on a property in the area where you live that shows at least a 30% projected return."),
+         "Yes. First-time investors can get up to 90% of the price plus 100% of a light or moderate rehab, depending on credit."),
         ("What credit score do I need for a hard money loan?",
-         "660 for investors with three or more completed projects in the last three years and 680 for first-time and newer investors. Construction loans need 680, or 660 for builders with five or more completed projects."),
+         "From 660, or 680 for first-time investors."),
         ("Do you check my income for a hard money loan?",
-         "No personal income verification. The loan is sized on the property, your credit, your track record and the cash you bring to closing."),
-        ("Are California hard money lenders licensed?",
-         "Companies making or arranging these loans in California are licensed by the Department of Real Estate or the Department of Financial Protection and Innovation. West Coast Capital Mortgage holds California DRE Corporation License #02440065 and NMLS #2817729, and you can check both on the DRE and NMLS Consumer Access websites."),
+         "No personal income verification. The loan is sized on the property, your credit and your experience."),
+        ("Are you licensed in California?",
+         "Yes: California DRE Corporation License #02440065 and NMLS #2817729."),
         ("What does a hard money loan cost?",
-         "Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more interest is charged only on disbursed funds, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You get all of it in a written term sheet before you pay for an appraisal."),
+         "A rate and origination points set per deal, plus third-party costs. You see everything in a written term sheet before you pay for an appraisal."),
         SPEED_FAQ,
         DRAW_FAQ,
         LLC_FAQ,
@@ -900,7 +889,7 @@ def page_hard_money() -> dict:
   <p>Our loans do that job with our private lender behind them: published guidelines, online draw requests and no prepayment penalty on fix and flip, construction and bridge loans.</p>"""),
         answer("Hard money programs we offer", programs, bg=True, anchor="programs"),
         answer("Where we lend in California",
-               """<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit. Rural properties are financed for experienced investors on fix and flip loans, at lower leverage.</p>
+               """<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
   <p>We also lend in Florida and Texas, with market rules explained in the questions below.</p>"""),
         answer("What a hard money loan costs",
                """<p>Pricing is set per deal: an interest rate, origination points and third-party costs such as the appraisal, title and insurance. On loans of $100,000 or more you pay interest only on money that has been disbursed, there is no prepayment penalty on fix and flip, construction and bridge loans, and one month of interest reserve is collected at closing. You see all of it in a written term sheet before you pay for an appraisal.</p>""", bg=True),
@@ -919,7 +908,7 @@ def page_hard_money() -> dict:
         title="Hard Money Loans in California | West Coast Capital Mortgage",
         description="Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.",
         h1="Hard Money Loans in California", crumb="Hard Money Loans",
-        lead="Short-term private money for California real estate investors: buy, fix, build or bridge a 1&ndash;4 unit property, with the loan closed in your LLC. Also available in Florida and Texas.",
+        lead="Short-term private money for California real estate investors: buy, fix, build or bridge a property, with the loan closed in your LLC. Also available in Florida and Texas.",
         sections=sections, faqs=faqs,
         product=dict(name="Hard Money Loan", loanType="Hard money (private money) loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Non-owner-occupied 1–4 unit residential investment property",
