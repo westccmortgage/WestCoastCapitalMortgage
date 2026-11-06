@@ -500,10 +500,9 @@ def page_ground_up() -> dict:
     tiers = table(
         ["Completed ground-up projects", "Leverage", "Exit test", "Building in a new market"],
         [
-            ["None", "Not eligible", "&mdash;", "&mdash;"],
             ["1&ndash;2", "75% of land / 100% of construction / 85% of cost", "Projected ROI of at least 20%", "Not available"],
-            ["3&ndash;4", "Same", "Projected ROI of at least 10%", "With a GC contract, 700+ credit and 5% less leverage"],
-            ["5+", "Same", "Projected ROI of at least 10%", "With a GC contract, 700+ credit and 5% less leverage"],
+            ["3&ndash;4", "Same", "Projected ROI of at least 10%", "With a GC contract and 5% less leverage"],
+            ["5+", "Same", "Projected ROI of at least 10%", "With a GC contract and 5% less leverage"],
         ],
         caption="Ground-up construction requirements by experience",
     )
@@ -542,7 +541,7 @@ def page_ground_up() -> dict:
   <p class="inv-note">Illustration only. The construction budget can be up to twice your largest completed project, to a maximum of $500,000 unless underwriting approves more. Financing up to six months of interest raises the cost limit to 90%; the extra amount covers interest during the build.</p>""",
                bg=True, anchor="example"),
         answer("Who qualifies for a ground-up construction loan?",
-               f"""<p>Builders with completed ground-up projects and a credit score of 680 or higher. Leverage is the same at every experience level; experience changes the return the finished project must show and where you can build.</p>{tiers}
+               f"""<p>Builders with completed ground-up projects. Leverage is the same at every experience level; experience changes the return the finished project must show and where you can build.</p>{tiers}
   <p class="inv-note">If the finished project does not pass the exit test, the loan is sized down to what the completed home would support as a long-term rental.</p>""",
                anchor="leverage"),
         split_lists("What we finance", [

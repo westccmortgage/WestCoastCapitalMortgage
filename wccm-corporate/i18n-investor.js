@@ -741,5 +741,7 @@ window.WCCM_I18N_EXTRA = {
   "$230,000 (the cap trims the land advance)": ["$230,000 (el límite reduce el adelanto para el terreno)", "$230,000 (ограничение уменьшает выдачу на землю)"],
   "Released in draws for construction": ["Liberado en desembolsos para la construcción", "Выдаётся траншами на строительство"],
   "Your cash at closing": ["Su efectivo al cierre", "Ваши деньги при закрытии"],
-  "$120,000 + closing costs and one month of interest reserve": ["$120,000 + costos de cierre y un mes de reserva de intereses", "$120,000 + расходы на закрытие и резерв процентов за один месяц"]
+  "$120,000 + closing costs and one month of interest reserve": ["$120,000 + costos de cierre y un mes de reserva de intereses", "$120,000 + расходы на закрытие и резерв процентов за один месяц"],
+  "Builders with completed ground-up projects. Leverage is the same at every experience level; experience changes the return the finished project must show and where you can build.": ["Constructores con proyectos ground-up terminados. El apalancamiento es el mismo en todos los niveles de experiencia; la experiencia cambia el rendimiento que debe mostrar el proyecto terminado y dónde puede construir.", "Застройщики с завершёнными проектами ground-up. Плечо одинаково на любом уровне опыта; от опыта зависит, какую доходность должен показать готовый проект и где вы можете строить."],
+  "With a GC contract and 5% less leverage": ["Con contrato de contratista general (GC) y 5% menos de apalancamiento", "С договором генподрядчика (GC) и плечом на 5% ниже"]
 };
