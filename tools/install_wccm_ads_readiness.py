@@ -100,6 +100,7 @@ INVESTOR_PAGES = (
     "rental-portfolio-loans.html",
     "multifamily-bridge-loans.html",
     "hard-money-loans.html",
+    "hard-money-loans-los-angeles.html",
 )
 
 PAGE_FORMS = {

@@ -656,6 +656,10 @@
     ['Fix & flip','Ground-up','Bridge','Rentals / DSCR','Multifamily'],
     ['Fix & flip, bridge and construction loans','Statewide in California, plus Florida and Texas','Written terms before you pay for an appraisal'],
     INV_EXPERIENCE,[INV_CITY,invMoney('purchase_price','Purchase price ($)'),QUICK_AMOUNT,INV_CREDIT,QUICK_EMAIL]);
+  QUICK_LEAD_FORMS['/hard-money-loans-los-angeles']=investorForm('Investor Loans','Hard money deal review','Get terms on your next deal',
+    ['Fix & flip','Ground-up','Bridge','Rentals / DSCR','Multifamily'],
+    ['Fix & flip, bridge and construction loans','Across Los Angeles County and the San Fernando Valley','Written terms before you pay for an appraisal'],
+    INV_EXPERIENCE,[INV_CITY,invMoney('purchase_price','Purchase price ($)'),QUICK_AMOUNT,INV_CREDIT,QUICK_EMAIL]);
   QUICK_LEAD_FORMS['/fix-and-flip-loans']=investorForm('Fix & Flip','Fix and flip review','Get terms on your next flip',
     ['Buy & renovate','Refinance a project','Several properties'],
     ['Up to 90% of purchase and 100% of rehab','12 months, interest only, no prepayment penalty','First-time flippers considered'],

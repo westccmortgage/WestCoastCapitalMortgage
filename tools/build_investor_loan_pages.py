@@ -221,6 +221,7 @@ PROGRAMS = {
     "multifamily-bridge-loans": ("5+ units", "Multifamily Bridge Loans", "$2M&ndash;$5M value-add loans in California."),
     "dscr-loans": ("Long-term rental", "DSCR Loans", "Qualify a single rental on its rent."),
     "hard-money-loans": ("California", "Hard Money Loans in California", "Private money to buy, fix, build or bridge."),
+    "hard-money-loans-los-angeles": ("Los Angeles", "Hard Money Loans in Los Angeles", "Burbank office, loans across LA County and the Valley."),
 }
 
 
@@ -888,7 +889,8 @@ def page_hard_money() -> dict:
         answer("Hard money programs we offer", programs, bg=True, anchor="programs"),
         answer("Where we lend in California",
                """<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
-  <p>We also lend in Florida and Texas.</p>"""),
+  <p>We also lend in Florida and Texas.</p>
+  <p><a class="more" href="hard-money-loans-los-angeles.html">Hard Money Loans in Los Angeles</a></p>"""),
         how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
         anatoliy_note("<p>Send me the address, the price, your budget and what it will sell for. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>",
                       "Send me the deal first"),
@@ -909,6 +911,93 @@ def page_hard_money() -> dict:
         product=dict(name="Hard Money Loan", loanType="Hard money (private money) loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Non-owner-occupied 1–4 unit residential investment property",
                      description="Short-term, interest-only private money loans for California real estate investors: fix and flip, bridge and ground-up construction, up to 90% of purchase and 100% of rehab."),
+    )
+
+
+def page_hard_money_la() -> dict:
+    """Local page for the home market. Facts only: the Burbank office, where we lend,
+    the same program terms as the California pages, and how permits and draws work."""
+    terms = [
+        ("Programs", "Fix and flip, bridge and ground-up construction <small>plus rental refinances</small>"),
+        ("Purchase price financed", "Up to 90% <small>fix and flip</small>"),
+        ("Rehab or construction budget", "100%, released in draws"),
+        ("Loan amount", "$50K &ndash; $3M"),
+        ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
+        ("Credit score", "From 660 <small>680 for first-time investors</small>"),
+        ("Where", "Los Angeles County and the San Fernando Valley <small>statewide in California, plus Florida and Texas</small>"),
+        ("Office", "150 E Olive Ave, Unit 112, Burbank"),
+    ]
+    deals = table(
+        ["The deal", "The loan", "Maximum leverage"],
+        [
+            ["Buy an older house, renovate it and sell", '<a href="fix-and-flip-loans.html">Fix and flip</a>', "90% of purchase + 100% of rehab"],
+            ["Build a new home on a lot or a teardown", '<a href="ground-up-construction-loans.html">Ground-up construction</a>', "75% of land + 100% of construction"],
+            ["Hold a finished flip while it sells or leases", '<a href="bridge-loans.html">Bridge</a>', "70% of value"],
+            ["Keep it as a rental", '<a href="dscr-loans.html">DSCR</a> or <a href="rental-portfolio-loans.html">rental portfolio</a>', "80% LTV, 30 years"],
+            ["Buy and renovate a 5+ unit building", '<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "75% of purchase + 100% of renovation"],
+        ],
+        caption="Hard money loans for Los Angeles deals",
+    )
+    faqs = [
+        ("Who offers hard money loans in Burbank and the San Fernando Valley?",
+         "West Coast Capital Mortgage, 150 E Olive Ave, Unit 112, Burbank. We offer fix and flip, bridge and construction loans across the Valley and the rest of Los Angeles County."),
+        ("Do you lend in the City of Los Angeles, Glendale and Pasadena?",
+         "Yes, across Los Angeles County. Terms can vary by neighborhood, and we confirm them on the first call."),
+        ("How much can I borrow on a Los Angeles flip?",
+         "Up to 90% of the price plus 100% of the rehab, within 70&ndash;75% of the after-repair value, from $50,000 to $3 million."),
+        ("Can I get a loan for my first flip?",
+         "Yes. First-time investors can get up to 90% of the price plus 100% of a light or moderate rehab, depending on credit."),
+        ("Can I build a new home on a lot or a teardown?",
+         "Yes, with a ground-up construction loan: up to 75% of the land with approved permits plus 100% of the construction budget, for builders with completed projects."),
+        ("My flip is finished. Can I get a bridge loan while it sells?",
+         "Yes. A bridge loan covers up to 70% of value on a finished home that is listed for sale or leasing up."),
+        ("Can I meet you in person?",
+         "Yes. The office is at 150 E Olive Ave, Unit 112, Burbank, CA 91502. Call 310-654-1577 to set a time."),
+        CREDIT_PULL_FAQ,
+        LLC_FAQ,
+        SPEED_FAQ,
+    ]
+    sections = [
+        term_sheet("Hard money terms in Los Angeles", terms, ""),
+        answer("Where we lend in Los Angeles",
+               """<p><b>San Fernando Valley:</b> Burbank, North Hollywood, Studio City, Sherman Oaks, Encino, Van Nuys, Reseda, Northridge, Granada Hills, Tarzana and Woodland Hills.</p>
+  <p><b>Glendale, Pasadena and the foothills:</b> Glendale, La Crescenta, La Ca&ntilde;ada Flintridge, Pasadena and Altadena.</p>
+  <p><b>City of Los Angeles:</b> Silver Lake, Echo Park, Eagle Rock, Highland Park, Mid-City, the Westside and South Los Angeles.</p>
+  <p>And the rest of Los Angeles County. Terms can vary by neighborhood; we confirm what applies to your property on the first call.</p>"""),
+        answer("Which loan fits your deal", deals, bg=True, anchor="programs"),
+        answer("Permits and draws",
+               """<p>Rehab and construction money is held back at closing and released in draws after an inspection confirms the work. Permits come from the city the property is in: LADBS for the City of Los Angeles, including most of the Valley, or the building departments of Burbank, Glendale, Pasadena and the other cities.</p>
+  <p>On a new build, the land is financed at the highest leverage once permits are approved.</p>"""),
+        how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
+        anatoliy_note("<p>Our office is in Burbank, on Olive Avenue. If your property is in the Valley or anywhere in Los Angeles County, send me the address, the price, your budget and what it will sell for, or come by the office. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>"
+                      "<p>When the work is done, our sister brokerage <a href=\"https://westcoastcapitalrealty.com\">West Coast Capital Realty</a> can list it, and if you keep it, we can move you into a long-term <a href=\"dscr-loans.html\">DSCR loan</a>.</p>",
+                      "We&rsquo;re in Burbank"),
+        faq_section(faqs, "Questions about hard money in Los Angeles"),
+        answer("More for Los Angeles",
+               """<p><a href="loans/dscr/los-angeles-metro.html">DSCR loans in Los Angeles</a></p>
+  <p><a href="hard-money-loans.html">Hard money loans across California</a></p>"""),
+        related("hard-money-loans-los-angeles"),
+        cta_band("Have a deal in Los Angeles?", "Send the address, price and budget. You&rsquo;ll hear which loan fits and how much leverage to expect before you pay for an appraisal."),
+        DISCLOSURE,
+    ]
+    cities = ["Burbank", "Los Angeles", "Glendale", "Pasadena", "North Hollywood", "Studio City", "Sherman Oaks",
+              "Encino", "Van Nuys", "Northridge", "Woodland Hills"]
+    return dict(
+        slug="hard-money-loans-los-angeles",
+        terms=terms,
+        strip=["Office in Burbank", "Up to 90% of the price + 100% of the rehab", "Loans from $50K to $3M", "Soft credit pull for terms"],
+        title="Hard Money Loans in Los Angeles & San Fernando Valley | West Coast Capital Mortgage",
+        description="Hard money and fix and flip loans in Los Angeles County and the San Fernando Valley from our Burbank office: up to 90% of purchase and 100% of rehab, $50K to $3M.",
+        h1="Hard Money Loans in Los Angeles and the San Fernando Valley", crumb="Hard Money Loans in Los Angeles",
+        programs_line="Fix &amp; Flip &middot; Ground-Up Construction &middot; Bridge Loans",
+        lead="Fix and flip, construction and bridge loans for investors in the San Fernando Valley and across Los Angeles County, from our office in Burbank. The loan closes in your LLC.",
+        sections=sections, faqs=faqs,
+        area_served=[{"@type": "AdministrativeArea", "name": "Los Angeles County, California"},
+                     {"@type": "Place", "name": "San Fernando Valley, California"}]
+                    + [{"@type": "City", "name": f"{c}, California"} for c in cities],
+        product=dict(name="Hard Money Loan in Los Angeles", loanType="Hard money (private money) loan", min=50000, max=3000000, term=12, termUnit="MON",
+                     collateral="Non-owner-occupied 1–4 unit residential investment property",
+                     description="Short-term private money loans for real estate investors in Los Angeles County and the San Fernando Valley: fix and flip, bridge and ground-up construction, up to 90% of purchase and 100% of rehab."),
     )
 
 
@@ -996,7 +1085,7 @@ def json_ld(page: dict) -> str:
     if page["slug"] != "investor-loans":
         crumbs.append(("Investment Property Loans", f"{SITE}/investor-loans"))
     crumbs.append((page["crumb"], url))
-    states = [{"@type": "State", "name": s} for s in page.get("states", STATES)]
+    states = page.get("area_served") or [{"@type": "State", "name": s} for s in page.get("states", STATES)]
     graph: list[dict] = [
         org_node(),
         {
@@ -1124,7 +1213,8 @@ def render(page: dict, top: str, footer: str) -> str:
 """
 
 
-PAGE_BUILDERS = (page_hub, page_fix_flip, page_ground_up, page_bridge, page_portfolio, page_multifamily, page_hard_money)
+PAGE_BUILDERS = (page_hub, page_fix_flip, page_ground_up, page_bridge, page_portfolio, page_multifamily, page_hard_money,
+                 page_hard_money_la)
 PAGE_FILES = tuple(f"{b()['slug']}.html" for b in PAGE_BUILDERS)
 
 
