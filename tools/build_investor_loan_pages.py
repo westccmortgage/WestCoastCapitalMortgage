@@ -480,7 +480,6 @@ def page_ground_up() -> dict:
         ("Loan amount", "$50K &ndash; $3M <small>over $1M by pre-screen, with 3+ projects</small>"),
         ("Term", "12 months, interest only <small>18&ndash;24 months with a pricing adjustment</small>"),
         ("Credit score", "From 660 <small>660 for builders with 5+ completed projects; 680 for newer builders</small>"),
-        ("What you can build", "1&ndash;4 units: homes, 2&ndash;4 unit buildings, small condo projects"),
     ]
     example = table(
         ["Example build", "Amount"],
