@@ -647,6 +647,8 @@ window.WCCM_I18N_EXTRA = {
   "Founder · NMLS #2775380": ["Fundador · NMLS #2775380", "Основатель · NMLS #2775380"],
   "Reviewed and updated November 5, 2026": ["Revisado y actualizado el 5 de noviembre de 2026", "Проверено и обновлено 5 ноября 2026"],
   "Tell Me Your Scenario": ["Cuénteme su escenario", "Расскажите о вашей сделке"],
+  "Apply Online": ["Solicitar en línea", "Заявка онлайн"],
+  "Borrower Login": ["Acceso de clientes", "Вход для заёмщика"],
   "3 states": ["3 estados", "3 штата"],
   "California, Florida and Texas": ["California, Florida y Texas", "Калифорния, Флорида и Техас"],
   "of the price, plus 100% of the rehab": ["del precio, más el 100% de la remodelación", "цены плюс 100% ремонта"],

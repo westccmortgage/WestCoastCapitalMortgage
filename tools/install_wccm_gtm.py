@@ -22,7 +22,7 @@ GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 # GA4 shares the same gtag.js loader as Ads (one library, two config calls).
 GA4_ID = "G-GB57YWMKBH"
 # Keep in step with the script.js stamp in tools/install_wccm_ads_readiness.py.
-ASSET_VERSION = "20261105-investor-loans"
+ASSET_VERSION = "20261109-portal-buttons"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"

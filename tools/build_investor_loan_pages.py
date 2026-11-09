@@ -51,6 +51,9 @@ DIRECT_TEXT = "310-686-5053"
 PHOTO = "assets/anatoliy-kanevsky-portrait.webp"
 AVATAR = "assets/anatoliy-kanevsky-avatar.webp"
 FORM_ID = "investor-review"
+# White-label borrower portal (Roc Capital platform), live since 2026-11-09.
+PORTAL_APPLY = "https://portal.westcoastcapitalmortgage.com/apply-for-a-loan"
+PORTAL_LOGIN = "https://portal.westcoastcapitalmortgage.com/login"
 STATES = ["California", "Florida", "Texas"]
 
 # ---------------------------------------------------------------------------
@@ -1041,9 +1044,17 @@ def chrome_for(top: str) -> str:
     top = re.sub(r'(<nav class="mainnav"[^>]*>.*?</nav>)',
                  lambda m: m.group(1).replace(' class="active"', ""), top, flags=re.DOTALL)
     top, _ = links.add_nav_link(top, active=True)
-    # The residential /apply application does not fit LLC business-purpose loans.
+    # The residential /apply application does not fit LLC business-purpose loans:
+    # investor pages send borrowers to our white-label loan portal (Roc), and the
+    # on-page "Tell Me Your Scenario" form keeps feeding leads to the CRM.
     top = top.replace('<a class="btn btn-blue" href="/apply" data-cta="preapproval">Get Preapproved</a>',
-                      f'<a class="btn btn-blue" href="#{FORM_ID}" data-cta="investor-deal">Tell Me Your Scenario</a>', 1)
+                      f'<a class="header-login" href="{PORTAL_LOGIN}" rel="noopener" data-cta="portal-login">Borrower Login</a>'
+                      f'<a class="btn btn-blue" href="{PORTAL_APPLY}" rel="noopener" data-cta="portal-apply">Apply Online</a>', 1)
+    # Desktop: the login link sits in the top bar next to the language switch (the main
+    # header row has no room for it); the header-cta copy above shows only in the phone menu.
+    top = re.sub(r'(<div class="topbar-right">\s*)',
+                 lambda m: m.group(1) + f'<a class="topbar-login" href="{PORTAL_LOGIN}" rel="noopener" '
+                                        f'data-cta="portal-login-top">Borrower Login</a>', top, count=1)
     if 'investor-loans.html" class="active"' not in top:
         top = re.sub(r'<a href="([^"]*investor-loans(?:\.html)?)">Investment Property Loans</a>',
                      r'<a href="\1" class="active">Investment Property Loans</a>', top, count=1)

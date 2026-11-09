@@ -874,3 +874,10 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
   .nav-dd-menu{display:flex;padding-left:18px}
   .nav-dd-menu a{font-size:.95rem}
 }
+
+/* Investor pages: borrower portal login (2026-11-09). Desktop: top bar next to the
+   language switch; phones: a button in the open menu above "Apply Online". */
+.topbar-right a.topbar-login{color:#fff;font-weight:600}
+.topbar-right a.topbar-login:hover{text-decoration:underline}
+.header-cta .header-login{display:none}
+@media(max-width:960px){.topbar-right a.topbar-login{display:none}.header-cta .header-login{display:block;text-align:center;padding:13px;border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.84rem;color:var(--black);text-decoration:none}}
