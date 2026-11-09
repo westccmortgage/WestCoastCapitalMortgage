@@ -11,8 +11,8 @@ numbers here and re-run `python tools/build_investor_loan_pages.py`.
 Every program figure comes from the capital partner's current product manuals
 (November 2026; summary in "D:/wcc Mortgage/ROC/Программы Roc — хайлайты и условия.md").
 Do not add rates, speed or approval promises that are not in those documents.
-Voice: private lending for investors. Loans close with WCCM (white-label platform,
-our private lender). Never write "direct lender", "our own money" or "in-house
+Voice: private lending for investors. Don't explain who closes or funds the loan
+(owner's decision 09.11.2026). Never write "direct lender", "our own money" or "in-house
 underwriting/funding": the capital and underwriting belong to the capital partner.
 
 Shared site chrome (top bar, header, footer) is copied from loans.html, the
@@ -316,8 +316,6 @@ def page_hub() -> dict:
     faqs = [
         ("What investor loans do you offer?",
          "Fix and flip, ground-up construction, bridge, DSCR, rental portfolio and multifamily bridge loans for investors in California, Florida and Texas, closed in your LLC or corporation."),
-        ("Are you a lender or a broker?",
-         "Your loan closes with West Coast Capital Mortgage, funded by our private lender. We issue your term sheet and stay your contact from the first call to the payoff. NMLS #2817729 &middot; CA DRE #02440065."),
         ("How much can I borrow?",
          "Up to 90% of the price plus 100% of the rehab on a fix and flip, 75% of the land plus 100% of construction on a new build, up to 80% LTV on rentals, and $2M to $5M on apartment buildings."),
         ("Will you finance my first flip?",
@@ -335,7 +333,7 @@ def page_hub() -> dict:
     ]
     what_you_get = f"""<section class="bg-light"><div class="wrap">
   <div class="inv-two">
-    <div><h2 class="inv-h2">Your loan closes with us</h2><p class="lead">You deal with one company from the first call to the payoff, and the capital is there when the deal is.</p></div>
+    <div><h2 class="inv-h2">One team from term sheet to payoff</h2><p class="lead">You deal with one company from the first call to the payoff, and the capital is there when the deal is.</p></div>
     <ul class="inv-checklist inv-get">
       <li><b>A term sheet in our name</b> before you pay for an appraisal, with the rate, leverage and costs in writing.</li>
       <li><b>Your own borrower portal</b> to apply, upload documents and request draws, extensions and payoffs online.</li>
@@ -353,7 +351,7 @@ def page_hub() -> dict:
         title="Investment Property Loans | West Coast Capital Mortgage",
         description="Investment property loans for investors and developers in CA, FL and TX: fix & flip, ground-up construction, bridge, rental portfolio and multifamily loans.",
         h1="Financing for Real Estate Investors &amp; Developers", crumb="Investment Property Loans", programs_line="Fix &amp; Flip &middot; Ground-Up Construction &middot; Bridge Loans",
-        lead="Fix and flip, construction, bridge and rental loans in California, Florida and Texas. Your loan closes with West Coast Capital Mortgage: our term sheet, our team and our borrower portal, with our private lender behind every loan.",
+        lead="Fix and flip, construction, bridge and rental loans in California, Florida and Texas: our term sheet, our team and our borrower portal, with our private lender behind every loan.",
         sections=sections, faqs=faqs, product=None,
         catalog=[(PROGRAMS[s][1], s) for s in PROGRAMS if s != "investor-loans"],
     )
@@ -503,7 +501,7 @@ def page_ground_up() -> dict:
     )
     faqs = [
         ("Can I get a construction loan before permits are approved?",
-         "Yes. We fund 60% of the land now and bring it to 75% once permits are issued."),
+         "Yes. The loan covers 60% of the land now and goes up to 75% once permits are issued."),
         ("How much cash do I need to build?",
          "Usually from 15% of the total project cost, or 10% when interest is financed, plus closing costs."),
         ("Can I include interest in the loan?",
@@ -1009,7 +1007,7 @@ def page_hard_money_la() -> dict:
 
 def llms_full(pages: list[dict]) -> str:
     out = ["# West Coast Capital Mortgage: investment property loans (full text)", "",
-           f"> Investment property loans for real estate investors and developers in California, Florida and Texas. Loans close with West Coast Capital Mortgage (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065) and are funded by its private lender partner. Figures are program maximums; not a commitment to lend.",
+           f"> Investment property loans for real estate investors and developers in California, Florida and Texas from West Coast Capital Mortgage (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065). Figures are program maximums; not a commitment to lend.",
            "", "Site summary and other sections: https://westcoastcapitalmortgage.com/llms.txt", ""]
     for p in pages:
         out += [f"## {plain(p['h1'])}", f"URL: {SITE}/{p['slug']}", "", plain(p["lead"]), ""]
