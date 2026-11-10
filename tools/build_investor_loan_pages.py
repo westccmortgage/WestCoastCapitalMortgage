@@ -252,7 +252,7 @@ CREDIT_PULL_FAQ = ("Will checking my terms affect my credit score?",
 REFI_TO_RENTAL_FAQ = ("Can I keep the property as a rental when the work is done?",
     "Yes. Once it is rented, refinance into a 30-year <a href=\"dscr-loans.html\">DSCR</a> or <a href=\"rental-portfolio-loans.html\">portfolio loan</a>, qualified on the rent.")
 MARKETS_FAQ = ("Which states do you lend in?",
-    "California, Florida and Texas. For investment property in other states, see <a href=\"https://westcoastcapitalinvestment.com/where-we-lend/\" rel=\"noopener\">West Coast Capital Investment</a>, our investor-lending site for 38 states and Washington, DC. Terms can vary by market, and we confirm what applies to your property on the first call.")
+    "California, Florida and Texas. For investment property in other states, see <a href=\"https://westcoastcapitalinvestment.com/where-we-lend/\" rel=\"noopener\">West Coast Capital Investment</a>, our investor-lending site for 31 states and Washington, DC. Terms can vary by market, and we confirm what applies to your property on the first call.")
 
 
 # ---------------------------------------------------------------------------
