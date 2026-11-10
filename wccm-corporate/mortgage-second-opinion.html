@@ -21,10 +21,33 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
   window.__wccmAdsLeadConversionHook=true;
   window.__wccmAdsLeadCursor=0;
   window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
-  window.__wccmAdsLeadScanner=setInterval(function(){
+  var safePagePath=function(){
+    var path=window.location.pathname||'/';
+    return (path.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(path))?path:'/';
+  };
+  var scan=function(){
     var dl=window.dataLayer||[];
     while(window.__wccmAdsLeadCursor<dl.length){
       var item=dl[window.__wccmAdsLeadCursor++];
+      /* Taps on our phone numbers and on the loan application link, for GA4 only:
+         they are not Google Ads conversions. The number sent is ours, digits only. */
+      if(item&&item.event==='wccm_phone_click'&&!item.__wccmGa4Sent){
+        item.__wccmGa4Sent=true;
+        window.gtag('event','click_call',{
+          'send_to':'G-GB57YWMKBH',
+          'phone_number':String(item.phone_number||'').replace(new RegExp('[^0-9]','g'),'').slice(0,15),
+          'page_path':safePagePath()
+        });
+        continue;
+      }
+      if(item&&item.event==='wccm_application_start'&&!item.__wccmGa4Sent){
+        item.__wccmGa4Sent=true;
+        window.gtag('event','application_start',{
+          'send_to':'G-GB57YWMKBH',
+          'page_path':safePagePath()
+        });
+        continue;
+      }
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
         item.__wccmAdsLeadSent=true;
         var leadEventId=item.lead_event_id||'';
@@ -68,7 +91,13 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
         });
       }
     }
-  },200);
+  };
+  window.__wccmAdsLeadScanner=setInterval(scan,200);
+  /* A tap on the application link leaves the page: read the queue right after
+     the click instead of waiting for the next tick. */
+  if(typeof document!=='undefined'&&document.addEventListener){
+    document.addEventListener('click',function(){setTimeout(scan,0);});
+  }
 })();
 
 window.gtag('js',new Date());
@@ -119,7 +148,7 @@ window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261109-portal-buttons">
+<link rel="stylesheet" href="styles.css?v=20261110-california-pages">
 <link rel="canonical" href="https://westcoastcapitalmortgage.com/mortgage-second-opinion">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="West Coast Capital Mortgage">
@@ -272,6 +301,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="footer-col"><h4>Licensing</h4><ul class="footer-disclosure"><li>West Coast Capital Mortgage</li><li>Company NMLS #2817729</li><li>CA DRE Corporation License #02440065</li><li>Anatoliy Kanevsky · NMLS #2775380 · CA Broker DRE #01385024</li><li>Equal Housing Opportunity</li></ul><img src="assets/equal-housing.svg" alt="Equal Housing Opportunity" width="42" height="42" loading="lazy"></div>
   </div>
 </footer>
-<script src="script.js?v=20261109-portal-buttons" defer></script>
+<script src="script.js?v=20261110-california-pages" defer></script>
 </body>
 </html>

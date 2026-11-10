@@ -19,10 +19,33 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
   window.__wccmAdsLeadConversionHook=true;
   window.__wccmAdsLeadCursor=0;
   window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{};
-  window.__wccmAdsLeadScanner=setInterval(function(){
+  var safePagePath=function(){
+    var path=window.location.pathname||'/';
+    return (path.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(path))?path:'/';
+  };
+  var scan=function(){
     var dl=window.dataLayer||[];
     while(window.__wccmAdsLeadCursor<dl.length){
       var item=dl[window.__wccmAdsLeadCursor++];
+      /* Taps on our phone numbers and on the loan application link, for GA4 only:
+         they are not Google Ads conversions. The number sent is ours, digits only. */
+      if(item&&item.event==='wccm_phone_click'&&!item.__wccmGa4Sent){
+        item.__wccmGa4Sent=true;
+        window.gtag('event','click_call',{
+          'send_to':'G-GB57YWMKBH',
+          'phone_number':String(item.phone_number||'').replace(new RegExp('[^0-9]','g'),'').slice(0,15),
+          'page_path':safePagePath()
+        });
+        continue;
+      }
+      if(item&&item.event==='wccm_application_start'&&!item.__wccmGa4Sent){
+        item.__wccmGa4Sent=true;
+        window.gtag('event','application_start',{
+          'send_to':'G-GB57YWMKBH',
+          'page_path':safePagePath()
+        });
+        continue;
+      }
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){
         item.__wccmAdsLeadSent=true;
         var leadEventId=item.lead_event_id||'';
@@ -66,7 +89,13 @@ window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
         });
       }
     }
-  },200);
+  };
+  window.__wccmAdsLeadScanner=setInterval(scan,200);
+  /* A tap on the application link leaves the page: read the queue right after
+     the click instead of waiting for the next tick. */
+  if(typeof document!=='undefined'&&document.addEventListener){
+    document.addEventListener('click',function(){setTimeout(scan,0);});
+  }
 })();
 
 window.gtag('js',new Date());
@@ -108,7 +137,7 @@ window.oaiq("init",{pixelId:"SJQeDxdLY3Jhg74ed29uyH"});
   },200);
 })();
 </script>
-<!-- End OpenAI Ads pixel --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>California Local Mortgage Markets | West Coast Capital Mortgage</title><meta name="description" content="Curated California local mortgage guides for Manhattan Beach, Palos Verdes, Calabasas, Encino, Sherman Oaks, Pacific Palisades, Westside and South Bay markets. NMLS #2817729."><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css?v=20261109-portal-buttons"><link rel="canonical" href="https://westcoastcapitalmortgage.com/california-mortgage-locations"><meta name="robots" content="index,follow,max-image-preview:large"><meta name="author" content="West Coast Capital Mortgage"></head><body>
+<!-- End OpenAI Ads pixel --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>California Local Mortgage Markets | West Coast Capital Mortgage</title><meta name="description" content="Curated California local mortgage guides for Manhattan Beach, Palos Verdes, Calabasas, Encino, Sherman Oaks, Pacific Palisades, Westside and South Bay markets. NMLS #2817729."><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css?v=20261110-california-pages"><link rel="canonical" href="https://westcoastcapitalmortgage.com/california-mortgage-locations"><meta name="robots" content="index,follow,max-image-preview:large"><meta name="author" content="West Coast Capital Mortgage"></head><body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2X3X454"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -127,4 +156,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div></section>
 <section><div class="wrap"><div class="cta-band"><h2>Not sure which local page fits?</h2><p>Call us with the property address and scenario. We will start with the financing problem rather than forcing the file into a generic city page.</p><div class="btn-row"><a class="btn btn-lg btn-blue" href="tel:+13106541577">Call (310) 654-1577</a><a class="btn btn-lg btn-outline-light" href="/loans.html">All Loan Programs</a></div></div></div></section>
-<footer class="site-footer"><div class="wrap"><div class="footer-bottom"><div class="row"><span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px"> Equal Housing Opportunity</span></div><p>West Coast Capital Mortgage. Company NMLS #2817729. CA DRE Corporation License #02440065. Anatoliy Kanevsky NMLS #2775380, CA Broker DRE #01385024. 150 E Olive Ave, Unit 112, Burbank, CA 91502. (310) 654-1577.</p><p>&copy; <span class="year"></span> West Coast Capital Mortgage</p></div></div></footer><script src="/script.js?v=20261109-portal-buttons"></script></body></html>
+<footer class="site-footer"><div class="wrap"><div class="footer-bottom"><div class="row"><span class="eho"><img src="/assets/equal-housing.svg" alt="Equal Housing Opportunity" style="height:32px;vertical-align:middle;margin-right:7px"> Equal Housing Opportunity</span></div><p>West Coast Capital Mortgage. Company NMLS #2817729. CA DRE Corporation License #02440065. Anatoliy Kanevsky NMLS #2775380, CA Broker DRE #01385024. 150 E Olive Ave, Unit 112, Burbank, CA 91502. (310) 654-1577.</p><p>&copy; <span class="year"></span> West Coast Capital Mortgage</p></div></div></footer><script src="/script.js?v=20261110-california-pages"></script></body></html>
