@@ -22,7 +22,7 @@ GOOGLE_ADS_LEAD_DESTINATION = "AW-18417657219/LiA7CPWd4eocEIPLnM5E"
 # GA4 shares the same gtag.js loader as Ads (one library, two config calls).
 GA4_ID = "G-GB57YWMKBH"
 # Keep in step with the script.js stamp in tools/install_wccm_ads_readiness.py.
-ASSET_VERSION = "20261109-portal-buttons"
+ASSET_VERSION = "20261110-california-pages"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 ADS_BLOCK_START = "<!-- Google tag (gtag.js) - Google Ads -->"
 ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
@@ -30,6 +30,10 @@ ADS_BLOCK_END = "<!-- End Google tag - Google Ads -->"
 OPENAI_PIXEL_ID = "SJQeDxdLY3Jhg74ed29uyH"
 OPENAI_BLOCK_START = "<!-- OpenAI Ads pixel -->"
 OPENAI_BLOCK_END = "<!-- End OpenAI Ads pixel -->"
+# Meta Events Manager > dataset (pixel) ID. Empty = not installed.
+META_PIXEL_ID = ""
+META_BLOCK_START = "<!-- Meta pixel -->"
+META_BLOCK_END = "<!-- End Meta pixel -->"
 
 GTM_HEAD_SNIPPET = f"""<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
@@ -57,10 +61,33 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
   window.__wccmAdsLeadConversionHook=true;
   window.__wccmAdsLeadCursor=0;
   window.__wccmAdsLeadSentIds=window.__wccmAdsLeadSentIds||{{}};
-  window.__wccmAdsLeadScanner=setInterval(function(){{
+  var safePagePath=function(){{
+    var path=window.location.pathname||'/';
+    return (path.length<=160&&new RegExp('^[/a-z0-9-]+$','i').test(path))?path:'/';
+  }};
+  var scan=function(){{
     var dl=window.dataLayer||[];
     while(window.__wccmAdsLeadCursor<dl.length){{
       var item=dl[window.__wccmAdsLeadCursor++];
+      /* Taps on our phone numbers and on the loan application link, for GA4 only:
+         they are not Google Ads conversions. The number sent is ours, digits only. */
+      if(item&&item.event==='wccm_phone_click'&&!item.__wccmGa4Sent){{
+        item.__wccmGa4Sent=true;
+        window.gtag('event','click_call',{{
+          'send_to':'{GA4_ID}',
+          'phone_number':String(item.phone_number||'').replace(new RegExp('[^0-9]','g'),'').slice(0,15),
+          'page_path':safePagePath()
+        }});
+        continue;
+      }}
+      if(item&&item.event==='wccm_application_start'&&!item.__wccmGa4Sent){{
+        item.__wccmGa4Sent=true;
+        window.gtag('event','application_start',{{
+          'send_to':'{GA4_ID}',
+          'page_path':safePagePath()
+        }});
+        continue;
+      }}
       if(item&&item.event==='wccm_lead_submit'&&!item.__wccmAdsLeadSent){{
         item.__wccmAdsLeadSent=true;
         var leadEventId=item.lead_event_id||'';
@@ -104,7 +131,13 @@ window.gtag=window.gtag||function(){{window.dataLayer.push(arguments);}};
         }});
       }}
     }}
-  }},200);
+  }};
+  window.__wccmAdsLeadScanner=setInterval(scan,200);
+  /* A tap on the application link leaves the page: read the queue right after
+     the click instead of waiting for the next tick. */
+  if(typeof document!=='undefined'&&document.addEventListener){{
+    document.addEventListener('click',function(){{setTimeout(scan,0);}});
+  }}
 }})();
 
 window.gtag('js',new Date());
@@ -148,6 +181,38 @@ window.oaiq("init",{{pixelId:"{OPENAI_PIXEL_ID}"}});
 }})();
 </script>
 {OPENAI_BLOCK_END}"""
+
+META_PIXEL_HEAD_SNIPPET = f"""{META_BLOCK_START}
+<script>
+(function(w,d,s,u){{
+  /* Stays off when the browser sends Global Privacy Control. */
+  if(w.fbq||navigator.globalPrivacyControl===true)return;
+  var n=w.fbq=function(){{n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments);}};
+  if(!w._fbq)w._fbq=n;
+  n.push=n;n.loaded=true;n.version='2.0';n.queue=[];
+  var js=d.createElement(s);js.async=true;js.src=u;
+  var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);
+  w.fbq('init','{META_PIXEL_ID}');
+  w.fbq('track','PageView');
+
+  /* Same accepted-lead signal as the Google Ads block. No form data is sent;
+     lead_event_id is the Meta eventID so a resent lead is deduplicated. */
+  var cursor=0,sentIds={{}};
+  setInterval(function(){{
+    var dl=w.dataLayer||[];
+    while(cursor<dl.length){{
+      var item=dl[cursor++];
+      if(!item||item.event!=='wccm_lead_submit'||item.__wccmMetaLeadSent)continue;
+      item.__wccmMetaLeadSent=true;
+      var leadEventId=item.lead_event_id||'';
+      if(leadEventId&&sentIds[leadEventId])continue;
+      if(leadEventId)sentIds[leadEventId]=true;
+      w.fbq('track','Lead',{{}},leadEventId?{{eventID:leadEventId}}:undefined);
+    }}
+  }},200);
+}})(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+</script>
+{META_BLOCK_END}"""
 
 HEAD_TAG_RE = re.compile(r"<head(?:\s[^>]*)?>", re.IGNORECASE)
 BODY_TAG_RE = re.compile(r"<body(?:\s[^>]*)?>", re.IGNORECASE)
@@ -239,6 +304,29 @@ def replace_openai_block(text: str) -> tuple[str, bool]:
     return text[:pos] + "\n" + OPENAI_PIXEL_HEAD_SNIPPET + text[pos:], True
 
 
+def replace_meta_block(text: str) -> tuple[str, bool]:
+    """Install, upgrade or (with no pixel ID) remove the Meta pixel block."""
+    start = text.find(META_BLOCK_START)
+    end = text.find(META_BLOCK_END)
+    if start >= 0 and end >= start:
+        end += len(META_BLOCK_END)
+        if not META_PIXEL_ID:
+            return text[:start].rstrip("\n") + text[end:], True
+        if text[start:end] == META_PIXEL_HEAD_SNIPPET:
+            return text, False
+        return text[:start] + META_PIXEL_HEAD_SNIPPET + text[end:], True
+    if not META_PIXEL_ID:
+        return text, False
+
+    # Last of the three: after the OpenAI block when there is one, else after Google Ads.
+    marker = OPENAI_BLOCK_END if OPENAI_BLOCK_END in text else ADS_BLOCK_END
+    pos = text.find(marker)
+    if pos < 0:
+        return text, False
+    pos += len(marker)
+    return text[:pos] + "\n" + META_PIXEL_HEAD_SNIPPET + text[pos:], True
+
+
 def inject(path: Path) -> tuple[bool, str | None]:
     text = path.read_text(encoding="utf-8")
     lower = text.lower()
@@ -272,7 +360,8 @@ def inject(path: Path) -> tuple[bool, str | None]:
 
     text, ads_changed = replace_ads_block(text)
     text, openai_changed = replace_openai_block(text)
-    changed = changed or ads_changed or openai_changed
+    text, meta_changed = replace_meta_block(text)
+    changed = changed or ads_changed or openai_changed or meta_changed
 
     # Bust stale browser/CDN copies whenever the shared lead form or its styles
     # change. The build applies this consistently to every deployable page.
@@ -331,6 +420,8 @@ def verify_critical(path: Path) -> None:
     )
     if OPENAI_PIXEL_ID:
         required += (OPENAI_PIXEL_ID, "bzrcdn.openai.com/sdk/oaiq.min.js")
+    if META_PIXEL_ID:
+        required += (META_PIXEL_ID, "connect.facebook.net/en_US/fbevents.js")
     if not all(token in text for token in required):
         raise SystemExit(f"Critical WCCM page is not fully instrumented: {path}")
 

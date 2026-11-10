@@ -51,6 +51,41 @@ var setInterval = function(fn) { scan = fn; };
         import json
         self.assertEqual(json.loads(completed.stdout), [expected for _, expected in cases])
 
+    def test_phone_and_application_taps_reach_ga4_only(self):
+        """A tap on our number or the application link is a GA4 event, never an Ads conversion."""
+        ads_block = gtm.GOOGLE_ADS_HEAD_SNIPPET.split(gtm.ADS_BLOCK_START, 1)[1].split(gtm.ADS_BLOCK_END, 1)[0]
+        script = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", ads_block, re.S)[0]
+        harness = r"""
+var hits = [];
+var scan = null;
+var window = {
+  location: { pathname: '/dscr-loans' },
+  dataLayer: [],
+  gtag: function(kind, event, payload) {
+    if (kind === 'event') hits.push([event, payload.send_to, payload.phone_number || '', payload.page_path || '']);
+  }
+};
+var setInterval = function(fn) { scan = fn; };
+"""
+        fixture = """
+window.dataLayer.push({event:'wccm_phone_click',page_path:'/dscr-loans',phone_number:'+1 (310) 654-1577'});
+window.dataLayer.push({event:'wccm_application_start',page_path:'/dscr-loans',destination:'https://example.my1003app.com/1/register?borrower=x'});
+scan(); scan();
+window.location.pathname = '/dscr-loans?email=a@example.com';
+window.dataLayer.push({event:'wccm_phone_click',phone_number:'3106541577'});
+scan();
+console.log(JSON.stringify(hits));
+"""
+        completed = subprocess.run(["node", "-e", harness + script + "\n" + fixture],
+                                   text=True, capture_output=True, check=False)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        import json
+        self.assertEqual(json.loads(completed.stdout), [
+            ["click_call", gtm.GA4_ID, "13106541577", "/dscr-loans"],
+            ["application_start", gtm.GA4_ID, "", "/dscr-loans"],
+            ["click_call", gtm.GA4_ID, "3106541577", "/"],
+        ])
+
     def test_accepted_lead_context_is_safe_consistent_and_idempotent(self):
         for name in ("contact.html", "index.html", "bank-statement-loans.html", "dscr-loans.html"):
             with self.subTest(page=name), TemporaryDirectory() as directory:
