@@ -229,12 +229,31 @@ PROGRAMS = {
 }
 
 
+# Topic split with westcoastcapitalinvestment.com (owner's decision 10.11.2026): these pages
+# answer California and Los Angeles searches, the investor-lending site carries the same
+# programs for Texas, Florida and other states. One plain link out per program page, to the
+# matching page there. No numbers and no state lists in these links.
+WCCI = "https://westcoastcapitalinvestment.com"
+OUT_OF_STATE_NOTE = "Texas, Florida and other states, at West Coast Capital Investment."
+OUT_OF_STATE = {
+    "fix-and-flip-loans": (f"{WCCI}/fix-and-flip-loans/", "Fix and Flip Loans Outside California", OUT_OF_STATE_NOTE),
+    "ground-up-construction-loans": (f"{WCCI}/ground-up-construction-loans/", "Construction Loans Outside California", OUT_OF_STATE_NOTE),
+    "bridge-loans": (f"{WCCI}/stabilized-bridge-loans/", "Bridge Loans Outside California", OUT_OF_STATE_NOTE),
+    "rental-portfolio-loans": (f"{WCCI}/rental-portfolio-loans/", "Blanket Loans for Rentals Outside California", OUT_OF_STATE_NOTE),
+    "multifamily-bridge-loans": (f"{WCCI}/multifamily-bridge-loans/", "Multifamily Bridge Loans Outside California",
+                                 "At West Coast Capital Investment."),
+}
+
+
 def related(current: str) -> str:
     links_html = []
     for slug, (_label, name, text) in PROGRAMS.items():
         if slug == current:
             continue
         links_html.append(f'<li><a href="{slug}.html">{name}</a><span>{text}</span></li>')
+    out = OUT_OF_STATE.get(current)
+    if out:
+        links_html.append(f'<li><a href="{out[0]}" rel="noopener">{out[1]}</a><span>{out[2]}</span></li>')
     return f"""<section class="inv-also"><div class="wrap">
   <h2 class="inv-h2">Not quite this deal?</h2>
   <ul class="inv-also-list">{"".join(links_html)}</ul>
@@ -289,7 +308,7 @@ def page_hub() -> dict:
         ["Program", "Best for", "Maximum leverage", "Loan size", "Term", "Credit from", "Experience"],
         [
             ['<a href="fix-and-flip-loans.html">Fix &amp; flip</a>', "Buy, renovate, then sell or rent", "90% of purchase + 100% of rehab", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required"],
-            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "660 (680 for newer builders)", "Completed ground-up projects"],
+            ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "680", "Completed ground-up projects"],
             ['<a href="bridge-loans.html">Bridge</a>', "Finished property being sold or leased", "70% of value", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required for renovated homes"],
             ['<a href="rental-portfolio-loans.html">Rental portfolio</a>', "2&ndash;10 leased rentals", "80% LTV purchase or rate-and-term, 75% cash-out", "Up to $2M", "30 years, fixed or ARM", "660 (700 for 80% LTV)", "Not required"],
             ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "5+ unit value-add in California", "75% of purchase + 100% of renovation", "$2M&ndash;$5M", "18&ndash;24 months + extensions", "725", "Multifamily in the same submarket"],
@@ -452,10 +471,10 @@ def page_fix_flip() -> dict:
         slug="fix-and-flip-loans",
         terms=terms,
         strip=["Up to 90% of the price + 100% of the rehab", "Interest only on funds drawn", "No prepayment penalty", "Soft credit pull for terms"],
-        title="Fix & Flip Loans in CA, FL, TX | West Coast Capital Mortgage",
-        description="Fix and flip loans up to 90% of purchase and 100% of rehab, $50K–$3M, 12-month interest-only with no prepayment penalty. First-time flippers considered.",
-        h1="Fix and Flip Loans", crumb="Fix and Flip Loans",
-        lead="Up to 90% of the purchase price and 100% of the rehab budget. Short-term, interest-only money to buy and renovate homes you plan to sell or rent.",
+        title="Fix and Flip Loans in California | West Coast Capital Mortgage",
+        description="Fix and flip loans for California investors from our Los Angeles office: up to 90% of purchase and 100% of rehab, $50K–$3M. First-time flippers considered.",
+        h1="Fix and Flip Loans in California", crumb="Fix and Flip Loans",
+        lead="For California investors: up to 90% of the purchase price and 100% of the rehab budget. Short-term, interest-only money to buy and renovate homes you plan to sell or rent, from our office in Los Angeles.",
         sections=sections, faqs=faqs,
         product=dict(name="Fix and Flip Loan", loanType="Fix and flip (rehab) loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Non-owner-occupied 1–4 unit residential investment property",
@@ -471,7 +490,7 @@ def page_ground_up() -> dict:
         ("Loan vs. completed value", "70% max"),
         ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>18&ndash;24 months available</small>"),
-        ("Credit score", "From 660 <small>680 for newer builders</small>"),
+        ("Credit score", "680+"),
     ]
     example = table(
         ["Example build", "Amount"],
@@ -557,10 +576,10 @@ def page_ground_up() -> dict:
         slug="ground-up-construction-loans",
         terms=terms,
         strip=["100% of construction financed", "Up to 6 months of interest built in", "Draws requested online", "Soft credit pull for terms"],
-        title="Ground-Up Construction Loans | West Coast Capital Mortgage",
-        description="Ground-up construction loans for new homes: up to 75% of land and 100% of construction, up to 85% of total cost, $50K–$3M, interest reserve financing.",
-        h1="Ground-Up Construction Loans", crumb="Ground-Up Construction Loans",
-        lead="Land plus 100% of the construction budget for builders putting up new homes, with up to six months of interest built into the loan.",
+        title="Ground-Up Construction Loans in California | West Coast Capital Mortgage",
+        description="Ground-up construction loans for California builders: up to 75% of land and 100% of construction, up to 85% of total cost, $50K–$3M, interest reserve financing.",
+        h1="Ground-Up Construction Loans in California", crumb="Ground-Up Construction Loans",
+        lead="Land plus 100% of the construction budget for California builders putting up new homes, with up to six months of interest built into the loan.",
         sections=sections, faqs=faqs,
         product=dict(name="Ground-Up Construction Loan", loanType="Residential construction loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Land and new 1–4 unit residential construction (non-owner-occupied)",
@@ -648,10 +667,10 @@ def page_bridge() -> dict:
         slug="bridge-loans",
         terms=terms,
         strip=["Up to 70% of value", "No DSCR test on renovated homes", "No prepayment penalty", "Soft credit pull for terms"],
-        title="Investor Bridge Loans | West Coast Capital Mortgage",
-        description="Bridge loans for finished 1–4 unit investment properties listed for sale or leasing up: up to 70% of value, 12 months interest-only, no prepayment penalty.",
-        h1="Investor Bridge Loans", crumb="Bridge Loans",
-        lead="For a finished property that&rsquo;s listed for sale or leasing up. Pay off a rehab loan that&rsquo;s coming due, or buy a finished home quickly.",
+        title="Investor Bridge Loans in California | West Coast Capital Mortgage",
+        description="Bridge loans for California investors with a finished 1–4 unit property listed for sale or leasing up: up to 70% of value, 12 months interest-only.",
+        h1="Bridge Loans for California Investors", crumb="Bridge Loans",
+        lead="For a finished California property that&rsquo;s listed for sale or leasing up. Pay off a rehab loan that&rsquo;s coming due, or buy a finished home quickly.",
         sections=sections, faqs=faqs,
         product=dict(name="Investor Bridge Loan", loanType="Short-term bridge loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Finished non-owner-occupied 1–4 unit residential investment property",
@@ -741,10 +760,10 @@ def page_portfolio() -> dict:
         slug="rental-portfolio-loans",
         terms=terms,
         strip=["Qualify on rent", "No tax returns or W-2s", "2 to 10 rentals, one payment", "30-year terms"],
-        title="Rental Portfolio Loans | West Coast Capital Mortgage",
-        description="One 30-year blanket loan for 2–10 rentals, qualified on rent with DSCR from 1.05: up to 80% LTV on purchases and rate-and-term, 75% cash-out.",
-        h1="Rental Portfolio Loans", crumb="Rental Portfolio Loans",
-        lead="Two to ten rentals under one 30-year loan. One closing, one payment, qualified on the rent instead of your personal income.",
+        title="Rental Portfolio Loans in California | West Coast Capital Mortgage",
+        description="Rental portfolio loans in California: 2–10 rentals in one 30-year loan qualified on rent, DSCR from 1.05, up to 80% LTV on purchases and rate-and-term, 75% cash-out.",
+        h1="Rental Portfolio Loans in California", crumb="Rental Portfolio Loans",
+        lead="Two to ten California rentals under one 30-year loan. One closing, one payment, qualified on the rent instead of your personal income.",
         sections=sections, faqs=faqs,
         product=dict(name="Rental Portfolio (Blanket) Loan", loanType="DSCR blanket loan", min=100000, max=2000000, term=30, termUnit="ANN",
                      collateral="Two to ten leased 1–4 unit residential rental properties",
@@ -827,9 +846,9 @@ def page_multifamily() -> dict:
         slug="multifamily-bridge-loans",
         terms=terms,
         strip=["$2M to $5M", "100% of the renovation", "Built for an agency refinance", "California apartment buildings"],
-        title="Multifamily Bridge Loans | West Coast Capital Mortgage",
+        title="Multifamily Bridge Loans in California | West Coast Capital Mortgage",
         description="Value-add bridge loans for 5+ unit apartment buildings in California: $2M–$5M, up to 75% of purchase and 100% of renovation, 18–24 months plus extensions.",
-        h1="Multifamily Bridge Loans", crumb="Multifamily Bridge Loans",
+        h1="California Multifamily Bridge Loans", crumb="Multifamily Bridge Loans",
         lead="Buy, renovate and stabilize a 5+ unit apartment building in California, then refinance into long-term agency financing.",
         sections=sections, faqs=faqs, states=["California"],
         product=dict(name="Multifamily Bridge Loan", loanType="Multifamily bridge (value-add) loan", min=2000000, max=5000000, term=24, termUnit="MON",
@@ -891,8 +910,8 @@ def page_hard_money() -> dict:
   <p>Our loans do that job with our private lender behind them: published guidelines, online draw requests and no prepayment penalty on fix and flip, construction and bridge loans.</p>"""),
         answer("Hard money programs we offer", programs, bg=True, anchor="programs"),
         answer("Where we lend in California",
-               """<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
-  <p>We also lend in Florida and Texas.</p>
+               f"""<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
+  <p>We also lend in Florida and Texas. For deals there and in other states, see West Coast Capital Investment: <a href="{WCCI}/florida/" rel="noopener">hard money loans in Florida</a> &middot; <a href="{WCCI}/texas/" rel="noopener">hard money loans in Texas</a> &middot; <a href="{WCCI}/hard-money-loans/" rel="noopener">hard money loans in other states</a></p>
   <p><a class="more" href="hard-money-loans-los-angeles.html">Hard Money Loans in Los Angeles</a></p>"""),
         how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
         anatoliy_note("<p>Send me the address, the price, your budget and what it will sell for. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>",
