@@ -650,11 +650,11 @@
   }
   QUICK_LEAD_FORMS['/investor-loans']=investorForm('Investor Loans','Investor deal review','Get terms on your next deal',
     ['Fix & flip','Ground-up','Bridge','Rentals / DSCR','Multifamily'],
-    ['Fix & flip, construction, bridge and rental loans','Properties in California, Florida and Texas','Written terms before you pay for an appraisal'],
+    ['Fix & flip, construction, bridge and rental loans','Properties in many states across the U.S.','Written terms before you pay for an appraisal'],
     INV_EXPERIENCE,[INV_CITY,invMoney('purchase_price','Purchase price ($)'),QUICK_AMOUNT,INV_CREDIT,QUICK_EMAIL]);
   QUICK_LEAD_FORMS['/hard-money-loans']=investorForm('Investor Loans','Hard money deal review','Get terms on your next deal',
     ['Fix & flip','Ground-up','Bridge','Rentals / DSCR','Multifamily'],
-    ['Fix & flip, bridge and construction loans','Statewide in California, plus Florida and Texas','Written terms before you pay for an appraisal'],
+    ['Fix & flip, bridge and construction loans','Statewide in California and in many other states','Written terms before you pay for an appraisal'],
     INV_EXPERIENCE,[INV_CITY,invMoney('purchase_price','Purchase price ($)'),QUICK_AMOUNT,INV_CREDIT,QUICK_EMAIL]);
   QUICK_LEAD_FORMS['/hard-money-loans-los-angeles']=investorForm('Investor Loans','Hard money deal review','Get terms on your next deal',
     ['Fix & flip','Ground-up','Bridge','Rentals / DSCR','Multifamily'],

@@ -181,7 +181,7 @@ def numbers_band() -> str:
     """Real numbers only: program maximums, loan sizes, years in business, Google rating."""
     items = [("Up to 90%", "of the price, plus 100% of the rehab"),
              ("$50K&ndash;$5M", "loan sizes across our investor programs"),
-             ("3 states", "California, Florida and Texas"),
+             ("Many states", "across the U.S., confirmed for each property"),
              ("5.0 &#9733;", '<a href="reviews.html">rating on Google</a>')]
     cells = "".join(f'<div class="inv-num"><b>{v}</b><span>{l}</span></div>' for v, l in items)
     return f'<section class="inv-numbers" aria-label="By the numbers"><div class="wrap"><div class="inv-num-grid">{cells}</div></div></section>'
@@ -231,10 +231,10 @@ PROGRAMS = {
 
 # Topic split with westcoastcapitalinvestment.com (owner's decision 10.11.2026): these pages
 # answer California and Los Angeles searches, the investor-lending site carries the same
-# programs for Texas, Florida and other states. One plain link out per program page, to the
+# programs for other states. One plain link out per program page, to the
 # matching page there. No numbers and no state lists in these links.
 WCCI = "https://westcoastcapitalinvestment.com"
-OUT_OF_STATE_NOTE = "Texas, Florida and other states, at West Coast Capital Investment."
+OUT_OF_STATE_NOTE = "Many other states, at West Coast Capital Investment."
 OUT_OF_STATE = {
     "fix-and-flip-loans": (f"{WCCI}/fix-and-flip-loans/", "Fix and Flip Loans Outside California", OUT_OF_STATE_NOTE),
     "ground-up-construction-loans": (f"{WCCI}/ground-up-construction-loans/", "Construction Loans Outside California", OUT_OF_STATE_NOTE),
@@ -271,7 +271,7 @@ CREDIT_PULL_FAQ = ("Will checking my terms affect my credit score?",
 REFI_TO_RENTAL_FAQ = ("Can I keep the property as a rental when the work is done?",
     "Yes. Once it is rented, refinance into a 30-year <a href=\"dscr-loans.html\">DSCR</a> or <a href=\"rental-portfolio-loans.html\">portfolio loan</a>, qualified on the rent.")
 MARKETS_FAQ = ("Which states do you lend in?",
-    "California, Florida and Texas. For investment property in other states, see <a href=\"https://westcoastcapitalinvestment.com/where-we-lend/#check\" rel=\"noopener\">West Coast Capital Investment</a>, our investor-lending site, where you can check availability for your property. Terms can vary by market, and we confirm what applies to your property on the first call.")
+    "Many states across the U.S. Check availability for your property on <a href=\"https://westcoastcapitalinvestment.com/where-we-lend/#check\" rel=\"noopener\">West Coast Capital Investment</a>, our investor-lending site. Terms can vary by market, and we confirm what applies to your property on the first call.")
 
 
 # ---------------------------------------------------------------------------
@@ -334,7 +334,7 @@ def page_hub() -> dict:
 
     faqs = [
         ("What investor loans do you offer?",
-         "Fix and flip, ground-up construction, bridge, DSCR, rental portfolio and multifamily bridge loans for investors in California, Florida and Texas, closed in your LLC or corporation."),
+         "Fix and flip, ground-up construction, bridge, DSCR, rental portfolio and multifamily bridge loans for investors in many states across the U.S., closed in your LLC or corporation."),
         ("How much can I borrow?",
          "Up to 90% of the price plus 100% of the rehab on a fix and flip, 75% of the land plus 100% of construction on a new build, up to 80% LTV on rentals, and $2M to $5M on apartment buildings."),
         ("Will you finance my first flip?",
@@ -368,9 +368,9 @@ def page_hub() -> dict:
     return dict(
         slug="investor-loans",
         title="Investment Property Loans | West Coast Capital Mortgage",
-        description="Investment property loans for investors and developers in CA, FL and TX: fix & flip, ground-up construction, bridge, rental portfolio and multifamily loans.",
+        description="Investment property loans for investors and developers in many states: fix & flip, ground-up construction, bridge, rental portfolio and multifamily loans.",
         h1="Financing for Real Estate Investors &amp; Developers", crumb="Investment Property Loans", programs_line="Fix &amp; Flip &middot; Ground-Up Construction &middot; Bridge Loans",
-        lead="Fix and flip, construction, bridge and rental loans in California, Florida and Texas: our term sheet, our team and our borrower portal, with our private lender behind every loan.",
+        lead="Fix and flip, construction, bridge and rental loans in many states across the U.S.: our term sheet, our team and our borrower portal, with our private lender behind every loan.",
         sections=sections, faqs=faqs, product=None,
         catalog=[(PROGRAMS[s][1], s) for s in PROGRAMS if s != "investor-loans"],
     )
@@ -866,7 +866,7 @@ def page_hard_money() -> dict:
         ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
         ("Credit score", "From 660 <small>680 for first-time investors</small>"),
-        ("Where", "Statewide in California <small>also Florida and Texas</small>"),
+        ("Where", "Statewide in California <small>and in many other states</small>"),
         ("Borrower", "LLC or corporation"),
     ]
     programs = table(
@@ -882,7 +882,7 @@ def page_hard_money() -> dict:
     )
     faqs = [
         ("Who offers hard money loans in Los Angeles?",
-         "West Coast Capital Mortgage in Los Angeles offers hard money loans across Los Angeles County and the rest of California, plus Florida and Texas: fix and flip, bridge and construction loans."),
+         "West Coast Capital Mortgage in Los Angeles offers hard money loans across Los Angeles County, the rest of California and many other states: fix and flip, bridge and construction loans."),
         ("Is private money the same as hard money?",
          "In practice, yes: short-term, interest-only loans based on the property and the deal."),
         ("How much can I borrow with a hard money loan?",
@@ -911,7 +911,7 @@ def page_hard_money() -> dict:
         answer("Hard money programs we offer", programs, bg=True, anchor="programs"),
         answer("Where we lend in California",
                f"""<p>Statewide: Los Angeles County and the San Fernando Valley, Orange County, the Inland Empire, Ventura, San Diego, the Bay Area, Sacramento and the Central Valley. Infill homes and lots in cities and suburbs are the best fit.</p>
-  <p>We also lend in Florida and Texas. For deals there and in other states, see West Coast Capital Investment: <a href="{WCCI}/florida/" rel="noopener">hard money loans in Florida</a> &middot; <a href="{WCCI}/texas/" rel="noopener">hard money loans in Texas</a> &middot; <a href="{WCCI}/hard-money-loans/" rel="noopener">hard money loans in other states</a></p>
+  <p>We also lend in many other states. For deals outside California, see West Coast Capital Investment: <a href="{WCCI}/hard-money-loans/" rel="noopener">hard money loans in other states</a> &middot; <a href="{WCCI}/where-we-lend/#check" rel="noopener">check availability in your state</a></p>
   <p><a class="more" href="hard-money-loans-los-angeles.html">Hard Money Loans in Los Angeles</a></p>"""),
         how_it_works("The rehab or construction budget is released through draws you request online as work is completed."),
         anatoliy_note("<p>Send me the address, the price, your budget and what it will sell for. I&rsquo;ll tell you which loan fits and how much cash you need to bring, before you pay for an appraisal.</p>",
@@ -928,7 +928,7 @@ def page_hard_money() -> dict:
         title="Hard Money Loans in California | West Coast Capital Mortgage",
         description="Hard money and private money loans for California real estate investors: fix and flip, bridge and construction loans, up to 90% of purchase and 100% of rehab.",
         h1="Hard Money Loans in California", crumb="Hard Money Loans",
-        lead="Short-term private money for California real estate investors: buy, fix, build or bridge a property, with the loan closed in your LLC. Also available in Florida and Texas.",
+        lead="Short-term private money for California real estate investors: buy, fix, build or bridge a property, with the loan closed in your LLC. Also available in many other states.",
         sections=sections, faqs=faqs,
         product=dict(name="Hard Money Loan", loanType="Hard money (private money) loan", min=50000, max=3000000, term=12, termUnit="MON",
                      collateral="Non-owner-occupied 1–4 unit residential investment property",
@@ -947,7 +947,7 @@ def page_hard_money_la() -> dict:
         ("Loan amount", "$50K &ndash; $3M"),
         ("Term", "12 months, interest only <small>no prepayment penalty</small>"),
         ("Credit score", "From 660 <small>680 for first-time investors</small>"),
-        ("Where", "Los Angeles County and the San Fernando Valley <small>statewide in California, plus Florida and Texas</small>"),
+        ("Where", "Los Angeles County and the San Fernando Valley <small>statewide in California and in many other states</small>"),
         ("Office", "150 E Olive Ave, Unit 112, Burbank"),
     ]
     deals = table(
@@ -1026,7 +1026,7 @@ def page_hard_money_la() -> dict:
 
 def llms_full(pages: list[dict]) -> str:
     out = ["# West Coast Capital Mortgage: investment property loans (full text)", "",
-           f"> Investment property loans for real estate investors and developers in California, Florida and Texas from West Coast Capital Mortgage (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065). Figures are program maximums; not a commitment to lend.",
+           f"> Investment property loans for real estate investors and developers in California and many other states from West Coast Capital Mortgage (150 E Olive Ave, Unit 112, Burbank, CA 91502; NMLS #2817729; CA DRE Corporation License #02440065). Figures are program maximums; not a commitment to lend.",
            "", "Site summary and other sections: https://westcoastcapitalmortgage.com/llms.txt", ""]
     for p in pages:
         out += [f"## {plain(p['h1'])}", f"URL: {SITE}/{p['slug']}", "", plain(p["lead"]), ""]
@@ -1062,7 +1062,7 @@ def chrome_for(top: str) -> str:
                  lambda m: m.group(1).replace(' class="active"', ""), top, flags=re.DOTALL)
     top, _ = links.add_nav_link(top, active=True)
     # Group sites in the top bar: Mortgage | Realty | Investment (westcoastcapitalinvestment.com
-    # covers investor loans in 38 states + DC; these pages cover CA, FL and TX).
+    # covers investor loans nationwide; these pages lead with California).
     top = top.replace('<a href="https://westccrealty.com">Realty</a>',
                       '<a href="https://westccrealty.com">Realty</a>'
                       '<a href="https://westcoastcapitalinvestment.com" rel="noopener" data-cta="wcci-site">Investment</a>', 1)
@@ -1121,7 +1121,10 @@ def json_ld(page: dict) -> str:
     if page["slug"] != "investor-loans":
         crumbs.append(("Investment Property Loans", f"{SITE}/investor-loans"))
     crumbs.append((page["crumb"], url))
-    states = page.get("area_served") or [{"@type": "State", "name": s} for s in page.get("states", STATES)]
+    # A loan names an area only when the page has one of its own (a city page, a program with a state list).
+    # The programs are offered in many states, so there is no default list.
+    states = page.get("area_served") or [{"@type": "State", "name": s} for s in page.get("states", [])]
+    area = {"areaServed": states} if states else {}
     graph: list[dict] = [
         org_node(),
         {
@@ -1158,14 +1161,14 @@ def json_ld(page: dict) -> str:
             "category": "Business-purpose real estate investor loan",
             "amount": {"@type": "MonetaryAmount", "currency": "USD", "minValue": product["min"], "maxValue": product["max"]},
             "loanTerm": {"@type": "QuantitativeValue", "value": product["term"], "unitCode": product["termUnit"]},
-            "requiredCollateral": product["collateral"], "areaServed": states,
+            "requiredCollateral": product["collateral"], **area,
             "provider": {"@id": ORG_ID},
         })
     else:
         graph.append({
             "@type": "Service", "@id": f"{url}#service", "name": "Real estate investor loans",
             "serviceType": "Business-purpose real estate investor financing", "url": url,
-            "provider": {"@id": ORG_ID}, "areaServed": states,
+            "provider": {"@id": ORG_ID}, **area,
             "hasOfferCatalog": {
                 "@type": "OfferCatalog", "name": "Investor loan programs",
                 "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "LoanOrCredit", "name": name, "url": f"{SITE}/{slug}"}}
