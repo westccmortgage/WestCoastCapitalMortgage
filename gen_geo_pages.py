@@ -585,7 +585,7 @@ def render_metro_dscr(slug, name, counties):
 <section style="padding-top:0"><div class="wrap">
   <h3>Related links</h3>
   <p>Learn more about our <a href="/dscr-loans">DSCR Loans</a> program, see
-  <a href="/investment-property-loans.html">investment property loans</a>, or browse
+  <a href="/investor-loans.html">investment property loans</a>, or browse
   <a href="/loans.html">all loan programs</a>.</p>
 </div></section>"""
     body = (body.replace("@@NCITIES@@", str(len(cities)))
