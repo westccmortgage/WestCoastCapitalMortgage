@@ -310,7 +310,7 @@ def page_hub() -> dict:
             ['<a href="fix-and-flip-loans.html">Fix &amp; flip</a>', "Buy, renovate, then sell or rent", "90% of purchase + 100% of rehab", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required"],
             ['<a href="ground-up-construction-loans.html">Ground-up construction</a>', "New homes", "75% of land + 100% of construction", "$50K&ndash;$3M", "12 months (18&ndash;24 available)", "680", "Completed ground-up projects"],
             ['<a href="bridge-loans.html">Bridge</a>', "Finished property being sold or leased", "70% of value", "$50K&ndash;$3M", "12 months, interest only", "660 (680 for newer investors)", "Not required for renovated homes"],
-            ['<a href="rental-portfolio-loans.html">Rental portfolio</a>', "2&ndash;10 leased rentals", "80% LTV purchase or rate-and-term, 75% cash-out", "Up to $2M", "30 years, fixed or ARM", "660 (700 for 80% LTV)", "Not required"],
+            ['<a href="rental-portfolio-loans.html">Rental portfolio</a>', "2&ndash;10 leased rentals", "80% LTV purchase or rate-and-term, 75% cash-out", "Up to $2M", "30 years, fixed, ARM or interest-only", "660 (700 for 80% LTV)", "Not required"],
             ['<a href="multifamily-bridge-loans.html">Multifamily bridge</a>', "5+ unit value-add in California", "75% of purchase + 100% of renovation", "$2M&ndash;$5M", "18&ndash;24 months + extensions", "725", "Multifamily in the same submarket"],
         ],
         caption="Investor loan programs compared",

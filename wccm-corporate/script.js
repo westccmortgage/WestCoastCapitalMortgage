@@ -285,7 +285,7 @@
     var nameVal=fullNameEl?fullNameEl.value.trim():(firstVal+' '+lastVal).replace(/\s+/g,' ').trim();
     var excluded=[emailEl,phoneEl,fullNameEl,firstEl,lastEl].filter(function(el){return !!el;});
     var programEl=form.querySelector('[name="program_interest"]');
-    var skipNames={company:1,'form-name':1,submission_id:1,utm_source:1,utm_medium:1,utm_campaign:1,utm_term:1,
+    var skipNames={company:1,wccm_hp:1,'form-name':1,submission_id:1,utm_source:1,utm_medium:1,utm_campaign:1,utm_term:1,
       utm_content:1,gclid:1,gbraid:1,wbraid:1,landing_page:1,conversion_page:1,source_path:1,referrer:1,program_interest:1};
     var detailParts=[];
     var visible=form.querySelectorAll('input:not([type="hidden"]):not(.hp),select,textarea');
@@ -303,7 +303,7 @@
     try{ref=sessionStorage.getItem('wccm_referrer')||document.referrer||'direct';}catch(e){ref=document.referrer||'direct';}
     return {
       'form-name':'partial-lead',
-      company:'',
+      wccm_hp:'',
       source_form:form.getAttribute('name')||'',
       page_path:window.location.pathname,
       state_context:stateContext(),
@@ -462,9 +462,9 @@
           <h2>See whether a bank-statement path fits your scenario</h2>\
           <p class="lead">Share the basics. A licensed mortgage professional will review the scenario before discussing any program, pricing, or qualification.</p>\
         </div>\
-        <form id="bank-statement-lead-form" class="form" data-ack data-validate name="bank-statement-lead" netlify netlify-honeypot="company" novalidate>\
+        <form id="bank-statement-lead-form" class="form" data-ack data-validate name="bank-statement-lead" netlify netlify-honeypot="wccm_hp" novalidate>\
           <input type="hidden" name="form-name" value="bank-statement-lead">\
-          <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
+          <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="wccm_hp">\
           <input type="hidden" name="program_interest" value="Bank Statement / Self-Employed">\
           <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>\
           <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your bank-statement scenario and follow up.</div>\
@@ -828,11 +828,11 @@
     form.setAttribute('data-ack','');
     form.setAttribute('data-validate','');
     form.setAttribute('netlify','');
-    form.setAttribute('netlify-honeypot','company');
+    form.setAttribute('netlify-honeypot','wccm_hp');
     form.setAttribute('novalidate','');
     form.innerHTML='\
       <input type="hidden" name="form-name">\
-      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
+      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="wccm_hp">\
       <input type="hidden" name="program_interest">\
       <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>';
     form.querySelector('[name="form-name"]').value=name;
@@ -1042,11 +1042,11 @@
     form.setAttribute('data-validate','');
     form.setAttribute('name',config.formName);
     form.setAttribute('netlify','');
-    form.setAttribute('netlify-honeypot','company');
+    form.setAttribute('netlify-honeypot','wccm_hp');
     form.setAttribute('novalidate','');
     form.innerHTML='\
       <input type="hidden" name="form-name">\
-      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="company">\
+      <input type="text" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" name="wccm_hp">\
       <input type="hidden" name="program_interest">\
       <div class="form-error-summary" role="alert" aria-live="assertive" hidden></div>\
       <div class="form-ok" role="status" aria-live="polite" hidden>Thank you. A licensed mortgage professional will review your scenario and follow up.</div>\
@@ -1331,7 +1331,7 @@
   }
   function showFieldError(field,message){
     var error=fieldErrorElement(field);
-    error.textContent=message;
+    error.textContent=(message&&window.I18N&&window.I18N.t)?window.I18N.t(message):message;
     error.hidden=!message;
     if(message)field.setAttribute('aria-invalid','true');
     else field.removeAttribute('aria-invalid');
@@ -1505,11 +1505,13 @@
       var list=(lim>0)?d.products.slice(0,lim):d.products;
       var rows=list.map(function(p){
         var rate=(typeof p.rate==='number')?(p.rate.toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+'%'):p.rate;
-        return '<div class="rate-row"><span class="rate-name">'+p.name+'</span><span class="rate-val">'+rate+'</span></div>';
+        var tr=(window.I18N&&window.I18N.t)?window.I18N.t:function(s){return s;};
+        return '<div class="rate-row"><span class="rate-name">'+tr(p.name)+'</span><span class="rate-val">'+rate+'</span></div>';
       }).join('');
       var html='<div class="rate-table">'+rows+'</div>';
-      if(d.effective) html+='<p class="rate-effective">Effective '+d.effective+'</p>';
-      if(more) html+='<p style="margin-top:10px"><a href="'+more+'" style="color:var(--blue);font-weight:600">See all rates →</a></p>';
+      var tr2=(window.I18N&&window.I18N.t)?window.I18N.t:function(s){return s;};
+      if(d.effective) html+='<p class="rate-effective">'+tr2('Effective')+' '+d.effective+'</p>';
+      if(more) html+='<p style="margin-top:10px"><a href="'+more+'" style="color:var(--blue);font-weight:600">'+tr2('See all rates →')+'</a></p>';
       rb.innerHTML=html;
     }).catch(function(){
       rb.innerHTML='<p class="muted">Current sample rates are updated regularly. <a href="contact.html" style="color:var(--blue);font-weight:600">Request today’s rate quote →</a></p>';

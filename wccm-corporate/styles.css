@@ -936,3 +936,24 @@ body:has(.mortgage-compact-hero):not(.florida-mortgage-page) .site-footer div.wc
 }
 
 .site-footer .footer-disclosure{list-style:none;padding-left:0}
+
+/* Licensing line added where a footer lacked part of the required disclosures (2026-11-25). */
+.wccm-license-line{max-width:var(--max,1180px);margin:14px auto 0;padding:0 24px 8px;font-size:.78rem;line-height:1.6;color:#aab2bd;text-align:center}
+.wccm-license-line a{color:inherit;text-decoration:underline}
+
+/* The hero quick-lead form is inserted by script.js after load, which pushed the
+   whole page down (CLS up to 0.28 on slow phones). Hold the final hero height
+   (measured per page) until the form is in place (2026-11-25). */
+/* Desktop value from 1024px, phone value up to 760px; tablets get no reserve (heights differ too much). */
+@media(min-width:1024px){.page-hero[data-ql]:not(.has-quick-lead){min-height:var(--ql-d)}}
+@media(max-width:760px){.page-hero[data-ql]:not(.has-quick-lead){min-height:var(--ql-m)}}
+/* Calculator and other .field inputs were 15.2px: iOS zooms into any field under 16px. */
+@media(max-width:760px){.field input,.field select,.field textarea{font-size:16px}}
+/* 320px phones: a long nowrap button and a fixed-width map widened /refinance and /reviews. */
+@media(max-width:360px){.btn{white-space:normal}.split>*,.grid>*,.reviews-map,.reviews-profile-copy{min-width:0}iframe{max-width:100%}}
+/* Links inside body text looked like plain text on phones (no hover). Zero specificity:
+   any link that already has its own style keeps it. */
+:where(section:not(.page-hero):not(.mortgage-compact-hero):not(.cta-band)) :where(p,li) a:where(:not([class])){color:var(--blue);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+
+/* Light footers (e.g. Washington, New York pages): keep the licensing line readable. */
+footer.footer .wccm-license-line{color:var(--gray)}

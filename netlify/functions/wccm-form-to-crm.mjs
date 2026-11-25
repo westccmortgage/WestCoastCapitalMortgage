@@ -4,7 +4,7 @@ const CRM_ENDPOINT = 'https://grcrm.com/.netlify/functions/lead-inbound'
 // program, the visitor's answers and the ad source are folded into the message.
 // Everything else stays in the CRM intake log only.
 const NOTE_SKIP = new Set([
-  'form-name', 'form_name', 'company', 'full_name', 'name', 'first_name', 'last_name',
+  'form-name', 'form_name', 'company', 'wccm_hp', 'full_name', 'name', 'first_name', 'last_name',
   'email', 'phone', 'message', 'program_interest', 'submission_id', 'lead_submission_id',
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
   'gclid', 'gbraid', 'wbraid', 'fbclid', 'landing_page', 'conversion_page', 'source_path',

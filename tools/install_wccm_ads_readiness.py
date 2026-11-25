@@ -137,9 +137,9 @@ BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 def build_schema_twin(form_name: str) -> str:
     fields = FORM_SCHEMAS[form_name]
     lines = [
-        f'<form name="{form_name}" netlify netlify-honeypot="company" hidden>',
+        f'<form name="{form_name}" netlify netlify-honeypot="wccm_hp" hidden>',
         f'  <input type="hidden" name="form-name" value="{form_name}">',
-        '  <input type="text" name="company">',
+        '  <input type="text" name="wccm_hp">',
         '  <input type="hidden" name="program_interest">',
     ]
     for field in fields:
@@ -157,9 +157,9 @@ def build_schema_twin(form_name: str) -> str:
 
 def build_partial_lead_twin() -> str:
     lines = [
-        '<form name="partial-lead" netlify netlify-honeypot="company" hidden>',
+        '<form name="partial-lead" netlify netlify-honeypot="wccm_hp" hidden>',
         '  <input type="hidden" name="form-name" value="partial-lead">',
-        '  <input type="text" name="company">',
+        '  <input type="text" name="wccm_hp">',
     ]
     for field in PARTIAL_LEAD_CONTENT_FIELDS:
         if field == "details":

@@ -53,6 +53,7 @@ window.WCCM_I18N_EXTRA = {
   "3 or more": ["3 o más", "3 и более"],
   "30 years": ["30 años", "30 лет"],
   "30 years, fixed or ARM": ["30 años, tasa fija o ARM", "30 лет, фиксированная ставка или ARM"],
+  "30 years, fixed, ARM or interest-only": ["30 años, tasa fija, ARM o solo intereses", "30 лет, фиксированная ставка, ARM или interest-only"],
   "30-year terms": ["Plazos de 30 años", "Сроки 30 лет"],
   "5+ unit value-add in California": ["Proyectos value-add de 5+ unidades en California", "Value-add объекты на 5+ юнитов в Калифорнии"],
   "660 (680 for newer investors)": ["660 (680 para inversionistas con poca experiencia)", "660 (680 для инвесторов с небольшим опытом)"],
