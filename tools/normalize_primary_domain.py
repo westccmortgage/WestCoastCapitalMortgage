@@ -75,7 +75,8 @@ CONTACT_NEW_SCHEMA = '''{
   },
   "areaServed": [
     { "@type": "State", "name": "California" },
-    { "@type": "State", "name": "Florida" }
+    { "@type": "State", "name": "Florida" },
+    { "@type": "State", "name": "Texas" }
   ],
   "hasOfferCatalog": {"@type":"OfferCatalog","name":"Mortgage services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Home Purchase Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Mortgage Refinance","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Jumbo Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bank Statement Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Non-QM Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DSCR Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Investment Property Loans","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Mortgage Second Opinion","provider":{"@id":"https://westcoastcapitalmortgage.com/#organization"}}}]},
   "sameAs": [

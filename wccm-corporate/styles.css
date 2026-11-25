@@ -771,7 +771,7 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .inv-cycle a{color:var(--blue);font-weight:600}
 .inv-checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .inv-checklist li{position:relative;padding-left:30px;line-height:1.55}
-.inv-checklist li::before{content:"";position:absolute;left:0;top:.2em;width:16px;height:16px;border:2px solid var(--navy);border-radius:3px}
+.inv-checklist li::before{content:"";position:absolute;left:3px;top:.42em;width:14px;height:8px;border-left:2.5px solid #2f8f5b;border-bottom:2.5px solid #2f8f5b;transform:rotate(-45deg)}
 .inv-checklist-box{background:#fbf8f3;border:1px solid #e8e1d6;border-radius:12px;padding:22px 24px}
 .inv-also-list{list-style:none;margin:0;padding:0;columns:2;column-gap:40px}
 .inv-also-list li{break-inside:avoid;padding:8px 0}
@@ -881,3 +881,58 @@ h3:has(+ .city-links){font-size:.8rem;font-weight:700;letter-spacing:.14em;text-
 .topbar-right a.topbar-login:hover{text-decoration:underline}
 .header-cta .header-login{display:none}
 @media(max-width:960px){.topbar-right a.topbar-login{display:none}.header-cta .header-login{display:block;text-align:center;padding:13px;border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:.84rem;color:var(--black);text-decoration:none}}
+
+/* ---------- Mobile audit fixes 2026-11-24 ---------- */
+/* Menu: the bottom action bar (z-index 60) sat on top of the open menu and hid
+   its last button; the page scrolled under the menu; after scrolling a gap
+   opened between the header and the menu (fixed top:124px). */
+@media(max-width:960px){
+  body.nav-open .mobile-action-bar{display:none}
+  html.nav-lock{overflow:hidden}
+  .nav-collapse{top:var(--nav-top,124px);max-height:calc(100vh - var(--nav-top,124px));max-height:calc(100dvh - var(--nav-top,124px));overscroll-behavior:contain;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .nav-backdrop{position:fixed;inset:0;z-index:45;background:rgba(11,28,51,.38);display:none}
+  body.nav-open .nav-backdrop{display:block}
+  [id]{scroll-margin-top:96px}
+}
+/* Bottom bar: never cover a form's own submit button; keep the phone number on one line. */
+.mobile-action-bar.mab-near-submit{transform:translateY(120%)}
+.mobile-action-bar .mab-call{white-space:nowrap}
+@media(max-width:380px){.mobile-action-bar{gap:8px;padding-left:10px;padding-right:10px}.mobile-action-bar a{font-size:.86rem;padding:10px 8px}}
+/* Utility strip on phones: links were cut mid-word ("C…", "In…"). Hide the link to
+   the site you are already on, make the language buttons tappable. */
+@media(max-width:560px){
+  .topbar-left a.active-service,.topbar-left a[href*="reviews"]{display:none}
+  .topbar-left a{margin-right:14px}
+  .lang-switch button{min-height:32px;min-width:34px}
+}
+/* Compact-hero pages hid the whole footer (phones and desktop), including NMLS /
+   DRE / Equal Housing. Keep the licensing column and the licensing block visible. */
+body:has(.mortgage-compact-hero):not(.florida-mortgage-page) .site-footer .footer-grid:has(.footer-disclosure){display:grid;grid-template-columns:1fr}
+body:has(.mortgage-compact-hero):not(.florida-mortgage-page) .site-footer .footer-grid:has(.footer-disclosure)>:not(:has(.footer-disclosure)){display:none}
+body:has(.mortgage-compact-hero):not(.florida-mortgage-page) .site-footer div.wccm-legal{display:block}
+/* Tables on phones: show that they scroll, keep the row label visible, and
+   let narrow tables fit instead of cutting the numbers. */
+.tscroll{position:relative}
+.tscroll:has(>.inv-table-wrap){margin-top:24px}
+.tscroll-hint+.tscroll:has(>.inv-table-wrap){margin-top:0}
+.tscroll-hint[hidden]+.tscroll:has(>.inv-table-wrap){margin-top:24px}
+.tscroll>.inv-table-wrap,.tscroll>.tscroll-box{margin-top:0}
+.tscroll::after{content:"";position:absolute;top:1px;right:1px;bottom:1px;width:40px;pointer-events:none;border-radius:0 12px 12px 0;background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.96));transition:opacity .2s}
+.tscroll.at-end::after{opacity:0}
+.tscroll-hint{display:flex;align-items:center;gap:6px;margin:24px 0 8px;font-size:.8rem;font-weight:700;color:var(--blue);letter-spacing:.02em}
+.tscroll-hint[hidden]{display:none}
+.tscroll-hint::after{content:"→";font-size:1rem;line-height:1}
+@media(max-width:760px){
+  .inv-table.wide tbody th:first-child,.inv-table.wide tbody td:first-child{position:sticky;left:0;z-index:1;background:#fff;box-shadow:1px 0 0 var(--border);min-width:112px;max-width:132px}
+  .inv-table.wide tbody tr:nth-child(even)>:first-child{background:#fafbfc}
+  .inv-table.wide thead th:first-child{position:sticky;left:0;z-index:2;background:var(--navy)}
+}
+@media(max-width:600px){
+  .inv-table th,.inv-table td{padding:10px 12px}
+  .inv-table:not(.wide){font-size:.88rem}
+  .inv-table:not(.wide) thead th{white-space:normal;letter-spacing:.03em}
+  .inv-table:not(.wide) td,.inv-table:not(.wide) th{overflow-wrap:anywhere}
+  .rate-table[style*="min-width"]{min-width:0 !important}
+}
+
+.site-footer .footer-disclosure{list-style:none;padding-left:0}

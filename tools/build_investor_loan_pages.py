@@ -1063,8 +1063,8 @@ def chrome_for(top: str) -> str:
     top, _ = links.add_nav_link(top, active=True)
     # Group sites in the top bar: Mortgage | Realty | Investment (westcoastcapitalinvestment.com
     # covers investor loans nationwide; these pages lead with California).
-    top = top.replace('<a href="https://westccrealty.com">Realty</a>',
-                      '<a href="https://westccrealty.com">Realty</a>'
+    top = top.replace('<a href="https://westcoastcapitalrealty.com">Realty</a>',
+                      '<a href="https://westcoastcapitalrealty.com">Realty</a>'
                       '<a href="https://westcoastcapitalinvestment.com" rel="noopener" data-cta="wcci-site">Investment</a>', 1)
     # The residential /apply application does not fit LLC business-purpose loans:
     # investor pages send borrowers to our white-label loan portal (Roc), and the

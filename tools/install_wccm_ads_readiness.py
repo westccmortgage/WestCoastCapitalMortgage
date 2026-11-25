@@ -130,7 +130,7 @@ QUICK_FORM_PAGES = (
 )
 
 # Keep in step with ASSET_VERSION / BANK_STATEMENT_ASSET_VERSION in tools/install_wccm_gtm.py.
-ASSET_VERSION = "20261112-many-states"
+ASSET_VERSION = "20261124-mobile-fixes"
 BANK_STATEMENT_ASSET_VERSION = "20261002-bank-disclosure"
 
 

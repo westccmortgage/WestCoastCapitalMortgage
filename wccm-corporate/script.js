@@ -404,12 +404,33 @@
   /* Mobile menu */
   var burger=document.getElementById('hamburger');
   if(burger){
-    burger.addEventListener('click',function(){
-      var open=document.body.classList.toggle('nav-open');
+    /* Phones: pin the menu to the real bottom of the header (the utility strip
+       scrolls away), lock the page behind it, close on backdrop tap / Escape. */
+    var backdrop=document.createElement('div');
+    backdrop.className='nav-backdrop';
+    backdrop.setAttribute('aria-hidden','true');
+    document.body.appendChild(backdrop);
+    var setMenu=function(open){
+      if(open){
+        var header=burger.closest('header')||document.querySelector('.site-header');
+        if(header){
+          var bottom=Math.max(0,Math.round(header.getBoundingClientRect().bottom));
+          document.documentElement.style.setProperty('--nav-top',bottom+'px');
+        }
+      }
+      document.body.classList.toggle('nav-open',open);
+      document.documentElement.classList.toggle('nav-lock',open);
       burger.setAttribute('aria-expanded',open?'true':'false');
+    };
+    burger.addEventListener('click',function(){
+      setMenu(!document.body.classList.contains('nav-open'));
+    });
+    backdrop.addEventListener('click',function(){setMenu(false);});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&document.body.classList.contains('nav-open'))setMenu(false);
     });
     document.querySelectorAll('.nav-collapse a').forEach(function(a){
-      a.addEventListener('click',function(){document.body.classList.remove('nav-open');burger.setAttribute('aria-expanded','false');});
+      a.addEventListener('click',function(){setMenu(false);});
     });
   }
 
@@ -1156,6 +1177,61 @@
     document.body.classList.add('has-mobile-action-bar');
   }
   injectMobileActionBar();
+
+  /* The bar must never sit on top of a form's own submit button: hide it while
+     any submit button on the page is on screen. */
+  (function(){
+    var bar=document.querySelector('.mobile-action-bar');
+    if(!bar||typeof window.IntersectionObserver!=='function')return;
+    var buttons=document.querySelectorAll('form button[type="submit"], form input[type="submit"], form button:not([type])');
+    if(!buttons.length)return;
+    var visible=new Set();
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);
+      });
+      bar.classList.toggle('mab-near-submit',visible.size>0);
+    },{rootMargin:'0px 0px 40px 0px'});
+    Array.prototype.forEach.call(buttons,function(b){
+      if(b.closest('form[hidden]'))return;
+      io.observe(b);
+    });
+  })();
+
+  /* Wide tables scroll sideways on phones, but nothing said so (Clarity:
+     visitors saw clipped columns). Add a hint and an edge fade while there is
+     more to the right. */
+  (function(){
+    var boxes=document.querySelectorAll('.inv-table-wrap, div[style*="overflow-x:auto"]');
+    Array.prototype.forEach.call(boxes,function(box){
+      if(!box.querySelector('table'))return;
+      if(box.parentNode&&box.parentNode.classList&&box.parentNode.classList.contains('tscroll'))return;
+      var wrap=document.createElement('div');
+      wrap.className='tscroll';
+      if(!box.classList.contains('inv-table-wrap'))box.classList.add('tscroll-box');
+      var hint=document.createElement('p');
+      hint.className='tscroll-hint';
+      hint.textContent='Swipe to see all columns';
+      box.parentNode.insertBefore(wrap,box);
+      wrap.parentNode.insertBefore(hint,wrap);
+      wrap.appendChild(box);
+      var update=function(){
+        var more=box.scrollWidth-box.clientWidth>4;
+        hint.hidden=!more;
+        wrap.classList.toggle('at-end',!more||box.scrollLeft+box.clientWidth>=box.scrollWidth-4);
+      };
+      box.addEventListener('scroll',update,{passive:true});
+      window.addEventListener('resize',update);
+      window.addEventListener('load',update);
+      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
+      if(typeof window.ResizeObserver==='function'){
+        var ro=new ResizeObserver(update);
+        ro.observe(box);
+        ro.observe(box.querySelector('table'));
+      }
+      update();
+    });
+  })();
 
   /* While the hero quick form is on screen, its own button and call link do the
      bar's job — and on short phones the bar would cover that submit button. */

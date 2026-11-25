@@ -556,7 +556,7 @@ def header(active, compact=False):
   <div class="wrap topbar-inner">
     <nav class="topbar-left" aria-label="Utility">
       <a class="active-service" href="/">Mortgage</a>
-      <a href="https://westccrealty.com">Realty</a>
+      <a href="https://westcoastcapitalrealty.com">Realty</a>
     </nav>
     <div class="topbar-right">
       <div class="lang-switch" role="group" aria-label="Language">
