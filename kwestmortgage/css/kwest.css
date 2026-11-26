@@ -903,7 +903,7 @@ a.card.card--link:hover .card__more{ color:var(--navy); }
   .nav__links { gap: 16px; }
   .nav__links a { font-size: .9rem; }
   .nav__links > li.nav__start { display: none; }
-  .nav__cta a.btn--ghost[href$=".html"] { display: none; }
+  .nav__cta a.btn--ghost:not([hreflang]) { display: none; }  /* "Compare"; language links (hreflang) stay */
   .nav__cta .lang-switch { margin-right: 0; }
   .nav__cta .lang-switch button { padding: 2px 7px; }
 }
