@@ -12,7 +12,7 @@
   "use strict";
 
   var COMPLIANCE =
-    "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+    "Reference figures only — confirm current limits for your county with a loan officer.";
 
   var UNIT_KEY = [null, "one", "two", "three", "four"];
 

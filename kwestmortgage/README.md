@@ -1,11 +1,11 @@
 # K West Mortgage — KWestMortgage.com
 
-A premium coastal mortgage lead-generation and education site for **Key West / Monroe County, Florida**, powered by **Sun Coast Capital Mortgage / West Coast Capital Mortgage Inc.**
+A premium coastal mortgage lead-generation and education site for **Key West / Monroe County, Florida**, operated by **West Coast Capital Mortgage**
 
 > Marketing angle: **“Buying in Key West? Don’t assume it has to be jumbo.”**
 > Core message: in a high-cost market, check **high-balance conforming** options before assuming a jumbo loan.
 
-This is a **standalone static site** kept in its own folder so it does not overwrite or interfere with CaliforniaMTG.com or the surrounding repository.
+This is a **standalone static site** kept in its own folder so it does not overwrite or interfere with the other sites in the repository.
 
 ## Structure
 
@@ -24,7 +24,7 @@ kwestmortgage/
 ├── disclosures.html         # Licensing & compliance disclosures
 ├── css/kwest.css            # Design system (coastal palette, components, responsive)
 ├── js/kwest.js              # Nav, scenario rotation, reveal, accordion, forms, cookie consent, visitor ID
-├── assets/                  # favicon.svg, og-image.svg (social placeholder)
+├── assets/                  # favicon.svg, og-image.png (1200x630), hero posters
 ├── robots.txt
 ├── sitemap.xml
 └── netlify.toml             # Standalone deploy config (base dir = kwestmortgage)
@@ -61,9 +61,9 @@ Static — no build step. On Netlify, set **base directory** to `kwestmortgage`.
 
 ## Before launch (placeholders to replace)
 
-- **Phone** — currently `(888) 656-1256` (shared CaliforniaMTG business line); replace if K West gets its own number.
+- **Phone** — (561) 956-8866 (owner to confirm) and the office line (310) 654-1577 (footer of every page).
 - **Email** — `info@kwestmortgages.com` placeholder.
-- **Sun Coast Capital Mortgage / Florida licensing** details (footer + `disclosures.html`).
+- **Licensing** details: NMLS #2817729 · FL OFR License #MBR8669 · CA DRE #02440065 (footer + `disclosures.html`).
 - **Hero videos** — drop two files into `assets/`:
   - `assets/hero-desktop.mp4` — horizontal ocean/sunset clip (desktop background)
   - `assets/hero-mobile.mp4` — vertical moon/ocean clip (mobile background)

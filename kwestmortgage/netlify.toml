@@ -1,6 +1,6 @@
 # K West Mortgage — KWestMortgage.com
 # Standalone static site (this IS the repo root). No base directory needed.
-# Intentionally separate from CaliforniaMTG.com and PegasusCapitalNetwork —
+# Intentionally separate from the other group sites —
 # do not merge build settings.
 
 [build]
@@ -33,6 +33,32 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
+
+
+# NOTE: no .html -> clean 301s here (they can loop on hosts that emulate Netlify redirects);
+# canonical tags and the sitemap already point at the clean URLs.
+
+# Clean URLs for pages that had no explicit rule
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+[[redirects]]
+  from = "/terms"
+  to = "/terms.html"
+  status = 200
+[[redirects]]
+  from = "/disclosures"
+  to = "/disclosures.html"
+  status = 200
+[[redirects]]
+  from = "/early-conforming-loan-limit-845000"
+  to = "/early-conforming-loan-limit-845000.html"
+  status = 200
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200
 
 # Clean URLs (optional): /concierge -> /concierge.html
 [[redirects]]

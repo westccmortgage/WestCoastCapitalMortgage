@@ -28,21 +28,61 @@
     onScroll();
   }
 
-  /* ---------------- Mobile nav ---------------- */
+  /* ---------------- Mobile nav ----------------
+     Scroll lock lives on <html> only (html.menu-open); locking <body> as well
+     breaks position:sticky. Closes on Esc, link click, outside tap, and when the
+     viewport grows past the 1240px breakpoint. */
   var toggle = $(".nav__toggle"), menu = $(".mobile-menu");
   if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      var open = menu.classList.toggle("open");
+    var root = document.documentElement;
+    var LBL = { en: ["Open menu", "Close menu"], es: ["Abrir men\u00fa", "Cerrar men\u00fa"], pt: ["Abrir menu", "Fechar menu"] };
+    var lblFor = function () {
+      var l = (root.getAttribute("lang") || "en").toLowerCase().slice(0, 2);
+      return LBL[l] || LBL.en;
+    };
+    var setMenu = function (open, returnFocus) {
+      menu.classList.toggle("open", open);
       toggle.classList.toggle("open", open);
-      document.body.style.overflow = open ? "hidden" : "";
+      root.classList.toggle("menu-open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+      toggle.setAttribute("aria-label", lblFor()[open ? 1 : 0]);
+      if (!open && returnFocus) toggle.focus();
+    };
+    toggle.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
     $all("a", menu).forEach(function (a) {
-      a.addEventListener("click", function () {
-        menu.classList.remove("open"); toggle.classList.remove("open"); document.body.style.overflow = "";
-      });
+      a.addEventListener("click", function () { setMenu(false); });
     });
+    document.addEventListener("keydown", function (e) {
+      if ((e.key === "Escape" || e.key === "Esc") && menu.classList.contains("open")) setMenu(false, true);
+    });
+    document.addEventListener("click", function (e) {
+      if (!menu.classList.contains("open")) return;
+      if (menu.contains(e.target) || toggle.contains(e.target)) return;
+      setMenu(false);
+    });
+    var closeIfWide = function () { if (window.innerWidth > 1240) setMenu(false); };
+    window.addEventListener("resize", closeIfWide);
+    window.addEventListener("orientationchange", closeIfWide);
   }
+
+  /* ---------------- Wide tables: "swipe" hint only while they really overflow ---------------- */
+  $all(".limits-scroll, .compare-wrap, .table-wrap, [data-swipe]").forEach(function (wrap) {
+    var hint = document.createElement("p");
+    hint.className = "swipe-hint";
+    hint.hidden = true;
+    hint.setAttribute("aria-hidden", "true");
+    hint.textContent = "Swipe to see more \u2192";
+    wrap.parentNode.insertBefore(hint, wrap);
+    var update = function () {
+      var overflows = wrap.scrollWidth > wrap.clientWidth + 2;
+      var atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2;
+      hint.hidden = !overflows || atEnd;
+    };
+    wrap.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("load", update);
+    update();
+  });
 
   /* ---------------- Scroll reveal ---------------- */
   if ("IntersectionObserver" in window) {
@@ -114,6 +154,29 @@
     } catch (e) { return null; }
   }
 
+  /* ---------------- Microsoft Clarity (loads only after consent) ----------------
+     The tag is NOT part of the page: it is injected here once kw_consent is "granted"
+     (on Accept, and on later page loads when consent was already given). */
+  var CLARITY_ID = "x8m07mb7jq";
+  function clarityConsent(state) {
+    try {
+      if (typeof window.clarity === "function") window.clarity("consentv2", { ad_Storage: state, analytics_Storage: state });
+    } catch (e) {}
+  }
+  function loadClarity() {
+    try {
+      if (localStorage.getItem("kw_consent") !== "granted") return;
+      if (!document.querySelector('script[src*="clarity.ms/tag/"]')) {
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", CLARITY_ID);
+      }
+      clarityConsent("granted");
+    } catch (e) {}
+  }
+
   /* ---------------- Cookie consent ---------------- */
   var bar = $(".cookie-bar");
   if (bar) {
@@ -123,13 +186,15 @@
     var setConsent = function (val) {
       try { localStorage.setItem("kw_consent", val); } catch (e) {}
       bar.classList.remove("show");
-      if (val === "granted") ensureVisitorId();
+      if (val === "granted") { ensureVisitorId(); loadClarity(); }
+      else clarityConsent("denied");
     };
     var acc = $("[data-consent-accept]", bar), dec = $("[data-consent-decline]", bar);
     if (acc) acc.addEventListener("click", function () { setConsent("granted"); });
     if (dec) dec.addEventListener("click", function () { setConsent("declined"); });
   }
   ensureVisitorId();
+  loadClarity();
 
   /* ---------------- Netlify Forms (AJAX submit) ----------------
      Forms stay as real Netlify forms in the HTML (data-netlify="true" +
@@ -139,12 +204,11 @@
      statically-hosted sites), then redirect to the thank-you page. */
   $all('form[data-netlify]').forEach(function (form) {
     form.addEventListener("submit", function (ev) {
-      // Let the browser enforce required fields with its native UI first.
-      if (typeof form.reportValidity === "function" && !form.reportValidity()) {
-        ev.preventDefault();
-        return;
-      }
       ev.preventDefault();
+      // Let the browser enforce required fields and the phone pattern first.
+      if (typeof form.reportValidity === "function" && !form.reportValidity()) return;
+      if (form.dataset.kwestSending === "true") return; // one POST per submit
+      form.dataset.kwestSending = "true";
 
       var btn = $("button[type=submit]", form);
       var redirect = form.getAttribute("action") || "/thank-you.html";
@@ -158,7 +222,7 @@
         encoded.append("form-name", form.getAttribute("name") || "key-west-scenario-review");
       }
 
-      if (btn) { btn.dataset.label = btn.textContent; btn.disabled = true; btn.textContent = "Sending…"; }
+      if (btn) { btn.dataset.label = btn.textContent; btn.disabled = true; btn.textContent = "Sending\u2026"; }
 
       fetch("/", {
         method: "POST",
@@ -168,28 +232,44 @@
         if (!res.ok) throw new Error("Bad status " + res.status);
         window.location.href = redirect;
       }).catch(function () {
-        // Network/processing fallback: let the browser do a normal native POST,
-        // which Netlify also accepts and will redirect to the action page.
+        form.dataset.kwestSending = "false";
         if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Submit"; }
-        form.submit();
+        var n = form.querySelector("[data-kwest-submit-error]");
+        if (!n) { n = document.createElement("p"); n.setAttribute("data-kwest-submit-error", ""); n.setAttribute("role", "alert"); form.appendChild(n); }
+        n.textContent = "Your request could not be sent. Please try again or call ";
+        var tel = document.createElement("a"); tel.href = "tel:+13106541577"; tel.textContent = "(310) 654-1577";
+        n.appendChild(tel); n.appendChild(document.createTextNode("."));
       });
     });
   });
 
   /* ---------------- Hero video ---------------- */
-  /* Reveal a hero video only once it can actually play; otherwise the
-     animated coastal gradient remains as a graceful fallback. */
-  $all("[data-hero-video]").forEach(function (v) {
-    var reveal = function () { v.classList.add("is-ready"); };
-    if (v.readyState >= 3) reveal();
-    v.addEventListener("canplay", reveal, { once: true });
-    v.addEventListener("loadeddata", reveal, { once: true });
-    // Best-effort autoplay (some browsers need an explicit call)
-    var p = v.play && v.play();
-    if (p && typeof p.catch === "function") p.catch(function () {});
-  });
+  /* Phones (<= 760px) keep the lightweight poster image and never download the
+     video. On wider screens the desktop video loads after the page has loaded
+     (unless Data Saver is on) and fades in over its poster. */
+  var heroStarted = false;
+  function startHeroVideo() {
+    if (heroStarted || window.innerWidth <= 760) return;
+    var conn = navigator.connection;
+    if (conn && conn.saveData) return;
+    heroStarted = true;
+    $all("[data-hero-video][data-src]").forEach(function (v) {
+      var reveal = function () { v.classList.add("is-ready"); };
+      v.addEventListener("canplay", reveal, { once: true });
+      v.addEventListener("loadeddata", reveal, { once: true });
+      v.preload = "auto";
+      v.src = v.getAttribute("data-src");
+      var p = v.play && v.play();
+      if (p && typeof p.catch === "function") p.catch(function () {});
+    });
+  }
+  if ($("[data-hero-video][data-src]")) {
+    if (document.readyState === "complete") startHeroVideo();
+    else window.addEventListener("load", startHeroVideo, { once: true });
+    window.addEventListener("resize", startHeroVideo);
+  }
 
-  /* ---------------- Hero "Before Jumbo Quick Check" ---------------- */
+  /* ---------------- Hero Quick Check ---------------- */
   var qc = $("[data-quickcheck]");
   if (qc && window.KW) {
     var priceEl = $("[data-qc-price]", qc);
@@ -228,7 +308,7 @@
         var ra = window.KW.rateFor({ loan: loan, occupancy: occ });
         var pi = window.KW.monthlyPI(loan, ra.rate, 30);
         var piEl = $("[data-qc-pi]", qc); if (piEl) piEl.textContent = window.KW.fmtCurrency(pi) + "/mo";
-        var piRate = $("[data-qc-pi-rate]", qc); if (piRate) piRate.textContent = "@ " + ra.rate + "% / 30 yr (assumption)";
+        var piRate = $("[data-qc-pi-rate]", qc); if (piRate) piRate.textContent = "@ " + ra.rate + "% / 30 yr (illustrative assumption)";
         var sd = $("[data-qc-sd]", qc), sl = $("[data-qc-sl]", qc), sr = $("[data-qc-sr]", qc);
         if (sd) sd.style.width = (price > 0 ? Math.max(0, Math.min(100, down / price * 100)) : 0) + "%";
         if (sl) sl.style.width = (price > 0 ? Math.max(0, Math.min(100, loan / price * 100)) : 0) + "%";

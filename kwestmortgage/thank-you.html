@@ -3,20 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};var g="denied";try{if(localStorage.getItem("kw_consent")==="granted")g="granted"}catch(e){}window.clarity("consentv2",{ad_Storage:g,analytics_Storage:g});})();</script>
 <title>Thank You | K West Mortgage</title>
 <meta name="description" content="Thank you. Your Key West mortgage scenario has been received. A licensed mortgage professional will review your information and contact you.">
 <meta name="robots" content="noindex,follow">
-<link rel="canonical" href="https://kwestmortgages.com/thank-you.html">
+<link rel="canonical" href="https://kwestmortgages.com/thank-you">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/kwest.css?v=8">
+<link rel="stylesheet" href="css/kwest.css?v=20261126-a">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <a href="#main" class="skip-link" id="skip-link">Skip to content</a>
 <header class="site-header"><div class="wrap"><nav class="nav" aria-label="Primary">
-  <a class="brand" id="brand-home" href="index.html"><span class="brand__name">K <b>West</b> Mortgage</span></a>
+  <a class="brand" id="brand-home" href="/"><span class="brand__name">K <b>West</b> Mortgage</span></a>
   <ul class="nav__links">
     <li><a href="concierge.html">Concierge</a></li>
     <li><a href="loan-options.html" id="nav-programs">Loan Programs</a></li>
@@ -26,9 +27,14 @@
   <div class="nav__cta">
     <a class="btn btn--ghost" id="back-market" href="/monroe-county-mortgage">Monroe County</a>
     <a class="btn btn--primary" id="review-again" href="/monroe-county-mortgage#lead">Review My Scenario</a>
-    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </nav></div></header>
+<div class="mobile-menu" id="mobile-menu" aria-label="Mobile">
+  <a href="concierge.html">Concierge</a><a id="m-programs" href="loan-options.html">Loan Programs</a><a id="m-education" href="education.html">Education</a><a id="m-contact" href="contact.html">Contact</a>
+  <a class="btn btn--ghost btn--block" id="m-market" href="/monroe-county-mortgage">Monroe County</a>
+  <a class="btn btn--primary btn--block" id="m-review" href="/monroe-county-mortgage#lead">Review My Scenario</a>
+</div>
 
 <main id="main">
 <section class="page-hero">
@@ -58,10 +64,10 @@
 <footer class="site-footer"><div class="wrap">
   <div class="footer-grid">
     <div class="footer-brand"><span class="brand__name">K <b>West</b> Mortgage</span><p id="footer-positioning">Key West Mortgage Concierge. Local, educational, scenario-first mortgage guidance for Key West &amp; Monroe County buyers.</p></div>
-    <div><h4 id="footer-contact-title">Contact</h4><ul><li><a href="tel:+15619568866">(561) 956-8866</a></li><li><a href="mailto:info@kwestmortgages.com">info@kwestmortgages.com</a></li><li>Key West, Florida</li><li>Monroe County</li></ul></div>
+    <div><h4 id="footer-contact-title">Contact</h4><ul><li><a href="tel:+15619568866">(561) 956-8866</a></li><li><a href="mailto:info@kwestmortgages.com">info@kwestmortgages.com</a></li><li><a href="tel:+13106541577">Office (310) 654-1577</a></li><li>Serving Key West &amp; Monroe County</li></ul></div>
   </div>
   <div class="footer-legal">
-    <div class="footer-disclosures"><span>West Coast Capital Mortgage Inc.</span><span>NMLS #2817729</span><span>CA DRE Corp. License #02440065</span><span class="ehl">Equal Housing Opportunity</span></div>
+    <div class="footer-disclosures"><span>West Coast Capital Mortgage</span><span>NMLS #2817729 &middot; FL OFR License #MBR8669 &middot; CA DRE #02440065</span><span><a href="https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2817729" target="_blank" rel="noopener">NMLS Consumer Access</a></span><span class="ehl">Equal Housing Opportunity</span></div>
     <p id="legal-copy">This information is for educational purposes only and is not a loan approval, loan commitment, rate quote, or commitment to lend. Final loan options are subject to review by a licensed mortgage professional, borrower qualification, property eligibility, underwriting approval, and current program guidelines.</p>
     <p style="margin-top:14px">&copy; <span data-year>2026</span> K West Mortgage</p>
   </div>
@@ -91,7 +97,7 @@
     footer: "Orientación hipotecaria local y educativa para compradores de Key West y Monroe County.",
     footerContact: "Contacto",
     legal: "Esta información es educativa y no constituye aprobación, compromiso de préstamo ni cotización de tasa. Las opciones finales están sujetas a revisión por un profesional con licencia, calificación del comprador, elegibilidad de la propiedad, underwriting y guidelines vigentes.",
-    route: "/es/monroe-county-mortgage"
+    route: "/es/monroe-county-mortgage/"
   } : {
     html: "pt-BR",
     skip: "Ir para o conteúdo",
@@ -110,7 +116,7 @@
     footer: "Orientação hipotecária local e educativa para compradores de Key West e Monroe County.",
     footerContact: "Contato",
     legal: "Estas informações são educativas e não constituem aprovação, compromisso de empréstimo ou cotação de taxa. As opções finais estão sujeitas à análise de um profissional licenciado, qualificação do comprador, elegibilidade do imóvel, underwriting e guidelines vigentes.",
-    route: "/pt-br/monroe-county-mortgage"
+    route: "/pt-br/monroe-county-mortgage/"
   };
 
   document.documentElement.lang = copy.html;
@@ -122,6 +128,13 @@
   document.getElementById("back-market").href = copy.route;
   document.getElementById("review-again").textContent = copy.review;
   document.getElementById("review-again").href = copy.route + "#lead";
+  document.getElementById("m-programs").textContent = copy.programs;
+  document.getElementById("m-education").textContent = copy.education;
+  document.getElementById("m-contact").textContent = copy.contact;
+  document.getElementById("m-market").textContent = copy.market;
+  document.getElementById("m-market").href = copy.route;
+  document.getElementById("m-review").textContent = copy.review;
+  document.getElementById("m-review").href = copy.route + "#lead";
   document.getElementById("received-label").textContent = copy.label;
   document.getElementById("thank-title").textContent = copy.title;
   document.getElementById("thank-copy").textContent = copy.thanks;
@@ -135,5 +148,10 @@
   document.getElementById("legal-copy").textContent = copy.legal;
 })();
 </script>
+<script src="js/kwest.js?v=20261126-a" defer></script>
+<div class="cookie-bar" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies and a first-party visitor ID only with your consent. <a href="privacy.html">Privacy</a>.</p>
+  <div class="cookie-actions"><button class="btn btn--primary" data-consent-accept>Accept</button><button class="btn btn--ghost" data-consent-decline>Decline</button></div>
+</div>
 </body>
 </html>

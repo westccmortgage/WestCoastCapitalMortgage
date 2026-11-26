@@ -69,7 +69,7 @@
   function isLeadForm(form) {
     if (!form || !form.matches || !form.matches('form')) return false;
     var name = form.getAttribute("name") || "";
-    return /(?:key-west|kwest|monroe).*(?:scenario|review|lead|contact|mortgage)|(?:scenario|review).*(?:key-west|kwest|monroe)/i.test(name);
+    return /(?:key-west|kwest|monroe).*(?:scenario|review|lead|contact|mortgage|strategy|studio)|(?:scenario|review|strategy|studio).*(?:key-west|kwest|monroe)/i.test(name);
   }
 
   function markPending(form) {
@@ -121,7 +121,10 @@
     syncAttribution(form);
     sessionRemove(PENDING_KEY);
     var button = form.querySelector('button[type="submit"]');
-    if (button) button.disabled = true;
+    var buttonLabel = button ? button.textContent : "";
+    // coming back with the Back button (bfcache) must not leave the form stuck on "Sending…"
+    window.addEventListener("pageshow", function (e) { if (e.persisted) { form.dataset.kwestSending = "false"; if (button) { button.disabled = false; button.textContent = buttonLabel || "Submit"; } } });
+    if (button) { button.disabled = true; button.textContent = "Sending\u2026"; }
     try {
       var body = new URLSearchParams(new FormData(form));
       if (!body.has("form-name")) body.set("form-name", form.getAttribute("name"));
@@ -131,10 +134,12 @@
       window.location.assign(form.getAttribute("action") || "/thank-you.html");
     } catch (_) {
       form.dataset.kwestSending = "false";
-      if (button) button.disabled = false;
+      if (button) { button.disabled = false; button.textContent = buttonLabel || "Submit"; }
       var notice = form.querySelector("[data-kwest-submit-error]");
       if (!notice) { notice = document.createElement("p"); notice.setAttribute("data-kwest-submit-error", ""); notice.setAttribute("role", "alert"); form.appendChild(notice); }
-      notice.textContent = "Your request could not be sent. Please try again.";
+      notice.textContent = "Your request could not be sent. Please try again or call ";
+      var tel = document.createElement("a"); tel.href = "tel:+13106541577"; tel.textContent = "(310) 654-1577";
+      notice.appendChild(tel); notice.appendChild(document.createTextNode("."));
     }
   }, true);
 

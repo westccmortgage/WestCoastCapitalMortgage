@@ -1,5 +1,5 @@
 /* ============================================================
-   Before Jumbo Strategy Studio — Market config + portable logic
+   K West Strategy Studio — Market config + portable logic
    ------------------------------------------------------------
    PORTABILITY: market copy lives in the MARKETS registry; the default
    is a neutral "generic" market so the Studio never shows a specific
@@ -17,7 +17,7 @@
   /* ============================================================
      MARKET REGISTRY — add/edit markets here. The engine + UI read
      the ACTIVE market only. Resolve by URL path (/key-west) or
-     ?market=slug. Verify every limit annually before launch.
+     ?market=slug. Review every limit each year.
      baselineConformingLimit = standard 1-unit conforming reference.
      highBalanceLimit = 1-unit high-cost-area ceiling for that county
        (set equal to baseline for non-high-cost counties).
@@ -60,7 +60,7 @@
     "custom": {
       marketSlug: "custom", marketName: "Your Market", countyName: "Your County", state: "US",
       loanLimitYear: LIMIT_YEAR, baselineConformingLimit: 832750, highBalanceLimit: 832750, fhaLimit: null,
-      localDisclaimer: "Configure this market in MARKETS['custom'] before launch.",
+      localDisclaimer: "Reference figures only — confirm current limits with a loan officer.",
       marketHeroCopy: "Don’t assume it has to be jumbo — compare your review path before you write the offer.",
       lastVerifiedDate: VERIFY
     }
@@ -71,7 +71,7 @@
     domain: "kwestmortgages.com",
     logoText: "K West Mortgage",
     primaryCTA: "Review My Key West Scenario",
-    poweredByText: "Powered by Sun Coast Capital Mortgage / West Coast Capital Mortgage Inc.",
+    poweredByText: "Operated by West Coast Capital Mortgage",
     complianceFooter: "Educational scenario-organization tool. Not a loan application, approval, rate quote, underwriting decision, or commitment to lend. Subject to borrower qualification, property eligibility, underwriting approval, and current program guidelines.",
     recipient: "info@kwestmortgages.com"
   };
@@ -114,7 +114,7 @@
     return MARKET_CONFIG;
   }
 
-  var COMPLIANCE_REF = "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+  var COMPLIANCE_REF = "Reference figures only — confirm current limits for your county with a loan officer.";
   var LAST_LOCATION = null;
 
   /* Resolve loan limits for a selected property location via the national
@@ -152,7 +152,7 @@
   }
 
   /* Route-preset location for preselecting the selector (state abbr + concrete
-     county only; placeholder county names like "California"/"Your County" are
+     county only; placeholder county names like "Your County" are
      treated as "state only, pick a county"). */
   function locationPreset() {
     var st = MARKET_CONFIG.state || "";
@@ -165,7 +165,7 @@
      Falls back to these defaults when the central config isn't loaded. */
   var RATE_CONFIG = {
     lastUpdated: "2026-06-12",
-    sourceLabel: "Owner-provided educational rate assumptions. Verify current pricing before use.",
+    sourceLabel: "Illustrative rate assumptions for education. Confirm current pricing with a loan officer.",
     conforming30: 6.58,
     jumbo30: 6.84,
     fha30: 6.14,
@@ -454,7 +454,7 @@
     return { score: score, label: label };
   }
 
-  /* ---------- "Before Jumbo" what-if (math illustration only) ---------- */
+  /* ---------- High-balance what-if (math illustration only) ---------- */
   function whatIf(s) {
     var cfg = MARKET_CONFIG;
     var loan = s.loan != null ? s.loan : estimatedLoan(s);
@@ -807,10 +807,10 @@
     L.push("  Units: " + u + (u === 1 ? " unit" : " units"));
     if (loc && loc.countyConformingLimit != null) {
       L.push("  County conforming/high-balance reference (" + u + "-unit): " + fmtCurrency(loc.countyConformingLimit) +
-        (loc.highCost ? " (high-cost)" : "") + " — configured reference only, verify before launch");
+        (loc.highCost ? " (high-cost)" : "") + " — reference figure only, confirm with a loan officer");
     }
     if (loc && loc.fhaLimit != null) {
-      L.push("  FHA reference (" + u + "-unit): " + fmtCurrency(loc.fhaLimit) + " — configured reference only, verify before launch");
+      L.push("  FHA reference (" + u + "-unit): " + fmtCurrency(loc.fhaLimit) + " — reference figure only, confirm with a loan officer");
     }
     if (loc && loc.source) L.push("  Source: " + loc.source + (loc.verifiedAt ? " (verified " + loc.verifiedAt + ")" : ""));
     L.push("");

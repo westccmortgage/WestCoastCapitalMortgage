@@ -1,5 +1,5 @@
 /* ============================================================
-   California Mortgage — Guided Tool Tutorial (modular overlay)
+   K West Mortgage — Guided Tool Tutorial (modular overlay)
    ------------------------------------------------------------
    A self-contained, data-driven walkthrough of the Strategy
    Console. It does NOT touch the calculator's logic — it only
@@ -524,7 +524,7 @@
     }
     card.style.width = "";
 
-    // Standalone desktop: pin the card to the bottom-left corner (California
+    // Standalone desktop: pin the card to the bottom-left corner (K West
     // host style). The wide calculator stays fully visible behind it; only the
     // gold glow ring tracks the active field.
     var margin = 24;

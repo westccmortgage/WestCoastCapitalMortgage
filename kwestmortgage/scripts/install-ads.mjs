@@ -43,7 +43,7 @@ for (const file of htmlFiles(root)) {
     const isNetlify = /data-netlify(?:\s*=\s*["']true["'])?/i.test(openTag)
     const nameMatch = openTag.match(/name\s*=\s*["']([^"']+)["']/i)
     const name = nameMatch ? nameMatch[1] : ''
-    const isLead = isNetlify && /(?:key-west|kwest|monroe).*(?:scenario|review|lead|contact|mortgage)|(?:scenario|review).*(?:key-west|kwest|monroe)/i.test(name)
+    const isLead = isNetlify && /(?:key-west|kwest|monroe).*(?:scenario|review|lead|contact|mortgage|strategy|studio)|(?:scenario|review|strategy|studio).*(?:key-west|kwest|monroe)/i.test(name)
 
     if (isLead) {
       const missing = attributionFields.filter((field) => !new RegExp(`name=["']${field}["']`, 'i').test(formBody))
