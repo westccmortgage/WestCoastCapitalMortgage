@@ -509,7 +509,7 @@
       var bad = !v ||
         (p[0] === "name" && v.length < 2) ||
         (p[0] === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) ||
-        (p[0] === "phone" && !/^[^0-9]*([0-9][^0-9]*){10,15}$/.test(v));
+        (p[0] === "phone" && !/^(?:\+[^0-9]*([0-9][^0-9]*){10,15}|[^0-9+]*(1[^0-9]*)?([0-9][^0-9]*){10})$/.test(v));
       if (el) el.classList.toggle("is-bad", bad);
       if (bad && !first) first = el;
       if (bad) ok = false;
