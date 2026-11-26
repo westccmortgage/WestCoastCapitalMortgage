@@ -1,7 +1,7 @@
 California Mortgage Concierge — scenario builder & intake portal (californiamtg.com)
 ===================================================================================
 
-Powered by West Coast Capital Mortgage Inc. (NMLS #2817729 · CA DRE #01385024).
+Powered by West Coast Capital Mortgage (NMLS #2817729 · CA DRE #01385024).
 
 A standalone, no-build static site — a premium California mortgage concierge
 intake experience. It collects useful mortgage scenario detail through a

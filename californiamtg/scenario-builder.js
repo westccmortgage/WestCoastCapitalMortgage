@@ -1,6 +1,6 @@
 /* ============================================================
    California Mortgage — Scenario Builder & Concierge Intake
-   Powered by West Coast Capital Mortgage Inc.
+   Powered by West Coast Capital Mortgage
 
    Config-driven, branching, multi-step questionnaire. Vanilla JS,
    no dependencies, no build step. Mounts into #scenarioBuilder.
@@ -215,7 +215,7 @@
     { id: "userType", kind: "choice", title: "What best describes you?",
       options: ["Home Buyer", "Homeowner", "Self-Employed Borrower", "Real Estate Investor", "Realtor / Agent", "Not Sure"].map(s => ({ v: s, label: s })) },
     { id: "propertyState", kind: "choice", title: "Where is the property?",
-      options: ["California", "Florida", "Other state", "I have not chosen a property yet"].map(s => ({ v: s, label: s })) },
+      options: ["California", "Another state", "I have not chosen a property yet"].map(s => ({ v: s, label: s })) },
     { id: "timeline", kind: "choice", title: "How soon do you need help?",
       options: ["Today / urgent", "This week", "This month", "Just researching"].map(s => ({ v: s, label: s })) },
     { id: "nextStep", kind: "choice", title: "Preferred next step",
@@ -512,7 +512,11 @@
   /* ----------------------------------------------------------
      5. SUBMIT HANDLER (placeholder — connect integrations here)
      ---------------------------------------------------------- */
+  // one save per scenario: a second click, a retry while the first request is still
+  // running, or a late success after the timeout never creates a second lead
+  var pendingSave = null, leadSaved = false;
   function submit() {
+    if (mount.classList.contains("is-sending")) return;
     var lead = buildLead();
 
     /* =========================================================
@@ -544,10 +548,49 @@
 
     // Save via the lead layer (Supabase + CRM, or Netlify/local fallback). Fire and
     // forget — the user is thanked immediately. See src/app.js (CMLeads).
-    try { if (window.CMLeads && window.CMLeads.saveScenarioLead) window.CMLeads.saveScenarioLead(lead); }
-    catch (e) { console.warn("[California Mortgage] lead save failed:", e); }
+    // 2026-11-25: wait for the lead layer; thank the visitor only after a backend
+    // accepted the lead, otherwise offer a retry and the phone (nothing is lost silently).
+    if (leadSaved) { renderThankYou(lead); return; }
+    if (!pendingSave) {
+      var saving = null;
+      try { if (window.CMLeads && window.CMLeads.saveScenarioLead) saving = window.CMLeads.saveScenarioLead(lead); }
+      catch (e) { console.warn("[California Mortgage] lead save failed:", e); }
+      if (!saving || typeof saving.then !== "function") { renderThankYou(lead); return; }
+      pendingSave = saving;
+      saving.then(function (r) {
+        if (r && !r.error) {
+          leadSaved = true;
+          // success arrived after the timeout screen: replace it with the thank-you
+          if (mount.querySelector("[data-retry]")) renderThankYou(lead);
+        } else { pendingSave = null; }
+      }, function () { pendingSave = null; });
+    }
+    mount.classList.add("is-sending");
+    mount.setAttribute("aria-busy", "true");
+    Array.prototype.forEach.call(mount.querySelectorAll("button"), function (b) { b.disabled = true; });
+    var sendBtn = mount.querySelector(".builder-nav .btn-gold, [data-retry]");
+    if (sendBtn) sendBtn.textContent = "Sending…";
+    var timeout = new Promise(function (resolve) { setTimeout(function () { resolve({ error: true, timeout: true }); }, 15000); });
+    function done(ok) {
+      mount.classList.remove("is-sending");
+      mount.removeAttribute("aria-busy");
+      if (ok || leadSaved) renderThankYou(lead); else renderSendError();
+    }
+    Promise.race([pendingSave, timeout]).then(function (res) { done(res && !res.error); }, function () { done(false); });
+  }
 
-    renderThankYou(lead);
+  function renderSendError() {
+    mount.classList.add("is-thankyou");
+    mount.innerHTML =
+      '<div class="thankyou">' +
+        '<h3>We could not send your scenario.</h3>' +
+        '<p class="ty-lead">Your answers are saved on this device. Please try again, or call ' +
+        '<a href="tel:+13106541577">(310) 654-1577</a>.</p>' +
+        '<div class="ty-actions"><button type="button" class="btn btn-gold btn-lg" data-retry>Try again</button></div>' +
+      '</div>';
+    var b = mount.querySelector("[data-retry]");
+    if (b) b.addEventListener("click", function () { submit(); });
+    scrollIntoView();
   }
 
   /* ----------------------------------------------------------
@@ -559,7 +602,7 @@
 
     var primary = { label: "Continue to AI Scenario Review", href: "https://wcci.online" };
     if (next === "Talk to a licensed mortgage professional") primary = { label: "Talk to a Licensed Mortgage Professional", href: "/contact.html" };
-    else if (next === "Get pre-approved") primary = { label: "Continue to Secure Pre-Approval", href: "/apply" };
+    else if (next === "Get pre-approved") primary = { label: "Continue to Secure Pre-Approval", href: "/get-preapproved.html" };
     else if (next === "Learn loan options first") primary = { label: "Explore Loan Options", href: "/loan-options.html" };
 
     var cats = lead.leadCategories.length ? lead.leadCategories.join(" &middot; ") : "Scenario received";
@@ -569,7 +612,7 @@
       '<div class="thankyou">' +
         '<div class="ty-mark" aria-hidden="true">&#10003;</div>' +
         '<h3>Thank you' + (lead.contact.fullName ? ", " + escapeHtml(lead.contact.fullName.split(" ")[0]) : "") + '.</h3>' +
-        '<p class="ty-lead">Your scenario has been received and can be reviewed by West Coast Capital Mortgage Inc.</p>' +
+        '<p class="ty-lead">Your scenario has been received and can be reviewed by West Coast Capital Mortgage.</p>' +
         '<p class="ty-cats"><span>Scenario tags:</span> ' + cats + '</p>' +
         '<div class="ty-actions">' +
           '<a class="btn btn-gold btn-lg" href="' + primary.href + '">' + primary.label + '</a>' +
@@ -578,7 +621,7 @@
           '<span>Or choose another path:</span>' +
           '<a href="https://wcci.online">AI Scenario Review</a>' +
           '<a href="/contact.html">Talk to a Professional</a>' +
-          '<a href="/apply">Secure Pre-Approval</a>' +
+          '<a href="/get-preapproved.html">Secure Pre-Approval</a>' +
         '</div>' +
         '<p class="ty-compliance">This is not a loan approval, loan commitment, or rate quote. ' +
           'Final loan options are subject to review by a licensed mortgage professional.</p>' +

@@ -1,12 +1,13 @@
 /* California Mortgage — landing interactions
-   Powered by West Coast Capital Mortgage Inc.
+   Powered by West Coast Capital Mortgage
    Vanilla JS, no dependencies. */
 (function () {
   "use strict";
 
   /* ---- Sticky header: transparent over hero, solid navy on scroll ---- */
-  var header = document.getElementById("siteHeader");
+  var header = document.getElementById("siteHeader") || document.querySelector(".site-header");
   function onScroll() {
+    if (!header) return;
     if (window.scrollY > 40) header.classList.add("scrolled");
     else header.classList.remove("scrolled");
   }
@@ -16,16 +17,22 @@
   /* ---- Mobile navigation ---- */
   var toggle = document.getElementById("navToggle");
   var nav = document.getElementById("mainNav");
+  function lockPage(open) {
+    // the page behind the phone menu does not scroll; the cookie banner hides while it is open
+    document.documentElement.classList.toggle("nav-open", open);
+  }
   function closeNav() {
     nav.classList.remove("open");
     toggle.classList.remove("open");
     toggle.setAttribute("aria-expanded", "false");
+    lockPage(false);
   }
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("open");
       toggle.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", String(open));
+      lockPage(open);
     });
     // Close menu when a link is tapped
     nav.querySelectorAll("a").forEach(function (a) {

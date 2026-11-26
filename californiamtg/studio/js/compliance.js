@@ -1,5 +1,5 @@
 /* ============================================================
-   BeforeJumboLoan.com — Centralized compliance / company config
+   California MTG Studio — Centralized compliance / company config
    Single source of truth for brand, licensing, and footer wording.
    Loaded on every page; renders the global footer-legal block and
    fills [data-compliance="…"] hooks. Conservative by design:
@@ -9,9 +9,9 @@
   "use strict";
 
   var C = {
-    product_brand: "BeforeJumboLoan.com",
+    product_brand: "California MTG",
     product_description: "educational mortgage strategy resource",
-    licensed_review_entity: "West Coast Capital Mortgage Inc.",
+    licensed_review_entity: "West Coast Capital Mortgage",
     company_nmls: "2817729",
     individual_name: "Anatoliy Kanevsky",
     individual_nmls: "2775380",
@@ -53,8 +53,7 @@
   function licensingSentence() {
     return "Licensed mortgage review may be provided by " + C.licensed_review_entity +
       ", NMLS #" + C.company_nmls + " (" + C.individual_name + ", NMLS #" + C.individual_nmls +
-      "; CA DRE #" + C.ca_dre + "), where licensed and applicable. Additional license details must be " +
-      C.verification_status + ".";
+      "; CA DRE #" + C.ca_dre + "), where licensed and applicable.";
   }
 
   function footerLegalHTML() {
@@ -67,7 +66,7 @@
       '<p>' + educationalDisclaimer() + '</p>' +
       '<p>' + licensingSentence() + '</p>' +
       '<p style="margin-top:14px">&copy; ' + year + ' ' + C.product_brand +
-        ' · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="disclosures.html">Disclosures</a></p>';
+        ' · <a href="/privacy-policy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/about.html">Disclosures</a></p>';
   }
 
   function setHTML(sel, html) {
