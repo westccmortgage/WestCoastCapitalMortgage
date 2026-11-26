@@ -9,16 +9,16 @@ if (!html.includes(id)) {
   if (!html.includes(marker)) throw new Error('BeforeJumbo limit-table insertion marker not found');
   const block = `
     <div id="${id}" class="limit-callout">
-      <p class="hero__label">New lender update · September 2026</p>
-      <h2 style="margin-top:.35rem">Select lenders are offering an early conforming limit up to $845,000</h2>
-      <p>The official 2026 one-unit national baseline remains <strong>$832,750</strong>. The early <strong>$845,000</strong> figure is lender-specific and does <strong>not</strong> replace the official FHFA county limits in the table below.</p>
-      <p>For a baseline county, a loan near $840,000 may now have an additional conforming path through an eligible lender. In a high-cost California county, the official county limit may already be above $845,000.</p>
-      <p><a class="btn btn--primary" href="/early-conforming-loan-limit-845000">Read the $845K update →</a></p>
+      <p class="source-note"><strong>FHFA update &middot; November 24, 2026</strong></p>
+      <h2 style="margin-top:.35rem">2027 conforming loan limit: $855,400</h2>
+      <p>FHFA raised the 2027 one-unit baseline to <strong>$855,400</strong> (up $22,650 from $832,750), with a high-cost ceiling of <strong>$1,283,100</strong>. The county figures in the table below are the <strong>2026</strong> limits, so check your county&rsquo;s 2027 limit on <a href="https://www.fhfa.gov/data/dashboard/conforming-loan-limits" target="_blank" rel="noopener noreferrer">FHFA&rsquo;s map</a>.</p>
+      <p>The early $845,000&ndash;$850,000 limits some lenders offered in September 2026 are superseded by the official 2027 baseline.</p>
+      <p><a class="btn btn--primary" href="/early-conforming-loan-limit-845000">Read the 2027 limit update &rarr;</a></p>
     </div>
 `;
-  html = html.replace(marker, block + marker);
+  html = html.replace(marker, () => block + marker);
   fs.writeFileSync(file, html);
-  console.log('Installed BeforeJumbo early-$845K reference');
+  console.log('Installed BeforeJumbo 2027 limit update block');
 } else {
-  console.log('BeforeJumbo early-$845K reference already installed');
+  console.log('BeforeJumbo 2027 limit update block already installed');
 }

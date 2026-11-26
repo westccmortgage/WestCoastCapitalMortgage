@@ -28,21 +28,52 @@
     onScroll();
   }
 
-  /* ---------------- Mobile nav ---------------- */
+  /* ---------------- Mobile nav ----------------
+     Scroll lock lives on <html> only (html.menu-open); locking body as well
+     breaks position:sticky. Closes on Esc, link click, and when the viewport
+     grows past the 1024px breakpoint. */
   var toggle = $(".nav__toggle"), menu = $(".mobile-menu");
   if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      var open = menu.classList.toggle("open");
+    var root = document.documentElement;
+    var setMenu = function (open, returnFocus) {
+      menu.classList.toggle("open", open);
       toggle.classList.toggle("open", open);
-      document.body.style.overflow = open ? "hidden" : "";
+      root.classList.toggle("menu-open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      if (!open && returnFocus) toggle.focus();
+    };
+    toggle.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
     $all("a", menu).forEach(function (a) {
-      a.addEventListener("click", function () {
-        menu.classList.remove("open"); toggle.classList.remove("open"); document.body.style.overflow = "";
-      });
+      a.addEventListener("click", function () { setMenu(false); });
     });
+    document.addEventListener("keydown", function (e) {
+      if ((e.key === "Escape" || e.key === "Esc") && menu.classList.contains("open")) setMenu(false, true);
+    });
+    var mq = window.matchMedia ? window.matchMedia("(min-width: 1025px)") : null;
+    var onWide = function () { if (!mq || mq.matches) setMenu(false); };
+    if (mq) { if (mq.addEventListener) mq.addEventListener("change", onWide); else if (mq.addListener) mq.addListener(onWide); }
+    window.addEventListener("resize", function () { if (window.innerWidth > 1024) setMenu(false); });
   }
+
+  /* ---------------- Wide tables: "swipe" hint only when they really overflow ---------------- */
+  $all(".limits-scroll, .compare-wrap, .table-wrap").forEach(function (wrap) {
+    var hint = document.createElement("p");
+    hint.className = "swipe-hint";
+    hint.hidden = true;
+    hint.setAttribute("aria-hidden", "true");
+    hint.textContent = "Swipe to see more \u2192";
+    wrap.parentNode.insertBefore(hint, wrap);
+    var update = function () {
+      var overflows = wrap.scrollWidth > wrap.clientWidth + 2;
+      var atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2;
+      hint.hidden = !overflows || atEnd;
+    };
+    wrap.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("load", update);
+    update();
+  });
 
   /* ---------------- Scroll reveal ---------------- */
   if ("IntersectionObserver" in window) {
@@ -58,10 +89,10 @@
   var stage = $("[data-scenarios]");
   if (stage) {
     var scenarios = [
-      { q: "“I’m buying at $1.15M with 20% down in a high-cost county. Do I really need jumbo?”", next: "High-Balance Review", href: "https://westccmortgage.com/loans" },
-      { q: "“I’m self-employed and buying a second home. What changes?”", next: "Self-Employed / Second Home Review", href: "https://westccmortgage.com/loans" },
-      { q: "“I’m buying an investment property and want to compare DSCR vs conventional.”", next: "Investor Review", href: "https://westccmortgage.com/loans" },
-      { q: "“I’m a veteran buying in a high-cost county. How does VA fit?”", next: "VA Review", href: "https://westccmortgage.com/resources" }
+      { q: "“I’m buying at $1.15M with 20% down in a high-cost county. Do I really need jumbo?”", next: "High-Balance Review", href: "https://westcoastcapitalmortgage.com/loans" },
+      { q: "“I’m self-employed and buying a second home. What changes?”", next: "Self-Employed / Second Home Review", href: "https://westcoastcapitalmortgage.com/loans" },
+      { q: "“I’m buying an investment property and want to compare DSCR vs conventional.”", next: "Investor Review", href: "https://westcoastcapitalmortgage.com/loans" },
+      { q: "“I’m a veteran buying in a high-cost county. How does VA fit?”", next: "VA Review", href: "https://westcoastcapitalmortgage.com/resources" }
     ];
     var quoteEl = $(".scenario-card .quote", stage);
     var nextEl = $(".scenario-card .next span", stage);
@@ -115,6 +146,12 @@
   }
 
   /* ---------------- Cookie consent ---------------- */
+  // Tell Microsoft Clarity about the choice (a head snippet sets the initial state).
+  function clarityConsent(state) {
+    try {
+      if (typeof window.clarity === "function") window.clarity("consentv2", { ad_Storage: state, analytics_Storage: state });
+    } catch (e) {}
+  }
   var bar = $(".cookie-bar");
   if (bar) {
     var stored;
@@ -123,6 +160,7 @@
     var setConsent = function (val) {
       try { localStorage.setItem("kw_consent", val); } catch (e) {}
       bar.classList.remove("show");
+      clarityConsent(val === "granted" ? "granted" : "denied");
       if (val === "granted") ensureVisitorId();
     };
     var acc = $("[data-consent-accept]", bar), dec = $("[data-consent-decline]", bar);
@@ -343,7 +381,9 @@
         sending=false;if(b)b.disabled=false;
         var n=form.querySelector("[data-bjl-error]");
         if(!n){n=document.createElement("p");n.setAttribute("data-bjl-error","");n.setAttribute("role","alert");form.appendChild(n);}
-        n.textContent="Your request could not be sent. Please try again.";
+        n.textContent="Your request could not be sent. Please try again or call ";
+        var tel=document.createElement("a");tel.href="tel:+13106541577";tel.textContent="(310) 654-1577";
+        n.appendChild(tel);n.appendChild(document.createTextNode("."));
       });
     },true);
   }

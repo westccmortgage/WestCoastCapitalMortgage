@@ -62,7 +62,7 @@
     });
     var n; while ((n = w.nextNode())) textNodes.push({ node: n, raw: n.nodeValue });
     Array.prototype.forEach.call(document.body.querySelectorAll("[placeholder],[aria-label]"), function (el) {
-      if (el.closest && el.closest(".lang-switch")) return;
+      if (el.closest && (el.closest(".lang-switch") || el.closest(".nav__toggle"))) return;
       var ph = el.getAttribute("placeholder"); if (ph && ph.trim()) attrNodes.push({ el: el, attr: "placeholder", en: ph });
       var al = el.getAttribute("aria-label"); if (al && al.trim()) attrNodes.push({ el: el, attr: "aria-label", en: al });
     });

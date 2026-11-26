@@ -10,7 +10,7 @@
   "record_count": 3235,
   "year": 2026,
   "source": "FHFA Conforming Loan Limit Values",
-  "compliance": "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.",
+  "compliance": "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.",
   "baseline": {
     "one_unit": 832750,
     "two_unit": 1066250,

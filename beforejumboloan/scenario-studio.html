@@ -3,20 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};var g="denied";try{if(localStorage.getItem("kw_consent")==="granted")g="granted"}catch(e){}window.clarity("consentv2",{ad_Storage:g,analytics_Storage:g});})();</script>
 <title>Before Jumbo Strategy Studio | Before Jumbo Loan</title>
 <meta name="description" content="Compare conforming, high-balance conforming, jumbo, VA, FHA, DSCR and self-employed review paths before you go jumbo. A market-driven scenario tool. Educational only.">
-<link rel="canonical" href="https://beforejumboloan.com/scenario-studio.html">
+<link rel="canonical" href="https://beforejumboloan.com/scenario-studio">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Before Jumbo Strategy Studio | Before Jumbo Loan">
 <meta property="og:description" content="Build your mortgage scenario before you go jumbo — then send it for licensed review.">
-<meta property="og:url" content="https://beforejumboloan.com/scenario-studio.html">
+<meta property="og:url" content="https://beforejumboloan.com/scenario-studio">
 <meta property="og:image" content="https://beforejumboloan.com/assets/og-image.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/studio.css">
+<link rel="stylesheet" href="css/studio.css?v=20261125-m">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -31,10 +32,17 @@
           <button type="button" data-lang="ru" aria-pressed="false">RU</button>
           <button type="button" data-lang="zh" aria-pressed="false">中文</button>
         </div><a class="btn btn--primary" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a>
-    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </nav></div></header>
-<div class="mobile-menu" aria-label="Mobile"><a href="/">Home</a><a class="btn btn--primary btn--block" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a></div>
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile"><a href="/">Home</a><a class="btn btn--primary btn--block" href="https://2817729.my1003app.com/2775380/register" target="_blank" rel="noopener">Start Application</a>
+  <div class="lang-switch lang-switch--menu" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true" class="is-active">EN</button>
+    <button type="button" data-lang="es" aria-pressed="false">ES</button>
+    <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+  </div>
+</div>
 
 <main id="main">
 <section class="page-hero page-hero--studio">
@@ -200,8 +208,8 @@
           <h2 class="st__q">Where should the review go?</h2>
           <p class="st__sub">Your scenario details are organized — add your contact info so a licensed mortgage professional can follow up.</p>
           <div class="form-grid">
-            <div class="field"><label for="st-name">Name <span class="req">*</span></label><input id="st-name" data-c="name" type="text" placeholder="Your name" autocomplete="name" required></div>
-            <div class="field"><label for="st-phone">Phone <span class="req">*</span></label><input id="st-phone" data-c="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" required></div>
+            <div class="field"><label for="st-name">Name <span class="req">*</span></label><input id="st-name" data-c="name" type="text" placeholder="Your name" autocomplete="name" minlength="2" required></div>
+            <div class="field"><label for="st-phone">Phone <span class="req">*</span></label><input id="st-phone" data-c="phone" type="tel" inputmode="tel" placeholder="(000) 000-0000" autocomplete="tel" pattern="[^0-9]*([0-9][^0-9]*){10,15}" title="Enter a phone number with 10 to 15 digits, for example (310) 654-1577" required></div>
             <div class="field full"><label for="st-email">Email <span class="req">*</span></label><input id="st-email" data-c="email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
             <div class="field"><label for="st-contact">Preferred contact method</label><select id="st-contact" data-c="preferred_contact_method"><option value="">Select…</option><option>Phone</option><option>Email</option><option>Text</option></select></div>
             <div class="field full"><label for="st-msg">Message / notes</label><textarea id="st-msg" data-c="message" placeholder="Anything else we should know about your purchase…"></textarea></div>
@@ -223,6 +231,7 @@
             <input type="checkbox" data-consent>
             <span>By submitting, I agree to be contacted by a licensed mortgage professional by phone, email, or text regarding my mortgage scenario. Message and data rates may apply. I understand this is not a loan application, loan approval, rate quote, underwriting decision, or commitment to lend.</span>
           </label>
+          <p class="st__hint consent-note" data-consent-note role="alert" hidden></p>
           <p class="st__hint" style="margin-top:8px">No credit check is performed to start.</p>
         </div>
 
@@ -317,7 +326,8 @@
             <span class="snap__k">County loan limit reference</span>
             <div class="snap__limitline"><span class="snap__limitval" data-snap-countylimit>—</span><span class="snap__delta" data-snap-limitdelta></span></div>
             <div class="snap__fha" data-snap-fha hidden></div>
-            <p class="snap__refnote" data-snap-limitnote>Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.</p>
+            <p class="snap__refnote" data-snap-limitnote>Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.</p>
+            <p class="limits-note" data-limits-2027-note><strong>2027 update:</strong> FHFA announced the 2027 limits on November 24, 2026 ($855,400 baseline, up to $1,283,100 in high-cost areas). County figures here are the 2026 limits; check your county&rsquo;s 2027 limit on <a href="https://www.fhfa.gov/data/dashboard/conforming-loan-limits" target="_blank" rel="noopener noreferrer">FHFA&rsquo;s map</a>.</p>
           </div>
           <div class="snap__cx">
             <span class="snap__k">Scenario complexity</span>
@@ -361,7 +371,7 @@
           <p class="snap__refnote" data-app-helper hidden>Your scenario will continue in the secure lender application portal. Final program availability, pricing, eligibility, and terms require licensed review.</p>
           <div class="state-block" data-app-state hidden>
             <p class="state-block__title" data-app-state-title>Licensed review is not available for this property state yet.</p>
-            <p class="state-block__text">West Coast Capital Mortgage Inc. is currently routing applications only for supported states. Contact us to ask about future availability.</p>
+            <p class="state-block__text">West Coast Capital Mortgage is currently routing applications only for supported states. Contact us to ask about future availability.</p>
             <a class="btn btn--ghost btn--block" href="contact.html">Contact Us About Future Availability →</a>
           </div>
           <p class="snap__refnote" data-app-prompt hidden>Confirm the property location above to continue.</p>
@@ -455,21 +465,21 @@
 <footer class="site-footer"><div class="wrap">
   <div class="footer-grid">
     <div class="footer-brand"><span class="brand__name">Before <b>Jumbo</b> Loan</span><p>BeforeJumboLoan.com — an educational mortgage strategy resource. Compare your review path before you go jumbo.</p><p class="footer-powered">Licensed mortgage review provided only where properly licensed and authorized.</p></div>
-    <div><h4>Explore</h4><ul><li><a href="concierge.html">Concierge</a></li><li><a href="https://westccmortgage.com/loans">Conforming</a></li><li><a href="https://westccmortgage.com/loans">Loan Options</a></li><li><a href="rates.html">Rates &amp; Payments</a></li><li><a href="/scenario-studio">Scenario Engine Preview</a></li></ul></div>
-    <div><h4>Learn</h4><ul><li><a href="https://westccmortgage.com/resources">Education</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="disclosures.html">Disclosures</a></li></ul></div>
+    <div><h4>Explore</h4><ul><li><a href="concierge.html">Concierge</a></li><li><a href="https://westcoastcapitalmortgage.com/loans">Conforming</a></li><li><a href="https://westcoastcapitalmortgage.com/loans">Loan Options</a></li><li><a href="rates.html">Rates &amp; Payments</a></li><li><a href="/scenario-studio">Strategy Studio</a></li></ul></div>
+    <div><h4>Learn</h4><ul><li><a href="https://westcoastcapitalmortgage.com/resources">Education</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="disclosures.html">Disclosures</a></li></ul></div>
     <div><h4>Contact</h4><ul><li><a href="contact.html">Send your scenario</a></li><li>BeforeJumboLoan.com</li></ul></div>
   </div>
   <div class="footer-legal">
     <div class="footer-disclosures"><span class="ehl"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/></svg> Equal Housing Opportunity</span></div>
     <p>BeforeJumboLoan.com is an educational mortgage strategy resource. Licensed mortgage review is provided only where properly licensed and authorized.</p>
-    <p>Licensed mortgage review may be provided by West Coast Capital Mortgage Inc., NMLS #2817729, CA DRE Corporation License #02440065; Anatoliy Kanevsky, NMLS #2775380, CA Broker DRE #01385024, where licensed and applicable.</p>
+    <p>Licensed mortgage review may be provided by West Coast Capital Mortgage, NMLS #2817729, CA DRE Corporation License #02440065; Anatoliy Kanevsky, NMLS #2775380, CA Broker DRE #01385024, where licensed and applicable.</p>
     <p>This information is for educational purposes only and is not a loan approval, loan commitment, rate quote, or commitment to lend. Final loan options are subject to review by a licensed mortgage professional, borrower qualification, property eligibility, underwriting approval, and current program guidelines.</p>
     <p style="margin-top:14px">&copy; <span data-year>2026</span> BeforeJumboLoan.com · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="disclosures.html">Disclosures</a></p>
   </div>
 </div></footer>
 
 <div class="cookie-bar" role="dialog" aria-label="Cookie consent">
-  <p>We use cookies and a first-party visitor ID to understand site usage and improve your experience. Analytics and tracking run only with your consent. See our <a href="privacy.html">Privacy Policy</a>.</p>
+  <p>We use cookies and a first-party visitor ID, with your consent, to understand site usage. <a href="privacy.html">Privacy</a>.</p>
   <div class="cookie-actions"><button class="btn btn--primary" data-consent-accept>Accept</button><button class="btn btn--ghost" data-consent-decline>Decline</button></div>
 </div>
 

@@ -10,7 +10,7 @@
   "record_count": 3235,
   "year": 2026,
   "source": "HUD FHA Forward Mortgage Limits",
-  "compliance": "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.",
+  "compliance": "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.",
   "floor": {
     "one_unit": 541287
   },

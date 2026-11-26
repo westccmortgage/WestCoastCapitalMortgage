@@ -51,7 +51,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  overflow-x: clip; /* clip makes no scroll container, so the sticky header keeps working */
 }
+html.menu-open { overflow: hidden; }
 img, svg, video { max-width: 100%; display: block; }
 a { color: var(--ocean); text-decoration: none; transition: color .2s var(--ease); }
 a:hover { color: var(--navy); }
@@ -128,19 +130,24 @@ p  { margin: 0 0 1.1em; color: var(--ink); }
 .nav__toggle.open span:nth-child(2){ opacity:0; }
 .nav__toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 1024px) {
-  .nav__links, .nav__cta .btn { display: none; }   /* both CTAs collapse into the menu */
-  .nav__toggle { display: block; }
-  .mobile-menu { display: block; }
-}
 .mobile-menu {
   display: none; position: fixed; inset: 76px 0 0 0; z-index: 99;
   background: var(--white); padding: 28px 24px; transform: translateX(100%);
-  transition: transform .35s var(--ease); overflow-y: auto;
+  visibility: hidden;
+  transition: transform .35s var(--ease), visibility 0s linear .35s; overflow-y: auto;
 }
-.mobile-menu.open { transform: translateX(0); }
+.mobile-menu.open { transform: translateX(0); visibility: visible; transition-delay: 0s; }
 .mobile-menu a { display: block; padding: 16px 4px; font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); border-bottom: 1px solid var(--line); }
-.mobile-menu .btn { margin-top: 22px; }
+.mobile-menu a.btn { display: flex; margin-top: 22px; font-family: var(--font-body); font-size: 1rem; padding: 15px 30px; border-bottom-color: transparent; }
+.mobile-menu a.btn--primary { color: #fff; }
+.mobile-menu .lang-switch { display: none; margin: 22px 0 0; }
+
+/* Breakpoint rules come AFTER the base .mobile-menu rule so they win the cascade. */
+@media (max-width: 1024px) {
+  .nav__links, .nav__cta .btn { display: none; }   /* both CTAs collapse into the menu */
+  .nav__toggle { display: block; min-width: 44px; min-height: 44px; }
+  .mobile-menu { display: block; }
+}
 
 /* ---------- Hero ---------- */
 .hero { position: relative; min-height: 92vh; display: flex; align-items: center; overflow: hidden; color: #fff; }
@@ -592,7 +599,7 @@ input[type="range"]:focus-visible{ box-shadow:0 0 0 3px rgba(46,127,166,.3); }
    ============================================================ */
 .glass{ background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); }
 .studio__grid{ display:grid; grid-template-columns:1.25fr .85fr; gap:28px; align-items:start; }
-@media (max-width:980px){ .studio__grid{ grid-template-columns:1fr; } }
+@media (max-width:980px){ .studio__grid{ grid-template-columns:minmax(0,1fr); } .studio__main, .studio__panel{ min-width:0; } }
 
 .studio__main{ padding:clamp(24px,3vw,38px); position:relative; min-height:440px; display:flex; flex-direction:column; }
 .studio__progress{ display:flex; align-items:center; gap:16px; margin-bottom:26px; }
@@ -624,6 +631,7 @@ input[type="range"]:focus-visible{ box-shadow:0 0 0 3px rgba(46,127,166,.3); }
 .st-slider__lbl strong{ font-family:var(--font-display); font-size:1.2rem; color:var(--ocean); }
 .st-slider__scale{ display:flex; justify-content:space-between; font-size:.74rem; color:var(--muted); margin-top:8px; }
 
+.studio__nav[hidden]{ display:none; }
 .studio__nav{ display:flex; justify-content:space-between; gap:14px; margin-top:30px; padding-top:22px; border-top:1px solid var(--line); }
 .btn--soft{ background:var(--sand-soft); color:var(--navy); border-color:var(--line); }
 .btn--soft:hover{ background:var(--sand); transform:translateY(-2px); }
@@ -797,7 +805,8 @@ input[type="range"]:focus-visible{ box-shadow:0 0 0 3px rgba(46,127,166,.3); }
 .page-stub__body h2 { font-family: var(--font-display); font-size: 1.4rem; margin: 30px 0 10px; color: var(--navy); }
 .page-stub__body p { color: var(--ink); line-height: 1.7; margin: 0 0 12px; }
 .page-stub__body ul { color: var(--ink); line-height: 1.8; padding-left: 20px; }
-.page-stub__body a { color: var(--ocean); }
+.page-stub__body a:not(.btn) { color: var(--ocean); }
+.page-stub__body a:not(.btn):hover { color: var(--navy); }
 
 /* ============================================================
    Property location selector + county loan-limit reference
@@ -821,3 +830,54 @@ input[type="range"]:focus-visible{ box-shadow:0 0 0 3px rgba(46,127,166,.3); }
 .lang-switch button:hover{color:#1C2B33}
 .lang-switch button.is-active{color:#C8A86B}
 @media(max-width:900px){.lang-switch{margin-right:8px}.lang-switch button{padding:2px 7px;font-size:.7rem}}
+
+/* ============================================================
+   Mobile audit fixes (2026-11-25)
+   ============================================================ */
+
+/* Notices (2027 loan-limit note, swipe hint) */
+.limits-note { margin: 16px 0; padding: 12px 16px; border-left: 3px solid var(--ocean); background: var(--ocean-pale); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--navy); font-size: .92rem; line-height: 1.55; }
+.limits-note a { font-weight: 600; text-decoration: underline; }
+.swipe-hint { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin: 6px 0 -12px; font-size: .78rem; font-weight: 600; color: var(--muted); }
+.swipe-hint[hidden] { display: none; }
+/* Home CTA block under the calculator */
+.home-cta { padding: clamp(36px, 6vw, 64px) 0; background: var(--sand-soft, #faf7f2); text-align: center; }
+.home-cta h2 { margin-bottom: .4em; }
+.home-cta p { max-width: 56ch; margin: 0 auto 22px; color: var(--ink); }
+.home-cta__actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+/* Contact page phone line */
+.contact-phone { font-size: 1.05rem; margin: 0 0 18px; }
+.contact-phone a { font-weight: 700; }
+
+@media (max-width: 600px) {
+  /* Header: language switch moves into the menu so the hamburger always fits */
+  .nav__cta .lang-switch { display: none; }
+  .mobile-menu .lang-switch { display: inline-flex; }
+  .lang-switch button { min-height: 44px; min-width: 44px; padding: 2px 10px; font-size: .8rem; }
+  .nav { gap: 8px; }
+  .brand__powered { font-size: .52rem; letter-spacing: .06em; }
+
+  /* Buttons may wrap on narrow screens instead of overflowing */
+  .btn { white-space: normal; max-width: 100%; text-align: center; line-height: 1.25; }
+
+  /* 16px inputs stop iOS from zooming; 44px tap targets */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]), select, textarea { font-size: 16px !important; min-height: 44px; }
+  .chip, .purpose__opt, [data-qc-occ] { min-height: 44px; }
+
+  /* Compact cookie bar */
+  .cookie-bar { left: 10px; right: 10px; bottom: 10px; max-width: none; padding: 10px 12px; border-radius: 12px; }
+  .cookie-bar p { font-size: .74rem; line-height: 1.4; margin: 0 0 8px; }
+  .cookie-actions { gap: 8px; flex-wrap: nowrap; }
+  .cookie-actions .btn { flex: 1 1 0; padding: 8px 12px; font-size: .82rem; min-height: 36px; line-height: 1.2; }
+}
+
+.consent-note { color: #b0402b; font-weight: 600; margin-top: 8px; }
+.consent.is-bad { outline: 2px solid #c0553f; outline-offset: 4px; border-radius: 6px; }
+
+@media (max-width: 600px) {
+  /* the home page uses the mini cookie bar; keep it just as compact */
+  .cookie-bar.cookie-bar--mini { left: 10px; right: 10px; bottom: 10px; max-width: none; padding: 10px 12px; gap: 6px; border-radius: 12px; }
+  .cookie-bar.cookie-bar--mini p { font-size: .74rem; line-height: 1.4; }
+  .cookie-bar.cookie-bar--mini .cookie-actions .btn { padding: 8px 12px; font-size: .82rem; min-height: 36px; }
+}

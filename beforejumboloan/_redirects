@@ -1,12 +1,12 @@
 # BeforeJumboLoan.com — redirects (Netlify manual drop friendly). No GitHub dependency.
 
 # Education / program content now lives on West Coast Capital Mortgage.
-/loan-options              https://westccmortgage.com/loans       301
-/loan-options.html         https://westccmortgage.com/loans       301
-/jumbo-vs-conforming       https://westccmortgage.com/loans       301
-/jumbo-vs-conforming.html  https://westccmortgage.com/loans       301
-/education                 https://westccmortgage.com/resources   301
-/education.html            https://westccmortgage.com/resources   301
+/loan-options              https://westcoastcapitalmortgage.com/loans       301
+/loan-options.html         https://westcoastcapitalmortgage.com/loans       301
+/jumbo-vs-conforming       https://westcoastcapitalmortgage.com/loans       301
+/jumbo-vs-conforming.html  https://westcoastcapitalmortgage.com/loans       301
+/education                 https://westcoastcapitalmortgage.com/resources   301
+/education.html            https://westcoastcapitalmortgage.com/resources   301
 
 # Market route presets — each path serves the (internal) scenario engine; the
 # path stays visible so the engine resolves the market slug.

@@ -75,7 +75,7 @@ export function titleCase(s) {
 export function nowISO() { return new Date().toISOString(); }
 
 export const COMPLIANCE =
-  "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+  "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.";
 
 /* Statutory special-exception areas (Alaska, Hawaii, Guam, U.S. Virgin Islands). */
 export const SPECIAL_AREAS = new Set(["AK", "HI", "GU", "VI"]);

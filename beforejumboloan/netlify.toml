@@ -17,6 +17,39 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# Pages that now live on West Coast Capital Mortgage. force = true because the
+# local .html files still exist and would otherwise shadow these rules.
+[[redirects]]
+  from = "/loan-options"
+  to = "https://westcoastcapitalmortgage.com/loans"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/loan-options.html"
+  to = "https://westcoastcapitalmortgage.com/loans"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/jumbo-vs-conforming"
+  to = "https://westcoastcapitalmortgage.com/loans"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/jumbo-vs-conforming.html"
+  to = "https://westcoastcapitalmortgage.com/loans"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/education"
+  to = "https://westcoastcapitalmortgage.com/resources"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/education.html"
+  to = "https://westcoastcapitalmortgage.com/resources"
+  status = 301
+  force = true
+
 # Market routes → same page; the engine resolves the slug from the path.
 [[redirects]]
   from = "/key-west"

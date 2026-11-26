@@ -24,7 +24,7 @@
      ============================================================ */
   var DEFAULT_MARKET = "generic";
   var LIMIT_YEAR = 2026;
-  var VERIFY = "VERIFY BEFORE LAUNCH (FHFA / Fannie Mae / HUD)";
+  var VERIFY = "Confirm current FHFA / HUD limits with a loan officer";
   // FHFA 2026 Conforming Loan Limit Values (effective 2026-01-01):
   //   baseline 1-unit $832,750 · high-cost ceiling 1-unit $1,249,125.
   // County values below reflect FHFA's published 2026 1-unit limits.
@@ -60,28 +60,28 @@
     "california": {
       marketSlug: "california", marketName: "California (high-cost)", countyName: "California", state: "CA",
       loanLimitYear: LIMIT_YEAR, baselineConformingLimit: 832750, highBalanceLimit: 1249125, fhaLimit: null,
-      localDisclaimer: "California conforming limits vary by county; the configured value is the 2026 high-cost-area ceiling. Verify the specific county before launch.",
+      localDisclaimer: "California conforming limits vary by county. For 2026 the baseline is $832,750 and the high-cost ceiling is $1,249,125; confirm the specific county's limit with a loan officer.",
       marketHeroCopy: "Buying in California? Don’t assume it has to be jumbo — compare your review path before you write the offer.",
       lastVerifiedDate: VERIFY
     },
     "orange-county": {
       marketSlug: "orange-county", marketName: "Orange County, CA", countyName: "Orange County", state: "CA",
       loanLimitYear: LIMIT_YEAR, baselineConformingLimit: 832750, highBalanceLimit: 1249125, fhaLimit: null,
-      localDisclaimer: "Orange County is a high-cost area; the configured value is the 2026 high-cost ceiling.",
+      localDisclaimer: "Orange County is a high-cost area; the 2026 limit shown is the high-cost ceiling of $1,249,125 (the 2026 baseline is $832,750).",
       marketHeroCopy: "Buying in Orange County? Compare high-balance conforming vs jumbo before you write the offer.",
       lastVerifiedDate: VERIFIED
     },
     "los-angeles": {
       marketSlug: "los-angeles", marketName: "Los Angeles County, CA", countyName: "Los Angeles County", state: "CA",
       loanLimitYear: LIMIT_YEAR, baselineConformingLimit: 832750, highBalanceLimit: 1249125, fhaLimit: null,
-      localDisclaimer: "Los Angeles County is a high-cost area; the configured value is the 2026 high-cost ceiling.",
+      localDisclaimer: "Los Angeles County is a high-cost area; the 2026 limit shown is the high-cost ceiling of $1,249,125 (the 2026 baseline is $832,750).",
       marketHeroCopy: "Buying in Los Angeles? Compare high-balance conforming vs jumbo before you write the offer.",
       lastVerifiedDate: VERIFIED
     },
     "custom": {
       marketSlug: "custom", marketName: "Your Market", countyName: "Your County", state: "US",
       loanLimitYear: LIMIT_YEAR, baselineConformingLimit: 832750, highBalanceLimit: 832750, fhaLimit: null,
-      localDisclaimer: "Configure this market in MARKETS['custom'] before launch.",
+      localDisclaimer: "Confirm the county conforming limit for this market with a loan officer.",
       marketHeroCopy: "Don’t assume it has to be jumbo — compare your review path before you write the offer.",
       lastVerifiedDate: VERIFY
     }
@@ -135,7 +135,7 @@
     return MARKET_CONFIG;
   }
 
-  var COMPLIANCE_REF = "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+  var COMPLIANCE_REF = "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.";
   var LAST_LOCATION = null;
 
   /* Resolve loan limits for a selected property location via the national
@@ -831,10 +831,10 @@
     L.push("  Units: " + u + (u === 1 ? " unit" : " units"));
     if (loc && loc.countyConformingLimit != null) {
       L.push("  County conforming/high-balance reference (" + u + "-unit): " + fmtCurrency(loc.countyConformingLimit) +
-        (loc.highCost ? " (high-cost)" : "") + " — configured reference only, verify before launch");
+        (loc.highCost ? " (high-cost)" : "") + " — reference figure only, confirm with a loan officer");
     }
     if (loc && loc.fhaLimit != null) {
-      L.push("  FHA reference (" + u + "-unit): " + fmtCurrency(loc.fhaLimit) + " — configured reference only, verify before launch");
+      L.push("  FHA reference (" + u + "-unit): " + fmtCurrency(loc.fhaLimit) + " — reference figure only, confirm with a loan officer");
     }
     if (loc && loc.source) L.push("  Source: " + loc.source + (loc.verifiedAt ? " (verified " + loc.verifiedAt + ")" : ""));
     L.push("");

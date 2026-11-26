@@ -19,7 +19,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
   var fmt = KW.fmtCurrency, num = KW.parseNum;
-  var COMPLIANCE = (KW.COMPLIANCE_REF) || "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+  var COMPLIANCE = (KW.COMPLIANCE_REF) || "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.";
   var SAFE = "Educational structure estimate only. Not approval, qualification, rate quote, APR, loan estimate, or commitment to lend.";
 
   var VALUE_LABEL = {
@@ -615,7 +615,7 @@
       if (S.county) q.set("county", S.county);
       if (S.county_fips) q.set("county_fips", S.county_fips);
       a.removeAttribute("data-needs-loc");
-      a.textContent = "Scenario Engine Preview (internal)";
+      a.textContent = "Strategy Studio";
     } else {
       // No confirmed property (example / unresolved / ambiguous): never pass a
       // default county. Flag the Studio to open at property-location confirmation.
@@ -629,7 +629,7 @@
         } catch (e) {}
       }
       a.setAttribute("data-needs-loc", "yes");
-      a.textContent = "Scenario Engine Preview (internal)";
+      a.textContent = "Strategy Studio";
     }
     a.setAttribute("href", "scenario-studio.html?" + q.toString());
     renderCta(confirmedReal);

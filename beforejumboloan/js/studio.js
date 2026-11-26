@@ -264,7 +264,7 @@
 
   /* ---------- property location selector + national loan-limit resolver ---------- */
   var COMPLIANCE_REF = (window.BJLLimits && window.BJLLimits.COMPLIANCE) ||
-    "Configured reference only — verify current FHFA/Fannie/Freddie/HUD limits before launch.";
+    "Reference figures only — confirm current FHFA/HUD limits for your county with a loan officer.";
 
   function applyLocation() {
     if (KW.applyLocation) {
@@ -489,15 +489,38 @@
     goTo(step + 1);
   });
 
+  var consentNote = $("[data-consent-note]");
+  function setConsentNote(msg) {
+    if (!consentNote) return;
+    consentNote.textContent = msg || "";
+    consentNote.hidden = !msg;
+    var lbl = consentEl && consentEl.closest ? consentEl.closest(".consent") : null;
+    if (lbl) lbl.classList.toggle("is-bad", !!msg);
+  }
+  if (consentEl) consentEl.addEventListener("change", function () { if (consentEl.checked) setConsentNote(""); });
+
+  /* The consent checkbox lives on step 9, so it is validated here, when the
+     user leaves step 9 — never on the result screen where step 9 is hidden. */
   function validateContact() {
     var ok = true, first = null;
     [["name", S.name], ["email", S.email], ["phone", S.phone]].forEach(function (p) {
       var el = $('[data-c="' + p[0] + '"]');
-      var bad = !p[1] || (p[0] === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p[1]));
+      var v = p[1] || "";
+      var bad = !v ||
+        (p[0] === "name" && v.length < 2) ||
+        (p[0] === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) ||
+        (p[0] === "phone" && !/^[^0-9]*([0-9][^0-9]*){10,15}$/.test(v));
       if (el) el.classList.toggle("is-bad", bad);
       if (bad && !first) first = el;
       if (bad) ok = false;
     });
+    if (consentEl && !consentEl.checked) {
+      setConsentNote("Please check the consent box so a licensed mortgage professional can contact you.");
+      if (!first) first = consentEl;
+      ok = false;
+    } else {
+      setConsentNote("");
+    }
     if (first) { try { first.focus(); } catch (e) {} }
     return ok;
   }
@@ -641,11 +664,7 @@
 
   /* ---------- submit to Netlify ("/" urlencoded) ---------- */
   if (sendBtn) sendBtn.addEventListener("click", function () {
-    if (consentEl && !consentEl.checked) {
-      if (sendNote) sendNote.textContent = "Please check the consent box so a licensed mortgage professional can contact you.";
-      try { consentEl.focus(); } catch (e) {}
-      return;
-    }
+    if (!validateContact()) { goTo(TOTAL); validateContact(); return; }
     var o = KW.strategySummary(S);
     var ppBase = { loan: S.loan, scenario_type: S.scenario_type, occupancy: S.occupancy, rate: (S.rate != null && S.rate !== "") ? S.rate : undefined };
     var ppAmort = KW.paymentPreview(ppBase) || {};
@@ -675,10 +694,10 @@
       property_zip: S.property_zip || "",
       property_units: String(S.units || 1),
       county_loan_limit_reference: (KW.lastLocation && KW.lastLocation.countyConformingLimit)
-        ? KW.fmtCurrency(KW.lastLocation.countyConformingLimit) + " (" + (S.units || 1) + "-unit; configured reference — verify before launch)"
+        ? KW.fmtCurrency(KW.lastLocation.countyConformingLimit) + " (" + (S.units || 1) + "-unit; reference figure — confirm with a loan officer)"
         : "",
       fha_limit_reference: (KW.lastLocation && KW.lastLocation.fhaLimit)
-        ? KW.fmtCurrency(KW.lastLocation.fhaLimit) + " (" + (S.units || 1) + "-unit; configured reference — verify before launch)"
+        ? KW.fmtCurrency(KW.lastLocation.fhaLimit) + " (" + (S.units || 1) + "-unit; reference figure — confirm with a loan officer)"
         : "",
       occupancy: o.occupancy,
       property_type: o.propertyType,
